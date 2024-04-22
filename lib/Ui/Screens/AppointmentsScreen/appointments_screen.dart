@@ -36,6 +36,7 @@ import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MyProfileScreen/my_profil
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/SuggestionScreen/suggestion_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/T&CScreen/t&c_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/privacy_policy/privacy_policy.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/suggest_doctor/suggest_doctor_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/demo.dart/dropdown/dropdown_bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
@@ -292,6 +293,19 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                 },
               ),
               ListTile(
+                title: const Text('Privacy policy'),
+                trailing: const Icon(Icons.assignment_outlined),
+                onTap: () {
+                  // Handle item 2 tap
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyScreen(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
                 title: const Text('About Us'),
                 trailing: const Icon(Icons.assignment_turned_in_outlined),
                 onTap: () {
@@ -488,15 +502,14 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                           return CustomDropDown(
                             width: 140.w,
                             value: state.changValue,
-                            items: items.entries
-                                .map<DropdownMenuItem<String>>(
-                                    (MapEntry<String, int?> entry) {
-                                  // Specify the return type
-                                  return DropdownMenuItem<String>(
-                                    value: entry.key,
-                                    child: Text(entry.key),
-                                  );
-                                }).toList(),
+                            items: items.entries.map<DropdownMenuItem<String>>(
+                                (MapEntry<String, int?> entry) {
+                              // Specify the return type
+                              return DropdownMenuItem<String>(
+                                value: entry.key,
+                                child: Text(entry.key),
+                              );
+                            }).toList(),
                             onChanged: (String? newValue) {
                               BlocProvider.of<DropdownBloc>(context).add(
                                   DropdownSelectEvent(
@@ -511,7 +524,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                               ));
                               // selectedValue.toString()
                               BlocProvider.of<GetAllCompletedAppointmentsBloc>(
-                                  context)
+                                      context)
                                   .add(FetchAllCompletedAppointments(
                                 date: controller.formatDate(),
                                 clinicId: controller.initialIndex!,
@@ -523,65 +536,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                       ),
 
                       const VerticalSpacingWidget(height: 2),
-                      // _isLoading
-                      //     ? Shimmer.fromColors(
-                      //         baseColor: Colors.grey.shade300,
-                      //         highlightColor: Colors.grey.shade100,
-                      //         child: Container(
-                      //           height: 40.h,
-                      //           width: 140.w,
-                      //           decoration: BoxDecoration(
-                      //               color: kCardColor,
-                      //               borderRadius: BorderRadius.circular(5),
-                      //               border: Border.all(
-                      //                   color: const Color(0xFF9C9C9C))),
-                      //         ),
-                      //       )
-                      //     : BlocBuilder<DropdownBloc, DropdownState>(
-                      //         builder: (context, state) {
-                      //           return CustomDropDown(
-                      //             width: 140.w,
-                      //             value: state.changValue,
-                      //             items: items.entries
-                      //                 .map<DropdownMenuItem<String>>(
-                      //                     (MapEntry<String, int?> entry) {
-                      //               // Specify the return type
-                      //               return DropdownMenuItem<String>(
-                      //                 value: entry.key,
-                      //                 child: Text(entry.key),
-                      //               );
-                      //             }).toList(),
-                      //             onChanged: (String? newValue) {
-                      //               BlocProvider.of<DropdownBloc>(context).add(
-                      //                   DropdownSelectEvent(
-                      //                       dropdownSelectnvLalu: newValue!));
-                      //               // dropdownValue = newValue!;
-                      //               selectedValue = items[newValue];
-                      //               BlocProvider.of<GetAllAppointmentsBloc>(
-                      //                       context)
-                      //                   .add(FetchAllAppointments(
-                      //                       date: formatDate(),
-                      //                       clinicId: selectedClinicId,
-                      //                       scheduleType:
-                      //                           selectedValue.toString()));
-                      //               BlocProvider.of<
-                      //                           GetAllCompletedAppointmentsBloc>(
-                      //                       context)
-                      //                   .add(FetchAllCompletedAppointments(
-                      //                       date: formatDate(),
-                      //                       clinicId: selectedClinicId,
-                      //                       scheduleType:
-                      //                           selectedValue.toString()));
-                      //             },
-                      //           );
-                      //         },
-                      //       ),
                     ],
                   ),
                 ],
               ),
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 8.w),
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Text(
                   "Your Appointments",
                   style: TextStyle(
@@ -594,19 +554,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                 initialDate: controller.selectedDate,
                 disabledDates: _getDisabledDates(),
                 onDateChange: (date) {
-                  String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(date);
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(date);
                   controller.selectedDate = date;
-                  BlocProvider.of<GetAllAppointmentsBloc>(context)
-                      .add(
+                  BlocProvider.of<GetAllAppointmentsBloc>(context).add(
                     FetchAllAppointments(
                         date: formattedDate,
                         clinicId: controller.initialIndex!,
                         scheduleType: controller.scheduleIndex),
                   );
-                  BlocProvider.of<GetAllCompletedAppointmentsBloc>(
-                      context)
-                      .add(
+                  BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
                     FetchAllCompletedAppointments(
                         date: formattedDate,
                         clinicId: controller.initialIndex!,
@@ -623,11 +579,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                   dayStructure: DayStructure.dayNumDayStr,
                   inactiveDayStyle: DayStyle(
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: kMainColor)),
-                    dayNumStyle:
-                    TextStyle(fontSize: 18.0, color: kTextColor),
+                    dayNumStyle: TextStyle(fontSize: 18.0, color: kTextColor),
                   ),
                   activeDayStyle: DayStyle(
                     borderRadius: 10,
@@ -677,19 +632,21 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                               physics: const ClampingScrollPhysics(),
                               dividerColor: kCardColor,
                               unselectedLabelColor: kTextColor,
-                              onTap: (d){
+                              onTap: (d) {
                                 log("${tabController.index}");
-                                if(tabController.index==0){
-                                  BlocProvider.of<GetAllAppointmentsBloc>(context)
+                                if (tabController.index == 0) {
+                                  BlocProvider.of<GetAllAppointmentsBloc>(
+                                          context)
                                       .add(
                                     FetchAllAppointments(
                                         date: controller.formatDate(),
                                         clinicId: controller.initialIndex!,
                                         scheduleType: controller.scheduleIndex),
                                   );
-                                }else{
-                                  BlocProvider.of<GetAllCompletedAppointmentsBloc>(
-                                      context)
+                                } else {
+                                  BlocProvider.of<
+                                              GetAllCompletedAppointmentsBloc>(
+                                          context)
                                       .add(
                                     FetchAllCompletedAppointments(
                                         date: controller.formatDate(),
@@ -802,6 +759,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                                                                       index]
                                                                   .id
                                                                   .toString(),
+                                                          firstIndex:
+                                                              getAllAppointmentsModel
+                                                                  .appointments![
+                                                                      index]
+                                                                  .firstIndexStatus!,
                                                         ),
                                                       ),
                                                     );
@@ -913,165 +875,164 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                                       .getAllCompletedAppointmentsModel;
                                 }
                                 return getAllCompletedAppointmentsModel
-                                    .appointments!.isEmpty
+                                        .appointments!.isEmpty
                                     ? const Center(
-                                    child: Image(
-                                        image: AssetImage(
-                                            "assets/images/No completed Appointment to day-01-01.png")))
+                                        child: Image(
+                                            image: AssetImage(
+                                                "assets/images/No completed Appointment to day-01-01.png")))
                                     : SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.w),
-                                        child: Text(
-                                          "Patient Count (${getAllCompletedAppointmentsModel.appointments!.length.toString()})",
-                                          style: const TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                      ),
-                                      ListView.separated(
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.zero,
-                                        physics:
-                                        const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                        getAllCompletedAppointmentsModel
-                                            .appointments!.length,
-                                        separatorBuilder: (BuildContext
-                                        context,
-                                            int index) =>
-                                        const VerticalSpacingWidget(
-                                            height: 3),
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding:
-                                            EdgeInsets.fromLTRB(
-                                                0, 5.h, 0, 2.h),
-                                            child: InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (ctx) =>
-                                                            GetAllCompletedAppointmentDetailsScreen(
-                                                              tokenId: getAllCompletedAppointmentsModel
-                                                                  .appointments![
-                                                              index]
-                                                                  .id
-                                                                  .toString(),
-                                                            )));
-                                              },
-                                              child:
-                                              AppointmentCardWidget(
-                                                tokenNumber:
-                                                getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .tokenNumber
-                                                    .toString(),
-                                                patientImage: getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .userImage ==
-                                                    null
-                                                    ? ""
-                                                    : getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .userImage
-                                                    .toString(),
-                                                patientName:
-                                                getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .patientName
-                                                    .toString(),
-                                                time:
-                                                getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .startingtime
-                                                    .toString(),
-                                                mediezyId: getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .mediezyPatientId ==
-                                                    null
-                                                    ? ""
-                                                    : getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .mediezyPatientId
-                                                    .toString(),
-                                                // mainSymptoms: "",
-                                                // mainSymptoms: getAllCompletedAppointmentsModel
-                                                //     .appointments![
-                                                // index]
-                                                //     .otherSymptoms!
-                                                //     .isEmpty
-                                                //     ? getAllCompletedAppointmentsModel
-                                                //     .appointments![
-                                                // index]
-                                                //     .mainSymptoms!
-                                                //     .mainsymptoms
-                                                //     .toString()
-                                                //     : getAllCompletedAppointmentsModel
-                                                //     .appointments![
-                                                // index]
-                                                //     .otherSymptoms!
-                                                //     .first
-                                                //     .symtoms
-                                                //     .toString(),
-
-                                                mainSymptoms: getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .mainSymptoms ==
-                                                    null
-                                                    ? getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .otherSymptoms!
-                                                    .first
-                                                    .symtoms
-                                                    .toString()
-                                                    : getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .mainSymptoms!
-                                                    .mainsymptoms
-                                                    .toString(),
-                                                onlineStatus:
-                                                getAllCompletedAppointmentsModel
-                                                    .appointments![
-                                                index]
-                                                    .onlineStatus
-                                                    .toString(),
-                                                reachedStatus: "",
-                                                // reachedStatus: getAllCompletedAppointmentsModel
-                                                //                 .appointments![
-                                                //                     index]
-                                                //                 .isReached ==
-                                                //             1 ||
-                                                //         getAllCompletedAppointmentsModel
-                                                //                 .appointments![
-                                                //                     index]
-                                                //                 .isReached ==
-                                                //             null
-                                                //     ? ""
-                                                //     : "",
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.w),
+                                              child: Text(
+                                                "Patient Count (${getAllCompletedAppointmentsModel.appointments!.length.toString()})",
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                            ListView.separated(
+                                              shrinkWrap: true,
+                                              padding: EdgeInsets.zero,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount:
+                                                  getAllCompletedAppointmentsModel
+                                                      .appointments!.length,
+                                              separatorBuilder: (BuildContext
+                                                          context,
+                                                      int index) =>
+                                                  const VerticalSpacingWidget(
+                                                      height: 3),
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 5.h, 0, 2.h),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (ctx) =>
+                                                                  GetAllCompletedAppointmentDetailsScreen(
+                                                                    tokenId: getAllCompletedAppointmentsModel
+                                                                        .appointments![
+                                                                            index]
+                                                                        .id
+                                                                        .toString(),
+                                                                  )));
+                                                    },
+                                                    child:
+                                                        AppointmentCardWidget(
+                                                      tokenNumber:
+                                                          getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .tokenNumber
+                                                              .toString(),
+                                                      patientImage: getAllCompletedAppointmentsModel
+                                                                  .appointments![
+                                                                      index]
+                                                                  .userImage ==
+                                                              null
+                                                          ? ""
+                                                          : getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .userImage
+                                                              .toString(),
+                                                      patientName:
+                                                          getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .patientName
+                                                              .toString(),
+                                                      time:
+                                                          getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .startingtime
+                                                              .toString(),
+                                                      mediezyId: getAllCompletedAppointmentsModel
+                                                                  .appointments![
+                                                                      index]
+                                                                  .mediezyPatientId ==
+                                                              null
+                                                          ? ""
+                                                          : getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .mediezyPatientId
+                                                              .toString(),
+                                                      // mainSymptoms: "",
+                                                      // mainSymptoms: getAllCompletedAppointmentsModel
+                                                      //     .appointments![
+                                                      // index]
+                                                      //     .otherSymptoms!
+                                                      //     .isEmpty
+                                                      //     ? getAllCompletedAppointmentsModel
+                                                      //     .appointments![
+                                                      // index]
+                                                      //     .mainSymptoms!
+                                                      //     .mainsymptoms
+                                                      //     .toString()
+                                                      //     : getAllCompletedAppointmentsModel
+                                                      //     .appointments![
+                                                      // index]
+                                                      //     .otherSymptoms!
+                                                      //     .first
+                                                      //     .symtoms
+                                                      //     .toString(),
+
+                                                      mainSymptoms: getAllCompletedAppointmentsModel
+                                                                  .appointments![
+                                                                      index]
+                                                                  .mainSymptoms ==
+                                                              null
+                                                          ? getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .otherSymptoms!
+                                                              .first
+                                                              .symtoms
+                                                              .toString()
+                                                          : getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .mainSymptoms!
+                                                              .mainsymptoms
+                                                              .toString(),
+                                                      onlineStatus:
+                                                          getAllCompletedAppointmentsModel
+                                                              .appointments![
+                                                                  index]
+                                                              .onlineStatus
+                                                              .toString(),
+                                                      reachedStatus: "",
+                                                      // reachedStatus: getAllCompletedAppointmentsModel
+                                                      //                 .appointments![
+                                                      //                     index]
+                                                      //                 .isReached ==
+                                                      //             1 ||
+                                                      //         getAllCompletedAppointmentsModel
+                                                      //                 .appointments![
+                                                      //                     index]
+                                                      //                 .isReached ==
+                                                      //             null
+                                                      //     ? ""
+                                                      //     : "",
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
                               }),
                             ],
                           ),

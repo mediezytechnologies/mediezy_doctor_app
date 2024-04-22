@@ -97,7 +97,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                 fontSize: 15.sp, color: kSubTextColor),
                           ),
                           CircleAvatar(
-                            backgroundColor: const Color(0xFF56B89C),
+                            backgroundColor: kMainColor,
                             radius: 16,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
@@ -353,7 +353,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                 width: 200.w,
                                 // color: kMainColor,
                                 image: const AssetImage(
-                                    "assets/images/You ahve no patients-01.png"))),
+                                    "assets/images/You ahve no patients-01.png"),color: kMainColor,)),
                       );
                     }
                     return Column(

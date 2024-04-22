@@ -29,6 +29,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/PatientsGet/patient
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/ScanReport/scan_report_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/TimeLine/time_line_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/completedAppointmentsHR/completed_appointments_health_record_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/get_all_vitals/get_all_vitals_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/AddFavouritesLab/add_favourites_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllFavouriteLab/get_all_favourite_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllLab/get_all_lab_bloc.dart';
@@ -116,5 +117,6 @@ class AppBBlocProviders{
     BlocProvider(create: (context)=> DropdownBloc()),
     BlocProvider(create: (context)=> SelectedClinicBloc()),
     BlocProvider(create: (context)=> LeaveCheckBloc()),
+    BlocProvider(create: (context)=> GetAllVitalsBloc()),
   ];
 }

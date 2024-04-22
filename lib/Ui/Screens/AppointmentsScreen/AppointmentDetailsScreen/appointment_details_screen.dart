@@ -44,14 +44,17 @@ class AppointmentDetailsScreen extends StatefulWidget {
     required this.appointmentsDetails,
     required this.position,
     //mahesh//====
-     this.length,
+    this.length,
+    required this.firstIndex,
   }) : super(key: key);
 
   final String tokenId;
   final List<Appointments> appointmentsDetails;
   final int position;
+
   //mahesh//====
   final int? length;
+  final int firstIndex;
 
   @override
   State<AppointmentDetailsScreen> createState() =>
@@ -113,8 +116,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   bool isFirstCheckIn = true;
 
 //mahesh//====
-  int? balanceAppoiment ;
-
+  int? balanceAppoiment;
 
   void handleDropValueChanged(String newValue) {
     // Handle the value here in your first screen
@@ -140,10 +142,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         ValueNotifier(medicalStoreValues.first.laboratory!);
     dropValueLabNotifier = ValueNotifier(labValues.first.laboratory!);
     dropValueScanningNotifier = ValueNotifier(scanningValues.first.laboratory!);
-   
+
     setState(() {
       // balanceAppoiment=widget.length!-1;
-      balanceAppoiment=widget.length!-1- widget.position;
+      balanceAppoiment = widget.length! - 1 - widget.position;
     });
 
     // dropValueMedicalStoreNotifier =
@@ -242,10 +244,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           .toString(),
                                     ),
                                   );
-                             setState(() {
-                                    balanceAppoiment =widget.length!-currentPosition-1;
+                                  setState(() {
+                                    balanceAppoiment =
+                                        widget.length! - currentPosition - 1;
                                     log("pos-- $currentPosition");
-                             });
+                                  });
                                 } else {
                                   // ignore: void_checks
                                   return GeneralServices.instance
@@ -289,10 +292,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           .toString(),
                                     ),
                                   );
-                                   setState(() {
-                                     balanceAppoiment =widget.length!-1-currentPosition;
+                                  setState(() {
+                                    balanceAppoiment =
+                                        widget.length! - 1 - currentPosition;
                                     log("pos-- $currentPosition");
-                             });
+                                  });
                                 } else {
                                   GeneralServices.instance.showToastMessage(
                                       "There are no more appointments");
@@ -314,44 +318,30 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         width: 120.w,
                         decoration: BoxDecoration(
                           color: kMainColor,
-                          borderRadius:
-                          BorderRadius.circular(
-                              5),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         child: Padding(
-                          padding:
-                          EdgeInsets.symmetric(
-                              horizontal: 5.w),
+                          padding: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
-                                padding:
-                                EdgeInsets.only(
-                                    right: 5.w),
+                                padding: EdgeInsets.only(right: 5.w),
                                 child: Text(
                                   "Pending",
                                   style: TextStyle(
                                     fontSize: 15.sp,
                                     color: kCardColor,
-                                    fontWeight:
-                                    FontWeight
-                                        .bold,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                               Container(
                                 height: 25.h,
                                 width: 28.w,
-                                decoration:
-                                BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: kCardColor,
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(
-                                      4),
+                                  borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Center(
                                   child: Text(
@@ -359,11 +349,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     "$balanceAppoiment",
                                     style: TextStyle(
                                       fontSize: 20.sp,
-                                      color:
-                                      kTextColor,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
+                                      color: kTextColor,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -382,7 +369,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 if (appointmentDetailsPageModel
                                         .bookingData!.isCheckedin !=
                                     1) {
-                                  if (isFirstCheckIn) {
+                                  if (widget
+                                          .appointmentsDetails[currentPosition]
+                                          .firstIndexStatus ==
+                                      1) {
                                     // Show alert dialog only for the first token's check-in
                                     GeneralServices.instance.appCloseDialogue(
                                         context,
@@ -478,15 +468,19 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           : Container(),
                       const VerticalSpacingWidget(height: 10),
                       VitalsWidget(
-                          tokenId: appointmentDetailsPageModel.bookingData!.tokenId.toString(),
+                          tokenId: appointmentDetailsPageModel
+                              .bookingData!.tokenId
+                              .toString(),
                           appointmentDetailsPageModel:
                               appointmentDetailsPageModel),
                       // }, child: Text("data")),
                       MedicineWidget(
-                        tokenId: appointmentDetailsPageModel.bookingData!.tokenId.toString(),
+                        tokenId: appointmentDetailsPageModel
+                            .bookingData!.tokenId
+                            .toString(),
                         appointmentDetailsPageModel:
                             appointmentDetailsPageModel,
-                      medicalStoreId: dropValueMedicalStore,
+                        medicalStoreId: dropValueMedicalStore,
                         // medicalStoreId: ,
                       ),
                       // const VerticalSpacingWidget(height: 10),
@@ -589,11 +583,14 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         builder: (context, state) {
                           if (state is GetAllFavouriteMedicalStoreLoaded) {
                             final getAllFavouriteMedicalStoreModel =
-                                BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
+                                BlocProvider.of<
+                                            GetAllFavouriteMedicalStoreBloc>(
+                                        context)
                                     .getAllFavouriteMedicalStoresModel;
                             if (medicalStoreValues.length <= 1) {
                               medicalStoreValues.addAll(
-                                  getAllFavouriteMedicalStoreModel.favoritemedicalshop!);
+                                  getAllFavouriteMedicalStoreModel
+                                      .favoritemedicalshop!);
                             }
                             if (getAllFavouriteMedicalStoreModel
                                 .favoritemedicalshop!.isEmpty) {
@@ -609,38 +606,47 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                               decoration: BoxDecoration(
                                   color: kCardColor,
                                   borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: const Color(0xFF9C9C9C))),
+                                  border: Border.all(
+                                      color: const Color(0xFF9C9C9C))),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                                 child: Center(
                                   child: ValueListenableBuilder(
-                                    valueListenable: dropValueMedicalStoreNotifier,
-                                    builder: (BuildContext context, String dropValue1, _) {
+                                    valueListenable:
+                                        dropValueMedicalStoreNotifier,
+                                    builder: (BuildContext context,
+                                        String dropValue1, _) {
                                       return DropdownButtonFormField(
                                         iconEnabledColor: kMainColor,
                                         decoration:
-                                        const InputDecoration.collapsed(hintText: ''),
+                                            const InputDecoration.collapsed(
+                                                hintText: ''),
                                         value: dropValue1,
                                         style: TextStyle(
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: kTextColor),
-                                        icon: const Icon(Icons.keyboard_arrow_down),
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
                                         onChanged: (String? value) {
                                           dropValue1 = value!;
-                                          dropValueMedicalStoreNotifier.value = value;
+                                          dropValueMedicalStoreNotifier.value =
+                                              value;
                                           medicalStoreId = medicalStoreValues
-                                              .where((element) =>
-                                              element.laboratory!.contains(value))
+                                              .where((element) => element
+                                                  .laboratory!
+                                                  .contains(value))
                                               .toList();
                                           // widget.onDropValueChanged(dropValueMedicalStore);
                                           (">>>>>>>>>$medicalStoreId");
                                         },
                                         items: medicalStoreValues
-                                            .map<DropdownMenuItem<String>>((value) {
+                                            .map<DropdownMenuItem<String>>(
+                                                (value) {
                                           return DropdownMenuItem<String>(
                                             onTap: () {
-                                              dropValueMedicalStore = value.id.toString();
+                                              dropValueMedicalStore =
+                                                  value.id.toString();
                                               print(
                                                   ".........................$dropValueMedicalStore");
                                             },
@@ -657,6 +663,27 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           }
                           return Container();
                         },
+                      ),
+                      const VerticalSpacingWidget(height: 5),
+                      SizedBox(
+                        width: double.infinity,
+                        child: TextFormField(
+                          cursorColor: kMainColor,
+                          controller: labTestController,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(
+                                fontSize: 13.sp, color: kSubTextColor),
+                            hintText: "Lab test",
+                            filled: true,
+                            fillColor: kCardColor,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
                       ),
                       const VerticalSpacingWidget(height: 5),
                       Text(
@@ -744,18 +771,19 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           return Container();
                         },
                       ),
-                      const VerticalSpacingWidget(height: 10),
+                      // const VerticalSpacingWidget(height: 10),
+                      const VerticalSpacingWidget(height: 5),
                       SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           cursorColor: kMainColor,
-                          controller: labTestController,
+                          controller: scanTestController,
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             hintStyle: TextStyle(
                                 fontSize: 13.sp, color: kSubTextColor),
-                            hintText: "Lab test",
+                            hintText: "Scan test",
                             filled: true,
                             fillColor: kCardColor,
                             border: OutlineInputBorder(
@@ -765,7 +793,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           ),
                         ),
                       ),
-                      // const VerticalSpacingWidget(height: 10),
                       const VerticalSpacingWidget(height: 5),
                       Text(
                         "Select scanning centre",
@@ -853,27 +880,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           return Container();
                         },
                       ),
-                      const VerticalSpacingWidget(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextFormField(
-                          cursorColor: kMainColor,
-                          controller: scanTestController,
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintStyle: TextStyle(
-                                fontSize: 13.sp, color: kSubTextColor),
-                            hintText: "Scan test",
-                            filled: true,
-                            fillColor: kCardColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                      ),
+
                       const VerticalSpacingWidget(height: 10),
                       //! add note
                       Text(
@@ -1039,86 +1046,76 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   SizedBox nameCard() {
     return SizedBox(
-                          width: 140.w,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                appointmentDetailsPageModel
-                                    .bookingData!.patientName
-                                    .toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.sp),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              // const VerticalSpacingWidget(height: 10),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Token Number : ",
-                                    style: TextStyle(
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
-                                  ),
-                                  Text(
-                                    appointmentDetailsPageModel
-                                        .bookingData!.tokenNumber!,
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                              appointmentDetailsPageModel
-                                          .bookingData!.mediezyPatientId ==
-                                      null
-                                  ? Container()
-                                  : Row(
-                                      children: [
-                                        Text(
-                                          "Patient Id : ",
-                                          style: TextStyle(
-                                              fontSize: 10.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: kSubTextColor),
-                                        ),
-                                        Text(
-                                          appointmentDetailsPageModel
-                                              .bookingData!.mediezyPatientId!,
-                                          style: TextStyle(
-                                            fontSize: 10.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                              // const VerticalSpacingWidget(height: 10),
-                              // appointmentDetailsPageModel
-                              //     .bookingData!.patient=="null"?Container():
-                              appointmentDetailsPageModel
-                                          .bookingData!.patient ==
-                                      null
-                                  ? Container()
-                                  : Text(
-                                      appointmentDetailsPageModel
-                                          .bookingData!.patient!.age
-                                          .toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        );
+      width: 140.w,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            appointmentDetailsPageModel.bookingData!.patientName.toString(),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          // const VerticalSpacingWidget(height: 10),
+          Row(
+            children: [
+              Text(
+                "Token Number : ",
+                style: TextStyle(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                    color: kSubTextColor),
+              ),
+              Text(
+                appointmentDetailsPageModel.bookingData!.tokenNumber!,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          appointmentDetailsPageModel.bookingData!.mediezyPatientId == null
+              ? Container()
+              : Row(
+                  children: [
+                    Text(
+                      "Patient Id : ",
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w400,
+                          color: kSubTextColor),
+                    ),
+                    Text(
+                      appointmentDetailsPageModel
+                          .bookingData!.mediezyPatientId!,
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+          // const VerticalSpacingWidget(height: 10),
+          // appointmentDetailsPageModel
+          //     .bookingData!.patient=="null"?Container():
+          appointmentDetailsPageModel.bookingData!.patient == null
+              ? Container()
+              : Text(
+                  appointmentDetailsPageModel.bookingData!.patient!.age
+                      .toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                ),
+        ],
+      ),
+    );
   }
 
   @override

@@ -4,13 +4,13 @@ import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import '../../../../Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
-import '../../../../Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,15 +44,13 @@ class _SplashScreenState extends State<SplashScreen> {
             clinicId: controller.initialIndex!,
             scheduleType: controller.scheduleIndex,
           ));
-          // selectedValue.toString()
-
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
             scheduleType: controller.scheduleIndex,
           ));
-          log("mssg working ===== splash ");
+          log("msg working ===== splash ");
         }
       },
     );

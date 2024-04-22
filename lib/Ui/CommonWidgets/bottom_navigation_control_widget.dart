@@ -116,21 +116,12 @@ class _BottomNavigationControlWidgetState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset("assets/images/No internet.jpg"),
-                  const VerticalSpacingWidget(height: 10),
-                  const Text(
-                    "Sorry! Something seems wrong",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   const VerticalSpacingWidget(height: 5),
                   Text(
                     "Please check your internet connection",
                     style: TextStyle(
-                      fontSize: 15.sp,
-                      color: kSubTextColor,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
