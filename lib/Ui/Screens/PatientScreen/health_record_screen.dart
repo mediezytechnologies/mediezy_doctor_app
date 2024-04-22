@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/BaseSpaceExpandedTabBar.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/all_health_record_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/completed_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/discharge_summary_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/lab_report_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/prescription_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/scanning_report_screen.dart';
+
+class HealthRecordScreen extends StatefulWidget {
+  const HealthRecordScreen(
+      {super.key, required this.patientId, required this.userId});
+
+  final String patientId;
+  final String userId;
+
+  @override
+  State<HealthRecordScreen> createState() => _HealthRecordScreenState();
+}
+
+class _HealthRecordScreenState extends State<HealthRecordScreen>
+    with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    // final mWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: kCardColor,
+      appBar: AppBar(
+        backgroundColor: kCardColor,
+        title: const Text("Health Record"),
+        centerTitle: true,
+      ),
+      body: BaseSpaceExpandedTabBar(
+        tabs: const [
+          Tab(height: 35, text: 'All'),
+          Tab(height: 35, text: 'Completed'),
+          Tab(height: 35, text: 'Prescription'),
+          Tab(height: 35, text: 'Lab report'),
+          Tab(height: 35, text: 'Scan report'),
+          Tab(height: 35, text: 'Discharge summary'),
+        ],
+        tabViews: [
+          AllHealthRecordScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          ),
+          CompletedScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          ),
+          PrescriptionScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          ),
+          LabReportScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          ),
+          ScanningReportScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          ),
+          DischargeSummaryScreen(
+            patientId: widget.patientId,
+            userId: widget.userId,
+          )
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,35 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart';
+import 'package:mediezy_doctor/Model/CustomSchedule/get_all_break_model.dart';
+import 'package:mediezy_doctor/Model/CustomSchedule/get_all_early_model.dart';
+import 'package:mediezy_doctor/Model/CustomSchedule/get_all_late_model.dart';
+import 'package:mediezy_doctor/Model/MessageShowModel/message_show_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class ContactUsApi {
+  ApiClient apiClient = ApiClient();
+
+  Future<String> addContactUs({
+    required String clinicIdkdsfjl,
+    required String date,
+    required String scheduleType,
+    required String timeDuration,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+
+    String basePath =
+        "getContactUsDetails";
+
+        final body = {
+          
+        }
+
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    return response.body;
+  }
+}

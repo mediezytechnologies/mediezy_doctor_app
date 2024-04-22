@@ -1,0 +1,56 @@
+
+# hospital app
+
+* department screen ui = done
+* home screens add new images = done
+
+
+# user app
+
+* token booking screen api change done
+* api rewriting in the folders
+
+
+Doctor App :-
+
+* Late section schedule 2,schedule 3 selected dropdown issue solved
+* Early section schedule 2,schedule 3 selected dropdown issue solved
+* Late section Reset button change to Submit done
+* Early section Reset button change to Submit done
+* Break section Reset button change to Submit done
+* Delete token screen appBar name change to Remove tokens
+* Appointment details screen select lab dropdown button bad state error solved
+* Late section delete late schedule added ui done
+* Early section delete early schedule added ui done
+* Break section delete break schedule added ui done
+* Late section successfull and error time popup message ui done
+* Early section successfull and error time popup message ui done
+* Break section successfull and error time popup message ui done
+* Schedule token screen successfull and error time popup message ui done
+* Remove token screen successfull and error time popup message ui done
+* Leave Schedule screen successfull and error time popup message ui done
+* Suggestion screen successfull and error time popup message ui done
+* Edit profile screen successfull and error time popup message ui done
+
+
+
+
+
+
+
+* Live token screen schedule base get patient details api done
+* appointment screen schedule base get datas api done
+
+
+
+
+# pending
+
+
+* Booking screen get tokens edit with schedule 1,Schedule 2, Schedule 3 api done
+* Reservation screen get tokens 
+* delete screen get token 
+* token screen add patient id and image 
+* patient screen add patient id and image 
+* search patient screen add patient id and image 
+

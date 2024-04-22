@@ -1,0 +1,153 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Model/Labs/get_all_labs_model.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllScanningCentre/get_all_scanning_centre_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllLab/get_all_lab_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/get_lab_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
+import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/Labs/search_lab_screen.dart';
+
+class LabScreen extends StatefulWidget {
+  const LabScreen({super.key});
+
+  @override
+  State<LabScreen> createState() => _LabScreenState();
+}
+
+class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
+  late GetAllLabsModel getAllLabsModel;
+  late TabController tabController;
+
+  @override
+  void initState() {
+    BlocProvider.of<GetAllLabBloc>(context).add(FetchGetAllLabs());
+    BlocProvider.of<GetAllScanningCentreBloc>(context)
+        .add(FetchGetAllScanningCentre());
+    tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Lab and Scan"),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => const BottomNavigationControlWidget()));
+            },
+            icon: const Icon(Icons.arrow_back)),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<GetAllLabBloc, GetAllLabState>(
+              builder: (context, state) {
+                if (state is GetAllLabLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: kMainColor,
+                    ),
+                  );
+                }
+                if (state is GetAllLabError) {
+                  return const Center(
+                    child: Text("Something Went Wrong"),
+                  );
+                }
+                if (state is GetAllLabLoaded) {
+                  getAllLabsModel =
+                      BlocProvider.of<GetAllLabBloc>(context).getAllLabsModel;
+
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SearchScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 40.h,
+                          width: 340.w,
+                          decoration: BoxDecoration(
+                            color: kCardColor,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 10.w),
+                                child: Text(
+                                  "Search lab and scanning centre",
+                                  style: TextStyle(
+                                      fontSize: 15.sp, color: kSubTextColor),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 10.w),
+                                child: CircleAvatar(
+                                  backgroundColor: const Color(0xFF56B89C),
+                                  radius: 16,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Icon(
+                                      IconlyLight.search,
+                                      color: kCardColor,
+                                      size: 16.sp,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: getAllLabsModel.laboratory!.length,
+                          itemBuilder: (context, index) {
+                            return GetLabWidget(
+                              labName: getAllLabsModel
+                                  .laboratory![index].laboratory
+                                  .toString(),
+                              imageUrl: getAllLabsModel
+                                  .laboratory![index].laboratoryimage
+                                  .toString(),
+                              mobileNo: getAllLabsModel
+                                  .laboratory![index].mobileNo
+                                  .toString(),
+                              location: getAllLabsModel
+                                  .laboratory![index].location
+                                  .toString(),
+                              labId: getAllLabsModel.laboratory![index].id
+                                  .toString(),
+                              favouritesStatus: getAllLabsModel
+                                  .laboratory![index].favoriteStatus
+                                  .toString(),
+                            );
+                          }),
+                    ],
+                  );
+                }
+                return Container();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
