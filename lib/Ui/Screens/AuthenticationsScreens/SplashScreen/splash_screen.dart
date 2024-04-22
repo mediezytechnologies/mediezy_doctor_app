@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
               .add(FetchAllAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex,
+            scheduleType: controller.scheduleIndex.value,
           ));
           // selectedValue.toString()
 
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex,
+            scheduleType: controller.scheduleIndex.value,
           ));
           log("mssg working ===== splash ");
         }

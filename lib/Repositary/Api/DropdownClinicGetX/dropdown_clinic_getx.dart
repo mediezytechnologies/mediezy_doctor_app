@@ -44,7 +44,7 @@ class HospitalService {
 class HospitalController extends GetxController {
   RxBool loding = true.obs;
   String? initialIndex;
-  String scheduleIndex ='0';
+  var scheduleIndex ='0'.obs;
   RxList<HospitalDetails>? hospitalDetails = <HospitalDetails>[].obs;
 
   Future<List<HospitalDetails>?> gethospitalService() async {
@@ -86,7 +86,7 @@ class HospitalController extends GetxController {
       initialIndex = value;
     //  update();
     } else if (checkingValue == '0') {
-      scheduleIndex = value;
+      scheduleIndex.value= value;
       log("${scheduleIndex.toString()}");
        update();
     }

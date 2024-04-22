@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,7 +24,47 @@ class GeneralServices {
   //* to close the app
   appCloseDialogue(
       BuildContext context, String title, void Function()? yesFunction) {
-    showDialog(
+       Platform.isIOS
+        ? showCupertinoDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: ((context) {
+              return CupertinoAlertDialog(
+                content: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: kTextColor),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text(
+                      "No",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    onPressed: yesFunction,
+                    child: Text(
+                      "Yes",
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.red),
+                    ),
+                  )
+                ],
+              );
+            }),
+          )
+        :  showDialog(
       barrierDismissible: false,
       context: context,
       builder: ((context) {
@@ -66,7 +109,35 @@ class GeneralServices {
 
   //*show dialogue
   showDialogue(BuildContext context, String title) {
-    showDialog(
+    Platform.isIOS
+        ? showCupertinoDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              content: Text(
+                title,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: kTextColor),
+              ),
+              actions: [
+                TextButton(
+                  child: const Text(
+                    "Ok",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          )
+        :  showDialog(
       barrierDismissible: false,
       context: context,
       builder: ((context) {
@@ -102,7 +173,25 @@ class GeneralServices {
   //successfull pop up
 
   void showSuccessMessage(BuildContext context, String title) {
-    showDialog(
+    Platform.isIOS
+        ? showCupertinoDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              title: Align(
+                alignment: Alignment.center,
+                child: Lottie.asset("assets/animations/confirm booking.json",
+                    height: 120.h),
+              ),
+                content: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+             
+            ),
+          )
+        :   showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -124,7 +213,26 @@ class GeneralServices {
   //error pop up
 
   void showErrorMessage(BuildContext context, String title) {
-    showDialog(
+  Platform.isIOS
+        ? showCupertinoDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+               title: Align(
+            alignment: Alignment.center,
+            child: Lottie.asset(
+                "assets/animations/Animation - 1708083154204.json",
+                height: 120.h),
+          ),
+          content: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+              
+            ),
+          )
+        :    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

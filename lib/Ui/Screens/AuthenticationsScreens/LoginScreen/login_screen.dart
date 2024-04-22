@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   .add(FetchAllAppointments(
                 date: controller.formatDate(),
                 clinicId: controller.initialIndex!,
-                scheduleType: controller.scheduleIndex,
+                scheduleType: controller.scheduleIndex.value,
               )));
 
           // selectedValue.toString()
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex,
+            scheduleType: controller.scheduleIndex.value,
           ));
           //    Future.delayed(Duration(seconds: 2)).then((value) => controller.gethospitalService());
         }

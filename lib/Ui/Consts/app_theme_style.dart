@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
-ThemeData appThemeStyle() {
+ThemeData appThemeStyle(BuildContext context) {
   return ThemeData(
     scaffoldBackgroundColor: kScaffoldColor,
-    //* appbar
+     textTheme: GoogleFonts.robotoTextTheme(
+      Theme.of(context).textTheme,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: kScaffoldColor,
       iconTheme: IconThemeData(color: kMainColor),

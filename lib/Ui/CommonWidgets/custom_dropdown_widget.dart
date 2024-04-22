@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class CustomDropDown extends StatelessWidget {
+  
   const CustomDropDown(
       {super.key,
       this.value,
@@ -17,8 +18,9 @@ class CustomDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      height: 40.h,
+      height:size.height*0.055,
       width: width,
       decoration: BoxDecoration(
           color: kCardColor,
