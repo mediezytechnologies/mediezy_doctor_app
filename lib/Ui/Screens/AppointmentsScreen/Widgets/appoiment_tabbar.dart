@@ -187,6 +187,10 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                                       MaterialPageRoute(
                                                         builder: (ctx) =>
                                                             AppointmentDetailsScreen(
+                                                              firstIndex:  getAllAppointmentsModel
+                                                                  .appointments![
+                                                                      index]
+                                                                  .firstIndexStatus!,
                                                           length:
                                                               getAllAppointmentsModel
                                                                   .appointments!
