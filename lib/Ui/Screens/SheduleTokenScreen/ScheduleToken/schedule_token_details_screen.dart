@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,7 @@ class _ScheduleTokenDetailsScreenState
   final FocusNode timeDurationFocusController = FocusNode();
 
   DateTime startSchedule1Date = DateTime.now();
+  
 
   DateTime selectedDate11 = DateTime.now();
 
@@ -430,7 +432,19 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
+                                        Platform.isIOS
+                                ? GeneralServices.instance.selectIosDate(
+                                    context: context,
+                                    date: startSchedule1Date,
+                                    onDateSelected: (DateTime picked) async {
+                                      setState(() {
+                                        startSchedule1Date = picked;
+                                      });
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                    },
+                                  )
+                                :           GeneralServices.instance
                                                       .selectDate(
                                                     context: context,
                                                     date: startSchedule1Date,

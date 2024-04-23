@@ -8,6 +8,7 @@ import 'dart:typed_data';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -493,6 +494,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                       // const VerticalSpacingWidget(height: 5),
                       //! upload attachments
                       Card(
+                        color: Colors.white,
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
