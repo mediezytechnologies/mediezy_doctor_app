@@ -34,7 +34,6 @@ class _ScheduleTokenDetailsScreenState
   final FocusNode timeDurationFocusController = FocusNode();
 
   DateTime startSchedule1Date = DateTime.now();
-  
 
   DateTime selectedDate11 = DateTime.now();
 
@@ -55,11 +54,6 @@ class _ScheduleTokenDetailsScreenState
     });
     return selectedDays;
   }
-
-
-
-
-
 
   int tokenCount = 0;
   List<String> tokenDetails = [];
@@ -130,11 +124,11 @@ class _ScheduleTokenDetailsScreenState
     fetchSelectedStartingTime();
     fetchSelectedEndingTime();
 
-
     setState(() {
       _days1.forEach((day) {
         if (day != 'Sunday') {
-          checkboxData[day] = true; // Set Monday to Saturday as initially selected
+          checkboxData[day] =
+              true; // Set Monday to Saturday as initially selected
         }
       });
     });
@@ -147,6 +141,7 @@ class _ScheduleTokenDetailsScreenState
     });
     super.initState();
   }
+
   void _handleCheckboxChange(String label, bool newValue) {
     setState(() {
       checkboxData[label] = newValue;
@@ -402,7 +397,8 @@ class _ScheduleTokenDetailsScreenState
                                       ),
                                     ),
                                   ),
-                                  child: Builder(builder: (BuildContext context) {
+                                  child:
+                                      Builder(builder: (BuildContext context) {
                                     return InkWell(
                                       onTap: () {
                                         GeneralServices.instance.selectDate(
@@ -412,13 +408,15 @@ class _ScheduleTokenDetailsScreenState
                                             setState(() {
                                               startSchedule1Date = picked;
                                               // Update end date to be 30 days after the selected start date
-                                              endScheduleDate = picked.add(const Duration(days: 30));
+                                              endScheduleDate = picked.add(
+                                                  const Duration(days: 30));
                                             });
                                           },
                                         );
                                       },
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
@@ -431,29 +429,49 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                        Platform.isIOS
-                                ? GeneralServices.instance.selectIosDate(
-                                    context: context,
-                                    date: startSchedule1Date,
-                                    onDateSelected: (DateTime picked) async {
-                                      setState(() {
-                                        startSchedule1Date = picked;
-                                      });
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  )
-                                :           GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: startSchedule1Date,
-                                                    onDateSelected: (DateTime picked) {
-                                                      setState(() {
-                                                        startSchedule1Date = picked;
-                                                        endScheduleDate = picked.add(const Duration(days: 30));
-                                                      });
-                                                    },
-                                                  );
+                                                  Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date:
+                                                              startSchedule1Date,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              startSchedule1Date =
+                                                                  picked;
+                                                              endScheduleDate =
+                                                                  picked.add(
+                                                                      const Duration(
+                                                                          days:
+                                                                              30));
+                                                            });
+                                                            // FocusScope.of(
+                                                            //         context)
+                                                            //     .requestFocus(
+                                                            //         FocusNode());
+                                                          },
+                                                        )
+                                                      : GeneralServices.instance
+                                                          .selectDate(
+                                                          context: context,
+                                                          date:
+                                                              startSchedule1Date,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              startSchedule1Date =
+                                                                  picked;
+                                                              endScheduleDate =
+                                                                  picked.add(
+                                                                      const Duration(
+                                                                          days:
+                                                                              30));
+                                                            });
+                                                          },
+                                                        );
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
@@ -463,7 +481,8 @@ class _ScheduleTokenDetailsScreenState
                                             ],
                                           ),
                                           Text(
-                                            DateFormat("dd-MM-yyy").format(startSchedule1Date),
+                                            DateFormat("dd-MM-yyy")
+                                                .format(startSchedule1Date),
                                             style: TextStyle(
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w600,
@@ -484,7 +503,8 @@ class _ScheduleTokenDetailsScreenState
                                       ),
                                     ),
                                   ),
-                                  child: Builder(builder: (BuildContext context) {
+                                  child:
+                                      Builder(builder: (BuildContext context) {
                                     return InkWell(
                                       onTap: () async {
                                         GeneralServices.instance.selectDate(
@@ -498,7 +518,8 @@ class _ScheduleTokenDetailsScreenState
                                         );
                                       },
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
@@ -511,15 +532,33 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance.selectDate(
-                                                    context: context,
-                                                    date: endScheduleDate,
-                                                    onDateSelected: (DateTime picked) {
-                                                      setState(() {
-                                                        endScheduleDate = picked;
-                                                      });
-                                                    },
-                                                  );
+                                                  Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: endScheduleDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              endScheduleDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        )
+                                                      : GeneralServices.instance
+                                                          .selectDate(
+                                                          context: context,
+                                                          date: endScheduleDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              endScheduleDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        );
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
@@ -529,7 +568,8 @@ class _ScheduleTokenDetailsScreenState
                                             ],
                                           ),
                                           Text(
-                                            DateFormat('dd-MM-yyy').format(endScheduleDate),
+                                            DateFormat('dd-MM-yyy')
+                                                .format(endScheduleDate),
                                             // Display the selected and formatted date
                                             style: TextStyle(
                                                 fontSize: 15.sp,
@@ -864,11 +904,11 @@ class _ScheduleTokenDetailsScreenState
                               child: SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * .12,
-                                child:
-                                GridView.builder(
+                                child: GridView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   padding: EdgeInsets.zero,
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
                                     mainAxisSpacing: 10.0,
                                     crossAxisSpacing: 0.0,
@@ -876,14 +916,15 @@ class _ScheduleTokenDetailsScreenState
                                   ),
                                   itemCount: _days1.length,
                                   itemBuilder: (context, index) {
-
                                     // log("$_selectedDays1");
                                     // log("$checkboxData");
                                     log("$selectedDays");
                                     final day = _days1[index];
-                                    final isChecked = checkboxData[day] ?? false;
+                                    final isChecked =
+                                        checkboxData[day] ?? false;
                                     return GestureDetector(
-                                      onTap: () => _handleCheckboxChange(day, !isChecked),
+                                      onTap: () => _handleCheckboxChange(
+                                          day, !isChecked),
                                       child: Row(
                                         children: [
                                           SizedBox(
@@ -891,10 +932,13 @@ class _ScheduleTokenDetailsScreenState
                                             child: Checkbox(
                                               activeColor: kMainColor,
                                               value: isChecked,
-                                              onChanged: (value) => _handleCheckboxChange(day, value ?? false),
+                                              onChanged: (value) =>
+                                                  _handleCheckboxChange(
+                                                      day, value ?? false),
                                             ),
                                           ),
-                                          const HorizontalSpacingWidget(width: 10),
+                                          const HorizontalSpacingWidget(
+                                              width: 10),
                                           SizedBox(
                                             width: 68.w,
                                             child: Text(
@@ -1106,7 +1150,6 @@ class _ScheduleTokenDetailsScreenState
     );
   }
 
-
   // checkBox
 
   Future<void> saveCheckboxData(String label, bool isChecked) async {
@@ -1135,7 +1178,6 @@ class _ScheduleTokenDetailsScreenState
 
     return checkboxData;
   }
-
 
   //! format time
   String formatTimeOfDay(TimeOfDay timeOfDay) {

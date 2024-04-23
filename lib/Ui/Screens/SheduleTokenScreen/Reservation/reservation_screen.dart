@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -137,15 +138,20 @@ class _ReservationScreenState extends State<ReservationScreen>
                 setState(() {
                   visible = value;
                 });
-                if(tabFirstController.index==0){
+                if (tabFirstController.index == 0) {
                   BlocProvider.of<GetTokenBloc>(context).add(
-                    FetchTokens(date: formatDate(), clinicId: dController.initialIndex!),
+                    FetchTokens(
+                        date: formatDate(),
+                        clinicId: dController.initialIndex!),
                   );
                 }
-                BlocProvider.of<ReserveTokenBloc>(context).add(FetchReservedTokens(
-                    fromDate: DateFormat('yyy-MM-dd').format(selectedunreserveDate),
-                    toDate: DateFormat('yyy-MM-dd').format(unreserveendDate),
-                    clinicId: dController.initialIndex!));
+                BlocProvider.of<ReserveTokenBloc>(context).add(
+                    FetchReservedTokens(
+                        fromDate: DateFormat('yyy-MM-dd')
+                            .format(selectedunreserveDate),
+                        toDate:
+                            DateFormat('yyy-MM-dd').format(unreserveendDate),
+                        clinicId: dController.initialIndex!));
               },
               controller: tabFirstController,
               physics: const NeverScrollableScrollPhysics(),
@@ -385,18 +391,33 @@ class _ReservationScreenState extends State<ReservationScreen>
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            GeneralServices.instance.selectDate(
-                                              context: context,
-                                              date: selectedDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  selectedDate = picked;
-                                                  endDate =
-                                                      picked; // Update endDate as well
-                                                });
-                                              },
-                                            );
+                                            Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                    context: context,
+                                                    date: selectedDate,
+                                                    onDateSelected:
+                                                        (DateTime picked) {
+                                                      setState(() {
+                                                        selectedDate = picked;
+                                                        endDate =
+                                                            picked; // Update endDate as well
+                                                      });
+                                                    },
+                                                  )
+                                                : GeneralServices.instance
+                                                    .selectDate(
+                                                    context: context,
+                                                    date: selectedDate,
+                                                    onDateSelected:
+                                                        (DateTime picked) {
+                                                      setState(() {
+                                                        selectedDate = picked;
+                                                        endDate =
+                                                            picked; // Update endDate as well
+                                                      });
+                                                    },
+                                                  );
                                           },
                                           child: Row(
                                             children: [
@@ -409,29 +430,61 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: selectedDate,
-                                                    onDateSelected: (DateTime
-                                                        picked) async {
-                                                      setState(() {
-                                                        selectedDate = picked;
-                                                        endDate =
-                                                            picked; // Update endDate as well
-                                                      });
-                                                      BlocProvider.of<
-                                                          GetTokenBloc>(
-                                                        context,
-                                                      ).add(
-                                                        FetchTokens(
-                                                          date: formatDate(),
-                                                          clinicId: dController
-                                                              .initialIndex!,
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
+                                                  Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: selectedDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              selectedDate =
+                                                                  picked;
+                                                              endDate =
+                                                                  picked; // Update endDate as well
+                                                            });
+                                                            BlocProvider.of<
+                                                                GetTokenBloc>(
+                                                              context,
+                                                            ).add(
+                                                              FetchTokens(
+                                                                date:
+                                                                    formatDate(),
+                                                                clinicId:
+                                                                    dController
+                                                                        .initialIndex!,
+                                                              ),
+                                                            );
+                                                          },
+                                                        )
+                                                      : GeneralServices.instance
+                                                          .selectDate(
+                                                          context: context,
+                                                          date: selectedDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              selectedDate =
+                                                                  picked;
+                                                              endDate =
+                                                                  picked; // Update endDate as well
+                                                            });
+                                                            BlocProvider.of<
+                                                                GetTokenBloc>(
+                                                              context,
+                                                            ).add(
+                                                              FetchTokens(
+                                                                date:
+                                                                    formatDate(),
+                                                                clinicId:
+                                                                    dController
+                                                                        .initialIndex!,
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
@@ -457,17 +510,31 @@ class _ReservationScreenState extends State<ReservationScreen>
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            GeneralServices.instance.selectDate(
-                                              context: context,
-                                              date: endDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  endDate = picked;
-                                                  print(endDate);
-                                                });
-                                              },
-                                            );
+                                            Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                    context: context,
+                                                    date: endDate,
+                                                    onDateSelected: (DateTime
+                                                        picked) async {
+                                                      setState(() {
+                                                        endDate =
+                                                            picked; // Update endDate as well
+                                                      });
+                                                    },
+                                                  )
+                                                : GeneralServices.instance
+                                                    .selectDate(
+                                                    context: context,
+                                                    date: endDate,
+                                                    onDateSelected:
+                                                        (DateTime picked) {
+                                                      setState(() {
+                                                        endDate = picked;
+                                                        print(endDate);
+                                                      });
+                                                    },
+                                                  );
                                           },
                                           child: Row(
                                             children: [
@@ -480,7 +547,20 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
+                                             Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                    context: context,
+                                                    date: endDate,
+                                                    onDateSelected: (DateTime
+                                                        picked) async {
+                                                      setState(() {
+                                                        endDate =
+                                                            picked; // Update endDate as well
+                                                      });
+                                                    },
+                                                  )
+                                                :         GeneralServices.instance
                                                       .selectDate(
                                                     context: context,
                                                     date: endDate,
@@ -1255,7 +1335,22 @@ class _ReservationScreenState extends State<ReservationScreen>
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            GeneralServices.instance.selectDate(
+                                    Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                    context: context,
+                                              date: selectedunreserveDate,
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  selectedunreserveDate =
+                                                      picked;
+                                                  unreserveendDate =
+                                                      picked; // Update unreserveendDate as well
+                                                });
+                                              },
+                                                  )
+                                                :            GeneralServices.instance.selectDate(
                                               context: context,
                                               date: selectedunreserveDate,
                                               onDateSelected:
@@ -1280,7 +1375,37 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
+                                             Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                context: context,
+                                                    date: selectedunreserveDate,
+                                                    onDateSelected: (DateTime
+                                                        picked) async {
+                                                      setState(() {
+                                                        selectedunreserveDate =
+                                                            picked;
+                                                        unreserveendDate =
+                                                            picked; // Update unreserveendDate as well
+                                                      });
+                                                      BlocProvider.of<
+                                                                  ReserveTokenBloc>(
+                                                              context)
+                                                          .add(FetchReservedTokens(
+                                                              fromDate:
+                                                                  DateFormat(
+                                                                          'yyy-MM-dd')
+                                                                      .format(
+                                                                          selectedunreserveDate),
+                                                              toDate: DateFormat(
+                                                                      'yyy-MM-dd')
+                                                                  .format(
+                                                                      unreserveendDate),
+                                                              clinicId: dController
+                                                                  .initialIndex!));
+                                                    },
+                                                  )
+                                                :       GeneralServices.instance
                                                       .selectDate(
                                                     context: context,
                                                     date: selectedunreserveDate,
@@ -1334,7 +1459,20 @@ class _ReservationScreenState extends State<ReservationScreen>
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            GeneralServices.instance.selectDate(
+                                           Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                context: context,
+                                              date: unreserveendDate,
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  unreserveendDate = picked;
+                                                  print(unreserveendDate);
+                                                });
+                                              },
+                                                  )
+                                                :    GeneralServices.instance.selectDate(
                                               context: context,
                                               date: unreserveendDate,
                                               onDateSelected:
@@ -1357,7 +1495,21 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
+                                            Platform.isIOS
+                                                ? GeneralServices.instance
+                                                    .selectIosDate(
+                                                 context: context,
+                                                    date: unreserveendDate,
+                                                    onDateSelected:
+                                                        (DateTime picked) {
+                                                      setState(() {
+                                                        unreserveendDate =
+                                                            picked;
+                                                        print(unreserveendDate);
+                                                      });
+                                                    },
+                                                  )
+                                                :         GeneralServices.instance
                                                       .selectDate(
                                                     context: context,
                                                     date: unreserveendDate,

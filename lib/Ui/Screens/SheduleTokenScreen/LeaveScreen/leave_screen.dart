@@ -1,5 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -242,29 +245,57 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          selectDate(
-                                            context: context,
-                                            date: leaveStartDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveStartDate = picked;
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId:
-                                                          selectedLeaveClinicId,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? selectIosDate(
+                                                  context: context,
+                                                  date: leaveStartDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      leaveStartDate = picked;
+                                                      leaveEndDate = picked;
+                                                    });
+                                                    BlocProvider.of<
+                                                                LeaveCheckBloc>(
+                                                            context)
+                                                        .add(FetchLeaveCheck(
+                                                            clinicId:
+                                                                selectedLeaveClinicId,
+                                                            fromDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveStartDate),
+                                                            toDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveEndDate)));
+                                                  },
+                                                )
+                                              : selectDate(
+                                                  context: context,
+                                                  date: leaveStartDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      leaveStartDate = picked;
+                                                      leaveEndDate = picked;
+                                                    });
+                                                    BlocProvider.of<
+                                                                LeaveCheckBloc>(
+                                                            context)
+                                                        .add(FetchLeaveCheck(
+                                                            clinicId:
+                                                                selectedLeaveClinicId,
+                                                            fromDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveStartDate),
+                                                            toDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveEndDate)));
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -310,28 +341,55 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          selectDate(
-                                            context: context,
-                                            date: leaveEndDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId:
-                                                          selectedLeaveClinicId,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? selectIosDate(
+                                                  context: context,
+                                                  date: leaveEndDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      leaveEndDate = picked;
+                                                    });
+                                                    BlocProvider.of<
+                                                                LeaveCheckBloc>(
+                                                            context)
+                                                        .add(FetchLeaveCheck(
+                                                            clinicId:
+                                                                selectedLeaveClinicId,
+                                                            fromDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveStartDate),
+                                                            toDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveEndDate)));
+                                                  },
+                                                )
+                                              : selectDate(
+                                                  context: context,
+                                                  date: leaveEndDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      leaveEndDate = picked;
+                                                    });
+                                                    BlocProvider.of<
+                                                                LeaveCheckBloc>(
+                                                            context)
+                                                        .add(FetchLeaveCheck(
+                                                            clinicId:
+                                                                selectedLeaveClinicId,
+                                                            fromDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveStartDate),
+                                                            toDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveEndDate)));
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -541,6 +599,36 @@ class LeaveScreenState extends State<LeaveScreen> {
           child: child!,
         );
       }),
+    );
+    if (picked != null) {
+      onDateSelected(picked);
+    }
+  }
+
+  Future<void> selectIosDate({
+    required BuildContext context,
+    required DateTime date,
+    required Function(DateTime) onDateSelected,
+  }) async {
+    var now = DateTime.now();
+    var today = DateTime(now.year, now.month, now.day);
+    final DateTime? picked = await showModalBottomSheet<DateTime>(
+      context: context,
+      builder: (BuildContext builder) {
+        return Container(
+          // height: 200.0,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: date,
+            minimumDate: today,
+            maximumDate: DateTime.now().add(const Duration(days: 30)),
+            onDateTimeChanged: (DateTime newDateTime) {
+              onDateSelected(newDateTime);
+              // Do something when the date is changed (optional)
+            },
+          ),
+        );
+      },
     );
     if (picked != null) {
       onDateSelected(picked);

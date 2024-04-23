@@ -152,7 +152,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
-                                        children: [
+                                        children: [VerticalSpacingWidget(height: 7.h),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.w),
@@ -162,6 +162,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
+                                          VerticalSpacingWidget(height: 5.h),
                                           ListView.separated(
                                             shrinkWrap: true,
                                             physics:
