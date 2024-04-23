@@ -25,6 +25,7 @@ class _AllVitalsScreenState extends State<AllVitalsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocBuilder<GetAllVitalsBloc, GetAllVitalsState>(
         builder: (context, state) {
           if (state is GetAllVitalsLoading) {
@@ -47,7 +48,7 @@ class _AllVitalsScreenState extends State<AllVitalsScreen> {
           if (state is GetAllVitalsLoaded) {
             return state.getVitalsModel.vitals == null
                 ? Center(
-                    child: Image.asset("assets/icons/no data.png"),
+                    child: Image.asset("assets/images/no_data___.jpg"),
                   )
                 : ListView.builder(
                     itemCount: state.getVitalsModel.vitals!.length,

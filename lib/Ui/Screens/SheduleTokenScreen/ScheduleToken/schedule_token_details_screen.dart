@@ -45,6 +45,7 @@ class _ScheduleTokenDetailsScreenState
   late GenerateTokenErrorModel generateTokenErrorModel;
 
   Map<String, bool> checkboxData = {};
+
   List<String> getSelectedDays(Map<String, bool> checkboxData) {
     List<String> selectedDays = [];
     checkboxData.forEach((day, isSelected) {
@@ -441,16 +442,11 @@ class _ScheduleTokenDetailsScreenState
                                                             setState(() {
                                                               startSchedule1Date =
                                                                   picked;
-                                                              endScheduleDate =
-                                                                  picked.add(
-                                                                      const Duration(
-                                                                          days:
-                                                                              30));
                                                             });
-                                                            // FocusScope.of(
-                                                            //         context)
-                                                            //     .requestFocus(
-                                                            //         FocusNode());
+                                                            FocusScope.of(
+                                                                    context)
+                                                                .requestFocus(
+                                                                    FocusNode());
                                                           },
                                                         )
                                                       : GeneralServices.instance
@@ -532,33 +528,18 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date: endScheduleDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              endScheduleDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        )
-                                                      : GeneralServices.instance
-                                                          .selectDate(
-                                                          context: context,
-                                                          date: endScheduleDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) {
-                                                            setState(() {
-                                                              endScheduleDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        );
+                                                  GeneralServices.instance
+                                                      .selectDate(
+                                                    context: context,
+                                                    date: endScheduleDate,
+                                                    onDateSelected:
+                                                        (DateTime picked) {
+                                                      setState(() {
+                                                        endScheduleDate =
+                                                            picked;
+                                                      });
+                                                    },
+                                                  );
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
@@ -583,157 +564,6 @@ class _ScheduleTokenDetailsScreenState
                                 ),
                               ],
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     TextButtonTheme(
-                            //       data: TextButtonThemeData(
-                            //         style: TextButton.styleFrom(
-                            //           foregroundColor: Colors.red,
-                            //           textStyle: const TextStyle(
-                            //             fontWeight: FontWeight.bold,
-                            //             fontStyle: FontStyle.italic,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       child:
-                            //           Builder(builder: (BuildContext context) {
-                            //         return InkWell(
-                            //           onTap: () {
-                            //             GeneralServices.instance.selectDate(
-                            //               context: context,
-                            //               date: startSchedule1Date,
-                            //               onDateSelected: (DateTime picked) {
-                            //                 setState(() {
-                            //                   startSchedule1Date = picked;
-                            //                 });
-                            //               },
-                            //             );
-                            //           },
-                            //           child: Column(
-                            //             crossAxisAlignment:
-                            //                 CrossAxisAlignment.start,
-                            //             children: [
-                            //               Row(
-                            //                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //                 children: [
-                            //                   Text(
-                            //                     "Start Date",
-                            //                     style: TextStyle(
-                            //                         fontSize: 15.sp,
-                            //                         fontWeight: FontWeight.w600,
-                            //                         color: kSubTextColor),
-                            //                   ),
-                            //                   IconButton(
-                            //                     onPressed: () {
-                            //                       GeneralServices.instance
-                            //                           .selectDate(
-                            //                         context: context,
-                            //                         date: startSchedule1Date,
-                            //                         onDateSelected:
-                            //                             (DateTime picked) {
-                            //                           setState(() {
-                            //                             startSchedule1Date =
-                            //                                 picked;
-                            //                           });
-                            //                         },
-                            //                       );
-                            //                     },
-                            //                     icon: Icon(
-                            //                       IconlyLight.calendar,
-                            //                       color: kMainColor,
-                            //                     ),
-                            //                   )
-                            //                 ],
-                            //               ),
-                            //               Text(
-                            //                 DateFormat("dd-MM-yyy")
-                            //                     .format(startSchedule1Date),
-                            //                 style: TextStyle(
-                            //                     fontSize: 15.sp,
-                            //                     fontWeight: FontWeight.w600,
-                            //                     color: kTextColor),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         );
-                            //       }),
-                            //     ),
-                            //     TextButtonTheme(
-                            //       data: TextButtonThemeData(
-                            //         style: TextButton.styleFrom(
-                            //           foregroundColor: Colors.red,
-                            //           textStyle: const TextStyle(
-                            //             fontWeight: FontWeight.bold,
-                            //             fontStyle: FontStyle.italic,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //       child:
-                            //           Builder(builder: (BuildContext context) {
-                            //         return InkWell(
-                            //           onTap: () async {
-                            //             GeneralServices.instance.selectDate(
-                            //               context: context,
-                            //               date: endScheduleDate,
-                            //               onDateSelected: (DateTime picked) {
-                            //                 setState(() {
-                            //                   endScheduleDate = picked;
-                            //                 });
-                            //               },
-                            //             );
-                            //           },
-                            //           child: Column(
-                            //             crossAxisAlignment:
-                            //                 CrossAxisAlignment.start,
-                            //             children: [
-                            //               Row(
-                            //                 children: [
-                            //                   Text(
-                            //                     "End Date",
-                            //                     style: TextStyle(
-                            //                         fontSize: 15.sp,
-                            //                         fontWeight: FontWeight.w600,
-                            //                         color: kSubTextColor),
-                            //                   ),
-                            //                   IconButton(
-                            //                     onPressed: () {
-                            //                       GeneralServices.instance
-                            //                           .selectDate(
-                            //                         context: context,
-                            //                         date: endScheduleDate,
-                            //                         onDateSelected:
-                            //                             (DateTime picked) {
-                            //                           setState(() {
-                            //                             endScheduleDate =
-                            //                                 picked;
-                            //                           });
-                            //                         },
-                            //                       );
-                            //                     },
-                            //                     icon: Icon(
-                            //                       IconlyLight.calendar,
-                            //                       color: kMainColor,
-                            //                     ),
-                            //                   )
-                            //                 ],
-                            //               ),
-                            //               Text(
-                            //                 DateFormat('dd-MM-yyy')
-                            //                     .format(endScheduleDate),
-                            //                 // Display the selected and formatted date
-                            //                 style: TextStyle(
-                            //                     fontSize: 15.sp,
-                            //                     fontWeight: FontWeight.w600,
-                            //                     color: kTextColor),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         );
-                            //       }),
-                            //     ),
-                            //   ],
-                            // ),
                             const VerticalSpacingWidget(height: 10),
                             //! select starting and ending time
                             Row(
@@ -897,7 +727,6 @@ class _ScheduleTokenDetailsScreenState
                                   color: kSubTextColor),
                             ),
                             const VerticalSpacingWidget(height: 5),
-
                             //! sunday monday tuesday
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 4.w),
