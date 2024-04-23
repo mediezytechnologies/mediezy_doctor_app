@@ -7,6 +7,7 @@ import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/discharge_su
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/lab_report_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/prescription_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/scanning_report_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/vitals_screen.dart';
 
 class HealthRecordScreen extends StatefulWidget {
   const HealthRecordScreen(
@@ -37,6 +38,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen>
         tabs: const [
           Tab(height: 35, text: 'All'),
           Tab(height: 35, text: 'Completed'),
+          Tab(height: 35, text: 'Vitals'),
           Tab(height: 35, text: 'Prescription'),
           Tab(height: 35, text: 'Lab report'),
           Tab(height: 35, text: 'Scan report'),
@@ -50,6 +52,9 @@ class _HealthRecordScreenState extends State<HealthRecordScreen>
           CompletedScreen(
             patientId: widget.patientId,
             userId: widget.userId,
+          ),
+          AllVitalsScreen(
+            patientId: widget.patientId,
           ),
           PrescriptionScreen(
             patientId: widget.patientId,

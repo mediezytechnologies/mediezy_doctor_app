@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Login/login_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
@@ -14,9 +17,6 @@ import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
-import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import '../../../../Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
-import '../../../../Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

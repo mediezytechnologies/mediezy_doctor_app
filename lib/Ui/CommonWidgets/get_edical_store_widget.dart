@@ -60,7 +60,8 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
                   FadedScaleAnimation(
                     scaleDuration: const Duration(milliseconds: 400),
                     fadeDuration: const Duration(milliseconds: 400),
-                    child: widget.imageUrl == "https://mediezy.com/shopImages"
+                    child: widget.imageUrl == "https://test.mediezy.com/shopImages"
+                    // child: widget.imageUrl == "https://mediezy.com/shopImages"
                         ? Image.asset(
                             "assets/images/no image.jpg",
                             height: 50.h,

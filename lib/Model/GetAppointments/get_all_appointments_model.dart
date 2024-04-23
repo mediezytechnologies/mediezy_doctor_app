@@ -47,7 +47,9 @@ class Appointments {
       this.startingtime, 
       this.mainSymptoms, 
       this.otherSymptoms, 
-      this.onlineStatus,});
+      this.onlineStatus,
+      this.firstIndexStatus,
+  });
 
   Appointments.fromJson(dynamic json) {
     id = json['id'];
@@ -72,6 +74,7 @@ class Appointments {
       });
     }
     onlineStatus = json['online_status'];
+    firstIndexStatus = json['first_index_status'];
   }
   int? id;
   String? mediezyPatientId;
@@ -85,6 +88,7 @@ class Appointments {
   List<MainSymptoms>? mainSymptoms;
   List<OtherSymptoms>? otherSymptoms;
   String? onlineStatus;
+  int? firstIndexStatus;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -104,6 +108,7 @@ class Appointments {
       map['other_symptoms'] = otherSymptoms?.map((v) => v.toJson()).toList();
     }
     map['online_status'] = onlineStatus;
+    map['first_index_status'] = firstIndexStatus;
     return map;
   }
 

@@ -5,6 +5,7 @@ import 'package:mediezy_doctor/Model/HealthRecords/completed_appointments_ht_rcd
 import 'package:mediezy_doctor/Model/HealthRecords/discharge_summary_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/get_prescription_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/get_prescription_view_model.dart';
+import 'package:mediezy_doctor/Model/HealthRecords/get_vitals_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/health_records_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/lab_report_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/time_line_model.dart';
@@ -136,5 +137,20 @@ class HealthRecordsApi {
     print(
         "<<<<<< GET ALL UPLOADED DISCHARGE SUMMARY WORKED SUCCESSFULLY >>>>>>");
     return DischargeSummaryModel.fromJson(json.decode(response.body));
+  }
+
+  //* get vitals
+  Future<GetVitalsModel> getVitals({
+    required String patientId,
+  }) async {
+    String basePath = "patient/get_Vitals";
+    final body = {
+      "patient_id": patientId,
+    };
+    var response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
+    print("<<<<<<<<<<GET VITALS WORKED SUCCESSFULLY>>>>>>>>>>");
+    return GetVitalsModel.fromJson(json.decode(response.body));
   }
 }

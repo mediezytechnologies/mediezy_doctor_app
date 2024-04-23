@@ -97,7 +97,7 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
                               Padding(
                                 padding: EdgeInsets.only(right: 10.w),
                                 child: CircleAvatar(
-                                  backgroundColor: const Color(0xFF56B89C),
+                                  backgroundColor: kMainColor,
                                   radius: 16,
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),

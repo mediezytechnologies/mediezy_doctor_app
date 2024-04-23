@@ -402,8 +402,7 @@ class _ScheduleTokenDetailsScreenState
                                       ),
                                     ),
                                   ),
-                                  child:
-                                      Builder(builder: (BuildContext context) {
+                                  child: Builder(builder: (BuildContext context) {
                                     return InkWell(
                                       onTap: () {
                                         GeneralServices.instance.selectDate(
@@ -412,16 +411,16 @@ class _ScheduleTokenDetailsScreenState
                                           onDateSelected: (DateTime picked) {
                                             setState(() {
                                               startSchedule1Date = picked;
+                                              // Update end date to be 30 days after the selected start date
+                                              endScheduleDate = picked.add(const Duration(days: 30));
                                             });
                                           },
                                         );
                                       },
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 "Start Date",
@@ -448,11 +447,10 @@ class _ScheduleTokenDetailsScreenState
                                                       .selectDate(
                                                     context: context,
                                                     date: startSchedule1Date,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
+                                                    onDateSelected: (DateTime picked) {
                                                       setState(() {
-                                                        startSchedule1Date =
-                                                            picked;
+                                                        startSchedule1Date = picked;
+                                                        endScheduleDate = picked.add(const Duration(days: 30));
                                                       });
                                                     },
                                                   );
@@ -465,8 +463,7 @@ class _ScheduleTokenDetailsScreenState
                                             ],
                                           ),
                                           Text(
-                                            DateFormat("dd-MM-yyy")
-                                                .format(startSchedule1Date),
+                                            DateFormat("dd-MM-yyy").format(startSchedule1Date),
                                             style: TextStyle(
                                                 fontSize: 15.sp,
                                                 fontWeight: FontWeight.w600,
@@ -487,8 +484,7 @@ class _ScheduleTokenDetailsScreenState
                                       ),
                                     ),
                                   ),
-                                  child:
-                                      Builder(builder: (BuildContext context) {
+                                  child: Builder(builder: (BuildContext context) {
                                     return InkWell(
                                       onTap: () async {
                                         GeneralServices.instance.selectDate(
@@ -502,8 +498,7 @@ class _ScheduleTokenDetailsScreenState
                                         );
                                       },
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
@@ -516,15 +511,12 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-                                                  GeneralServices.instance
-                                                      .selectDate(
+                                                  GeneralServices.instance.selectDate(
                                                     context: context,
                                                     date: endScheduleDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
+                                                    onDateSelected: (DateTime picked) {
                                                       setState(() {
-                                                        endScheduleDate =
-                                                            picked;
+                                                        endScheduleDate = picked;
                                                       });
                                                     },
                                                   );
@@ -537,8 +529,7 @@ class _ScheduleTokenDetailsScreenState
                                             ],
                                           ),
                                           Text(
-                                            DateFormat('dd-MM-yyy')
-                                                .format(endScheduleDate),
+                                            DateFormat('dd-MM-yyy').format(endScheduleDate),
                                             // Display the selected and formatted date
                                             style: TextStyle(
                                                 fontSize: 15.sp,
@@ -552,6 +543,157 @@ class _ScheduleTokenDetailsScreenState
                                 ),
                               ],
                             ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     TextButtonTheme(
+                            //       data: TextButtonThemeData(
+                            //         style: TextButton.styleFrom(
+                            //           foregroundColor: Colors.red,
+                            //           textStyle: const TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontStyle: FontStyle.italic,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       child:
+                            //           Builder(builder: (BuildContext context) {
+                            //         return InkWell(
+                            //           onTap: () {
+                            //             GeneralServices.instance.selectDate(
+                            //               context: context,
+                            //               date: startSchedule1Date,
+                            //               onDateSelected: (DateTime picked) {
+                            //                 setState(() {
+                            //                   startSchedule1Date = picked;
+                            //                 });
+                            //               },
+                            //             );
+                            //           },
+                            //           child: Column(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Row(
+                            //                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //                 children: [
+                            //                   Text(
+                            //                     "Start Date",
+                            //                     style: TextStyle(
+                            //                         fontSize: 15.sp,
+                            //                         fontWeight: FontWeight.w600,
+                            //                         color: kSubTextColor),
+                            //                   ),
+                            //                   IconButton(
+                            //                     onPressed: () {
+                            //                       GeneralServices.instance
+                            //                           .selectDate(
+                            //                         context: context,
+                            //                         date: startSchedule1Date,
+                            //                         onDateSelected:
+                            //                             (DateTime picked) {
+                            //                           setState(() {
+                            //                             startSchedule1Date =
+                            //                                 picked;
+                            //                           });
+                            //                         },
+                            //                       );
+                            //                     },
+                            //                     icon: Icon(
+                            //                       IconlyLight.calendar,
+                            //                       color: kMainColor,
+                            //                     ),
+                            //                   )
+                            //                 ],
+                            //               ),
+                            //               Text(
+                            //                 DateFormat("dd-MM-yyy")
+                            //                     .format(startSchedule1Date),
+                            //                 style: TextStyle(
+                            //                     fontSize: 15.sp,
+                            //                     fontWeight: FontWeight.w600,
+                            //                     color: kTextColor),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         );
+                            //       }),
+                            //     ),
+                            //     TextButtonTheme(
+                            //       data: TextButtonThemeData(
+                            //         style: TextButton.styleFrom(
+                            //           foregroundColor: Colors.red,
+                            //           textStyle: const TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontStyle: FontStyle.italic,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       child:
+                            //           Builder(builder: (BuildContext context) {
+                            //         return InkWell(
+                            //           onTap: () async {
+                            //             GeneralServices.instance.selectDate(
+                            //               context: context,
+                            //               date: endScheduleDate,
+                            //               onDateSelected: (DateTime picked) {
+                            //                 setState(() {
+                            //                   endScheduleDate = picked;
+                            //                 });
+                            //               },
+                            //             );
+                            //           },
+                            //           child: Column(
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Row(
+                            //                 children: [
+                            //                   Text(
+                            //                     "End Date",
+                            //                     style: TextStyle(
+                            //                         fontSize: 15.sp,
+                            //                         fontWeight: FontWeight.w600,
+                            //                         color: kSubTextColor),
+                            //                   ),
+                            //                   IconButton(
+                            //                     onPressed: () {
+                            //                       GeneralServices.instance
+                            //                           .selectDate(
+                            //                         context: context,
+                            //                         date: endScheduleDate,
+                            //                         onDateSelected:
+                            //                             (DateTime picked) {
+                            //                           setState(() {
+                            //                             endScheduleDate =
+                            //                                 picked;
+                            //                           });
+                            //                         },
+                            //                       );
+                            //                     },
+                            //                     icon: Icon(
+                            //                       IconlyLight.calendar,
+                            //                       color: kMainColor,
+                            //                     ),
+                            //                   )
+                            //                 ],
+                            //               ),
+                            //               Text(
+                            //                 DateFormat('dd-MM-yyy')
+                            //                     .format(endScheduleDate),
+                            //                 // Display the selected and formatted date
+                            //                 style: TextStyle(
+                            //                     fontSize: 15.sp,
+                            //                     fontWeight: FontWeight.w600,
+                            //                     color: kTextColor),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         );
+                            //       }),
+                            //     ),
+                            //   ],
+                            // ),
                             const VerticalSpacingWidget(height: 10),
                             //! select starting and ending time
                             Row(
