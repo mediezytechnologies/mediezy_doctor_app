@@ -442,36 +442,16 @@ class _ScheduleTokenDetailsScreenState
                                                             setState(() {
                                                               startSchedule1Date =
                                                                   picked;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                            });
-                                                            FocusScope.of(
-                                                                    context)
-                                                                .requestFocus(
-                                                                    FocusNode());
-=======
                                                               endScheduleDate =
                                                                   picked.add(
                                                                       const Duration(
                                                                           days:
                                                                               30));
                                                             });
-=======
-                                                              endScheduleDate =
-                                                                  picked.add(
-                                                                      const Duration(
-                                                                          days:
-                                                                              30));
-                                                            });
->>>>>>> 49daa6ca9dab81332d1ffdd093765f8cd188e0c3
                                                             // FocusScope.of(
                                                             //         context)
                                                             //     .requestFocus(
                                                             //         FocusNode());
-<<<<<<< HEAD
->>>>>>> mahesh
-=======
->>>>>>> 49daa6ca9dab81332d1ffdd093765f8cd188e0c3
                                                           },
                                                         )
                                                       : GeneralServices.instance
@@ -553,23 +533,6 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                  GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: endScheduleDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        endScheduleDate =
-                                                            picked;
-                                                      });
-                                                    },
-                                                  );
-=======
-=======
->>>>>>> 49daa6ca9dab81332d1ffdd093765f8cd188e0c3
                                                   Platform.isIOS
                                                       ? GeneralServices.instance
                                                           .selectIosDate(
@@ -597,10 +560,6 @@ class _ScheduleTokenDetailsScreenState
                                                             });
                                                           },
                                                         );
-<<<<<<< HEAD
->>>>>>> mahesh
-=======
->>>>>>> 49daa6ca9dab81332d1ffdd093765f8cd188e0c3
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
