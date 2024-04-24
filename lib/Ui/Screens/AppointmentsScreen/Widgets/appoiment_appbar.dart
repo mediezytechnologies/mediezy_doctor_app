@@ -19,7 +19,8 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
     final size = MediaQuery.of(context).size;
     return AppBar(
       
-      iconTheme: const IconThemeData(color: Colors.white),
+      iconTheme:  IconThemeData(color: Colors.white,size: 20.sp),
+      
       backgroundColor: kMainColor,
       actions: [
         Padding(

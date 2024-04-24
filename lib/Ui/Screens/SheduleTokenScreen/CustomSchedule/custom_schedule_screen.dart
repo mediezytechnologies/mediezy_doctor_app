@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -307,15 +309,29 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          GeneralServices.instance.selectDate(
-                                            context: context,
-                                            date: lateDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                lateDate = picked;
-                                              });
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? GeneralServices.instance
+                                                  .selectIosDate(
+                                                  context: context,
+                                                  date: lateDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) async {
+                                                    setState(() {
+                                                      lateDate = picked;
+                                                    });
+                                                  },
+                                                )
+                                              : GeneralServices.instance
+                                                  .selectDate(
+                                                  context: context,
+                                                  date: lateDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      lateDate = picked;
+                                                    });
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -642,15 +658,29 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          GeneralServices.instance.selectDate(
-                                            context: context,
-                                            date: earlyDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                earlyDate = picked;
-                                              });
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? GeneralServices.instance
+                                                  .selectIosDate(
+                                                  context: context,
+                                                  date: earlyDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) async {
+                                                    setState(() {
+                                                      earlyDate = picked;
+                                                    });
+                                                  },
+                                                )
+                                              : GeneralServices.instance
+                                                  .selectDate(
+                                                  context: context,
+                                                  date: earlyDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      earlyDate = picked;
+                                                    });
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -1056,7 +1086,22 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          GeneralServices.instance.selectDate(
+                              Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: startBreakDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              startBreakDate =
+                                                                  picked;
+                                                                   endBreakDate = picked;
+                                                            });
+                                                          },
+                                                        )
+                                                      :              GeneralServices.instance.selectDate(
                                             context: context,
                                             date: startBreakDate,
                                             onDateSelected: (DateTime picked) {
@@ -1090,7 +1135,21 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    GeneralServices.instance.selectDate(
+                               Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: endBreakDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              endBreakDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        )
+                                                      :       GeneralServices.instance.selectDate(
                                       context: context,
                                       date: endBreakDate,
                                       onDateSelected: (DateTime picked) {
@@ -1112,7 +1171,21 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          GeneralServices.instance.selectDate(
+                                    Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: endBreakDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              endBreakDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        )
+                                                      :            GeneralServices.instance.selectDate(
                                             context: context,
                                             date: endBreakDate,
                                             onDateSelected: (DateTime picked) {
