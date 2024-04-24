@@ -442,11 +442,24 @@ class _ScheduleTokenDetailsScreenState
                                                             setState(() {
                                                               startSchedule1Date =
                                                                   picked;
+<<<<<<< HEAD
                                                             });
                                                             FocusScope.of(
                                                                     context)
                                                                 .requestFocus(
                                                                     FocusNode());
+=======
+                                                              endScheduleDate =
+                                                                  picked.add(
+                                                                      const Duration(
+                                                                          days:
+                                                                              30));
+                                                            });
+                                                            // FocusScope.of(
+                                                            //         context)
+                                                            //     .requestFocus(
+                                                            //         FocusNode());
+>>>>>>> mahesh
                                                           },
                                                         )
                                                       : GeneralServices.instance
@@ -528,6 +541,7 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                               IconButton(
                                                 onPressed: () {
+<<<<<<< HEAD
                                                   GeneralServices.instance
                                                       .selectDate(
                                                     context: context,
@@ -540,6 +554,35 @@ class _ScheduleTokenDetailsScreenState
                                                       });
                                                     },
                                                   );
+=======
+                                                  Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: endScheduleDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              endScheduleDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        )
+                                                      : GeneralServices.instance
+                                                          .selectDate(
+                                                          context: context,
+                                                          date: endScheduleDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              endScheduleDate =
+                                                                  picked;
+                                                            });
+                                                          },
+                                                        );
+>>>>>>> mahesh
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,

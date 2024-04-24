@@ -278,28 +278,54 @@ class GeneralServices {
       onDateSelected(picked);
     }
   }
+  // Future<void> selectIosDate({
+  //   required BuildContext context,
+  //   required DateTime date,
+  //   required Function(DateTime) onDateSelected,
+  // }) async {
+  //   final DateTime? picked = await showModalBottomSheet<DateTime>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         height: 300.0,
+  //         child: CupertinoDatePicker(
+  //           mode: CupertinoDatePickerMode.date,
+  //           initialDateTime: date,
+  //           minimumDate: DateTime(2101),
+  //           maximumDate: DateTime.now(),
+  //           onDateTimeChanged: (DateTime newDate) {
+  //             onDateSelected(newDate);
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  //}
   Future<void> selectIosDate({
-    required BuildContext context,
-    required DateTime date,
-    required Function(DateTime) onDateSelected,
-  }) async {
-    final DateTime? picked = await showModalBottomSheet<DateTime>(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 300.0,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: date,
-            minimumDate: DateTime(2101),
-            maximumDate: DateTime.now(),
-            onDateTimeChanged: (DateTime newDate) {
-              onDateSelected(newDate);
-            },
-          ),
-        );
-      },
-    );
-  }
+  required BuildContext context,
+  required DateTime date,
+  required Function(DateTime) onDateSelected,
+}) async {
+  var now = DateTime.now();
+    var today=  DateTime(now.year, now.month, now.day);
+  final DateTime? picked = await showModalBottomSheet<DateTime>(
+    context: context,
+    builder: (BuildContext builder) {
+      return Container(
+       // height: 200.0, 
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.date,        initialDateTime: date,
+          minimumDate: today,
+          maximumDate: DateTime(2101),
+          onDateTimeChanged: (DateTime newDateTime) {
+            onDateSelected(newDateTime);
+            // Do something when the date is changed (optional)
+          },
+        ),
+      );
+    },
+  );
+
+}
 
 }

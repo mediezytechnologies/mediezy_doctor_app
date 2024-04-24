@@ -74,8 +74,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Text("HEIGHT : ${size.height.toString()}",style: TextStyle(fontSize: 20.sp),),
+              //   Text("WIDTH : ${size.width.toString()}",style: TextStyle(fontSize: 20),),
+
+
               const VerticalSpacingWidget(height: 10),
-              AppoimentDropdown(),
+              const AppoimentDropdown(),
               const VerticalSpacingWidget(height: 10),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),

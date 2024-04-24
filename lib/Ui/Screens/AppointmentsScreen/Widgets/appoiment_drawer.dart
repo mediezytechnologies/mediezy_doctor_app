@@ -14,6 +14,7 @@ import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MyProfileScreen/my_profil
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/SuggestionScreen/suggestion_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/T&CScreen/t&c_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/privacy_policy/privacy_policy.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/suggest_doctor/suggest_doctor_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,6 +192,19 @@ class CustomDrawer extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const TermsandConditionsScreen(),
+                    ),
+                  );
+                },
+              ),
+                  ListTile(
+                title: const Text('Privacy policy'),
+                trailing: const Icon(Icons.assignment_outlined),
+                onTap: () {
+                  // Handle item 2 tap
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyScreen(),
                     ),
                   );
                 },

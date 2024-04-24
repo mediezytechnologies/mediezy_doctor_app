@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/get_all_completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
-
 import '../../../../Model/GetAppointments/get_all_appointments_model.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
@@ -154,7 +152,12 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
+<<<<<<< HEAD
                                         children: [
+                                          const VerticalSpacingWidget(height: 5),
+=======
+                                        children: [VerticalSpacingWidget(height: 7.h),
+>>>>>>> mahesh
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.w),
@@ -164,6 +167,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
+                                          VerticalSpacingWidget(height: 5.h),
                                           ListView.separated(
                                             shrinkWrap: true,
                                             physics:
@@ -326,6 +330,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
+                                            const VerticalSpacingWidget(height: 5),
                                             Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 10.w),
