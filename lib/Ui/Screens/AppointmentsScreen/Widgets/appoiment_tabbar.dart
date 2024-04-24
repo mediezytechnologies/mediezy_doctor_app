@@ -152,16 +152,8 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         children: [
                                           const VerticalSpacingWidget(height: 5),
-=======
-                                        children: [VerticalSpacingWidget(height: 7.h),
->>>>>>> mahesh
-=======
-                                        children: [VerticalSpacingWidget(height: 7.h),
->>>>>>> 49daa6ca9dab81332d1ffdd093765f8cd188e0c3
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.w),
