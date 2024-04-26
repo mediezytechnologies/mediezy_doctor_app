@@ -79,7 +79,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
 
               const VerticalSpacingWidget(height: 10),
-              AppoimentDropdown(),
+              const AppoimentDropdown(),
               const VerticalSpacingWidget(height: 10),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
