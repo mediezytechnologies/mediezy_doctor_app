@@ -1005,7 +1005,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     isCompleted:
                                                                         1,
                                                                     isCheckin:
-                                                                        1,
+                                                                        0,
                                                                     tokenNumber: getCurrentTokenModel
                                                                         .tokens![
                                                                             index]

@@ -145,6 +145,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                 if (tabFirstController.index == 0) {
                   BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
                       date: formatDate(), clinicId: dController.initialIndex!));
+                  resetSelectedTokens();
                 }
                 BlocProvider.of<DeletedTokensBloc>(context)
                     .add(FetchDeletedTokens(

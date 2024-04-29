@@ -144,6 +144,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                         date: formatDate(),
                         clinicId: dController.initialIndex!),
                   );
+                  resetSelectedTokens();
                 }
                 BlocProvider.of<ReserveTokenBloc>(context).add(
                     FetchReservedTokens(

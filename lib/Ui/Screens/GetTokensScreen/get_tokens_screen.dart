@@ -1,15 +1,21 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GetToken/get_token_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -39,15 +45,19 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
   late GetTokenModel getTokenModel;
   late ClinicGetModel clinicGetModel;
 
-  //* for select clinic section
-  late ValueNotifier<String> dropValueClinicNotifier;
-  String clinicId = "";
-  late String selectedClinicId;
-  List<HospitalDetails> clinicValues = [];
+  final HospitalController dController = Get.put(HospitalController());
+
+  // //* for select clinic section
+  // late ValueNotifier<String> dropValueClinicNotifier;
+  // String clinicId = "";
+  // late String selectedClinicId;
+  // List<HospitalDetails> clinicValues = [];
 
   @override
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
+    BlocProvider.of<GetTokenBloc>(context).add(
+        FetchTokens(date: formatDate(), clinicId: dController.initialIndex!));
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isLoading = false;
@@ -63,15 +73,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
         // BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
         // BlocProvider.of<ProfileGetBloc>(context).add(FetchProfileGet());
         BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
-        BlocProvider.of<GetTokenBloc>(context)
-            .add(FetchTokens(date: formatDate(), clinicId: selectedClinicId));
+        BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
+            date: formatDate(), clinicId: dController.initialIndex!));
       },
       child: WillPopScope(
         onWillPop: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (ctx) =>  BottomNavigationControlWidget()));
+                  builder: (ctx) => BottomNavigationControlWidget()));
           return Future.value(false);
         },
         child: Scaffold(
@@ -98,104 +108,27 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                           color: kSubTextColor),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                    BlocBuilder<GetClinicBloc, GetClinicState>(
-                      builder: (context, state) {
-                        if (state is GetClinicLoading) {
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
-                            child: Container(
-                              height: 40.h,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
+                    GetBuilder<HospitalController>(builder: (clx) {
+                      return CustomDropDown(
+                        width: double.infinity,
+                        value: dController.initialIndex,
+                        items: dController.hospitalDetails!.map((e) {
+                          return DropdownMenuItem(
+                            value: e.clinicId.toString(),
+                            child: Text(e.clinicName!),
                           );
-                        }
-                        if (state is GetClinicLoaded) {
-                          clinicGetModel =
-                              BlocProvider.of<GetClinicBloc>(context)
-                                  .clinicGetModel;
-
-                          if (clinicValues.isEmpty) {
-                            clinicValues
-                                .addAll(clinicGetModel.hospitalDetails!);
-                            dropValueClinicNotifier =
-                                ValueNotifier(clinicValues.first.clinicName!);
-                            clinicId = clinicValues.first.clinicId.toString();
-                            selectedClinicId =
-                                clinicValues.first.clinicId.toString();
-                          }
+                        }).toList(),
+                        onChanged: (newValue) {
+                          log(newValue!);
+                          dController.dropdownValueChanging(
+                              newValue, dController.initialIndex!);
                           BlocProvider.of<GetTokenBloc>(context).add(
                               FetchTokens(
                                   date: formatDate(),
-                                  clinicId: selectedClinicId));
-
-                          return Container(
-                            height: 40.h,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: kCardColor,
-                                borderRadius: BorderRadius.circular(5),
-                                border:
-                                    Border.all(color: const Color(0xFF9C9C9C))),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.w),
-                              child: Center(
-                                child: ValueListenableBuilder(
-                                  valueListenable: dropValueClinicNotifier,
-                                  builder: (BuildContext context,
-                                      String dropValue, _) {
-                                    return DropdownButtonFormField(
-                                      iconEnabledColor: kMainColor,
-                                      decoration:
-                                          const InputDecoration.collapsed(
-                                              hintText: ''),
-                                      value: dropValue,
-                                      style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: kTextColor),
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      items: clinicValues
-                                          .map<DropdownMenuItem<String>>(
-                                              (value) {
-                                        return DropdownMenuItem<String>(
-                                          onTap: () {},
-                                          value: value.clinicName!,
-                                          child: Text(value.clinicName!),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? value) {
-                                        dropValue = value!;
-                                        dropValueClinicNotifier.value = value;
-                                        clinicId = value;
-                                        selectedClinicId = clinicValues
-                                            .where((element) => element
-                                                .clinicName!
-                                                .contains(value))
-                                            .toList()
-                                            .first
-                                            .clinicId
-                                            .toString();
-                                        BlocProvider.of<GetTokenBloc>(context)
-                                            .add(FetchTokens(
-                                                date: formatDate(),
-                                                clinicId: selectedClinicId));
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        return Container();
-                      },
-                    ),
+                                  clinicId: dController.initialIndex!));
+                        },
+                      );
+                    }),
                     const VerticalSpacingWidget(height: 5),
                     _isLoading
                         ? _buildCalenderLoadingWidget()
@@ -209,7 +142,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                               BlocProvider.of<GetTokenBloc>(context).add(
                                   FetchTokens(
                                       date: formattedDate,
-                                      clinicId: selectedClinicId));
+                                      clinicId: dController.initialIndex!));
                             },
                             activeColor: kMainColor,
                             dayProps: EasyDayProps(
@@ -378,7 +311,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   ),
                                   itemBuilder: (context, index) {
                                     return TokenCardWidget(
-                                      clinicId: selectedClinicId,
+                                      clinicId: dController.initialIndex!,
                                       date: selectedDate,
                                       tokenNumber: getTokenModel.schedule!
                                           .schedule1![index].tokenNumber
@@ -426,7 +359,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   ),
                                   itemBuilder: (context, index) {
                                     return TokenCardWidget(
-                                      clinicId: selectedClinicId,
+                                      clinicId: dController.initialIndex!,
                                       date: selectedDate,
                                       tokenNumber: getTokenModel.schedule!
                                           .schedule2![index].tokenNumber
@@ -473,7 +406,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   ),
                                   itemBuilder: (context, index) {
                                     return TokenCardWidget(
-                                      clinicId: selectedClinicId,
+                                      clinicId: dController.initialIndex!,
                                       date: selectedDate,
                                       tokenNumber: getTokenModel.schedule!
                                           .schedule3![index].tokenNumber

@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/PatientsGet/patients_get_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/patients_card_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -26,10 +31,12 @@ class _PatientScreenState extends State<PatientScreen> {
   late PatientsGetModel patientsGetModel;
   late ClinicGetModel clinicGetModel;
 
-  late ValueNotifier<String> dropValueClinicNotifier;
-  String clinicId = "";
-  late String selectedClinicId;
-  List<HospitalDetails> clinicValues = [];
+  final HospitalController dController = Get.put(HospitalController());
+
+  // late ValueNotifier<String> dropValueClinicNotifier;
+  // String clinicId = "";
+  // late String selectedClinicId;
+  // List<HospitalDetails> clinicValues = [];
 
   //! sorting
   var items = ['All', 'Year', 'Month', 'Week', 'Today', 'Custom'];
@@ -47,6 +54,8 @@ class _PatientScreenState extends State<PatientScreen> {
   @override
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
+    BlocProvider.of<PatientsGetBloc>(context)
+        .add(FetchPatients(clinicId: dController.initialIndex!));
     super.initState();
   }
 
@@ -58,7 +67,7 @@ class _PatientScreenState extends State<PatientScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (ctx) =>  const BottomNavigationControlWidget()));
+                builder: (ctx) => const BottomNavigationControlWidget()));
         return Future.value(false);
       },
       child: Scaffold(
@@ -132,85 +141,26 @@ class _PatientScreenState extends State<PatientScreen> {
                         ),
                       ),
                       const VerticalSpacingWidget(height: 5),
-                      BlocBuilder<GetClinicBloc, GetClinicState>(
-                        builder: (context, state) {
-                          if (state is GetClinicLoaded) {
-                            clinicGetModel =
-                                BlocProvider.of<GetClinicBloc>(context)
-                                    .clinicGetModel;
-                            if (clinicValues.isEmpty) {
-                              clinicValues
-                                  .addAll(clinicGetModel.hospitalDetails!);
-                              dropValueClinicNotifier =
-                                  ValueNotifier(clinicValues.first.clinicName!);
-                              clinicId = clinicValues.first.clinicId.toString();
-                              selectedClinicId =
-                                  clinicValues.first.clinicId.toString();
-                              BlocProvider.of<PatientsGetBloc>(context).add(
-                                  FetchPatients(clinicId: selectedClinicId));
-                            }
-                            return Container(
-                              height: 40.h,
-                              width: 200.w,
-                              decoration: BoxDecoration(
-                                  color: kCardColor,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                      color: const Color(0xFF9C9C9C))),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Center(
-                                  child: ValueListenableBuilder(
-                                    valueListenable: dropValueClinicNotifier,
-                                    builder: (BuildContext context,
-                                        String dropValue, _) {
-                                      return DropdownButtonFormField(
-                                        iconEnabledColor: kMainColor,
-                                        decoration:
-                                            const InputDecoration.collapsed(
-                                                hintText: ''),
-                                        value: dropValue,
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: kTextColor),
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down),
-                                        items: clinicValues
-                                            .map<DropdownMenuItem<String>>(
-                                                (value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value.clinicName!,
-                                            child: Text(value.clinicName!),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? value) {
-                                          dropValue = value!;
-                                          dropValueClinicNotifier.value = value;
-                                          clinicId = value;
-                                          selectedClinicId = clinicValues
-                                              .where((element) => element
-                                                  .clinicName!
-                                                  .contains(value))
-                                              .toList()
-                                              .first
-                                              .clinicId
-                                              .toString();
-                                          BlocProvider.of<PatientsGetBloc>(
-                                                  context)
-                                              .add(FetchPatients(
-                                                  clinicId: selectedClinicId));
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
+                      GetBuilder<HospitalController>(builder: (clx) {
+                        return CustomDropDown(
+                          width: 210.w,
+                          value: dController.initialIndex,
+                          items: dController.hospitalDetails!.map((e) {
+                            return DropdownMenuItem(
+                              value: e.clinicId.toString(),
+                              child: Text(e.clinicName!),
                             );
-                          }
-                          return Container();
-                        },
-                      ),
+                          }).toList(),
+                          onChanged: (newValue) {
+                            log(newValue!);
+                            dController.dropdownValueChanging(
+                                newValue, dController.initialIndex!);
+                            BlocProvider.of<PatientsGetBloc>(context).add(
+                                FetchPatients(
+                                    clinicId: dController.initialIndex!));
+                          },
+                        );
+                      }),
                     ],
                   ),
                   Column(
@@ -228,56 +178,86 @@ class _PatientScreenState extends State<PatientScreen> {
                         ),
                       ),
                       const VerticalSpacingWidget(height: 5),
-                      Container(
-                        height: 40.h,
+                      CustomDropDown(
                         width: 130.w,
-                        decoration: BoxDecoration(
-                            color: kCardColor,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: const Color(0xFF9C9C9C))),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: Center(
-                            child: DropdownButtonFormField(
-                              iconEnabledColor: kMainColor,
-                              decoration:
-                                  const InputDecoration.collapsed(hintText: ''),
-                              value: dropdownValue,
-                              style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: kTextColor),
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: items.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue!;
-                                  setState(() {
-                                    dropdownValue = newValue;
-                                    if (newValue == 'Custom') {
-                                      _showCustomAlertDialog(context);
-                                    } else {
-                                      // Handle other options
-                                    }
-                                  });
-                                  BlocProvider.of<PatientsGetBloc>(context).add(
-                                      FetchSortPatients(
-                                          sort: dropdownValue,
-                                          clinicId: selectedClinicId,
-                                          fromDate: _startRange,
-                                          toDate: _endRange));
-                                  // print(dropdownvalue);
-                                });
-                              },
-                            ),
-                          ),
-                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                            setState(() {
+                              dropdownValue = newValue;
+                              if (newValue == 'Custom') {
+                                _showCustomAlertDialog(context);
+                              } else {
+                                // Handle other options
+                              }
+                            });
+                            BlocProvider.of<PatientsGetBloc>(context).add(
+                                FetchSortPatients(
+                                    sort: dropdownValue,
+                                    clinicId: dController.initialIndex!,
+                                    fromDate: _startRange,
+                                    toDate: _endRange));
+                            // print(dropdownvalue);
+                          });
+                        },
+                        value: dropdownValue,
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
                       ),
+                      // Container(
+                      //   height: 40.h,
+                      //   width: 130.w,
+                      //   decoration: BoxDecoration(
+                      //       color: kCardColor,
+                      //       borderRadius: BorderRadius.circular(5),
+                      //       border: Border.all(color: const Color(0xFF9C9C9C))),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      //     child: Center(
+                      //       child: DropdownButtonFormField(
+                      //         iconEnabledColor: kMainColor,
+                      //         decoration:
+                      //             const InputDecoration.collapsed(hintText: ''),
+                      //         value: dropdownValue,
+                      //         style: TextStyle(
+                      //             fontSize: 14.sp,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: kTextColor),
+                      //         icon: const Icon(Icons.keyboard_arrow_down),
+                      //         items: items.map((String items) {
+                      //           return DropdownMenuItem(
+                      //             value: items,
+                      //             child: Text(items),
+                      //           );
+                      //         }).toList(),
+                      //         onChanged: (String? newValue) {
+                      //           setState(() {
+                      //             dropdownValue = newValue!;
+                      //             setState(() {
+                      //               dropdownValue = newValue;
+                      //               if (newValue == 'Custom') {
+                      //                 _showCustomAlertDialog(context);
+                      //               } else {
+                      //                 // Handle other options
+                      //               }
+                      //             });
+                      //             BlocProvider.of<PatientsGetBloc>(context).add(
+                      //                 FetchSortPatients(
+                      //                     sort: dropdownValue,
+                      //                     clinicId: dController.initialIndex!,
+                      //                     fromDate: _startRange,
+                      //                     toDate: _endRange));
+                      //             // print(dropdownvalue);
+                      //           });
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
@@ -349,11 +329,13 @@ class _PatientScreenState extends State<PatientScreen> {
                       return Expanded(
                         child: Center(
                             child: Image(
-                                height: 200.h,
-                                width: 200.w,
-                                // color: kMainColor,
-                                image: const AssetImage(
-                                    "assets/images/You ahve no patients-01.png"),color: kMainColor,)),
+                          height: 200.h,
+                          width: 200.w,
+                          // color: kMainColor,
+                          image: const AssetImage(
+                              "assets/images/You ahve no patients-01.png"),
+                          color: kMainColor,
+                        )),
                       );
                     }
                     return Column(
@@ -386,7 +368,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                 patientName: patientsGetModel
                                     .patientData![index].firstname
                                     .toString(),
-                                age: patientsGetModel.patientData![index].displayAge
+                                age: patientsGetModel
+                                    .patientData![index].displayAge
                                     .toString(),
                                 gender: patientsGetModel
                                     .patientData![index].gender
@@ -459,7 +442,7 @@ class _PatientScreenState extends State<PatientScreen> {
               onPressed: () {
                 BlocProvider.of<PatientsGetBloc>(context).add(FetchSortPatients(
                     sort: "Custom",
-                    clinicId: selectedClinicId,
+                    clinicId: dController.initialIndex!,
                     fromDate: _startRange,
                     toDate: _endRange));
                 Navigator.of(context).pop();

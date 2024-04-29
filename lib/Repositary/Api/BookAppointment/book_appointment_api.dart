@@ -45,7 +45,7 @@ class BookAppointmentApi {
       "doctor_id": doctorId,
       "clinic_id": clinicId,
       "schedule_type": scheduleType,
-      // "EndTokenTime": endTokenTime
+      "reschedule_type": "0"
     };
 
     Response response =
