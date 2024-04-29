@@ -18,26 +18,24 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return AppBar(
-      
-      iconTheme:  IconThemeData(color: Colors.white,size: 20.sp),
-      
+      iconTheme: IconThemeData(color: Colors.white, size: 20.sp),
       backgroundColor: kMainColor,
       actions: [
         Padding(
-          padding:  EdgeInsets.only(right: size.width*0.04),
+          padding: EdgeInsets.only(right: size.width * 0.04),
           child: SizedBox(
-            height: size.height*0.04,
+            height: size.height * 0.04,
             width: 100.w,
             child: Image.asset("assets/icons/mediezy logo small.png"),
           ),
         )
       ],
       flexibleSpace: Container(
-         height: size.height * 0.27,
-    color: kMainColor, 
-       
+        //margin: ,
+        height: size.height * 0.27,
+        color: kMainColor,
         child: Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.bottomLeft,
           child: BlocBuilder<ProfileGetBloc, ProfileGetState>(
             builder: (context, state) {
               if (state is ProfileGetLoading) {
@@ -56,14 +54,14 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                     BlocProvider.of<ProfileGetBloc>(context).profileGetModel;
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  height: size.height * 0.13,
+                  height: size.height * 0.14,
                   width: double.infinity,
                   decoration: BoxDecoration(
-              color: kMainColor,
-                   // color: Colors.amber
+                   // color: Colors.amber,
+                   //color: Colors.amber
                   ),
                   child: Padding(
-                    padding:  EdgeInsets.only(left:size.width*0.02 ),
+                    padding: EdgeInsets.only(left: size.width * 0.02),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -76,21 +74,21 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 Text(
                                   "Hi",
                                   style: TextStyle(
-                                      fontSize: 17.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
                                 Text(
                                   "Dr.${profileGetModel.doctorDetails!.first.firstname.toString()} ${profileGetModel.doctorDetails!.first.secondname.toString()}",
                                   style: TextStyle(
-                                      fontSize: 17.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
                                 Text(
                                   "Manage Your Practice With Us",
                                   style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white),
                                 ),
@@ -100,8 +98,8 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                               scaleDuration: const Duration(milliseconds: 400),
                               fadeDuration: const Duration(milliseconds: 400),
                               child: PatientImageWidget(
-                                  patientImage: profileGetModel
-                                              .doctorDetails!.first.docterImage ==
+                                  patientImage: profileGetModel.doctorDetails!
+                                              .first.docterImage ==
                                           null
                                       ? ""
                                       : profileGetModel
@@ -122,7 +120,6 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
-
   }
 
   @override

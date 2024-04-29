@@ -86,7 +86,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 child: Text(
                   "Your Appointments",
                   style: TextStyle(
-                      fontSize: 15.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                       color: kSubTextColor),
                 ),
