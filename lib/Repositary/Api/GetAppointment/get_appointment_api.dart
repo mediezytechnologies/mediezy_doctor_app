@@ -7,7 +7,6 @@ import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointme
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
-import 'package:mediezy_doctor/Model/PreviousAppointments/previous_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -201,23 +200,6 @@ class GetAppointmentApi {
     return response.body;
   }
 
-  //* get all previous appointments
-
-  Future<PreviousAppointmentsModel> getAllPreviousAppointments({
-    required String date,
-    required String clinicId,
-  }) async {
-    String? id;
-    final preference = await SharedPreferences.getInstance();
-    id = preference.getString('DoctorId').toString();
-    String basePath = "previous-appointments";
-    final body = {"doctor_id": id, "clinic_id": clinicId, "date": date};
-    Response response =
-        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Get all previous prescription response worked>>>>>>>>>>");
-    return PreviousAppointmentsModel.fromJson(json.decode(response.body));
-  }
 
   //* get all Completed AppointmentDetails
 

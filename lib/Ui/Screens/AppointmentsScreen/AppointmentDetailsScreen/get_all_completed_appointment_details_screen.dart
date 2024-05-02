@@ -8,6 +8,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_completed_widget.dart';
 
@@ -365,6 +366,26 @@ class _GetAllCompletedAppointmentDetailsScreenState
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
+                                              getAllCompletedAppointmentDetailsModel
+                                                          .appointmentDetails!
+                                                          .first
+                                                          .doctorMedicines![
+                                                              index]
+                                                          .medicalStoreName ==
+                                                      null
+                                                  ? Container()
+                                                  : ShortNamesWidget(
+                                                      firstText:
+                                                          "Medical store : ",
+                                                      secondText:
+                                                          getAllCompletedAppointmentDetailsModel
+                                                              .appointmentDetails!
+                                                              .first
+                                                              .doctorMedicines![
+                                                                  index]
+                                                              .medicalStoreName
+                                                              .toString(),
+                                                    ),
                                               ShortNamesWidget(
                                                 firstText: "Medicine : ",
                                                 secondText:
@@ -591,19 +612,36 @@ class _GetAllCompletedAppointmentDetailsScreenState
                                         color: kSubTextColor),
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  Container(
-                                    height: 200.h,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ViewFileWidget(
+                                                  viewFile:
+                                                      getAllCompletedAppointmentDetailsModel
+                                                          .appointmentDetails!
+                                                          .first
+                                                          .prescriptionImage
+                                                          .toString())));
+                                    },
+                                    child: Container(
+                                      height: 200.h,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
                                               getAllCompletedAppointmentDetailsModel
                                                   .appointmentDetails!
                                                   .first
                                                   .prescriptionImage
-                                                  .toString()),
-                                        )),
+                                                  .toString(),
+                                            ),
+                                          ),
+                                      ),
+                                    ),
                                   ),
                                   const VerticalSpacingWidget(height: 20)
                                 ],

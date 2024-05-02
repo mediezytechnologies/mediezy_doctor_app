@@ -951,7 +951,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             .bookingData!.clinicId
                                             .toString(),
                                         isCompleted: 1,
-                                        isCheckin: 1,
+                                        isCheckin: 0,
                                         tokenNumber: appointmentDetailsPageModel
                                             .bookingData!.tokenNumber
                                             .toString(),

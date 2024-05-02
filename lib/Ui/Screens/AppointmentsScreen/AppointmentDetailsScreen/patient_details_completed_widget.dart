@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
+import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_details_model.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -13,6 +14,8 @@ class PatientDetailsCompletedWidget extends StatefulWidget {
 
   final GetAllCompletedAppointmentDetailsModel
       getAllCompletedAppointmentDetailsModel;
+
+
 
   @override
   State<PatientDetailsCompletedWidget> createState() =>
@@ -56,19 +59,20 @@ class _PatientDetailsCompletedWidgetState
                 .otherSymptoms!.isEmpty
             ? Container()
             : Wrap(
-          children: [
-            Text(
-              widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.otherSymptoms!
-                  .map((symptom) => "${symptom.symtoms}")
-                  .join(', '),
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
-                color: kTextColor,
+                children: [
+                  Text(
+                    widget.getAllCompletedAppointmentDetailsModel
+                        .appointmentDetails!.first.otherSymptoms!
+                        .map((symptom) => "${symptom.symtoms}")
+                        .join(', '),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                      color: kTextColor,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
         NamesWidget(
           firstText: "When did it start : ",
           secondText: widget.getAllCompletedAppointmentDetailsModel
@@ -184,12 +188,16 @@ class _PatientDetailsCompletedWidgetState
                         final index = entry.key;
                         final name = entry.value;
                         final isLastItem = index ==
-                            widget.getAllCompletedAppointmentDetailsModel
-                                .appointmentDetails!.first.surgeryName!.length - 1;
+                            widget
+                                    .getAllCompletedAppointmentDetailsModel
+                                    .appointmentDetails!
+                                    .first
+                                    .surgeryName!
+                                    .length -
+                                1;
                         return Text(
                           name == "Other"
-                              ? "${widget.getAllCompletedAppointmentDetailsModel
-                              .appointmentDetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name" + (isLastItem ? '' : ','),
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: TextStyle(
@@ -201,7 +209,6 @@ class _PatientDetailsCompletedWidgetState
                       }).toList(),
                     ),
                   ),
-
                 ],
               ),
         // NamesWidget(
@@ -230,12 +237,16 @@ class _PatientDetailsCompletedWidgetState
                         final index = entry.key;
                         final name = entry.value;
                         final isLastItem = index ==
-                            widget.getAllCompletedAppointmentDetailsModel
-                                .appointmentDetails!.first.treatmentTaken!.length - 1;
+                            widget
+                                    .getAllCompletedAppointmentDetailsModel
+                                    .appointmentDetails!
+                                    .first
+                                    .treatmentTaken!
+                                    .length -
+                                1;
                         return Text(
                           name == "Other"
-                              ? "${widget.getAllCompletedAppointmentDetailsModel
-                              .appointmentDetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name" + (isLastItem ? '' : ','),
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: TextStyle(

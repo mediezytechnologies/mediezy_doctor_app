@@ -125,8 +125,8 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                             Center(
                               child: Image(
                                 image: const AssetImage(
-                                    "assets/images/There is no lab-01.png"),
-                                height: 200.h,
+                                    "assets/images/You ahve no patients-01.png",),
+                                height: 200.h,color: kMainColor,
                                 width: 200.w,
                               ),
                             ),

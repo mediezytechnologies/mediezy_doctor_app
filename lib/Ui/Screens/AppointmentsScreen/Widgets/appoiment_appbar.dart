@@ -14,6 +14,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
   AppoimentAppbar({super.key});
 
   late ProfileGetModel profileGetModel;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -31,7 +32,6 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
         )
       ],
       flexibleSpace: Container(
-        //margin: ,
         height: size.height * 0.27,
         color: kMainColor,
         child: Align(
@@ -57,8 +57,8 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                   height: size.height * 0.14,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                   // color: Colors.amber,
-                   //color: Colors.amber
+                    color: kMainColor,
+                    // color: Colors.amber
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(left: size.width * 0.02),
@@ -74,22 +74,22 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 Text(
                                   "Hi",
                                   style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
                                       color: Colors.white),
                                 ),
                                 Text(
                                   "Dr.${profileGetModel.doctorDetails!.first.firstname.toString()} ${profileGetModel.doctorDetails!.first.secondname.toString()}",
                                   style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
                                 Text(
                                   "Manage Your Practice With Us",
                                   style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
                                       color: Colors.white),
                                 ),
                               ],

@@ -13,7 +13,6 @@ import 'package:mediezy_doctor/Model/RestoreTokens/get_delete_tokens_model.dart'
 import 'package:mediezy_doctor/Model/RestoreTokens/restore_dates_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/DeleteTokens/delete_tokens_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
@@ -145,6 +144,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                 if (tabFirstController.index == 0) {
                   BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
                       date: formatDate(), clinicId: dController.initialIndex!));
+                  resetSelectedTokens();
                 }
                 BlocProvider.of<DeletedTokensBloc>(context)
                     .add(FetchDeletedTokens(
@@ -946,159 +946,139 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                       ));
                     }
                   },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Select Clinic",
-                          style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
-                        ),
-                        const VerticalSpacingWidget(height: 2),
-                        GetBuilder<HospitalController>(builder: (clx) {
-                          return CustomDropDown(
-                            width: double.infinity,
-                            value: dController.initialIndex,
-                            items: dController.hospitalDetails!.map((e) {
-                              return DropdownMenuItem(
-                                value: e.clinicId.toString(),
-                                child: Text(e.clinicName!),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              log(newValue!);
-                              dController.dropdownValueChanging(
-                                  newValue, dController.initialIndex!);
-                              BlocProvider.of<DeletedTokensBloc>(context)
-                                  .add(FetchDeletedTokens(
-                                clinicId: dController.initialIndex!,
-                              ));
-                            },
-                          );
-                        }),
-                        // BlocBuilder<GetClinicBloc, GetClinicState>(
-                        //   builder: (context, state) {
-                        //     if (state is GetClinicLoaded) {
-                        //       clinicGetModel =
-                        //           BlocProvider.of<GetClinicBloc>(context)
-                        //               .clinicGetModel;
-                        //
-                        //       if (clinicValuesRestore.isEmpty) {
-                        //         clinicValuesRestore
-                        //             .addAll(clinicGetModel.hospitalDetails!);
-                        //         dropValueRestoreNotifier = ValueNotifier(
-                        //             clinicValuesRestore.first.clinicName!);
-                        //         clinicRestoreId = clinicValuesRestore
-                        //             .first.clinicId
-                        //             .toString();
-                        //         selectedRestoreClinicId = clinicValuesRestore
-                        //             .first.clinicId
-                        //             .toString();
-                        //       }
-                        //       // BlocProvider.of<RestoreTokensBloc>(context)
-                        //       //     .add(FetchRestoreDates(clinicId: selectedRestoreClinicId));
-                        //       BlocProvider.of<DeletedTokensBloc>(context)
-                        //           .add(FetchDeletedTokens(
-                        //         clinicId: selectedRestoreClinicId,
-                        //       ));
-                        //       return Container(
-                        //         height: 40.h,
-                        //         width: double.infinity,
-                        //         decoration: BoxDecoration(
-                        //             color: kCardColor,
-                        //             borderRadius: BorderRadius.circular(5),
-                        //             border: Border.all(
-                        //                 color: const Color(0xFF9C9C9C))),
-                        //         child: Padding(
-                        //           padding:
-                        //               EdgeInsets.symmetric(horizontal: 8.w),
-                        //           child: Center(
-                        //             child: ValueListenableBuilder(
-                        //               valueListenable: dropValueRestoreNotifier,
-                        //               builder: (BuildContext context,
-                        //                   String dropValue, _) {
-                        //                 return DropdownButtonFormField(
-                        //                   iconEnabledColor: kMainColor,
-                        //                   decoration:
-                        //                       const InputDecoration.collapsed(
-                        //                           hintText: ''),
-                        //                   value: dropValue,
-                        //                   style: TextStyle(
-                        //                       fontSize: 14.sp,
-                        //                       fontWeight: FontWeight.w500,
-                        //                       color: kTextColor),
-                        //                   icon: const Icon(
-                        //                       Icons.keyboard_arrow_down),
-                        //                   onChanged: (String? value) {
-                        //                     dropValue = value!;
-                        //                     dropValueRestoreNotifier.value =
-                        //                         value;
-                        //                     clinicRestoreId = value;
-                        //                     selectedRestoreClinicId =
-                        //                         clinicValuesRestore
-                        //                             .where((element) => element
-                        //                                 .clinicName!
-                        //                                 .contains(value))
-                        //                             .toList()
-                        //                             .first
-                        //                             .clinicId
-                        //                             .toString();
-                        //                     BlocProvider.of<DeletedTokensBloc>(
-                        //                             context)
-                        //                         .add(FetchDeletedTokens(
-                        //                       clinicId: selectedRestoreClinicId,
-                        //                     ));
-                        //                   },
-                        //                   items: clinicValuesRestore
-                        //                       .map<DropdownMenuItem<String>>(
-                        //                           (value) {
-                        //                     return DropdownMenuItem<String>(
-                        //                       value: value.clinicName!,
-                        //                       child: Text(value.clinicName!),
-                        //                     );
-                        //                   }).toList(),
-                        //                 );
-                        //               },
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       );
-                        //     }
-                        //     return Container();
-                        //   },
-                        // ),
-                        const VerticalSpacingWidget(height: 10),
-                        BlocBuilder<DeletedTokensBloc, DeletedTokensState>(
-                          builder: (context, state) {
-                            if (state is DeletedTokensLoading) {
-                              // return _buildLoadingWidget();
-                            }
-                            if (state is DeletedTokensError) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const VerticalSpacingWidget(height: 100),
-                                  Center(
-                                    child: Image(
-                                      height: 120.h,
-                                      image: const AssetImage(
-                                          "assets/images/something went wrong-01.png"),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }
-                            if (state is DeletedTokensLoaded) {
-                              getDeleteTokensModel =
-                                  BlocProvider.of<DeletedTokensBloc>(context)
-                                      .getDeleteTokensModel;
-
-                              if (getDeleteTokensModel.data!.isEmpty) {
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Select Clinic",
+                            style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: kSubTextColor),
+                          ),
+                          const VerticalSpacingWidget(height: 2),
+                          GetBuilder<HospitalController>(builder: (clx) {
+                            return CustomDropDown(
+                              width: double.infinity,
+                              value: dController.initialIndex,
+                              items: dController.hospitalDetails!.map((e) {
+                                return DropdownMenuItem(
+                                  value: e.clinicId.toString(),
+                                  child: Text(e.clinicName!),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                log(newValue!);
+                                dController.dropdownValueChanging(
+                                    newValue, dController.initialIndex!);
+                                BlocProvider.of<DeletedTokensBloc>(context)
+                                    .add(FetchDeletedTokens(
+                                  clinicId: dController.initialIndex!,
+                                ));
+                              },
+                            );
+                          }),
+                          // BlocBuilder<GetClinicBloc, GetClinicState>(
+                          //   builder: (context, state) {
+                          //     if (state is GetClinicLoaded) {
+                          //       clinicGetModel =
+                          //           BlocProvider.of<GetClinicBloc>(context)
+                          //               .clinicGetModel;
+                          //
+                          //       if (clinicValuesRestore.isEmpty) {
+                          //         clinicValuesRestore
+                          //             .addAll(clinicGetModel.hospitalDetails!);
+                          //         dropValueRestoreNotifier = ValueNotifier(
+                          //             clinicValuesRestore.first.clinicName!);
+                          //         clinicRestoreId = clinicValuesRestore
+                          //             .first.clinicId
+                          //             .toString();
+                          //         selectedRestoreClinicId = clinicValuesRestore
+                          //             .first.clinicId
+                          //             .toString();
+                          //       }
+                          //       // BlocProvider.of<RestoreTokensBloc>(context)
+                          //       //     .add(FetchRestoreDates(clinicId: selectedRestoreClinicId));
+                          //       BlocProvider.of<DeletedTokensBloc>(context)
+                          //           .add(FetchDeletedTokens(
+                          //         clinicId: selectedRestoreClinicId,
+                          //       ));
+                          //       return Container(
+                          //         height: 40.h,
+                          //         width: double.infinity,
+                          //         decoration: BoxDecoration(
+                          //             color: kCardColor,
+                          //             borderRadius: BorderRadius.circular(5),
+                          //             border: Border.all(
+                          //                 color: const Color(0xFF9C9C9C))),
+                          //         child: Padding(
+                          //           padding:
+                          //               EdgeInsets.symmetric(horizontal: 8.w),
+                          //           child: Center(
+                          //             child: ValueListenableBuilder(
+                          //               valueListenable: dropValueRestoreNotifier,
+                          //               builder: (BuildContext context,
+                          //                   String dropValue, _) {
+                          //                 return DropdownButtonFormField(
+                          //                   iconEnabledColor: kMainColor,
+                          //                   decoration:
+                          //                       const InputDecoration.collapsed(
+                          //                           hintText: ''),
+                          //                   value: dropValue,
+                          //                   style: TextStyle(
+                          //                       fontSize: 14.sp,
+                          //                       fontWeight: FontWeight.w500,
+                          //                       color: kTextColor),
+                          //                   icon: const Icon(
+                          //                       Icons.keyboard_arrow_down),
+                          //                   onChanged: (String? value) {
+                          //                     dropValue = value!;
+                          //                     dropValueRestoreNotifier.value =
+                          //                         value;
+                          //                     clinicRestoreId = value;
+                          //                     selectedRestoreClinicId =
+                          //                         clinicValuesRestore
+                          //                             .where((element) => element
+                          //                                 .clinicName!
+                          //                                 .contains(value))
+                          //                             .toList()
+                          //                             .first
+                          //                             .clinicId
+                          //                             .toString();
+                          //                     BlocProvider.of<DeletedTokensBloc>(
+                          //                             context)
+                          //                         .add(FetchDeletedTokens(
+                          //                       clinicId: selectedRestoreClinicId,
+                          //                     ));
+                          //                   },
+                          //                   items: clinicValuesRestore
+                          //                       .map<DropdownMenuItem<String>>(
+                          //                           (value) {
+                          //                     return DropdownMenuItem<String>(
+                          //                       value: value.clinicName!,
+                          //                       child: Text(value.clinicName!),
+                          //                     );
+                          //                   }).toList(),
+                          //                 );
+                          //               },
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     }
+                          //     return Container();
+                          //   },
+                          // ),
+                          const VerticalSpacingWidget(height: 10),
+                          BlocBuilder<DeletedTokensBloc, DeletedTokensState>(
+                            builder: (context, state) {
+                              if (state is DeletedTokensLoading) {
+                                // return _buildLoadingWidget();
+                              }
+                              if (state is DeletedTokensError) {
                                 return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -1106,124 +1086,146 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     const VerticalSpacingWidget(height: 100),
                                     Center(
                                       child: Image(
-                                        height: 200.h,
+                                        height: 120.h,
                                         image: const AssetImage(
-                                            "assets/images/no_data.jpg"),
+                                            "assets/images/something went wrong-01.png"),
                                       ),
                                     ),
                                   ],
                                 );
                               }
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        getDeleteTokensModel.data!.length,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5,
-                                      crossAxisCount: 4,
-                                      mainAxisExtent: 80,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      return Stack(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: kCardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color: kMainColor,
-                                                  width: 1.w),
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  getDeleteTokensModel
-                                                      .data![index].tokenNumber
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 18.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: kTextColor),
-                                                ),
-                                                Text(
-                                                  getDeleteTokensModel
-                                                      .data![index].time
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 9.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: kTextColor),
-                                                ),
-                                                Text(
-                                                  getDeleteTokensModel
-                                                      .data![index].formatdate
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 9.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: kTextColor),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 55.w,
-                                            child: InkWell(
-                                              onTap: () {
-                                                BlocProvider.of<
-                                                            RestoreTokensBloc>(
-                                                        context)
-                                                    .add(AddRestoreTokens(
-                                                        tokenId:
-                                                            getDeleteTokensModel
-                                                                .data![index]
-                                                                .tokenId
-                                                                .toString()));
-                                              },
-                                              child: const CircleAvatar(
-                                                backgroundColor: Colors.black,
-                                                radius: 10,
-                                                child: Icon(
-                                                  Icons.close,
-                                                  size: 15,
-                                                  color: Colors.white,
-                                                ),
+                              if (state is DeletedTokensLoaded) {
+                                getDeleteTokensModel =
+                                    BlocProvider.of<DeletedTokensBloc>(context)
+                                        .getDeleteTokensModel;
+                    
+                                if (getDeleteTokensModel.data!.isEmpty) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      const VerticalSpacingWidget(height: 100),
+                                      Center(
+                                        child: Image(
+                                          height: 200.h,
+                                          image: const AssetImage(
+                                              "assets/images/no_data.jpg"),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GridView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          getDeleteTokensModel.data!.length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisSpacing: 5,
+                                        mainAxisSpacing: 5,
+                                        crossAxisCount: 4,
+                                        mainAxisExtent: 80,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return Stack(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                color: kCardColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color: kMainColor,
+                                                    width: 1.w),
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceEvenly,
+                                                children: [
+                                                  Text(
+                                                    getDeleteTokensModel
+                                                        .data![index].tokenNumber
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 18.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: kTextColor),
+                                                  ),
+                                                  Text(
+                                                    getDeleteTokensModel
+                                                        .data![index].time
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 9.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: kTextColor),
+                                                  ),
+                                                  Text(
+                                                    getDeleteTokensModel
+                                                        .data![index].formatdate
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 9.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: kTextColor),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ],
-                              );
-                            }
-                            return Container();
-                          },
-                        ),
-                        const VerticalSpacingWidget(height: 10),
-                        // CommonButtonWidget(
-                        //     title: "Restore Token",
-                        //     onTapFunction: () {
-                        //       BlocProvider.of<RestoreTokensBloc>(context)
-                        //           .add(AddRestoreTokens(tokenId: selectedTokenNumbers));
-                        //     }),
-                      ],
+                                            Positioned(
+                                              left: 55.w,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  BlocProvider.of<
+                                                              RestoreTokensBloc>(
+                                                          context)
+                                                      .add(AddRestoreTokens(
+                                                          tokenId:
+                                                              getDeleteTokensModel
+                                                                  .data![index]
+                                                                  .tokenId
+                                                                  .toString()));
+                                                },
+                                                child: const CircleAvatar(
+                                                  backgroundColor: Colors.black,
+                                                  radius: 10,
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    size: 15,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              }
+                              return Container();
+                            },
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          // CommonButtonWidget(
+                          //     title: "Restore Token",
+                          //     onTapFunction: () {
+                          //       BlocProvider.of<RestoreTokensBloc>(context)
+                          //           .add(AddRestoreTokens(tokenId: selectedTokenNumbers));
+                          //     }),
+                        ],
+                      ),
                     ),
                   ),
                 ),
