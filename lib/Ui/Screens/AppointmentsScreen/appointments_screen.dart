@@ -65,7 +65,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       child: Scaffold(
         //! tab bar
         appBar: AppoimentAppbar(),
-
         drawer: CustomDrawer(),
         body: FadedSlideAnimation(
           beginOffset: const Offset(0, 0.3),
@@ -74,10 +73,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text("HEIGHT : ${size.height.toString()}",style: TextStyle(fontSize: 20.sp),),
-              //   Text("WIDTH : ${size.width.toString()}",style: TextStyle(fontSize: 20),),
-
-
               const VerticalSpacingWidget(height: 10),
               const AppoimentDropdown(),
               const VerticalSpacingWidget(height: 10),
@@ -139,7 +134,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
               ),
               const VerticalSpacingWidget(height: 5),
-              AppoimentTabbar()
+              AppoimentTabbar(),
             ],
           ),
         ),

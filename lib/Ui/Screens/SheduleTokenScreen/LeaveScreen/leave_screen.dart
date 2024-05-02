@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -7,14 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_leaves_model.dart';
-import 'package:mediezy_doctor/Model/GetReservedTokensModel/GetReservedTokensModel.dart';
 import 'package:mediezy_doctor/Model/leave_check_model/leave_check_model.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/GetAllLeaves/get_all_leaves_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/LeaveUpdate/leave_update_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/leave_check/leave_check_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
@@ -45,10 +47,12 @@ class LeaveScreenState extends State<LeaveScreen> {
   }
 
   //* for leave section
-  late ValueNotifier<String> dropValueLeaveNotifier;
-  String clinicLeaveId = "";
-  late String selectedLeaveClinicId;
-  List<HospitalDetails> clinicValuesLeave = [];
+  // late ValueNotifier<String> dropValueLeaveNotifier;
+  // String clinicLeaveId = "";
+  // late String dController.initialIndex!;
+  // List<HospitalDetails> clinicValuesLeave = [];
+
+  final HospitalController dController = Get.put(HospitalController());
 
   @override
   void initState() {
@@ -61,7 +65,7 @@ class LeaveScreenState extends State<LeaveScreen> {
     return BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
       listener: (context, state) {
         BlocProvider.of<GetAllLeavesBloc>(context)
-            .add(FetchAllLeaves(hospitalId: selectedLeaveClinicId));
+            .add(FetchAllLeaves(hospitalId: dController.initialIndex!));
       },
       child: Scaffold(
         appBar: AppBar(
@@ -110,111 +114,138 @@ class LeaveScreenState extends State<LeaveScreen> {
                               color: kSubTextColor),
                         ),
                         const VerticalSpacingWidget(height: 5),
-                        BlocBuilder<GetClinicBloc, GetClinicState>(
-                          builder: (context, state) {
-                            if (state is GetClinicLoaded) {
-                              clinicGetModel =
-                                  BlocProvider.of<GetClinicBloc>(context)
-                                      .clinicGetModel;
-
-                              if (clinicValuesLeave.isEmpty) {
-                                clinicValuesLeave
-                                    .addAll(clinicGetModel.hospitalDetails!);
-                                dropValueLeaveNotifier = ValueNotifier(
-                                    clinicValuesLeave.first.clinicName!);
-                                clinicLeaveId =
-                                    clinicValuesLeave.first.clinicId.toString();
-                                selectedLeaveClinicId =
-                                    clinicValuesLeave.first.clinicId.toString();
-                              }
-
+                        GetBuilder<HospitalController>(builder: (clx) {
+                          return CustomDropDown(
+                            width: double.infinity,
+                            value: dController.initialIndex,
+                            items: dController.hospitalDetails!.map((e) {
+                              return DropdownMenuItem(
+                                value: e.clinicId.toString(),
+                                child: Text(e.clinicName!),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              log(newValue!);
+                              dController.dropdownValueChanging(
+                                  newValue, dController.initialIndex!);
                               BlocProvider.of<GetAllLeavesBloc>(context).add(
                                   FetchAllLeaves(
-                                      hospitalId: selectedLeaveClinicId));
+                                      hospitalId: dController.initialIndex!));
                               BlocProvider.of<LeaveCheckBloc>(context).add(
                                   FetchLeaveCheck(
-                                      clinicId: selectedLeaveClinicId,
+                                      clinicId: dController.initialIndex!,
                                       fromDate: DateFormat('yyyy-MM-dd')
                                           .format(leaveStartDate),
                                       toDate: DateFormat('yyyy-MM-dd')
                                           .format(leaveEndDate)));
-                              return Container(
-                                height: 40.h,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: kCardColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                        color: const Color(0xFF9C9C9C))),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  child: Center(
-                                    child: ValueListenableBuilder(
-                                      valueListenable: dropValueLeaveNotifier,
-                                      builder: (BuildContext context,
-                                          String dropValue, _) {
-                                        return DropdownButtonFormField(
-                                          iconEnabledColor: kMainColor,
-                                          decoration:
-                                              const InputDecoration.collapsed(
-                                                  hintText: ''),
-                                          value: dropValue,
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: kTextColor),
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                          onChanged: (String? value) {
-                                            dropValue = value!;
-                                            dropValueLeaveNotifier.value =
-                                                value;
-                                            clinicLeaveId = value;
-                                            selectedLeaveClinicId =
-                                                clinicValuesLeave
-                                                    .where((element) => element
-                                                        .clinicName!
-                                                        .contains(value))
-                                                    .toList()
-                                                    .first
-                                                    .clinicId
-                                                    .toString();
-                                            BlocProvider.of<GetAllLeavesBloc>(
-                                                    context)
-                                                .add(FetchAllLeaves(
-                                                    hospitalId:
-                                                        selectedLeaveClinicId));
-                                            BlocProvider.of<LeaveCheckBloc>(
-                                                    context)
-                                                .add(FetchLeaveCheck(
-                                                    clinicId:
-                                                        selectedLeaveClinicId,
-                                                    fromDate: DateFormat(
-                                                            'yyyy-MM-dd')
-                                                        .format(leaveStartDate),
-                                                    toDate: DateFormat(
-                                                            'yyyy-MM-dd')
-                                                        .format(leaveEndDate)));
-                                          },
-                                          items: clinicValuesLeave
-                                              .map<DropdownMenuItem<String>>(
-                                                  (value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value.clinicName!,
-                                              child: Text(value.clinicName!),
-                                            );
-                                          }).toList(),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                            return Container();
-                          },
-                        ),
+                            },
+                          );
+                        }),
+                        // BlocBuilder<GetClinicBloc, GetClinicState>(
+                        //   builder: (context, state) {
+                        //     if (state is GetClinicLoaded) {
+                        //       clinicGetModel =
+                        //           BlocProvider.of<GetClinicBloc>(context)
+                        //               .clinicGetModel;
+                        //
+                        //       if (clinicValuesLeave.isEmpty) {
+                        //         clinicValuesLeave
+                        //             .addAll(clinicGetModel.hospitalDetails!);
+                        //         dropValueLeaveNotifier = ValueNotifier(
+                        //             clinicValuesLeave.first.clinicName!);
+                        //         clinicLeaveId =
+                        //             clinicValuesLeave.first.clinicId.toString();
+                        //         dController.initialIndex! =
+                        //             clinicValuesLeave.first.clinicId.toString();
+                        //       }
+                        //
+                        //       BlocProvider.of<GetAllLeavesBloc>(context).add(
+                        //           FetchAllLeaves(
+                        //               hospitalId: dController.initialIndex!));
+                        //       BlocProvider.of<LeaveCheckBloc>(context).add(
+                        //           FetchLeaveCheck(
+                        //               clinicId: dController.initialIndex!,
+                        //               fromDate: DateFormat('yyyy-MM-dd')
+                        //                   .format(leaveStartDate),
+                        //               toDate: DateFormat('yyyy-MM-dd')
+                        //                   .format(leaveEndDate)));
+                        //       return Container(
+                        //         height: 40.h,
+                        //         width: double.infinity,
+                        //         decoration: BoxDecoration(
+                        //             color: kCardColor,
+                        //             borderRadius: BorderRadius.circular(5),
+                        //             border: Border.all(
+                        //                 color: const Color(0xFF9C9C9C))),
+                        //         child: Padding(
+                        //           padding:
+                        //               EdgeInsets.symmetric(horizontal: 8.w),
+                        //           child: Center(
+                        //             child: ValueListenableBuilder(
+                        //               valueListenable: dropValueLeaveNotifier,
+                        //               builder: (BuildContext context,
+                        //                   String dropValue, _) {
+                        //                 return DropdownButtonFormField(
+                        //                   iconEnabledColor: kMainColor,
+                        //                   decoration:
+                        //                       const InputDecoration.collapsed(
+                        //                           hintText: ''),
+                        //                   value: dropValue,
+                        //                   style: TextStyle(
+                        //                       fontSize: 14.sp,
+                        //                       fontWeight: FontWeight.w500,
+                        //                       color: kTextColor),
+                        //                   icon: const Icon(
+                        //                       Icons.keyboard_arrow_down),
+                        //                   onChanged: (String? value) {
+                        //                     dropValue = value!;
+                        //                     dropValueLeaveNotifier.value =
+                        //                         value;
+                        //                     clinicLeaveId = value;
+                        //                     dController.initialIndex! =
+                        //                         clinicValuesLeave
+                        //                             .where((element) => element
+                        //                                 .clinicName!
+                        //                                 .contains(value))
+                        //                             .toList()
+                        //                             .first
+                        //                             .clinicId
+                        //                             .toString();
+                        //                     BlocProvider.of<GetAllLeavesBloc>(
+                        //                             context)
+                        //                         .add(FetchAllLeaves(
+                        //                             hospitalId:
+                        //                                 dController.initialIndex!));
+                        //                     BlocProvider.of<LeaveCheckBloc>(
+                        //                             context)
+                        //                         .add(FetchLeaveCheck(
+                        //                             clinicId:
+                        //                                 dController.initialIndex!,
+                        //                             fromDate: DateFormat(
+                        //                                     'yyyy-MM-dd')
+                        //                                 .format(leaveStartDate),
+                        //                             toDate: DateFormat(
+                        //                                     'yyyy-MM-dd')
+                        //                                 .format(leaveEndDate)));
+                        //                   },
+                        //                   items: clinicValuesLeave
+                        //                       .map<DropdownMenuItem<String>>(
+                        //                           (value) {
+                        //                     return DropdownMenuItem<String>(
+                        //                       value: value.clinicName!,
+                        //                       child: Text(value.clinicName!),
+                        //                     );
+                        //                   }).toList(),
+                        //                 );
+                        //               },
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }
+                        //     return Container();
+                        //   },
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -255,12 +286,13 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                       leaveStartDate = picked;
                                                       leaveEndDate = picked;
                                                     });
-                                                    BlocProvider.of<
-                                                                LeaveCheckBloc>(
-                                                            context)
+                                                    BlocProvider
+                                                            .of<
+                                                                    LeaveCheckBloc>(
+                                                                context)
                                                         .add(FetchLeaveCheck(
-                                                            clinicId:
-                                                                selectedLeaveClinicId,
+                                                            clinicId: dController
+                                                                .initialIndex!,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -280,12 +312,13 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                       leaveStartDate = picked;
                                                       leaveEndDate = picked;
                                                     });
-                                                    BlocProvider.of<
-                                                                LeaveCheckBloc>(
-                                                            context)
+                                                    BlocProvider
+                                                            .of<
+                                                                    LeaveCheckBloc>(
+                                                                context)
                                                         .add(FetchLeaveCheck(
-                                                            clinicId:
-                                                                selectedLeaveClinicId,
+                                                            clinicId: dController
+                                                                .initialIndex!,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -350,12 +383,13 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                     setState(() {
                                                       leaveEndDate = picked;
                                                     });
-                                                    BlocProvider.of<
-                                                                LeaveCheckBloc>(
-                                                            context)
+                                                    BlocProvider
+                                                            .of<
+                                                                    LeaveCheckBloc>(
+                                                                context)
                                                         .add(FetchLeaveCheck(
-                                                            clinicId:
-                                                                selectedLeaveClinicId,
+                                                            clinicId: dController
+                                                                .initialIndex!,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -374,12 +408,13 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                     setState(() {
                                                       leaveEndDate = picked;
                                                     });
-                                                    BlocProvider.of<
-                                                                LeaveCheckBloc>(
-                                                            context)
+                                                    BlocProvider
+                                                            .of<
+                                                                    LeaveCheckBloc>(
+                                                                context)
                                                         .add(FetchLeaveCheck(
-                                                            clinicId:
-                                                                selectedLeaveClinicId,
+                                                            clinicId: dController
+                                                                .initialIndex!,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -432,7 +467,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveUpdateBloc>(
                                                   context)
                                               .add(FetchLeaveUpdate(
-                                            clinicId: selectedLeaveClinicId,
+                                            clinicId: dController.initialIndex!,
                                             fromDate:
                                                 "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                             toDate:
@@ -443,7 +478,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       : BlocProvider.of<LeaveUpdateBloc>(
                                               context)
                                           .add(FetchLeaveUpdate(
-                                          clinicId: selectedLeaveClinicId,
+                                          clinicId: dController.initialIndex!,
                                           fromDate:
                                               "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                           toDate:
@@ -535,8 +570,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                               context)
                                                           .add(
                                                         LeaveDelete(
-                                                          clinicId:
-                                                              selectedLeaveClinicId,
+                                                          clinicId: dController
+                                                              .initialIndex!,
                                                           date:
                                                               getAllLeavesModel
                                                                   .leavesData![

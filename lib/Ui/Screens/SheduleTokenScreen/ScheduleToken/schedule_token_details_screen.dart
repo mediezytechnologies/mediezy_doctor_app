@@ -8,14 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GenerateTokenFinal/generate_token_final_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_help_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -107,10 +112,13 @@ class _ScheduleTokenDetailsScreenState
 
   late ClinicGetModel clinicGetModel;
 
-  late ValueNotifier<String> dropValueClinicNotifier;
-  String clinicId = "";
-  late String selectedClinicId;
-  List<HospitalDetails> clinicValues = [];
+  // late ValueNotifier<String> dropValueClinicNotifier;
+  // String clinicId = "";
+  // late String selectedClinicId;
+  // List<HospitalDetails> clinicValues = [];
+
+
+  final HospitalController dController = Get.put(HospitalController());
 
   bool generateToken1 = false;
 
@@ -159,6 +167,7 @@ class _ScheduleTokenDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     List<String> selectedDays = getSelectedDays(checkboxData);
     return Scaffold(
       backgroundColor: kCardColor,
@@ -170,6 +179,14 @@ class _ScheduleTokenDetailsScreenState
           style: TextStyle(
               fontSize: 18.sp, fontWeight: FontWeight.bold, color: kTextColor),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => const ScheduleHelpScreen(clinicName: "",)));
+              },
+              icon: const Icon(Icons.help_outline))
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -233,100 +250,23 @@ class _ScheduleTokenDetailsScreenState
                                     ),
                                     // const VerticalSpacingWidget(height: 5),
                                     //! select clinic
-                                    BlocBuilder<GetClinicBloc, GetClinicState>(
-                                      builder: (context, state) {
-                                        if (state is GetClinicLoaded) {
-                                          clinicGetModel =
-                                              BlocProvider.of<GetClinicBloc>(
-                                                      context)
-                                                  .clinicGetModel;
-
-                                          if (clinicValues.isEmpty) {
-                                            clinicValues.addAll(clinicGetModel
-                                                .hospitalDetails!);
-                                            dropValueClinicNotifier =
-                                                ValueNotifier(clinicValues
-                                                    .first.clinicName!);
-                                            clinicId = clinicValues
-                                                .first.clinicId
-                                                .toString();
-                                            selectedClinicId = clinicValues
-                                                .first.clinicId
-                                                .toString();
-                                          }
-                                          return Container(
-                                            height: 40.h,
-                                            width: 195.w,
-                                            decoration: BoxDecoration(
-                                                color: kCardColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xFF9C9C9C))),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 8.w),
-                                              child: Center(
-                                                child: ValueListenableBuilder(
-                                                  valueListenable:
-                                                      dropValueClinicNotifier,
-                                                  builder:
-                                                      (BuildContext context,
-                                                          String dropValue, _) {
-                                                    return DropdownButtonFormField(
-                                                      iconEnabledColor:
-                                                          kMainColor,
-                                                      decoration:
-                                                          const InputDecoration
-                                                              .collapsed(
-                                                              hintText: ''),
-                                                      value: dropValue,
-                                                      style: TextStyle(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: kTextColor),
-                                                      icon: const Icon(Icons
-                                                          .keyboard_arrow_down),
-                                                      items: clinicValues.map<
-                                                          DropdownMenuItem<
-                                                              String>>((value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value:
-                                                              value.clinicName!,
-                                                          child: Text(value
-                                                              .clinicName!),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged:
-                                                          (String? value) {
-                                                        dropValue = value!;
-                                                        dropValueClinicNotifier
-                                                            .value = value;
-                                                        clinicId = value;
-                                                        selectedClinicId = clinicValues
-                                                            .where((element) =>
-                                                                element
-                                                                    .clinicName!
-                                                                    .contains(
-                                                                        value))
-                                                            .toList()
-                                                            .first
-                                                            .clinicId
-                                                            .toString();
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
+                                    GetBuilder<HospitalController>(builder: (clx) {
+                                      return CustomDropDown(
+                                        width: 195.w,
+                                        value: dController.initialIndex,
+                                        items: dController.hospitalDetails!.map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.clinicId.toString(),
+                                            child: Text(e.clinicName!),
                                           );
-                                        }
-                                        return Container();
-                                      },
-                                    ),
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          log(newValue!);
+                                          dController.dropdownValueChanging(
+                                              newValue, dController.initialIndex!);
+                                        },
+                                      );
+                                    }),
                                   ],
                                 ),
                                 Column(
@@ -340,7 +280,7 @@ class _ScheduleTokenDetailsScreenState
                                           color: kSubTextColor),
                                     ),
                                     Container(
-                                      height: 40.h,
+                                      height:size.height*0.055,
                                       width: 145.w,
                                       decoration: BoxDecoration(
                                           color: kCardColor,
@@ -802,60 +742,6 @@ class _ScheduleTokenDetailsScreenState
                                 ),
                               ),
                             ),
-                            const VerticalSpacingWidget(height: 10),
-                            //! generate token
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<GenerateTokenFinalBloc>(
-                                            context)
-                                        .add(FetchGenerateTokenFinal(
-                                      clinicId: selectedClinicId.toString(),
-                                      selecteddays: selectedDays,
-                                      startDate:
-                                          '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                      endDate:
-                                          '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                      startTime: formatTimeOfDay(
-                                          selectedSchedule1StartingTime),
-                                      endTime: formatTimeOfDay(
-                                          selectedSchedule1EndingTime),
-                                      timeDuration:
-                                          timeDuration1Controller.text,
-                                      scheduleType: selectedValue.toString(),
-                                    ));
-                                  },
-                                  child: Center(
-                                    child: Container(
-                                      height: 40.h,
-                                      width: 150.w,
-                                      decoration: BoxDecoration(
-                                          color: generateToken1
-                                              ? Colors.grey
-                                              : kMainColor,
-                                          // Change color based on the variable
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: Center(
-                                        child: Text(
-                                          "Generate Token",
-                                          style: TextStyle(
-                                              color: generateToken1
-                                                  ? Colors.white
-                                                  : Colors.white,
-                                              // Change text color accordingly
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
                             // Container(color: kScaffoldColor,height: 2,width: mWidth*.99,),
                           ],
                         ),
@@ -867,6 +753,26 @@ class _ScheduleTokenDetailsScreenState
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+        child: CommonButtonWidget(
+            title: "Generate token",
+            onTapFunction: () {
+              BlocProvider.of<GenerateTokenFinalBloc>(context)
+                  .add(FetchGenerateTokenFinal(
+                clinicId: dController.initialIndex!,
+                selecteddays: selectedDays,
+                startDate:
+                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                endDate:
+                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                startTime: formatTimeOfDay(selectedSchedule1StartingTime),
+                endTime: formatTimeOfDay(selectedSchedule1EndingTime),
+                timeDuration: timeDuration1Controller.text,
+                scheduleType: selectedValue.toString(),
+              ));
+            }),
       ),
     );
   }

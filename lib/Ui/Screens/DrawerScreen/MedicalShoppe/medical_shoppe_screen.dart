@@ -102,31 +102,32 @@ class _MedicalShoppeScreenState extends State<MedicalShoppeScreen> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      // physics: const NeverScrollableScrollPhysics(),
-                      itemCount: getAllMedicalShopeModel.medicalShop!.length,
-                      itemBuilder: (context, index) {
-                        return GetMedicalStoreWidget(
-                          imageUrl: getAllMedicalShopeModel
-                              .medicalShop![index].medicalShopimage
-                              .toString(),
-                          mobileNo: getAllMedicalShopeModel
-                              .medicalShop![index].mobileNo
-                              .toString(),
-                          location: getAllMedicalShopeModel
-                              .medicalShop![index].location
-                              .toString(),
-                          favouritesStatus: getAllMedicalShopeModel
-                              .medicalShop![index].favoriteStatus
-                              .toString(),
-                          labName: getAllMedicalShopeModel
-                              .medicalShop![index].medicalShop
-                              .toString(),
-                          labId: getAllMedicalShopeModel.medicalShop![index].id
-                              .toString(),
-                        );
-                      }),
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    itemCount: getAllMedicalShopeModel.medicalShop!.length,
+                    itemBuilder: (context, index) {
+                      return GetMedicalStoreWidget(
+                        imageUrl: getAllMedicalShopeModel
+                            .medicalShop![index].medicalShopimage
+                            .toString(),
+                        mobileNo: getAllMedicalShopeModel
+                            .medicalShop![index].mobileNo
+                            .toString(),
+                        location: getAllMedicalShopeModel
+                            .medicalShop![index].location
+                            .toString(),
+                        favouritesStatus: getAllMedicalShopeModel
+                            .medicalShop![index].favoriteStatus
+                            .toString(),
+                        labName: getAllMedicalShopeModel
+                            .medicalShop![index].medicalShop
+                            .toString(),
+                        labId: getAllMedicalShopeModel.medicalShop![index].id
+                            .toString(),
+                      );
+                    },
+                  ),
                 ),
               ],
             );

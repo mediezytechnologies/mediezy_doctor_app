@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -80,6 +82,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
 
   @override
   Widget build(BuildContext context) {
+    log("${widget.medicalStoreId}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

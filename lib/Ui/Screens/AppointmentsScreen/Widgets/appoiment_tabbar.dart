@@ -246,6 +246,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                           reachedStatus: getAllAppointmentsModel
                                               .appointments![index].isReached
                                               .toString(),
+                                          noStatus: 0,
                                         ),
                                       ),
                                     );
@@ -406,6 +407,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                     .onlineStatus
                                                     .toString(),
                                             reachedStatus: "",
+                                            noStatus: 0,
                                             // reachedStatus: getAllCompletedAppointmentsModel
                                             //                 .appointments![
                                             //                     index]

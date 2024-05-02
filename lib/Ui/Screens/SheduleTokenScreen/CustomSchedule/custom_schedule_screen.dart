@@ -1,19 +1,22 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_break_model.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_early_model.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_late_model.dart';
 import 'package:mediezy_doctor/Model/MessageShowModel/message_show_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/BetweenCustomSchedule/between_schedule_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/GetAllLate/get_all_late_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/LateCustomSchedule/late_schedule_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/CustomSchedule/upcoming_list_widget.dart';
@@ -34,6 +37,8 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   final TextEditingController lateTimeController = TextEditingController();
   final TextEditingController earlyTimeController = TextEditingController();
 
+  final HospitalController dController = Get.put(HospitalController());
+
   late TabController tabFirstController;
 
   DateTime lateDate = DateTime.now();
@@ -51,22 +56,22 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   late GetAllBreakModel getAllBreakModel;
 
   //* for late section
-  late ValueNotifier<String> dropValueLateNotifier;
-  String clinicLateId = "";
-  late String selectedLateClinicId;
-  List<HospitalDetails> clinicValuesLate = [];
+  // late ValueNotifier<String> dropValueLateNotifier;
+  // String clinicLateId = "";
+  // late String selectedLateClinicId;
+  // List<HospitalDetails> clinicValuesLate = [];
 
   //* for early section
-  late ValueNotifier<String> dropValueEarlyNotifier;
-  String clinicEarlyId = "";
-  late String selectedEarlyClinicId;
-  List<HospitalDetails> clinicValuesEarly = [];
-
-  //* for between section
-  late ValueNotifier<String> dropValueBreakNotifier;
-  String clinicBreakId = "";
-  late String selectedBreakClinicId;
-  List<HospitalDetails> clinicValuesBreak = [];
+  // late ValueNotifier<String> dropValueEarlyNotifier;
+  // String clinicEarlyId = "";
+  // late String dController.initialIndex!;
+  // List<HospitalDetails> clinicValuesEarly = [];
+  //
+  // //* for between section
+  // late ValueNotifier<String> dropValueBreakNotifier;
+  // String clinicBreakId = "";
+  // late String selectedBreakClinicId;
+  // List<HospitalDetails> clinicValuesBreak = [];
 
   //! schedule dropDown
 
@@ -90,7 +95,12 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   @override
   void initState() {
     super.initState();
-
+    BlocProvider.of<GetAllLateBloc>(context)
+        .add(FetchAllLate(clinicId: dController.initialIndex!));
+    // BlocProvider.of<GetAllLateBloc>(context).add(
+    //     FetchAllEarly(clinicId: dController.initialIndex!));
+    // BlocProvider.of<GetAllLateBloc>(context)
+    //     .add(FetchAllBreak(clinicId: dController.initialIndex!));
     selectedLateValue = items['Schedule 1'];
     selectedEarlyValue = items['Schedule 1'];
     selectedBreakValue = items['Schedule 1'];
@@ -99,6 +109,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kCardColor,
       resizeToAvoidBottomInset: false,
@@ -119,6 +130,18 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
               height: 50.h,
               color: kCardColor,
               child: TabBar(
+                onTap: (d) {
+                  if (tabFirstController.index == 0) {
+                    BlocProvider.of<GetAllLateBloc>(context)
+                        .add(FetchAllLate(clinicId: dController.initialIndex!));
+                  } else if (tabFirstController.index == 1) {
+                    BlocProvider.of<GetAllLateBloc>(context).add(
+                        FetchAllEarly(clinicId: dController.initialIndex!));
+                  }else{
+                    BlocProvider.of<GetAllLateBloc>(context)
+                        .add(FetchAllBreak(clinicId: dController.initialIndex!));
+                  }
+                },
                 controller: tabFirstController,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(
@@ -197,89 +220,26 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               color: kSubTextColor),
                         ),
                         const VerticalSpacingWidget(height: 5),
-                        BlocBuilder<GetClinicBloc, GetClinicState>(
-                          builder: (context, state) {
-                            if (state is GetClinicLoaded) {
-                              clinicGetModel =
-                                  BlocProvider.of<GetClinicBloc>(context)
-                                      .clinicGetModel;
-                              if (clinicValuesLate.isEmpty) {
-                                clinicValuesLate
-                                    .addAll(clinicGetModel.hospitalDetails!);
-                                dropValueLateNotifier = ValueNotifier(
-                                    clinicValuesLate.first.clinicName!);
-                                clinicLateId =
-                                    clinicValuesLate.first.clinicId.toString();
-                                selectedLateClinicId =
-                                    clinicValuesLate.first.clinicId.toString();
-                              }
-                              BlocProvider.of<GetAllLateBloc>(context).add(
-                                  FetchAllLate(clinicId: selectedLateClinicId));
-                              return Container(
-                                height: 40.h,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: kCardColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                        color: const Color(0xFF9C9C9C))),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  child: Center(
-                                    child: ValueListenableBuilder(
-                                      valueListenable: dropValueLateNotifier,
-                                      builder: (BuildContext context,
-                                          String dropValue, _) {
-                                        return DropdownButtonFormField(
-                                          iconEnabledColor: kMainColor,
-                                          decoration:
-                                              const InputDecoration.collapsed(
-                                                  hintText: ''),
-                                          value: dropValue,
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: kTextColor),
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                          onChanged: (String? value) {
-                                            dropValue = value!;
-                                            dropValueLateNotifier.value = value;
-                                            clinicLateId = value;
-                                            selectedLateClinicId =
-                                                clinicValuesLate
-                                                    .where((element) => element
-                                                        .clinicName!
-                                                        .contains(value))
-                                                    .toList()
-                                                    .first
-                                                    .clinicId
-                                                    .toString();
-                                            BlocProvider.of<GetAllLateBloc>(
-                                                    context)
-                                                .add(FetchAllLate(
-                                                    clinicId:
-                                                        selectedLateClinicId));
-                                          },
-                                          items: clinicValuesLate
-                                              .map<DropdownMenuItem<String>>(
-                                                  (value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value.clinicName!,
-                                              child: Text(value.clinicName!),
-                                            );
-                                          }).toList(),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
+                        GetBuilder<HospitalController>(builder: (clx) {
+                          return CustomDropDown(
+                            width: double.infinity,
+                            value: dController.initialIndex,
+                            items: dController.hospitalDetails!.map((e) {
+                              return DropdownMenuItem(
+                                value: e.clinicId.toString(),
+                                child: Text(e.clinicName!),
                               );
-                            }
-                            return Container();
-                          },
-                        ),
+                            }).toList(),
+                            onChanged: (newValue) {
+                              log(newValue!);
+                              dController.dropdownValueChanging(
+                                  newValue, dController.initialIndex!);
+                              BlocProvider.of<GetAllLateBloc>(context).add(
+                                  FetchAllLate(
+                                      clinicId: dController.initialIndex!));
+                            },
+                          );
+                        }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -427,7 +387,8 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   context, "Late Schedule Added Successfull");
                               Future.delayed(const Duration(seconds: 3), () {});
                               BlocProvider.of<GetAllLateBloc>(context).add(
-                                  FetchAllLate(clinicId: selectedLateClinicId));
+                                  FetchAllLate(
+                                      clinicId: dController.initialIndex!));
                             }
                             if (state is LateScheduleError) {
                               GeneralServices.instance.showErrorMessage(
@@ -437,14 +398,10 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                             title: "Apply",
                             onTapFunction: () {
-                              if (lateTimeController.text.isEmpty) {
-                                GeneralServices.instance.showErrorMessage(
-                                    context, "Please fill your late time");
-                              }
                               BlocProvider.of<LateScheduleBloc>(context)
                                   .add(AddLateSchedule(
                                 date: DateFormat('yyy-MM-dd').format(lateDate),
-                                clinicId: selectedLateClinicId,
+                                clinicId: dController.initialIndex!,
                                 scheduleType: selectedLateValue.toString(),
                                 timeDuration: lateTimeController.text,
                               ));
@@ -456,7 +413,8 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           builder: (context, state) {
                             if (state is DeleteLateLoaded) {
                               BlocProvider.of<GetAllLateBloc>(context).add(
-                                  FetchAllLate(clinicId: selectedLateClinicId));
+                                  FetchAllLate(
+                                      clinicId: dController.initialIndex!));
                             }
                             if (state is GetAllLateLoaded) {
                               getAllLateModel =
@@ -491,7 +449,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                             date: getAllLateModel
                                                 .data![index].scheduleDate
                                                 .toString(),
-                                            clinicId: selectedLateClinicId,
+                                            clinicId: dController.initialIndex!,
                                             scheduleId: getAllLateModel
                                                 .data![index].rescheduleId
                                                 .toString(),
@@ -544,91 +502,26 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               color: kSubTextColor),
                         ),
                         const VerticalSpacingWidget(height: 5),
-                        BlocBuilder<GetClinicBloc, GetClinicState>(
-                          builder: (context, state) {
-                            if (state is GetClinicLoaded) {
-                              clinicGetModel =
-                                  BlocProvider.of<GetClinicBloc>(context)
-                                      .clinicGetModel;
-                              if (clinicValuesEarly.isEmpty) {
-                                clinicValuesEarly
-                                    .addAll(clinicGetModel.hospitalDetails!);
-                                dropValueEarlyNotifier = ValueNotifier(
-                                    clinicValuesEarly.first.clinicName!);
-                                clinicEarlyId =
-                                    clinicValuesEarly.first.clinicId.toString();
-                                selectedEarlyClinicId =
-                                    clinicValuesEarly.first.clinicId.toString();
-                              }
+                        GetBuilder<HospitalController>(builder: (clx) {
+                          return CustomDropDown(
+                            width: double.infinity,
+                            value: dController.initialIndex,
+                            items: dController.hospitalDetails!.map((e) {
+                              return DropdownMenuItem(
+                                value: e.clinicId.toString(),
+                                child: Text(e.clinicName!),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              log(newValue!);
+                              dController.dropdownValueChanging(
+                                  newValue, dController.initialIndex!);
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: selectedEarlyClinicId));
-                              return Container(
-                                height: 40.h,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: kCardColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                        color: const Color(0xFF9C9C9C))),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.w),
-                                  child: Center(
-                                    child: ValueListenableBuilder(
-                                      valueListenable: dropValueEarlyNotifier,
-                                      builder: (BuildContext context,
-                                          String dropValue, _) {
-                                        return DropdownButtonFormField(
-                                          iconEnabledColor: kMainColor,
-                                          decoration:
-                                              const InputDecoration.collapsed(
-                                                  hintText: ''),
-                                          value: dropValue,
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: kTextColor),
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                          onChanged: (String? value) {
-                                            dropValue = value!;
-                                            dropValueEarlyNotifier.value =
-                                                value;
-                                            clinicEarlyId = value;
-                                            selectedEarlyClinicId =
-                                                clinicValuesEarly
-                                                    .where((element) => element
-                                                        .clinicName!
-                                                        .contains(value))
-                                                    .toList()
-                                                    .first
-                                                    .clinicId
-                                                    .toString();
-                                            BlocProvider.of<GetAllLateBloc>(
-                                                    context)
-                                                .add(FetchAllEarly(
-                                                    clinicId:
-                                                        selectedEarlyClinicId));
-                                          },
-                                          items: clinicValuesEarly
-                                              .map<DropdownMenuItem<String>>(
-                                                  (value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value.clinicName!,
-                                              child: Text(value.clinicName!),
-                                            );
-                                          }).toList(),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                            return Container();
-                          },
-                        ),
+                                      clinicId: dController.initialIndex!));
+                            },
+                          );
+                        }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -775,7 +668,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               Future.delayed(const Duration(seconds: 3), () {});
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: selectedEarlyClinicId));
+                                      clinicId: dController.initialIndex!));
                             }
                             if (state is EarlyScheduleError) {
                               GeneralServices.instance.showErrorMessage(
@@ -785,15 +678,11 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                               title: "Apply",
                               onTapFunction: () {
-                                if (earlyTimeController.text.isEmpty) {
-                                  GeneralServices.instance.showErrorMessage(
-                                      context, "Please fill your early time");
-                                }
                                 BlocProvider.of<LateScheduleBloc>(context)
                                     .add(AddEarlySchedule(
                                   date:
                                       DateFormat('yyy-MM-dd').format(earlyDate),
-                                  clinicId: selectedEarlyClinicId,
+                                  clinicId: dController.initialIndex!,
                                   scheduleType: selectedEarlyValue.toString(),
                                   timeDuration: earlyTimeController.text,
                                 ));
@@ -805,7 +694,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             if (state is DeleteEarlyLoaded) {
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: selectedEarlyClinicId));
+                                      clinicId: dController.initialIndex!));
                             }
                             if (state is GetAllEarlyLoaded) {
                               getAllEarlyModel =
@@ -840,7 +729,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                             date: getAllEarlyModel
                                                 .data![index].scheduleDate
                                                 .toString(),
-                                            clinicId: selectedEarlyClinicId,
+                                            clinicId: dController.initialIndex!,
                                             scheduleId: getAllEarlyModel
                                                 .data![index].rescheduleId
                                                 .toString(),
@@ -900,105 +789,28 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 ),
                                 // const VerticalSpacingWidget(height: 5),
                                 //! select clinic
-                                BlocBuilder<GetClinicBloc, GetClinicState>(
-                                  builder: (context, state) {
-                                    if (state is GetClinicLoaded) {
-                                      clinicGetModel =
-                                          BlocProvider.of<GetClinicBloc>(
-                                                  context)
-                                              .clinicGetModel;
-                                      if (clinicValuesBreak.isEmpty) {
-                                        clinicValuesBreak.addAll(
-                                            clinicGetModel.hospitalDetails!);
-                                        dropValueBreakNotifier = ValueNotifier(
-                                            clinicValuesBreak
-                                                .first.clinicName!);
-                                        clinicBreakId = clinicValuesBreak
-                                            .first.clinicId
-                                            .toString();
-                                        selectedBreakClinicId =
-                                            clinicValuesBreak.first.clinicId
-                                                .toString();
-                                      }
+                                GetBuilder<HospitalController>(builder: (clx) {
+                                  return CustomDropDown(
+                                    width: 180.w,
+                                    value: dController.initialIndex,
+                                    items:
+                                        dController.hospitalDetails!.map((e) {
+                                      return DropdownMenuItem(
+                                        value: e.clinicId.toString(),
+                                        child: Text(e.clinicName!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      log(newValue!);
+                                      dController.dropdownValueChanging(
+                                          newValue, dController.initialIndex!);
                                       BlocProvider.of<GetAllLateBloc>(context)
                                           .add(FetchAllBreak(
-                                              clinicId: selectedBreakClinicId));
-                                      return Container(
-                                        height: 40.h,
-                                        width: 180.w,
-                                        decoration: BoxDecoration(
-                                            color: kCardColor,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color:
-                                                    const Color(0xFF9C9C9C))),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8.w),
-                                          child: Center(
-                                            child: ValueListenableBuilder(
-                                              valueListenable:
-                                                  dropValueBreakNotifier,
-                                              builder: (BuildContext context,
-                                                  String dropValue, _) {
-                                                return DropdownButtonFormField(
-                                                  iconEnabledColor: kMainColor,
-                                                  decoration:
-                                                      const InputDecoration
-                                                          .collapsed(
-                                                          hintText: ''),
-                                                  value: dropValue,
-                                                  style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: kTextColor),
-                                                  icon: const Icon(Icons
-                                                      .keyboard_arrow_down),
-                                                  onChanged: (String? value) {
-                                                    dropValue = value!;
-                                                    dropValueBreakNotifier
-                                                        .value = value;
-                                                    clinicBreakId = value;
-                                                    selectedBreakClinicId =
-                                                        clinicValuesBreak
-                                                            .where((element) =>
-                                                                element
-                                                                    .clinicName!
-                                                                    .contains(
-                                                                        value))
-                                                            .toList()
-                                                            .first
-                                                            .clinicId
-                                                            .toString();
-                                                    BlocProvider.of<
-                                                                GetAllLateBloc>(
-                                                            context)
-                                                        .add(FetchAllBreak(
-                                                            clinicId:
-                                                                selectedBreakClinicId));
-                                                  },
-                                                  items: clinicValuesBreak.map<
-                                                      DropdownMenuItem<
-                                                          String>>((value) {
-                                                    return DropdownMenuItem<
-                                                        String>(
-                                                      value: value.clinicName!,
-                                                      child: Text(
-                                                          value.clinicName!),
-                                                    );
-                                                  }).toList(),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    return Container();
-                                  },
-                                ),
+                                              clinicId:
+                                                  dController.initialIndex!));
+                                    },
+                                  );
+                                }),
                               ],
                             ),
                             Column(
@@ -1012,7 +824,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       color: kSubTextColor),
                                 ),
                                 Container(
-                                  height: 40.h,
+                                  height: size.height * 0.055,
                                   width: 145.w,
                                   decoration: BoxDecoration(
                                       color: kCardColor,
@@ -1086,31 +898,31 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                              Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date: startBreakDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              startBreakDate =
-                                                                  picked;
-                                                                   endBreakDate = picked;
-                                                            });
-                                                          },
-                                                        )
-                                                      :              GeneralServices.instance.selectDate(
-                                            context: context,
-                                            date: startBreakDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                startBreakDate = picked;
-                                                endBreakDate = picked;
-                                              });
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? GeneralServices.instance
+                                                  .selectIosDate(
+                                                  context: context,
+                                                  date: startBreakDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) async {
+                                                    setState(() {
+                                                      startBreakDate = picked;
+                                                      endBreakDate = picked;
+                                                    });
+                                                  },
+                                                )
+                                              : GeneralServices.instance
+                                                  .selectDate(
+                                                  context: context,
+                                                  date: startBreakDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      startBreakDate = picked;
+                                                      endBreakDate = picked;
+                                                    });
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -1135,29 +947,27 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               children: [
                                 InkWell(
                                   onTap: () {
-                               Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date: endBreakDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              endBreakDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        )
-                                                      :       GeneralServices.instance.selectDate(
-                                      context: context,
-                                      date: endBreakDate,
-                                      onDateSelected: (DateTime picked) {
-                                        setState(() {
-                                          endBreakDate = picked;
-                                        });
-                                      },
-                                    );
+                                    Platform.isIOS
+                                        ? GeneralServices.instance
+                                            .selectIosDate(
+                                            context: context,
+                                            date: endBreakDate,
+                                            onDateSelected:
+                                                (DateTime picked) async {
+                                              setState(() {
+                                                endBreakDate = picked;
+                                              });
+                                            },
+                                          )
+                                        : GeneralServices.instance.selectDate(
+                                            context: context,
+                                            date: endBreakDate,
+                                            onDateSelected: (DateTime picked) {
+                                              setState(() {
+                                                endBreakDate = picked;
+                                              });
+                                            },
+                                          );
                                   },
                                   child: Row(
                                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1171,29 +981,29 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                    Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date: endBreakDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              endBreakDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        )
-                                                      :            GeneralServices.instance.selectDate(
-                                            context: context,
-                                            date: endBreakDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                endBreakDate = picked;
-                                              });
-                                            },
-                                          );
+                                          Platform.isIOS
+                                              ? GeneralServices.instance
+                                                  .selectIosDate(
+                                                  context: context,
+                                                  date: endBreakDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) async {
+                                                    setState(() {
+                                                      endBreakDate = picked;
+                                                    });
+                                                  },
+                                                )
+                                              : GeneralServices.instance
+                                                  .selectDate(
+                                                  context: context,
+                                                  date: endBreakDate,
+                                                  onDateSelected:
+                                                      (DateTime picked) {
+                                                    setState(() {
+                                                      endBreakDate = picked;
+                                                    });
+                                                  },
+                                                );
                                         },
                                         icon: Icon(
                                           IconlyLight.calendar,
@@ -1329,7 +1139,8 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       () {
                                     BlocProvider.of<GetAllLateBloc>(context)
                                         .add(FetchAllBreak(
-                                            clinicId: selectedBreakClinicId));
+                                            clinicId:
+                                                dController.initialIndex!));
                                   });
                                 }
                                 if (state is BetweenScheduleError) {
@@ -1344,7 +1155,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 onTapFunction: () {
                                   BlocProvider.of<BetweenScheduleBloc>(context)
                                       .add(FetchBetweenSchedule(
-                                    clinicId: selectedBreakClinicId,
+                                    clinicId: dController.initialIndex!,
                                     startTime:
                                         formatTimeOfDay(selectedStartingTime),
                                     endTime:
@@ -1382,7 +1193,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   context, "Delete your Break Successfully");
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllBreak(
-                                      clinicId: selectedBreakClinicId));
+                                      clinicId: dController.initialIndex!));
                             }
                             if (state is DeleteBreakError) {
                               GeneralServices.instance.showErrorMessage(

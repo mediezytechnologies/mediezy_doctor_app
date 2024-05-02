@@ -1,17 +1,26 @@
+import 'dart:developer';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
 import 'package:mediezy_doctor/Model/PreviousAppointments/previous_appointments_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/get_all_previous_appointments_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingDetailsScreen/previous_booking_details_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_details_screen.dart';
 
 class PreviousBookingScreen extends StatefulWidget {
   const PreviousBookingScreen({super.key});
@@ -25,10 +34,15 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
   late ValueNotifier<String> dropValueClinicNotifier;
   late PreviousAppointmentsModel previousAppointmentsModel;
   late ClinicGetModel clinicGetModel;
-  String clinicId = "";
-  late String selectedClinicId;
-  List<HospitalDetails> clinicValues = [];
-  String dropdownvalue = '';
+
+  // late GetAllAppointmentsModel getAllAppointmentsModel;
+
+  final HospitalController dController = Get.put(HospitalController());
+
+  // String clinicId = "";
+  // late String selectedClinicId;
+  // List<HospitalDetails> clinicValues = [];
+  // String dropdownvalue = '';
   String formatDate() {
     String formattedSelectedDate =
         DateFormat('yyyy-MM-dd').format(selectedDate);
@@ -38,6 +52,10 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
   @override
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
+    BlocProvider.of<GetAllPreviousAppointmentsBloc>(context).add(
+      FetchAllPreviousAppointments(
+          date: formatDate(), clinicId: dController.initialIndex!),
+    );
     super.initState();
   }
 
@@ -65,89 +83,35 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                     color: kSubTextColor),
               ),
               const VerticalSpacingWidget(height: 5),
-              BlocBuilder<GetClinicBloc, GetClinicState>(
-                builder: (context, state) {
-                  if (state is GetClinicLoaded) {
-                    clinicGetModel =
-                        BlocProvider.of<GetClinicBloc>(context).clinicGetModel;
-                    if (clinicValues.isEmpty) {
-                      clinicValues.addAll(clinicGetModel.hospitalDetails!);
-                      dropValueClinicNotifier =
-                          ValueNotifier(clinicValues.first.clinicName!);
-                      clinicId = clinicValues.first.clinicId.toString();
-                      selectedClinicId = clinicValues.first.clinicId.toString();
+              GetBuilder<HospitalController>(
+                builder: (clx) {
+                  return CustomDropDown(
+                    width: double.infinity,
+                    value: dController.initialIndex,
+                    items: dController.hospitalDetails!.map((e) {
+                      return DropdownMenuItem(
+                        value: e.clinicId.toString(),
+                        child: Text(e.clinicName!),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      log(newValue!);
+                      dController.dropdownValueChanging(
+                          newValue, dController.initialIndex!);
                       BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
                           .add(
                         FetchAllPreviousAppointments(
-                            date: formatDate(), clinicId: selectedClinicId),
+                            date: formatDate(),
+                            clinicId: dController.initialIndex!),
                       );
-                    }
-                    return Container(
-                      height: 40.h,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: kCardColor,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: const Color(0xFF9C9C9C))),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Center(
-                          child: ValueListenableBuilder(
-                            valueListenable: dropValueClinicNotifier,
-                            builder:
-                                (BuildContext context, String dropValue, _) {
-                              return DropdownButtonFormField(
-                                iconEnabledColor: kMainColor,
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: ''),
-                                value: dropValue,
-                                style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: kTextColor),
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                onChanged: (String? value) {
-                                  dropValue = value!;
-                                  dropValueClinicNotifier.value = value;
-                                  clinicId = value;
-                                  selectedClinicId = clinicValues
-                                      .where((element) =>
-                                          element.clinicName!.contains(value))
-                                      .toList()
-                                      .first
-                                      .clinicId
-                                      .toString();
-                                  BlocProvider.of<
-                                              GetAllPreviousAppointmentsBloc>(
-                                          context)
-                                      .add(
-                                    FetchAllPreviousAppointments(
-                                        date: formatDate(),
-                                        clinicId: selectedClinicId),
-                                  );
-                                },
-                                items: clinicValues
-                                    .map<DropdownMenuItem<String>>((value) {
-                                  return DropdownMenuItem<String>(
-                                    onTap: () {},
-                                    value: value.clinicName!,
-                                    child: Text(value.clinicName!),
-                                  );
-                                }).toList(),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  return Container();
+                    },
+                  );
                 },
               ),
               const VerticalSpacingWidget(height: 10),
               InkWell(
-                onTap: () {
-                  selectDate(
+                onTap: () async {
+                  await selectDate(
                     context: context,
                     date: selectedDate,
                     onDateSelected: (DateTime picked) {
@@ -155,6 +119,12 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                         selectedDate = picked;
                       });
                     },
+                  );
+                  BlocProvider.of<GetAllPreviousAppointmentsBloc>(context).add(
+                    FetchAllPreviousAppointments(
+                      date: formatDate(),
+                      clinicId: dController.initialIndex!,
+                    ),
                   );
                 },
                 child: Row(
@@ -183,7 +153,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                             .add(
                           FetchAllPreviousAppointments(
                             date: formatDate(),
-                            clinicId: selectedClinicId,
+                            clinicId: dController.initialIndex!,
                           ),
                         );
                       },
@@ -204,308 +174,121 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
               ),
               const VerticalSpacingWidget(height: 10),
               BlocBuilder<GetAllPreviousAppointmentsBloc,
-                  GetAllPreviousAppointmentsState>(
-                builder: (context, state) {
-                  if (state is GetAllPreviousAppointmentsLoading) {
-                    return SizedBox(
-                      height: 400.h,
-                      child: Center(
-                        child: CircularProgressIndicator(color: kMainColor),
-                      ),
-                    );
-                  }
-                  if (state is GetAllPreviousAppointmentsError) {
-                    return const Text("Something went wrong");
-                  }
-                  if (state is GetAllPreviousAppointmentsLoaded) {
-                    previousAppointmentsModel =
-                        BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
-                            .previousAppointmentsModel;
-                    return previousAppointmentsModel
-                            .previousAppointments!.isEmpty
-                        ? SizedBox(
-                            height: 400.h,
-                            child: const Image(
+                  GetAllPreviousAppointmentsState>(builder: (context, state) {
+                if (state is GetAllPreviousAppointmentsLoading) {
+                  // return _shimmerLoading();
+                }
+                if (state is GetAllPreviousAppointmentsError) {
+                  return const Center(
+                    child: Text("Something Went Wrong"),
+                  );
+                }
+                if (state is GetAllPreviousAppointmentsLoaded) {
+                  previousAppointmentsModel =
+                      BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
+                          .previousAppointmentsModel;
+                  return previousAppointmentsModel.previousAppointments!.isEmpty
+                      ? const Center(
+                          child: Image(
                               image: AssetImage(
-                                  "assets/images/No_previous_appointments.jpg"),
-                            ),
-                          )
-                        : Expanded(
-                            child: ListView.separated(
-                              separatorBuilder: (context, index) =>
-                                  const VerticalSpacingWidget(height: 5),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: previousAppointmentsModel
-                                  .previousAppointments!.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            PreviousBookingDetailsScreen(
-                                          name: previousAppointmentsModel
+                                  "assets/images/No Appointment to day-01.png")))
+                      : SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                itemCount: previousAppointmentsModel
+                                    .previousAppointments!.length,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        const VerticalSpacingWidget(height: 3),
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (ctx) =>
+                                                  PreviousBookingDetailsScreen(
+                                                    appointmentId:
+                                                        previousAppointmentsModel
+                                                            .previousAppointments![
+                                                                index]
+                                                            .appointmentId
+                                                            .toString(),
+                                                    patientId:
+                                                        previousAppointmentsModel
+                                                            .previousAppointments![
+                                                                index]
+                                                            .patientId
+                                                            .toString(),
+                                                  )));
+                                    },
+                                    child: AppointmentCardWidget(
+                                      tokenNumber: previousAppointmentsModel
+                                          .previousAppointments![index]
+                                          .tokenNumber
+                                          .toString(),
+                                      patientImage: previousAppointmentsModel
+                                                  .previousAppointments![
+                                                      index]
+                                                  .userImage ==
+                                              null
+                                          ? ""
+                                          : previousAppointmentsModel
                                               .previousAppointments![index]
-                                              .patientName
+                                              .userImage
                                               .toString(),
-                                          age: previousAppointmentsModel
-                                              .previousAppointments![index].age
-                                              .toString(),
-                                          whenItCome: previousAppointmentsModel
+                                      patientName: previousAppointmentsModel
+                                          .previousAppointments![index]
+                                          .patientName
+                                          .toString(),
+                                      time: previousAppointmentsModel
+                                          .previousAppointments![index]
+                                          .startingtime
+                                          .toString(),
+                                      mediezyId: previousAppointmentsModel
+                                                  .previousAppointments![
+                                                      index]
+                                                  .mediezyPatientId ==
+                                              null
+                                          ? ""
+                                          : previousAppointmentsModel
                                               .previousAppointments![index]
-                                              .whenitcomes
+                                              .mediezyPatientId
                                               .toString(),
-                                          whenItStart: previousAppointmentsModel
+                                      mainSymptoms: previousAppointmentsModel
                                               .previousAppointments![index]
-                                              .whenitstart
-                                              .toString(),
-                                          appointmentFor:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .appoinmentfor2!
-                                                  .toList(),
-                                          bookedPersonId:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .bookedPersonId
-                                                  .toString(),
-                                          patientId: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .patientDetails ==
-                                                  null
-                                              ? ""
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .patientDetails!
-                                                  .id
-                                                  .toString(),
-                                          appointmentDate:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .date
-                                                  .toString(),
-                                          appointmentTime:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .tokenTime
-                                                  .toString(),
-                                          tokenNumber: previousAppointmentsModel
+                                              .mainSymptoms!
+                                              .isEmpty
+                                          ? previousAppointmentsModel
                                               .previousAppointments![index]
-                                              .tokenNumber
+                                              .otherSymptoms!
+                                              .first
+                                              .symtoms
+                                              .toString()
+                                          : previousAppointmentsModel
+                                              .previousAppointments![index]
+                                              .mainSymptoms!
+                                              .first
+                                              .mainsymptoms
                                               .toString(),
-                                          usingRegularMedicine:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .regularmedicine
-                                                  .toString(),
-                                          addedMedicines:
-                                              previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .medicines!
-                                                  .toList(),
-                                          additionalNote:
-                                              previousAppointmentsModel
-                                                          .previousAppointments![
-                                                              index]
-                                                          .notes ==
-                                                      null
-                                                  ? " "
-                                                  : previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .notes
-                                                      .toString(),
-                                          labName: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .laboratoryName ==
-                                                  null
-                                              ? " "
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .laboratoryName
-                                                  .toString(),
-                                          labTestName: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .laboratoryName ==
-                                                  null
-                                              ? " "
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .laboratoryName
-                                                  .toString(),
-                                          medicalShopeName:
-                                              previousAppointmentsModel
-                                                          .previousAppointments![
-                                                              index]
-                                                          .medicalshopName ==
-                                                      null
-                                                  ? " "
-                                                  : previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .medicalshopName
-                                                      .toString(),
-                                          reviewAfter: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .reviewAfter ==
-                                                  null
-                                              ? " "
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .reviewAfter!
-                                                  .toString(),
-                                          prescriptionImage:
-                                              previousAppointmentsModel
-                                                          .previousAppointments![
-                                                              index]
-                                                          .prescriptionImage ==
-                                                      null
-                                                  ? " "
-                                                  : previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .prescriptionImage
-                                                      .toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 60.h,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: kCardColor,
-                                      borderRadius: BorderRadius.circular(10),
+                                      onlineStatus: "online",
+                                      reachedStatus: "0",
+                                      noStatus: 1,
                                     ),
-                                    child: Row(
-                                      children: [
-                                        //! user image
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: 50.h,
-                                            width: 50.w,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Image.asset(
-                                                'assets/icons/profile pic.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const HorizontalSpacingWidget(
-                                            width: 10),
-                                        SizedBox(
-                                          width: 180.w,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              //! name
-                                              Text(
-                                                previousAppointmentsModel
-                                                    .previousAppointments![
-                                                        index]
-                                                    .patientName
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: 15.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              //! pain
-                                              Text(
-                                                previousAppointmentsModel
-                                                        .previousAppointments![
-                                                            index]
-                                                        .appoinmentfor1!
-                                                        .isEmpty
-                                                    ? previousAppointmentsModel
-                                                        .previousAppointments![
-                                                            index]
-                                                        .appoinmentfor2!
-                                                        .first
-                                                        .symtoms
-                                                        .toString()
-                                                    : previousAppointmentsModel
-                                                        .previousAppointments![
-                                                            index]
-                                                        .appoinmentfor1!
-                                                        .first
-                                                        .symtoms
-                                                        .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: kSubTextColor),
-                                              ),
-                                              //! date and time
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "Token No : ${previousAppointmentsModel.previousAppointments![index].tokenNumber.toString()}",
-                                                    style: TextStyle(
-                                                      fontSize: 10.sp,
-                                                      color: kTextColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    " | ",
-                                                    style: TextStyle(
-                                                      fontSize: 11.sp,
-                                                      color: kTextColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    previousAppointmentsModel
-                                                        .previousAppointments![
-                                                            index]
-                                                        .date
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 10.sp,
-                                                      color: kTextColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  const HorizontalSpacingWidget(
-                                                      width: 8),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                  }
-                  return Container();
-                },
-              )
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                }
+                return Container();
+              }),
             ],
           ),
         ),

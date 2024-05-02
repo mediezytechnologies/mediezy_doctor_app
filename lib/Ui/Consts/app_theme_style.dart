@@ -15,7 +15,7 @@ ThemeData appThemeStyle(BuildContext context) {
       centerTitle: false,
       elevation: 0,
       titleTextStyle: TextStyle(
-          fontSize: 20.sp, fontWeight: FontWeight.w600, color: Colors.black),
+          fontSize: 18.sp, fontWeight: FontWeight.w600, color: Colors.black),
     ),
   );
 }

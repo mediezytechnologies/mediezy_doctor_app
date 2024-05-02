@@ -40,21 +40,10 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (ctx) =>  BottomNavigationControlWidget()));
+                builder: (ctx) =>  const BottomNavigationControlWidget()));
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            "Schedule Token",
-            style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: kTextColor),
-          ),
-        ),
         body: _isLoading
             ? _buildLoadingWidget()
             : FadedSlideAnimation(
@@ -67,7 +56,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const VerticalSpacingWidget(height: 30),
+                  const VerticalSpacingWidget(height: 60),
                   //! first section (Daily shedule)
                   InkWell(
                     onTap: () {

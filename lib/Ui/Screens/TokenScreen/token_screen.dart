@@ -19,6 +19,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
@@ -42,11 +43,6 @@ class _TokenScreenState extends State<TokenScreen> {
   late GetCurrentTokenModel getCurrentTokenModel;
 
   final HospitalController dController = Get.put(HospitalController());
-
-  // late ValueNotifier<String> dropValueClinicNotifier;
-  // String clinicId = "";
-  // late String selectedClinicId;
-  // List<HospitalDetails> clinicValues = [];
 
   DateTime selectedDate = DateTime.now();
 
@@ -91,27 +87,32 @@ class _TokenScreenState extends State<TokenScreen> {
       onRefresh: () async {
         // Add your refresh logic here, such as fetching new data
         // For example, you can add:
-        BlocProvider.of<GetCurrentTokenBloc>(context).add(FetchGetCurrentToken(
-          clinicId: dController.initialIndex!,
-          scheduleType: selectedValue.toString(),
-        ));
+        BlocProvider.of<GetCurrentTokenBloc>(context).add(
+          FetchGetCurrentToken(
+            clinicId: dController.initialIndex!,
+            scheduleType: selectedValue.toString(),
+          ),
+        );
       },
       child: BlocListener<AddCheckinOrCheckoutBloc, AddCheckinOrCheckoutState>(
         listener: (context, state) {
           if (state is AddCheckinOrCheckoutLoaded) {
-            BlocProvider.of<GetCurrentTokenBloc>(context)
-                .add(FetchGetCurrentToken(
-              clinicId: dController.initialIndex!,
-              scheduleType: selectedValue.toString(),
-            ));
+            BlocProvider.of<GetCurrentTokenBloc>(context).add(
+              FetchGetCurrentToken(
+                clinicId: dController.initialIndex!,
+                scheduleType: selectedValue.toString(),
+              ),
+            );
           }
         },
         child: WillPopScope(
           onWillPop: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (ctx) => const BottomNavigationControlWidget()));
+              context,
+              MaterialPageRoute(
+                builder: (ctx) => const BottomNavigationControlWidget(),
+              ),
+            );
             return Future.value(false);
           },
           child: Scaffold(
@@ -120,7 +121,7 @@ class _TokenScreenState extends State<TokenScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
             ),
-            body: Container(
+            body: SizedBox(
               width: double.infinity,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -130,40 +131,18 @@ class _TokenScreenState extends State<TokenScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Select Clinic",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: kSubTextColor,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            const VerticalSpacingWidget(height: 2),
-                            GetBuilder<HospitalController>(builder: (clx) {
-                              return CustomDropDown(
-                                width: 190.w,
-                                value: dController.initialIndex,
-                                items: dController.hospitalDetails!.map((e) {
-                                  return DropdownMenuItem(
-                                    value: e.clinicId.toString(),
-                                    child: Text(e.clinicName!),
-                                  );
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  log(newValue!);
-                                  dController.dropdownValueChanging(
-                                      newValue, dController.initialIndex!);
-                                  BlocProvider.of<GetCurrentTokenBloc>(context)
-                                      .add(FetchGetCurrentToken(
-                                    clinicId: dController.initialIndex!,
-                                    scheduleType: selectedValue.toString(),
-                                  ));
-                                },
-                              );
-                            }),
-                          ],
+                        SelectClinicWidget(
+                          onChanged: (newValue) {
+                            log(newValue!);
+                            dController.dropdownValueChanging(
+                                newValue, dController.initialIndex!);
+                            BlocProvider.of<GetCurrentTokenBloc>(context).add(
+                              FetchGetCurrentToken(
+                                clinicId: dController.initialIndex!,
+                                scheduleType: selectedValue.toString(),
+                              ),
+                            );
+                          },
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,11 +150,11 @@ class _TokenScreenState extends State<TokenScreen> {
                             Text(
                               "Select Schedule",
                               style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: 13.sp,
                                   fontWeight: FontWeight.w600,
                                   color: kSubTextColor),
                             ),
-                            const VerticalSpacingWidget(height: 2),
+                            const VerticalSpacingWidget(height: 5),
                             BlocBuilder<DropdownBloc, DropdownState>(
                               builder: (context, state) {
                                 return CustomDropDown(
@@ -542,34 +521,44 @@ class _TokenScreenState extends State<TokenScreen> {
                                             ),
                                             const VerticalSpacingWidget(
                                                 height: 3),
-                                            getCurrentTokenModel.tokens![index].mainSymptoms!.isEmpty
+                                            getCurrentTokenModel.tokens![index]
+                                                    .mainSymptoms!.isEmpty
                                                 ? Container()
                                                 : Text(
-                                              getCurrentTokenModel.tokens![index].mainSymptoms!
-                                                  .first.mainsymptoms
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.sp,
-                                                  color: kTextColor),
-                                            ),
+                                                    getCurrentTokenModel
+                                                        .tokens![index]
+                                                        .mainSymptoms!
+                                                        .first
+                                                        .mainsymptoms
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 14.sp,
+                                                        color: kTextColor),
+                                                  ),
                                             // const VerticalSpacingWidget(height: 5),
-                                            getCurrentTokenModel.tokens![index].otherSymptoms!.isEmpty
+                                            getCurrentTokenModel.tokens![index]
+                                                    .otherSymptoms!.isEmpty
                                                 ? Container()
                                                 : Wrap(
-                                              children: [
-                                                Text(
-                                                  getCurrentTokenModel.tokens![index].otherSymptoms!
-                                                      .map((symptom) => "${symptom.symtoms}")
-                                                      .join(', '),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14.sp,
-                                                    color: kTextColor,
+                                                    children: [
+                                                      Text(
+                                                        getCurrentTokenModel
+                                                            .tokens![index]
+                                                            .otherSymptoms!
+                                                            .map((symptom) =>
+                                                                "${symptom.symtoms}")
+                                                            .join(', '),
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 14.sp,
+                                                          color: kTextColor,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                              ],
-                                            ),
                                             const VerticalSpacingWidget(
                                                 height: 10),
                                             Row(
@@ -643,10 +632,11 @@ class _TokenScreenState extends State<TokenScreen> {
                                                     physics:
                                                         const NeverScrollableScrollPhysics(),
                                                     padding: EdgeInsets.zero,
-                                                    itemCount: getCurrentTokenModel
-                                                        .tokens![
-                                                    index]
-                                                        .medicine!.length,
+                                                    itemCount:
+                                                        getCurrentTokenModel
+                                                            .tokens![index]
+                                                            .medicine!
+                                                            .length,
                                                     separatorBuilder: (BuildContext
                                                                 context,
                                                             int index) =>
@@ -656,7 +646,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                         (context, indexx) {
                                                       return Column(
                                                         children: [
-                                                          const VerticalSpacingWidget(height: 5),
+                                                          const VerticalSpacingWidget(
+                                                              height: 5),
                                                           getCurrentTokenModel
                                                                   .tokens![
                                                                       index]
@@ -669,7 +660,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   secondText: getCurrentTokenModel
                                                                       .tokens![
                                                                           index]
-                                                                      .medicine![indexx]
+                                                                      .medicine![
+                                                                          indexx]
                                                                       .medicineName
                                                                       .toString()),
                                                           getCurrentTokenModel
@@ -684,7 +676,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   secondText: getCurrentTokenModel
                                                                       .tokens![
                                                                           index]
-                                                                      .medicine![indexx]
+                                                                      .medicine![
+                                                                          indexx]
                                                                       .dosage
                                                                       .toString()),
                                                           getCurrentTokenModel
@@ -699,7 +692,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   secondText: getCurrentTokenModel
                                                                       .tokens![
                                                                           index]
-                                                                      .medicine![indexx]
+                                                                      .medicine![
+                                                                          indexx]
                                                                       .noOfDays
                                                                       .toString()),
                                                           getCurrentTokenModel
@@ -713,10 +707,12 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     Text(
                                                                       "Medicine time : ",
                                                                       style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize: 13.sp,
-                                                                          color: kSubTextColor),
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize: 13
+                                                                              .sp,
+                                                                          color:
+                                                                              kSubTextColor),
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].morning ==
@@ -724,10 +720,12 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           ? "Morning,"
                                                                           : "",
                                                                       style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize: 14.sp,
-                                                                          color: kTextColor),
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize: 14
+                                                                              .sp,
+                                                                          color:
+                                                                              kTextColor),
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].noon ==
@@ -735,10 +733,12 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           ? "Noon,"
                                                                           : "",
                                                                       style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize: 14.sp,
-                                                                          color: kTextColor),
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize: 14
+                                                                              .sp,
+                                                                          color:
+                                                                              kTextColor),
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].night ==
@@ -746,10 +746,12 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           ? "Night"
                                                                           : "",
                                                                       style: TextStyle(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontSize: 14.sp,
-                                                                          color: kTextColor),
+                                                                          fontWeight: FontWeight
+                                                                              .w500,
+                                                                          fontSize: 14
+                                                                              .sp,
+                                                                          color:
+                                                                              kTextColor),
                                                                     )
                                                                   ],
                                                                 ),

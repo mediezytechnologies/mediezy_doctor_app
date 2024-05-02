@@ -17,6 +17,7 @@ class AppointmentCardWidget extends StatelessWidget {
     // required this.otherSymptoms,
     required this.onlineStatus,
     required this.reachedStatus,
+    required this.noStatus,
   });
 
   final String patientName;
@@ -25,9 +26,11 @@ class AppointmentCardWidget extends StatelessWidget {
   final String time;
   final String mediezyId;
   final String mainSymptoms;
+
   // final String otherSymptoms;
   final String onlineStatus;
   final String reachedStatus;
+  final int noStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +141,7 @@ class AppointmentCardWidget extends StatelessWidget {
               ),
             ),
             const HorizontalSpacingWidget(width: 10),
+            noStatus==1?Container():
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -170,20 +174,20 @@ class AppointmentCardWidget extends StatelessWidget {
                         ],
                       ),
                 reachedStatus == "1"
-                    ?Row(
-                  children: [
-                     CircleAvatar(
-                      backgroundColor: kMainColor,
-                      radius: 5,
-                    ),
-                    const HorizontalSpacingWidget(width: 5),
-                    Text(
-                      reachedStatus=="1"?"Reached":"",
-                      style:  TextStyle(color:kMainColor ),
-                    )
-                  ],
-                ): Container()
-
+                    ? Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: kMainColor,
+                            radius: 5,
+                          ),
+                          const HorizontalSpacingWidget(width: 5),
+                          Text(
+                            reachedStatus == "1" ? "Reached" : "",
+                            style: TextStyle(color: kMainColor),
+                          )
+                        ],
+                      )
+                    : Container()
               ],
             ),
           ],

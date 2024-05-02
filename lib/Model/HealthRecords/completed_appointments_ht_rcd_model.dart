@@ -1,91 +1,66 @@
 class GetCompletedAppointmentsHealthRecordModel {
-  bool? status;
-  List<AppointmentDetails>? appointmentDetails;
+  GetCompletedAppointmentsHealthRecordModel({
+    this.status,
+    this.appointmentDetails,
+  });
 
-  GetCompletedAppointmentsHealthRecordModel({this.status, this.appointmentDetails});
-
-  GetCompletedAppointmentsHealthRecordModel.fromJson(Map<String, dynamic> json) {
+  GetCompletedAppointmentsHealthRecordModel.fromJson(dynamic json) {
     status = json['status'];
     if (json['appointment_details'] != null) {
-      appointmentDetails = <AppointmentDetails>[];
+      appointmentDetails = [];
       json['appointment_details'].forEach((v) {
-        appointmentDetails!.add(AppointmentDetails.fromJson(v));
+        appointmentDetails?.add(AppointmentDetails.fromJson(v));
       });
     }
   }
 
+  bool? status;
+  List<AppointmentDetails>? appointmentDetails;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
+    final map = <String, dynamic>{};
+    map['status'] = status;
     if (appointmentDetails != null) {
-      data['appointment_details'] =
-          appointmentDetails!.map((v) => v.toJson()).toList();
+      map['appointment_details'] =
+          appointmentDetails?.map((v) => v.toJson()).toList();
     }
-    return data;
+    return map;
   }
 }
 
 class AppointmentDetails {
-  int? tokenNumber;
-  String? date;
-  String? tokenStartTime;
-  String? symptomStartTime;
-  String? symptomFrequency;
-  String? prescriptionImage;
-  String? scheduleType;
-  String? notes;
-  String? patientName;
-  int? patientAge;
-  int? patientId;
-  int? patientUserId;
-  String? treatmentTaken;
-  String? doctorImage;
-  String? doctorName;
-  String? clinicName;
-  String? labName;
-  String? labTest;
-  String? scanName;
-  String? scanTest;
-  String? surgeryName;
-  String? mediezyPatientId;
-  String? patientUserImage;
-  Vitals? vitals;
-  List<Allergies>? allergies;
-  List<DoctorMedicines>? doctorMedicines;
-  MainSymptoms? mainSymptoms;
-  List<OtherSymptoms>? otherSymptoms;
+  AppointmentDetails({
+    this.tokenNumber,
+    this.date,
+    this.tokenStartTime,
+    this.symptomStartTime,
+    this.symptomFrequency,
+    this.prescriptionImage,
+    this.scheduleType,
+    this.notes,
+    this.patientName,
+    this.patientAge,
+    this.patientId,
+    this.patientUserId,
+    this.treatmentTaken,
+    this.doctorImage,
+    this.doctorName,
+    this.clinicName,
+    this.labName,
+    this.labTest,
+    this.scanName,
+    this.scanTest,
+    this.surgeryName,
+    this.mediezyPatientId,
+    this.patientUserImage,
+    this.vitals,
+    this.allergies,
+    this.doctorMedicines,
+    this.mainSymptoms,
+    this.otherSymptoms,
+  });
 
-  AppointmentDetails(
-      {this.tokenNumber,
-        this.date,
-        this.tokenStartTime,
-        this.symptomStartTime,
-        this.symptomFrequency,
-        this.prescriptionImage,
-        this.scheduleType,
-        this.notes,
-        this.patientName,
-        this.patientAge,
-        this.patientId,
-        this.patientUserId,
-        this.treatmentTaken,
-        this.doctorImage,
-        this.doctorName,
-        this.clinicName,
-        this.labName,
-        this.labTest,
-        this.scanName,
-        this.scanTest,
-        this.surgeryName,
-        this.mediezyPatientId,
-        this.patientUserImage,
-        this.vitals,
-        this.allergies,
-        this.doctorMedicines,
-        this.mainSymptoms,
-        this.otherSymptoms});
-
-  AppointmentDetails.fromJson(Map<String, dynamic> json) {
+  AppointmentDetails.fromJson(dynamic json) {
     tokenNumber = json['token_number'];
     date = json['date'];
     tokenStartTime = json['token_start_time'];
@@ -109,164 +84,159 @@ class AppointmentDetails {
     surgeryName = json['surgery_name'];
     mediezyPatientId = json['mediezy_patient_id'];
     patientUserImage = json['patient_user_image'];
-    vitals =
-    json['vitals'] != null ? Vitals.fromJson(json['vitals']) : null;
+    if (json['vitals'] != null) {
+      vitals = [];
+      json['vitals'].forEach((v) {
+        vitals?.add(Vitals.fromJson(v));
+      });
+    }
     if (json['allergies'] != null) {
-      allergies = <Allergies>[];
+      allergies = [];
       json['allergies'].forEach((v) {
-        allergies!.add(Allergies.fromJson(v));
+        allergies?.add(Allergies.fromJson(v));
       });
     }
     if (json['doctor_medicines'] != null) {
-      doctorMedicines = <DoctorMedicines>[];
+      doctorMedicines = [];
       json['doctor_medicines'].forEach((v) {
-        doctorMedicines!.add(DoctorMedicines.fromJson(v));
+        doctorMedicines?.add(DoctorMedicines.fromJson(v));
       });
     }
     mainSymptoms = json['main_symptoms'] != null
         ? MainSymptoms.fromJson(json['main_symptoms'])
         : null;
     if (json['other_symptoms'] != null) {
-      otherSymptoms = <OtherSymptoms>[];
+      otherSymptoms = [];
       json['other_symptoms'].forEach((v) {
-        otherSymptoms!.add(OtherSymptoms.fromJson(v));
+        otherSymptoms?.add(OtherSymptoms.fromJson(v));
       });
     }
   }
 
+  int? tokenNumber;
+  String? date;
+  String? tokenStartTime;
+  String? symptomStartTime;
+  String? symptomFrequency;
+  String? prescriptionImage;
+  String? scheduleType;
+  String? notes;
+  String? patientName;
+  int? patientAge;
+  int? patientId;
+  int? patientUserId;
+  String? treatmentTaken;
+  String? doctorImage;
+  String? doctorName;
+  String? clinicName;
+  String? labName;
+  String? labTest;
+  String? scanName;
+  String? scanTest;
+  String? surgeryName;
+  String? mediezyPatientId;
+  String? patientUserImage;
+  List<Vitals>? vitals;
+  List<Allergies>? allergies;
+  List<DoctorMedicines>? doctorMedicines;
+  MainSymptoms? mainSymptoms;
+  List<OtherSymptoms>? otherSymptoms;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['token_number'] = tokenNumber;
-    data['date'] = date;
-    data['token_start_time'] = tokenStartTime;
-    data['symptom_start_time'] = symptomStartTime;
-    data['symptom_frequency'] = symptomFrequency;
-    data['prescription_image'] = prescriptionImage;
-    data['schedule_type'] = scheduleType;
-    data['notes'] = notes;
-    data['patient_name'] = patientName;
-    data['patient_age'] = patientAge;
-    data['patient_id'] = patientId;
-    data['patient_user_id'] = patientUserId;
-    data['treatment_taken'] = treatmentTaken;
-    data['doctor_image'] = doctorImage;
-    data['doctor_name'] = doctorName;
-    data['clinic_name'] = clinicName;
-    data['lab_name'] = labName;
-    data['lab_test'] = labTest;
-    data['scan_name'] = scanName;
-    data['scan_test'] = scanTest;
-    data['surgery_name'] = surgeryName;
-    data['mediezy_patient_id'] = mediezyPatientId;
-    data['patient_user_image'] = patientUserImage;
+    final map = <String, dynamic>{};
+    map['token_number'] = tokenNumber;
+    map['date'] = date;
+    map['token_start_time'] = tokenStartTime;
+    map['symptom_start_time'] = symptomStartTime;
+    map['symptom_frequency'] = symptomFrequency;
+    map['prescription_image'] = prescriptionImage;
+    map['schedule_type'] = scheduleType;
+    map['notes'] = notes;
+    map['patient_name'] = patientName;
+    map['patient_age'] = patientAge;
+    map['patient_id'] = patientId;
+    map['patient_user_id'] = patientUserId;
+    map['treatment_taken'] = treatmentTaken;
+    map['doctor_image'] = doctorImage;
+    map['doctor_name'] = doctorName;
+    map['clinic_name'] = clinicName;
+    map['lab_name'] = labName;
+    map['lab_test'] = labTest;
+    map['scan_name'] = scanName;
+    map['scan_test'] = scanTest;
+    map['surgery_name'] = surgeryName;
+    map['mediezy_patient_id'] = mediezyPatientId;
+    map['patient_user_image'] = patientUserImage;
     if (vitals != null) {
-      data['vitals'] = vitals!.toJson();
+      map['vitals'] = vitals?.map((v) => v.toJson()).toList();
     }
     if (allergies != null) {
-      data['allergies'] = allergies!.map((v) => v.toJson()).toList();
+      map['allergies'] = allergies?.map((v) => v.toJson()).toList();
     }
     if (doctorMedicines != null) {
-      data['doctor_medicines'] =
-          doctorMedicines!.map((v) => v.toJson()).toList();
+      map['doctor_medicines'] =
+          doctorMedicines?.map((v) => v.toJson()).toList();
     }
     if (mainSymptoms != null) {
-      data['main_symptoms'] = mainSymptoms!.toJson();
+      map['main_symptoms'] = mainSymptoms?.toJson();
     }
     if (otherSymptoms != null) {
-      data['other_symptoms'] =
-          otherSymptoms!.map((v) => v.toJson()).toList();
+      map['other_symptoms'] = otherSymptoms?.map((v) => v.toJson()).toList();
     }
-    return data;
+    return map;
   }
 }
 
-class Vitals {
-  int? height;
-  int? weight;
-  int? temperature;
-  int? spo2;
-  int? sys;
-  int? dia;
-  int? heartRate;
-  String? temperatureType;
+class OtherSymptoms {
+  OtherSymptoms({
+    this.symtoms,
+  });
 
-  Vitals(
-      {this.height,
-        this.weight,
-        this.temperature,
-        this.spo2,
-        this.sys,
-        this.dia,
-        this.heartRate,
-        this.temperatureType});
-
-  Vitals.fromJson(Map<String, dynamic> json) {
-    height = json['height'];
-    weight = json['weight'];
-    temperature = json['temperature'];
-    spo2 = json['spo2'];
-    sys = json['sys'];
-    dia = json['dia'];
-    heartRate = json['heart_rate'];
-    temperatureType = json['temperature_type'];
+  OtherSymptoms.fromJson(dynamic json) {
+    symtoms = json['symtoms'];
   }
 
+  String? symtoms;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['height'] = height;
-    data['weight'] = weight;
-    data['temperature'] = temperature;
-    data['spo2'] = spo2;
-    data['sys'] = sys;
-    data['dia'] = dia;
-    data['heart_rate'] = heartRate;
-    data['temperature_type'] = temperatureType;
-    return data;
+    final map = <String, dynamic>{};
+    map['symtoms'] = symtoms;
+    return map;
   }
 }
 
-class Allergies {
-  String? allergyName;
-  String? allergyDetails;
+class MainSymptoms {
+  MainSymptoms({
+    this.mainsymptoms,
+  });
 
-  Allergies({this.allergyName, this.allergyDetails});
-
-  Allergies.fromJson(Map<String, dynamic> json) {
-    allergyName = json['allergy_name'];
-    allergyDetails = json['allergy_details'];
+  MainSymptoms.fromJson(dynamic json) {
+    mainsymptoms = json['Mainsymptoms'];
   }
 
+  String? mainsymptoms;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['allergy_name'] = allergyName;
-    data['allergy_details'] = allergyDetails;
-    return data;
+    final map = <String, dynamic>{};
+    map['Mainsymptoms'] = mainsymptoms;
+    return map;
   }
 }
 
 class DoctorMedicines {
-  String? medicineName;
-  String? dosage;
-  String? noOfDays;
-  int? noon;
-  int? night;
-  int? evening;
-  int? morning;
-  int? type;
-  String? medicalStoreName;
+  DoctorMedicines({
+    this.medicineName,
+    this.dosage,
+    this.noOfDays,
+    this.noon,
+    this.night,
+    this.evening,
+    this.morning,
+    this.type,
+    this.medicalStoreName,
+  });
 
-  DoctorMedicines(
-      {this.medicineName,
-        this.dosage,
-        this.noOfDays,
-        this.noon,
-        this.night,
-        this.evening,
-        this.morning,
-        this.type,
-        this.medicalStoreName});
-
-  DoctorMedicines.fromJson(Map<String, dynamic> json) {
+  DoctorMedicines.fromJson(dynamic json) {
     medicineName = json['medicine_name'];
     dosage = json['Dosage'];
     noOfDays = json['NoOfDays'];
@@ -278,49 +248,95 @@ class DoctorMedicines {
     medicalStoreName = json['medical_store_name'];
   }
 
+  String? medicineName;
+  String? dosage;
+  String? noOfDays;
+  int? noon;
+  int? night;
+  int? evening;
+  int? morning;
+  int? type;
+  dynamic medicalStoreName;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['medicine_name'] = medicineName;
-    data['Dosage'] = dosage;
-    data['NoOfDays'] = noOfDays;
-    data['Noon'] = noon;
-    data['night'] = night;
-    data['evening'] = evening;
-    data['morning'] = morning;
-    data['type'] = type;
-    data['medical_store_name'] = medicalStoreName;
-    return data;
+    final map = <String, dynamic>{};
+    map['medicine_name'] = medicineName;
+    map['Dosage'] = dosage;
+    map['NoOfDays'] = noOfDays;
+    map['Noon'] = noon;
+    map['night'] = night;
+    map['evening'] = evening;
+    map['morning'] = morning;
+    map['type'] = type;
+    map['medical_store_name'] = medicalStoreName;
+    return map;
   }
 }
 
-class MainSymptoms {
-  String? mainsymptoms;
+class Allergies {
+  Allergies({
+    this.allergyName,
+    this.allergyDetails,
+  });
 
-  MainSymptoms({this.mainsymptoms});
-
-  MainSymptoms.fromJson(Map<String, dynamic> json) {
-    mainsymptoms = json['Mainsymptoms'];
+  Allergies.fromJson(dynamic json) {
+    allergyName = json['allergy_name'];
+    allergyDetails = json['allergy_details'];
   }
 
+  String? allergyName;
+  String? allergyDetails;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Mainsymptoms'] = mainsymptoms;
-    return data;
+    final map = <String, dynamic>{};
+    map['allergy_name'] = allergyName;
+    map['allergy_details'] = allergyDetails;
+    return map;
   }
 }
 
-class OtherSymptoms {
-  String? symtoms;
+class Vitals {
+  Vitals({
+    this.height,
+    this.weight,
+    this.temperature,
+    this.spo2,
+    this.sys,
+    this.dia,
+    this.heartRate,
+    this.temperatureType,
+  });
 
-  OtherSymptoms({this.symtoms});
-
-  OtherSymptoms.fromJson(Map<String, dynamic> json) {
-    symtoms = json['symtoms'];
+  Vitals.fromJson(dynamic json) {
+    height = json['height'];
+    weight = json['weight'];
+    temperature = json['temperature'];
+    spo2 = json['spo2'];
+    sys = json['sys'];
+    dia = json['dia'];
+    heartRate = json['heart_rate'];
+    temperatureType = json['temperature_type'];
   }
 
+  String? height;
+  String? weight;
+  String? temperature;
+  String? spo2;
+  String? sys;
+  String? dia;
+  String? heartRate;
+  String? temperatureType;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['symtoms'] = symtoms;
-    return data;
+    final map = <String, dynamic>{};
+    map['height'] = height;
+    map['weight'] = weight;
+    map['temperature'] = temperature;
+    map['spo2'] = spo2;
+    map['sys'] = sys;
+    map['dia'] = dia;
+    map['heart_rate'] = heartRate;
+    map['temperature_type'] = temperatureType;
+    return map;
   }
 }
