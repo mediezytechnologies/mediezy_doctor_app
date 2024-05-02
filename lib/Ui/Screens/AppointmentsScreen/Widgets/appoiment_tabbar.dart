@@ -54,7 +54,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const VerticalSpacingWidget(height: 10),
+                         VerticalSpacingWidget(height: 10.h),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: Container(
@@ -62,7 +62,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                               color: Colors.white,
                               // Set the background color of the tab bar
                               borderRadius: BorderRadius.circular(
-                                  10), // Set border radius
+                                  10.r), // Set border radius
                             ),
                             // color: kCardColor,
                             child: TabBar(
@@ -114,10 +114,13 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
                                     ),
-                                    child: const Align(
+                                    child:  Align(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Upcoming",
+                                        "Upcoming", style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                             ),
                                       ),
                                     ),
                                   ),
@@ -128,9 +131,12 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>  with TickerProviderS
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
                                     ),
-                                    child: const Align(
+                                    child:  Align(
                                       alignment: Alignment.center,
-                                      child: Text("Completed"),
+                                      child: Text("Completed",style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                             ),),
                                     ),
                                   ),
                                 ),

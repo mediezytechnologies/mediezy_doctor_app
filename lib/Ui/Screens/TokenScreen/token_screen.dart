@@ -136,7 +136,7 @@ class _TokenScreenState extends State<TokenScreen> {
                             Text(
                               "Select Clinic",
                               style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: 12.sp,
                                   color: kSubTextColor,
                                   fontWeight: FontWeight.w600),
                             ),
@@ -171,7 +171,7 @@ class _TokenScreenState extends State<TokenScreen> {
                             Text(
                               "Select Schedule",
                               style: TextStyle(
-                                  fontSize: 15.sp,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w600,
                                   color: kSubTextColor),
                             ),
@@ -274,7 +274,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   .jumpToPage(currentIndex - 1);
                                             },
                                             icon: Icon(Icons.arrow_back_ios,
-                                                color: kMainColor, size: 30.sp),
+                                                color: kMainColor, size: 25.sp),
                                           ),
                                           TokenShowCardWidget(
                                             tokenNumber: getCurrentTokenModel
@@ -290,7 +290,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   .jumpToPage(currentIndex + 1);
                                             },
                                             icon: Icon(Icons.arrow_forward_ios,
-                                                color: kMainColor, size: 30.sp),
+                                                color: kMainColor, size: 25.sp),
                                           ),
                                         ],
                                       ),
@@ -326,7 +326,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                 .tokens![index]
                                                                 .userImage
                                                                 .toString(),
-                                                        radius: 45)),
+                                                        radius: 45.r)),
                                                 // const HorizontalSpacingWidget(
                                                 //     width: 40),
                                                 //! name
@@ -345,7 +345,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: 15.sp),
+                                                            fontSize: 12.sp),
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -374,7 +374,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
-                                                                            13.sp,
+                                                                            12.sp,
                                                                         fontWeight:
                                                                             FontWeight.bold,
                                                                       ),
@@ -430,7 +430,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           child: Text(
                                                             "Pending",
                                                             style: TextStyle(
-                                                              fontSize: 15.sp,
+                                                              fontSize: 10.sp,
                                                               color: kCardColor,
                                                               fontWeight:
                                                                   FontWeight
@@ -447,14 +447,14 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        4),
+                                                                        4.r),
                                                           ),
                                                           child: Center(
                                                             child: Text(
                                                               // "12",
                                                               "${length! - currentTokenLength!}",
                                                               style: TextStyle(
-                                                                fontSize: 20.sp,
+                                                                fontSize: 12.sp,
                                                                 color:
                                                                     kTextColor,
                                                                 fontWeight:
@@ -483,7 +483,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.sp,
                                                       color: kSubTextColor),
                                                 ),
                                                 Text(
@@ -491,7 +491,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      fontSize: 14.sp,
+                                                      fontSize: 12.sp,
                                                       color: kSubTextColor),
                                                 ),
                                               ],
@@ -508,7 +508,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      fontSize: 15.sp,
+                                                      fontSize: 13.sp,
                                                       color: kTextColor),
                                                 ),
                                                 IconButton(
@@ -526,7 +526,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   },
                                                   icon: Icon(
                                                     Icons.call,
-                                                    size: 25.sp,
+                                                    size: 16.sp,
                                                     color: kMainColor,
                                                   ),
                                                 )
@@ -537,7 +537,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                               'Appointment for',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 14.sp,
+                                                  fontSize: 12.sp,
                                                   color: kSubTextColor),
                                             ),
                                             const VerticalSpacingWidget(
@@ -550,7 +550,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   .toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 14.sp,
+                                                  fontSize: 12.sp,
                                                   color: kTextColor),
                                             ),
                                             // const VerticalSpacingWidget(height: 5),
@@ -564,7 +564,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       .join(', '),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 14.sp,
+                                                    fontSize: 12.sp,
                                                     color: kTextColor,
                                                   ),
                                                 ),
@@ -586,7 +586,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 14.sp,
+                                                          fontSize: 12.sp,
                                                           color: kSubTextColor),
                                                     ),
                                                     const VerticalSpacingWidget(
@@ -599,7 +599,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 15.sp,
+                                                          fontSize: 12.sp,
                                                           color: kTextColor),
                                                     ),
                                                   ],
@@ -613,7 +613,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 14.sp,
+                                                          fontSize: 12.sp,
                                                           color: kSubTextColor),
                                                     ),
                                                     const VerticalSpacingWidget(
@@ -626,7 +626,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
-                                                          fontSize: 15.sp,
+                                                          fontSize: 12.sp,
                                                           color: kTextColor),
                                                     ),
                                                   ],
@@ -715,7 +715,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       style: TextStyle(
                                                                           fontWeight:
                                                                               FontWeight.w500,
-                                                                          fontSize: 13.sp,
+                                                                          fontSize: 12.sp,
                                                                           color: kSubTextColor),
                                                                     ),
                                                                     Text(
@@ -726,7 +726,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       style: TextStyle(
                                                                           fontWeight:
                                                                               FontWeight.w500,
-                                                                          fontSize: 14.sp,
+                                                                          fontSize: 12.sp,
                                                                           color: kTextColor),
                                                                     ),
                                                                     Text(
@@ -737,7 +737,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       style: TextStyle(
                                                                           fontWeight:
                                                                               FontWeight.w500,
-                                                                          fontSize: 14.sp,
+                                                                          fontSize: 12.sp,
                                                                           color: kTextColor),
                                                                     ),
                                                                     Text(
@@ -748,7 +748,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       style: TextStyle(
                                                                           fontWeight:
                                                                               FontWeight.w500,
-                                                                          fontSize: 14.sp,
+                                                                          fontSize: 12.sp,
                                                                           color: kTextColor),
                                                                     )
                                                                   ],
@@ -812,7 +812,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        8),
+                                                                        8.r),
                                                             border: Border.all(
                                                                 width: .5,
                                                                 color:
@@ -832,8 +832,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         1
                                                                     ? kMainColor
                                                                     : kCardColor,
-                                                                height: 40.h,
-                                                                width: 40.w,
+                                                                height: 30.h,
+                                                                width: 30.w,
                                                               ),
                                                               const HorizontalSpacingWidget(
                                                                   width: 5),
@@ -842,7 +842,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize:
-                                                                      16.sp,
+                                                                      12.sp,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
@@ -970,7 +970,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
-                                                                          16.sp,
+                                                                          12.sp,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w600,
@@ -1053,7 +1053,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   Text(
                                                                     "Check Out",
                                                                     style: TextStyle(
-                                                                        fontSize: 16
+                                                                        fontSize: 12
                                                                             .sp,
                                                                         fontWeight:
                                                                             FontWeight

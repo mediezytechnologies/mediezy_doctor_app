@@ -12,7 +12,7 @@ class TokenShowCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120.h,
+      height: 130.h,
       width: 120.w,
       decoration: BoxDecoration(
         color: kMainColor,

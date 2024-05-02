@@ -1,5 +1,7 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -34,10 +36,10 @@ class AppointmentCardWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Container(
-        height: 70.h,
+        height: 90.h,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: kCardColor,
+        //  color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -47,12 +49,13 @@ class AppointmentCardWidget extends StatelessWidget {
               fadeDuration: const Duration(milliseconds: 400),
               child: PatientImageWidget(
                 patientImage: patientImage,
-                radius: 30,
+                radius: 30.r,
               ),
             ),
             const HorizontalSpacingWidget(width: 10),
-            SizedBox(
-              width: 180.w,
+            Container(
+          // color: const Color.fromARGB(255, 23, 22, 21),
+              width: 190.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -61,7 +64,7 @@ class AppointmentCardWidget extends StatelessWidget {
                   Text(
                     patientName,
                     style: TextStyle(
-                      fontSize: 15.sp,
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 1,
@@ -73,7 +76,7 @@ class AppointmentCardWidget extends StatelessWidget {
                     child: Text(
                       mainSymptoms,
                       style: TextStyle(
-                          fontSize: 12.sp,
+                          fontSize: 8.sp,
                           fontWeight: FontWeight.w400,
                           color: kSubTextColor),
                       maxLines: 1,
@@ -87,7 +90,7 @@ class AppointmentCardWidget extends StatelessWidget {
                           : Text(
                               "Patient Id : ",
                               style: TextStyle(
-                                  fontSize: 10.sp,
+                                  fontSize: 9.sp,
                                   fontWeight: FontWeight.w400,
                                   color: kSubTextColor),
                             ),
@@ -96,7 +99,7 @@ class AppointmentCardWidget extends StatelessWidget {
                           : Text(
                               mediezyId,
                               style: TextStyle(
-                                fontSize: 10.sp,
+                                fontSize: 9.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                               maxLines: 1,
@@ -110,7 +113,7 @@ class AppointmentCardWidget extends StatelessWidget {
                       Text(
                         "Token No : ${tokenNumber.toString()}",
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 8.sp,
                           color: kTextColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -118,7 +121,7 @@ class AppointmentCardWidget extends StatelessWidget {
                       Text(
                         " | ",
                         style: TextStyle(
-                          fontSize: 11.sp,
+                          fontSize: 9.sp,
                           color: kTextColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -126,7 +129,7 @@ class AppointmentCardWidget extends StatelessWidget {
                       Text(
                         time,
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 9.sp,
                           color: kTextColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -160,12 +163,12 @@ class AppointmentCardWidget extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             backgroundColor: kMainColor,
-                            radius: 5,
+                            radius: 5.r,
                           ),
                           const HorizontalSpacingWidget(width: 5),
                           Text(
                             onlineStatus,
-                            style: TextStyle(color: kMainColor),
+                            style: TextStyle(color: kMainColor,fontSize: 9.sp),
                           )
                         ],
                       ),

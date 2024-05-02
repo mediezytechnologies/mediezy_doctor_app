@@ -1,5 +1,6 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -48,8 +49,8 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: 70.h,
-              width: double.infinity,
+              height: 100.h,
+              width: double .infinity,
               decoration: BoxDecoration(
                 color: kCardColor,
                 borderRadius: BorderRadius.circular(10),
@@ -61,95 +62,92 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                     scaleDuration: const Duration(milliseconds: 400),
                     fadeDuration: const Duration(milliseconds: 400),
                     child: PatientImageWidget(
-                        patientImage: widget.userImage, radius: 30),
+                        patientImage: widget.userImage, radius: 30.r),
                   ),
-                  const HorizontalSpacingWidget(width: 10),
-                  SizedBox(
-                    width: 180.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //! name
-                        Text(
-                          widget.patientName,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.bold,
+                   HorizontalSpacingWidget(width: 7.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //! name
+                      Text(
+                        widget.patientName,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Patient Id : ",
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w400,
+                                color: kSubTextColor),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Patient Id : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          Text(
+                            widget.mediezyPatientId,
+                            // patientsGetModel.patientData![index].age.toString(),
+                            style: TextStyle(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              widget.mediezyPatientId,
-                              // patientsGetModel.patientData![index].age.toString(),
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Age : ",
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w400,
+                                color: kSubTextColor),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            widget.age,
+                            // patientsGetModel.patientData![index].age.toString(),
+                            style: TextStyle(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Age : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Gender : ",
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w400,
+                                color: kSubTextColor),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            widget.gender == "1" ? "Male" : "Female",
+                            style: TextStyle(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              widget.age,
-                              // patientsGetModel.patientData![index].age.toString(),
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Gender : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              widget.gender == "1" ? "Male" : "Female",
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),

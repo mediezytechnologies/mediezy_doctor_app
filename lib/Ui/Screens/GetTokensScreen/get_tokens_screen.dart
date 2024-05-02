@@ -71,7 +71,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (ctx) =>  BottomNavigationControlWidget()));
+                  builder: (ctx) => BottomNavigationControlWidget()));
           return Future.value(false);
         },
         child: Scaffold(
@@ -212,21 +212,44 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                       clinicId: selectedClinicId));
                             },
                             activeColor: kMainColor,
+                             headerProps: EasyHeaderProps(
+                  selectedDateStyle: TextStyle(
+                      fontSize: 9.0.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                  monthStyle: TextStyle(
+                      fontSize: 9.0.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
+                  selectedDateFormat: SelectedDateFormat.monthOnly,
+                ),
                             dayProps: EasyDayProps(
                                 height: 80.h,
                                 width: 65.w,
                                 activeDayNumStyle: TextStyle(
                                     color: kCardColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20.sp),
+                                    fontSize: 14.sp),
+                                inactiveDayNumStyle: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainColor),
+                                inactiveDayStrStyle: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainColor),
                                 activeDayStrStyle: TextStyle(
                                     color: kCardColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
                                 activeMothStrStyle: TextStyle(
                                     color: kCardColor,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
+                                inactiveMothStrStyle: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: kMainColor),
                                 todayHighlightStyle:
                                     TodayHighlightStyle.withBackground,
                                 todayHighlightColor: const Color(0xffE1ECC8),
@@ -252,7 +275,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                 "Available",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -271,7 +294,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                 "Timeout",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -290,7 +313,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                 "Booked",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -309,7 +332,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                 "Reserved",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12.sp),
+                                    fontSize: 10.sp),
                               )
                             ],
                           ),
@@ -353,10 +376,10 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                               if (getTokenModel
                                       .schedule?.schedule1?.isNotEmpty ==
                                   true)
-                                const Text(
+                                 Text(
                                   "Schedule 1",
                                   style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.bold),
                                 ),
                               if (getTokenModel
@@ -370,11 +393,11 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   itemCount:
                                       getTokenModel.schedule!.schedule1!.length,
                                   gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
                                     crossAxisCount: 5,
-                                    mainAxisExtent: 78,
+                                    mainAxisExtent: 65.h,
                                   ),
                                   itemBuilder: (context, index) {
                                     return TokenCardWidget(

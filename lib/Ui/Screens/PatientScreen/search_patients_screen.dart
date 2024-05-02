@@ -57,12 +57,12 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                         color: kMainColor,
                       ),
                       hintStyle:
-                          TextStyle(fontSize: 15.sp, color: kSubTextColor),
-                      hintText: "Search Your Patients",
+                          TextStyle(fontSize: 10.sp, color: kSubTextColor),
+                      hintText: "Search Your Patientsdsfdsfsdfgadsfasdf",
                       filled: true,
                       fillColor: kCardColor,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30.r),
                         borderSide: BorderSide.none,
                       ),
                     ),
