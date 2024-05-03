@@ -40,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
                 profileGetModel =
                     BlocProvider.of<ProfileGetBloc>(context).profileGetModel;
                 return SizedBox(
-                 
+                
                   height: size.height*0.25,
                   child: DrawerHeader(
                     decoration: BoxDecoration(color: kMainColor),

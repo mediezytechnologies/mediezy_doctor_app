@@ -34,6 +34,7 @@ class PatientsCardWidget extends StatefulWidget {
 class _PatientsCardWidgetState extends State<PatientsCardWidget> {
   @override
   Widget build(BuildContext context) {
+    final size=MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -73,7 +74,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                       Text(
                         widget.patientName,
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: size.width>450?13.sp: 15.sp,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 1,
@@ -84,7 +85,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           Text(
                             "Patient Id : ",
                             style: TextStyle(
-                                fontSize: 8.sp,
+                                fontSize: size.width>450?8.sp:13.sp,
                                 fontWeight: FontWeight.w400,
                                 color: kSubTextColor),
                             maxLines: 1,
@@ -94,7 +95,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                             widget.mediezyPatientId,
                             // patientsGetModel.patientData![index].age.toString(),
                             style: TextStyle(
-                              fontSize: 9.sp,
+                              fontSize:  size.width>450?9.sp:14.sp,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -107,7 +108,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           Text(
                             "Age : ",
                             style: TextStyle(
-                                fontSize: 8.sp,
+                                fontSize:  size.width>450?8.sp:13.sp,
                                 fontWeight: FontWeight.w400,
                                 color: kSubTextColor),
                             maxLines: 1,
@@ -117,7 +118,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                             widget.age,
                             // patientsGetModel.patientData![index].age.toString(),
                             style: TextStyle(
-                              fontSize: 9.sp,
+                              fontSize:  size.width>450?9.sp:14.sp,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -130,7 +131,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           Text(
                             "Gender : ",
                             style: TextStyle(
-                                fontSize: 8.sp,
+                                fontSize:  size.width>450?8.sp:13.sp,
                                 fontWeight: FontWeight.w400,
                                 color: kSubTextColor),
                             maxLines: 1,
@@ -139,7 +140,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           Text(
                             widget.gender == "1" ? "Male" : "Female",
                             style: TextStyle(
-                              fontSize: 9.sp,
+                              fontSize: size.width>450?9.sp:14.sp,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,

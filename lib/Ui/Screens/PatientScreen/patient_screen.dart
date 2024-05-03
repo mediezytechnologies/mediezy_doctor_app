@@ -75,325 +75,327 @@ class _PatientScreenState extends State<PatientScreen> {
             centerTitle: true,
             automaticallyImplyLeading: false,
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SearchPatientsScreen(),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SearchPatientsScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 40.h,
+                      width: 340.w,
+                      decoration: BoxDecoration(
+                        color: kCardColor,
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
-                    );
-                  },
-                  child: Container(
-                    height: 40.h,
-                    width: 340.w,
-                    decoration: BoxDecoration(
-                      color: kCardColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Search your Patients",
-                            style: TextStyle(
-                                fontSize: 15.sp, color: kSubTextColor),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: kMainColor,
-                            radius: 16,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Icon(
-                                IconlyLight.search,
-                                color: kCardColor,
-                                size: 16.sp,
-                              ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Search your Patients",
+                              style: TextStyle(
+                                  fontSize: 15.sp, color: kSubTextColor),
                             ),
-                          )
-                        ],
+                            CircleAvatar(
+                              backgroundColor: kMainColor,
+                              radius: 16.r,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Icon(
+                                  IconlyLight.search,
+                                  color: kCardColor,
+                                  size: 16.sp,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const VerticalSpacingWidget(height: 5),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Text(
-                          "Select Clinic",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
-                        ),
-                      ),
-                      const VerticalSpacingWidget(height: 5),
-                      GetBuilder<HospitalController>(builder: (clx) {
-                        return CustomDropDown(
-                          width: 210.w,
-                          value: dController.initialIndex,
-                          items: dController.hospitalDetails!.map((e) {
-                            return DropdownMenuItem(
-                              value: e.clinicId.toString(),
-                              child: Text(e.clinicName!),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            log(newValue!);
-                            dController.dropdownValueChanging(
-                                newValue, dController.initialIndex!);
-                            BlocProvider.of<PatientsGetBloc>(context).add(
-                                FetchPatients(
-                                    clinicId: dController.initialIndex!));
-                          },
-                        );
-                      }),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const VerticalSpacingWidget(height: 5),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Text(
-                          "Sort",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
-                        ),
-                      ),
-                      const VerticalSpacingWidget(height: 5),
-                      CustomDropDown(
-                        width: 130.w,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                            setState(() {
-                              dropdownValue = newValue;
-                              if (newValue == 'Custom') {
-                                _showCustomAlertDialog(context);
-                              } else {
-                                // Handle other options
-                              }
-                            });
-                            BlocProvider.of<PatientsGetBloc>(context).add(
-                                FetchSortPatients(
-                                    sort: dropdownValue,
-                                    clinicId: dController.initialIndex!,
-                                    fromDate: _startRange,
-                                    toDate: _endRange));
-                            // print(dropdownvalue);
-                          });
-                        },
-                        value: dropdownValue,
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items),
-                          );
-                        }).toList(),
-                      ),
-                      // Container(
-                      //   height: 40.h,
-                      //   width: 130.w,
-                      //   decoration: BoxDecoration(
-                      //       color: kCardColor,
-                      //       borderRadius: BorderRadius.circular(5),
-                      //       border: Border.all(color: const Color(0xFF9C9C9C))),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      //     child: Center(
-                      //       child: DropdownButtonFormField(
-                      //         iconEnabledColor: kMainColor,
-                      //         decoration:
-                      //             const InputDecoration.collapsed(hintText: ''),
-                      //         value: dropdownValue,
-                      //         style: TextStyle(
-                      //             fontSize: 14.sp,
-                      //             fontWeight: FontWeight.w500,
-                      //             color: kTextColor),
-                      //         icon: const Icon(Icons.keyboard_arrow_down),
-                      //         items: items.map((String items) {
-                      //           return DropdownMenuItem(
-                      //             value: items,
-                      //             child: Text(items),
-                      //           );
-                      //         }).toList(),
-                      //         onChanged: (String? newValue) {
-                      //           setState(() {
-                      //             dropdownValue = newValue!;
-                      //             setState(() {
-                      //               dropdownValue = newValue;
-                      //               if (newValue == 'Custom') {
-                      //                 _showCustomAlertDialog(context);
-                      //               } else {
-                      //                 // Handle other options
-                      //               }
-                      //             });
-                      //             BlocProvider.of<PatientsGetBloc>(context).add(
-                      //                 FetchSortPatients(
-                      //                     sort: dropdownValue,
-                      //                     clinicId: dController.initialIndex!,
-                      //                     fromDate: _startRange,
-                      //                     toDate: _endRange));
-                      //             // print(dropdownvalue);
-                      //           });
-                      //         },
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ],
-              ),
-              // const VerticalSpacingWidget(height: 5),
-
-              const VerticalSpacingWidget(height: 5),
-              BlocBuilder<PatientsGetBloc, PatientsGetState>(
-                builder: (context, state) {
-                  if (state is PatientsGetLoading) {
-                    return SizedBox(
-                      height: 400.h,
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: 7, // Choose a number of shimmer items
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 80.w, // Adjust width as needed
-                                    height: 80.h, // Adjust height as needed
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: double.infinity,
-                                          height: 16.h,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(height: 5.h),
-                                        Container(
-                                          width: 150.w,
-                                          // Adjust width as needed
-                                          height: 12.h,
-                                          color: Colors.white,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  }
-                  if (state is PatientsGetError) {
-                    return const Center(
-                      child: Text("Something Went Wrong"),
-                    );
-                  }
-                  if (state is PatientsGetLoaded) {
-                    patientsGetModel = BlocProvider.of<PatientsGetBloc>(context)
-                        .patientsGetModel;
-                    if (patientsGetModel.patientData == null ||
-                        patientsGetModel.patientData!.isEmpty) {
-                      return Expanded(
-                        child: Center(
-                            child: Image(
-                          height: 200.h,
-                          width: 200.w,
-                          // color: kMainColor,
-                          image: const AssetImage(
-                              "assets/images/You ahve no patients-01.png"),
-                          color: kMainColor,
-                        )),
-                      );
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const VerticalSpacingWidget(height: 5),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: Text(
-                            "Patient Count (${patientsGetModel.patientData!.length.toString()})",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            "Select Clinic",
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: kSubTextColor),
                           ),
                         ),
-                        SizedBox(
-                          height: 440.h,
-                          // color: Colors.yellow,
-                          child: ListView.separated(
+                        const VerticalSpacingWidget(height: 5),
+                        GetBuilder<HospitalController>(builder: (clx) {
+                          return CustomDropDown(
+                            width: 210.w,
+                            value: dController.initialIndex,
+                            items: dController.hospitalDetails!.map((e) {
+                              return DropdownMenuItem(
+                                value: e.clinicId.toString(),
+                                child: Text(e.clinicName!),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              log(newValue!);
+                              dController.dropdownValueChanging(
+                                  newValue, dController.initialIndex!);
+                              BlocProvider.of<PatientsGetBloc>(context).add(
+                                  FetchPatients(
+                                      clinicId: dController.initialIndex!));
+                            },
+                          );
+                        }),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const VerticalSpacingWidget(height: 5),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          child: Text(
+                            "Sort",
+                            style: TextStyle(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600,
+                                color: kSubTextColor),
+                          ),
+                        ),
+                        const VerticalSpacingWidget(height: 5),
+                        CustomDropDown(
+                          width: 130.w,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                              setState(() {
+                                dropdownValue = newValue;
+                                if (newValue == 'Custom') {
+                                  _showCustomAlertDialog(context);
+                                } else {
+                                  // Handle other options
+                                }
+                              });
+                              BlocProvider.of<PatientsGetBloc>(context).add(
+                                  FetchSortPatients(
+                                      sort: dropdownValue,
+                                      clinicId: dController.initialIndex!,
+                                      fromDate: _startRange,
+                                      toDate: _endRange));
+                              // print(dropdownvalue);
+                            });
+                          },
+                          value: dropdownValue,
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                        ),
+                        // Container(
+                        //   height: 40.h,
+                        //   width: 130.w,
+                        //   decoration: BoxDecoration(
+                        //       color: kCardColor,
+                        //       borderRadius: BorderRadius.circular(5),
+                        //       border: Border.all(color: const Color(0xFF9C9C9C))),
+                        //   child: Padding(
+                        //     padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        //     child: Center(
+                        //       child: DropdownButtonFormField(
+                        //         iconEnabledColor: kMainColor,
+                        //         decoration:
+                        //             const InputDecoration.collapsed(hintText: ''),
+                        //         value: dropdownValue,
+                        //         style: TextStyle(
+                        //             fontSize: 14.sp,
+                        //             fontWeight: FontWeight.w500,
+                        //             color: kTextColor),
+                        //         icon: const Icon(Icons.keyboard_arrow_down),
+                        //         items: items.map((String items) {
+                        //           return DropdownMenuItem(
+                        //             value: items,
+                        //             child: Text(items),
+                        //           );
+                        //         }).toList(),
+                        //         onChanged: (String? newValue) {
+                        //           setState(() {
+                        //             dropdownValue = newValue!;
+                        //             setState(() {
+                        //               dropdownValue = newValue;
+                        //               if (newValue == 'Custom') {
+                        //                 _showCustomAlertDialog(context);
+                        //               } else {
+                        //                 // Handle other options
+                        //               }
+                        //             });
+                        //             BlocProvider.of<PatientsGetBloc>(context).add(
+                        //                 FetchSortPatients(
+                        //                     sort: dropdownValue,
+                        //                     clinicId: dController.initialIndex!,
+                        //                     fromDate: _startRange,
+                        //                     toDate: _endRange));
+                        //             // print(dropdownvalue);
+                        //           });
+                        //         },
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ],
+                ),
+                // const VerticalSpacingWidget(height: 5),
+            
+                const VerticalSpacingWidget(height: 5),
+                BlocBuilder<PatientsGetBloc, PatientsGetState>(
+                  builder: (context, state) {
+                    if (state is PatientsGetLoading) {
+                      return SizedBox(
+                        height: 400.h,
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: ListView.builder(
                             padding: EdgeInsets.zero,
-                            itemCount: patientsGetModel.patientData!.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    const VerticalSpacingWidget(height: 3),
+                            itemCount: 7, // Choose a number of shimmer items
                             itemBuilder: (context, index) {
-                              return PatientsCardWidget(
-                                patientId: patientsGetModel
-                                    .patientData![index].id
-                                    .toString(),
-                                userId: patientsGetModel
-                                    .patientData![index].userId
-                                    .toString(),
-                                patientName: patientsGetModel
-                                    .patientData![index].firstname
-                                    .toString(),
-                                age: patientsGetModel
-                                    .patientData![index].displayAge
-                                    .toString(),
-                                gender: patientsGetModel
-                                    .patientData![index].gender
-                                    .toString(),
-                                userImage: patientsGetModel
-                                            .patientData![index].userImage ==
-                                        null
-                                    ? ""
-                                    : patientsGetModel
-                                        .patientData![index].userImage
-                                        .toString(),
-                                mediezyPatientId: patientsGetModel
-                                    .patientData![index].mediezyPatientId
-                                    .toString(),
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 80.w, // Adjust width as needed
+                                      height: 80.h, // Adjust height as needed
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: double.infinity,
+                                            height: 16.h,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          Container(
+                                            width: 150.w,
+                                            // Adjust width as needed
+                                            height: 12.h,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           ),
                         ),
-                      ],
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ],
+                      );
+                    }
+                    if (state is PatientsGetError) {
+                      return const Center(
+                        child: Text("Something Went Wrong"),
+                      );
+                    }
+                    if (state is PatientsGetLoaded) {
+                      patientsGetModel = BlocProvider.of<PatientsGetBloc>(context)
+                          .patientsGetModel;
+                      if (patientsGetModel.patientData == null ||
+                          patientsGetModel.patientData!.isEmpty) {
+                        return Expanded(
+                          child: Center(
+                              child: Image(
+                            height: 200.h,
+                            width: 200.w,
+                            // color: kMainColor,
+                            image: const AssetImage(
+                                "assets/images/You ahve no patients-01.png"),
+                            color: kMainColor,
+                          )),
+                        );
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Text(
+                              "Patient Count (${patientsGetModel.patientData!.length.toString()})",
+                              style:  TextStyle(fontWeight: FontWeight.bold,fontSize: 11.sp),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 440.h,
+                            // color: Colors.yellow,
+                            child: ListView.separated(
+                              padding: EdgeInsets.zero,
+                              itemCount: patientsGetModel.patientData!.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      const VerticalSpacingWidget(height: 3),
+                              itemBuilder: (context, index) {
+                                return PatientsCardWidget(
+                                  patientId: patientsGetModel
+                                      .patientData![index].id
+                                      .toString(),
+                                  userId: patientsGetModel
+                                      .patientData![index].userId
+                                      .toString(),
+                                  patientName: patientsGetModel
+                                      .patientData![index].firstname
+                                      .toString(),
+                                  age: patientsGetModel
+                                      .patientData![index].displayAge
+                                      .toString(),
+                                  gender: patientsGetModel
+                                      .patientData![index].gender
+                                      .toString(),
+                                  userImage: patientsGetModel
+                                              .patientData![index].userImage ==
+                                          null
+                                      ? ""
+                                      : patientsGetModel
+                                          .patientData![index].userImage
+                                          .toString(),
+                                  mediezyPatientId: patientsGetModel
+                                      .patientData![index].mediezyPatientId
+                                      .toString(),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
           )),
     );
   }

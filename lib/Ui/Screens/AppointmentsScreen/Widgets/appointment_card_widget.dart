@@ -42,6 +42,7 @@ class AppointmentCardWidget extends StatelessWidget {
         height: 90.h,
         width: double.infinity,
         decoration: BoxDecoration(
+          color: kCardColor,
         //  color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
@@ -57,7 +58,7 @@ class AppointmentCardWidget extends StatelessWidget {
             ),
             const HorizontalSpacingWidget(width: 10),
             Container(
-          // color: const Color.fromARGB(255, 23, 22, 21),
+      //color: const Color.fromARGB(255, 23, 22, 21),
               width: 190.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
