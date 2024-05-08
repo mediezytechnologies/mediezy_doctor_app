@@ -4,16 +4,12 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:keyboard_actions/keyboard_actions_config.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
@@ -167,19 +163,6 @@ class _ScheduleTokenDetailsScreenState
     timeDuration1Controller.dispose();
     timeDurationFocusController.dispose();
     super.dispose();
-  }
-
-  KeyboardActionsConfig buildConfig(BuildContext context) {
-    return KeyboardActionsConfig(
-      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-      keyboardBarColor: Colors.grey[200],
-      nextFocus: true,
-      actions: [
-        KeyboardActionsItem(
-          focusNode: timeDurationFocusController,
-        ),
-      ],
-    );
   }
 
   @override
@@ -689,17 +672,20 @@ class _ScheduleTokenDetailsScreenState
                                             fillColor: kCardColor,
                                             enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: kMainColor),
-                                              ),
+                                                    color: kMainColor)),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              borderSide:
+                                                  BorderSide(color: kMainColor),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      const HorizontalSpacingWidget(width: 5),
-                                      const HorizontalSpacingWidget(width: 5),
                                     ],
                                   ),
                                 ),
+                                const HorizontalSpacingWidget(width: 5),
                               ],
                             ),
                             const VerticalSpacingWidget(height: 10),

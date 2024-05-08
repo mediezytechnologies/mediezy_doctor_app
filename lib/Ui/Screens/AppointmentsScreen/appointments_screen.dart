@@ -102,15 +102,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   );
                 },
                 activeColor: kMainColor,
-                headerProps: EasyHeaderProps(
-                  selectedDateStyle: TextStyle(
-                      fontSize: 9.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black),
-                  monthStyle: TextStyle(
-                      fontSize: 9.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black),
+                headerProps: const EasyHeaderProps(
                   selectedDateFormat: SelectedDateFormat.monthOnly,
                 ),
                 dayProps: EasyDayProps(
@@ -120,7 +112,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   dayStructure: DayStructure.dayNumDayStr,
                   inactiveDayStyle: DayStyle(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: kMainColor)),
                     dayNumStyle: TextStyle(
                         fontSize: size.width > 400 ? 19.sp : 15.sp,
@@ -130,35 +123,16 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       fontSize: size.width > 400 ? 9.sp : 12.sp,
                       color: Colors.grey),
                   activeDayStyle: DayStyle(
-                    borderRadius: 10.r,
+                    borderRadius: 10,
                     dayNumStyle: TextStyle(
                         fontSize: size.width > 400 ? 15.sp : 18.sp,
                         fontWeight: FontWeight.bold,
                         color: kCardColor),
                   ),
-                  inactiveMothStrStyle: TextStyle(
-                      fontSize: 9.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: kMainColor),
-                  inactiveDayNumStyle: TextStyle(
-                      fontSize: 9.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: kMainColor),
-                  inactiveDayStrStyle: TextStyle(
-                      fontSize: 9.0.sp,
-                      fontWeight: FontWeight.w400,
-                      color: kMainColor),
                   activeDayStrStyle: TextStyle(
                       fontSize: size.width > 400 ? 9.sp : 12.sp,
                       fontWeight: FontWeight.w400,
                       color: kCardColor),
-                  disabledDayStyle: DayStyle(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                        border: Border.all(color: kMainColor)),
-                    dayNumStyle:
-                        TextStyle(fontSize: 18.0.sp, color: kMainColor),
-                  ),
                 ),
               ),
               const VerticalSpacingWidget(height: 5),

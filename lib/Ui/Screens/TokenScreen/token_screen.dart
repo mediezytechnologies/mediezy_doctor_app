@@ -85,7 +85,7 @@ class _TokenScreenState extends State<TokenScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // int? selectedValue = items['Schedule 1'];
-    final size =MediaQuery.of(context).size;
+   
     return RefreshIndicator(
       onRefresh: () async {
         // Add your refresh logic here, such as fetching new data

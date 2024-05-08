@@ -1,14 +1,18 @@
+
+
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/CustomSchedule/custom_schedule_screen.dart';
-import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/LeaveScreen/leave_screen.dart';
-import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/remove_token_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/reservation_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_token_details_screen.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../CommonWidgets/vertical_spacing_widget.dart';
+import 'LeaveScreen/leave_screen.dart';
+import 'RemoveTokens/remove_token_screen.dart';
 
 class SheduleTokenScreen extends StatefulWidget {
   const SheduleTokenScreen({super.key});
@@ -209,4 +213,3 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
     );
   }
 }
-//fjksdjkfdfjksa

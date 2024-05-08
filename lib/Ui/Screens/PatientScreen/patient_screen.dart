@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -20,7 +21,6 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/search_patients_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import '../../../Repositary/Bloc/HealthRecords/PatientsGet/patients_get_bloc.dart';
 
 class PatientScreen extends StatefulWidget {
   const PatientScreen({super.key});
@@ -79,25 +79,15 @@ class _PatientScreenState extends State<PatientScreen> {
             centerTitle: true,
             automaticallyImplyLeading: false,
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const SearchPatientsScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 40.h,
-                      width: 340.w,
-                      decoration: BoxDecoration(
-                        color: kCardColor,
-                        borderRadius: BorderRadius.circular(20.r),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SearchPatientsScreen(),
                       ),
                     );
                   },
@@ -128,20 +118,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                 size: size.width > 400 ? 12.sp : 18.sp,
                               ),
                             ),
-                            CircleAvatar(
-                              backgroundColor: kMainColor,
-                              radius: 16.r,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Icon(
-                                  IconlyLight.search,
-                                  color: kCardColor,
-                                  size: 16.sp,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -283,9 +261,8 @@ class _PatientScreenState extends State<PatientScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const VerticalSpacingWidget(height: 5),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Text(
                             "Patient Count (${patientsGetModel.patientData!.length.toString()})",
                             style: size.width > 400
@@ -298,127 +275,48 @@ class _PatientScreenState extends State<PatientScreen> {
                           // color: Colors.yellow,
                           child: ListView.separated(
                             padding: EdgeInsets.zero,
-                            itemCount: 7, // Choose a number of shimmer items
+                            itemCount: patientsGetModel.patientData!.length,
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const VerticalSpacingWidget(height: 3),
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 80.w, // Adjust width as needed
-                                      height: 80.h, // Adjust height as needed
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 10.w),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            height: 16.h,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(height: 5.h),
-                                          Container(
-                                            width: 150.w,
-                                            // Adjust width as needed
-                                            height: 12.h,
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              return PatientsCardWidget(
+                                patientId: patientsGetModel
+                                    .patientData![index].id
+                                    .toString(),
+                                userId: patientsGetModel
+                                    .patientData![index].userId
+                                    .toString(),
+                                patientName: patientsGetModel
+                                    .patientData![index].firstname
+                                    .toString(),
+                                age: patientsGetModel
+                                    .patientData![index].displayAge
+                                    .toString(),
+                                gender: patientsGetModel
+                                    .patientData![index].gender
+                                    .toString(),
+                                userImage: patientsGetModel
+                                            .patientData![index].userImage ==
+                                        null
+                                    ? ""
+                                    : patientsGetModel
+                                        .patientData![index].userImage
+                                        .toString(),
+                                mediezyPatientId: patientsGetModel
+                                    .patientData![index].mediezyPatientId
+                                    .toString(),
                               );
                             },
                           ),
                         ),
-                      );
-                    }
-                    if (state is PatientsGetError) {
-                      return const Center(
-                        child: Text("Something Went Wrong"),
-                      );
-                    }
-                    if (state is PatientsGetLoaded) {
-                      patientsGetModel = BlocProvider.of<PatientsGetBloc>(context)
-                          .patientsGetModel;
-                      if (patientsGetModel.patientData == null ||
-                          patientsGetModel.patientData!.isEmpty) {
-                        return Expanded(
-                          child: Center(
-                              child: Image(
-                            height: 200.h,
-                            width: 200.w,
-                            // color: kMainColor,
-                            image: const AssetImage(
-                                "assets/images/You ahve no patients-01.png"),
-                            color: kMainColor,
-                          )),
-                        );
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: Text(
-                              "Patient Count (${patientsGetModel.patientData!.length.toString()})",
-                              style:  TextStyle(fontWeight: FontWeight.bold,fontSize: 11.sp),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 440.h,
-                            // color: Colors.yellow,
-                            child: ListView.separated(
-                              padding: EdgeInsets.zero,
-                              itemCount: patientsGetModel.patientData!.length,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      const VerticalSpacingWidget(height: 3),
-                              itemBuilder: (context, index) {
-                                return PatientsCardWidget(
-                                  patientId: patientsGetModel
-                                      .patientData![index].id
-                                      .toString(),
-                                  userId: patientsGetModel
-                                      .patientData![index].userId
-                                      .toString(),
-                                  patientName: patientsGetModel
-                                      .patientData![index].firstname
-                                      .toString(),
-                                  age: patientsGetModel
-                                      .patientData![index].displayAge
-                                      .toString(),
-                                  gender: patientsGetModel
-                                      .patientData![index].gender
-                                      .toString(),
-                                  userImage: patientsGetModel
-                                              .patientData![index].userImage ==
-                                          null
-                                      ? ""
-                                      : patientsGetModel
-                                          .patientData![index].userImage
-                                          .toString(),
-                                  mediezyPatientId: patientsGetModel
-                                      .patientData![index].mediezyPatientId
-                                      .toString(),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-              ],
-            ),
+                      ],
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ],
           )),
     );
   }
