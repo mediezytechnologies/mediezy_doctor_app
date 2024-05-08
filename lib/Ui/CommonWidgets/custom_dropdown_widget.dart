@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class CustomDropDown extends StatelessWidget {
-  
   const CustomDropDown(
-      {super.key,
-      this.value,
-      this.items,
-      this.onChanged,
-      this.width = 170});
+      {super.key, this.value, this.items, this.onChanged, this.width = 170});
 
   final String? value;
   final List<DropdownMenuItem<String>>? items;
@@ -20,7 +16,7 @@ class CustomDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height:size.height*0.055,
+      height: size.height * 0.055,
       width: width,
       decoration: BoxDecoration(
           color: kCardColor,
@@ -33,8 +29,7 @@ class CustomDropDown extends StatelessWidget {
           iconEnabledColor: kMainColor,
           decoration: const InputDecoration.collapsed(hintText: ''),
           value: value,
-          style: TextStyle(
-              fontSize: 14.sp, fontWeight: FontWeight.w500, color: kTextColor),
+          style: size.width > 400 ? blackTabMainText : blackMainText,
           icon: const Icon(Icons.keyboard_arrow_down),
           items: items,
           onChanged: onChanged,

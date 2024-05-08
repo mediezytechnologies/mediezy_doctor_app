@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/custom_tooltip.dart';
@@ -14,6 +14,7 @@ class ScheduleHelpScreen extends StatefulWidget {
   final String clinicName;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ScheduleHelpScreenState createState() => _ScheduleHelpScreenState();
 }
 
@@ -67,6 +68,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return OverlayTooltipScaffold(
       // overlayColor: Colors.red.withOpacity(.4),
       tooltipAnimationCurve: Curves.linear,
@@ -94,11 +96,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          title: Text(
-            "Help",
-            style: TextStyle(
-                fontSize: 18.sp, fontWeight: FontWeight.bold, color: kTextColor),
-          ),
+          title: const Text("Help"),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -119,10 +117,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                       children: [
                         Text(
                           "Select Clinic",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
+                          style: size.width > 400 ? greyTab10B600 : grey13B600,
                         ),
                         Container(
                           height: 40.h,
@@ -134,10 +129,15 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                   Border.all(color: const Color(0xFF9C9C9C))),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Your clinic"),
+                                Text(
+                                  "Your clinic",
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
+                                ),
                                 Icon(Icons.keyboard_arrow_down),
                               ],
                             ),
@@ -158,10 +158,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                       children: [
                         Text(
                           "Select Schedule",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
+                          style: size.width > 400 ? greyTab10B600 : grey13B600,
                         ),
                         Container(
                           height: 40.h,
@@ -173,11 +170,16 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                   Border.all(color: const Color(0xFF9C9C9C))),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: const Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Schedule 1"),
-                                Icon(Icons.keyboard_arrow_down),
+                                Text(
+                                  "Schedule 1",
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
+                                ),
+                                const Icon(Icons.keyboard_arrow_down),
                               ],
                             ),
                           ),
@@ -204,10 +206,8 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                           children: [
                             Text(
                               "Start Date",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
+                              style:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                             ),
                             IconButton(
                               onPressed: () {},
@@ -220,10 +220,9 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                         ),
                         Text(
                           "24-04-2024",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kTextColor),
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
                         ),
                       ],
                     ),
@@ -242,10 +241,8 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                           children: [
                             Text(
                               "End Date",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
+                              style:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                             ),
                             IconButton(
                               onPressed: () {},
@@ -258,10 +255,9 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                         ),
                         Text(
                           "30-04-2024",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kTextColor),
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
                         ),
                       ],
                     ),
@@ -282,15 +278,14 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                           MTooltip(title: 'start time', controller: controller),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Text(
                               "Starting Time",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
+                              style:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                             ),
                             Icon(
                               IconlyLight.timeCircle,
@@ -310,10 +305,9 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                           child: Center(
                             child: Text(
                               "11:00 AM",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ),
                         ),
@@ -329,15 +323,15 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                 title: 'ending time', controller: controller),
                           ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Text(
                                 "Ending Time",
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: kSubTextColor),
+                                style: size.width > 400
+                                    ? greyTab10B600
+                                    : grey13B600,
                               ),
                               Icon(
                                 IconlyLight.timeCircle,
@@ -356,10 +350,9 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             child: Center(
                               child: Text(
                                 "1:00 PM",
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: kTextColor),
+                                style: size.width > 400
+                                    ? blackTabMainText
+                                    : blackMainText,
                               ),
                             ),
                           ),
@@ -380,25 +373,20 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                   children: [
                     Text(
                       "Time Duration",
-                      style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w600,
-                          color: kSubTextColor),
+                      style: size.width > 400 ? greyTab10B600 : grey13B600,
                     ),
                     const VerticalSpacingWidget(height: 5),
                     SizedBox(
                       height: 40.h,
                       child: TextFormField(
-                        // autofocus: true,
+                        style: TextStyle(
+                            fontSize: size.width > 400 ? 10.sp : 14.sp),
                         cursorColor: kMainColor,
-                        // controller: timeDuration1Controller,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
-                        // focusNode:
-                        // timeDurationFocusController,
                         decoration: InputDecoration(
                           hintStyle:
-                              TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                              size.width > 400 ? greyTab10B600 : grey13B600,
                           hintText: "10 min",
                           filled: true,
                           fillColor: kCardColor,
@@ -417,10 +405,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
               const VerticalSpacingWidget(height: 10),
               Text(
                 "Select Days",
-                style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
-                    color: kSubTextColor),
+                style: size.width > 400 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               //! sunday monday tuesday
@@ -433,11 +418,12 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.12,
+                    height: MediaQuery.of(context).size.height * .18,
                     child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 10.0,
                         crossAxisSpacing: 0.0,
@@ -457,14 +443,17 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             children: [
                               SizedBox(
                                 width: 10.w,
-                                child: Checkbox(
-                                  activeColor: kMainColor,
-                                  value: isChecked,
-                                  onChanged: (_) {
-                                    setState(() {
-                                      checkboxData[day] = !isChecked;
-                                    });
-                                  },
+                                child: Transform.scale(
+                                  scale: size.width > 400 ? 1.5 : 0.9,
+                                  child: Checkbox(
+                                    activeColor: kMainColor,
+                                    value: isChecked,
+                                    onChanged: (_) {
+                                      setState(() {
+                                        checkboxData[day] = !isChecked;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
                               const HorizontalSpacingWidget(width: 10),
@@ -472,7 +461,9 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                 width: 68.w,
                                 child: Text(
                                   day,
-                                  style: TextStyle(fontSize: 12.sp),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : black12B500,
                                 ),
                               ),
                             ],
@@ -486,11 +477,11 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-          child: CommonButtonWidget(
-              title: "Generate token", onTapFunction: () {}),
-        ),
+        // bottomNavigationBar: Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+        //   child: CommonButtonWidget(
+        //       title: "Generate token", onTapFunction: () {}),
+        // ),
       ),
     );
   }

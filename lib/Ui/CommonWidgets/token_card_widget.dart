@@ -32,17 +32,22 @@ class TokenCardWidget extends StatefulWidget {
 class _TokenCardWidgetState extends State<TokenCardWidget> {
   @override
   Widget build(BuildContext context) {
-    Color? containerColor =
-    widget.isBooked == 1 ? Colors.grey :
-    widget.isTimedOut == 1 ? Colors.grey[200] :
-    widget.isReserved == 1 ? Colors.greenAccent.shade100 :
-    Colors.white;
+    final size = MediaQuery.of(context).size;
+    Color? containerColor = widget.isBooked == 1
+        ? Colors.grey
+        : widget.isTimedOut == 1
+            ? Colors.grey[200]
+            : widget.isReserved == 1
+                ? Colors.greenAccent.shade100
+                : Colors.white;
 
-    Color? textColor =
-    widget.isBooked == 1 ? Colors. white:
-    widget.isTimedOut == 1 ? Colors.grey :
-    widget.isReserved == 1 ? Colors.black :
-    kTextColor;
+    Color? textColor = widget.isBooked == 1
+        ? Colors.white
+        : widget.isTimedOut == 1
+            ? Colors.grey
+            : widget.isReserved == 1
+                ? Colors.black
+                : kTextColor;
 
     return InkWell(
       onTap: () {
@@ -73,19 +78,31 @@ class _TokenCardWidgetState extends State<TokenCardWidget> {
           children: [
             Text(
               widget.tokenNumber,
-              style: TextStyle(
-                fontSize: 21.sp,
-                fontWeight: FontWeight.bold,
-                color: textColor,
-              ),
+              style: size.width > 400
+                  ? TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    )
+                  : TextStyle(
+                      fontSize: 21.sp,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
             ),
             Text(
               widget.formatedTime,
-              style: TextStyle(
-                fontSize: 9.sp,
-                fontWeight: FontWeight.bold,
-                color: textColor,
-              ),
+              style: size.width > 400
+                  ? TextStyle(
+                      fontSize: 7.sp,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    )
+                  : TextStyle(
+                      fontSize: 9.sp,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
             ),
           ],
         ),

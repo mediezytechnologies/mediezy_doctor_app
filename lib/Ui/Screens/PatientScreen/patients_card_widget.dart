@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dart';
 
@@ -33,6 +34,7 @@ class PatientsCardWidget extends StatefulWidget {
 class _PatientsCardWidgetState extends State<PatientsCardWidget> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -48,7 +50,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: 70.h,
+              height: size.width > 400 ? 82.h : 70.h,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: kCardColor,
@@ -61,7 +63,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                     scaleDuration: const Duration(milliseconds: 400),
                     fadeDuration: const Duration(milliseconds: 400),
                     child: PatientImageWidget(
-                        patientImage: widget.userImage, radius: 30),
+                        patientImage: widget.userImage, radius: 30.r),
                   ),
                   const HorizontalSpacingWidget(width: 10),
                   SizedBox(
@@ -73,10 +75,9 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                         //! name
                         Text(
                           widget.patientName,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -84,20 +85,16 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Patient Id : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.mediezyPatientId,
                               // patientsGetModel.patientData![index].age.toString(),
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -107,20 +104,16 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Age : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.age,
                               // patientsGetModel.patientData![index].age.toString(),
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -130,19 +123,15 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Gender : ",
-                              style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.gender == "1" ? "Male" : "Female",
-                              style: TextStyle(
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

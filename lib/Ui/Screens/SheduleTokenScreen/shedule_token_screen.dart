@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/CustomSchedule/custom_schedule_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/LeaveScreen/leave_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/remove_token_screen.dart';
@@ -34,163 +33,162 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (ctx) =>  const BottomNavigationControlWidget()));
+                builder: (ctx) => const BottomNavigationControlWidget()));
         return Future.value(false);
       },
       child: Scaffold(
         body: _isLoading
             ? _buildLoadingWidget()
             : FadedSlideAnimation(
-          beginOffset: const Offset(0, 0.3),
-          endOffset: const Offset(0, 0),
-          slideCurve: Curves.linearToEaseOut,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const VerticalSpacingWidget(height: 60),
-                  //! first section (Daily shedule)
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) =>
-                              const ScheduleTokenDetailsScreen()));
-                    },
-                    child: FadedScaleAnimation(
-                      scaleDuration:
-                      const Duration(milliseconds: 400),
-                      fadeDuration: const Duration(milliseconds: 400),
-                      child: Container(
-                        height: 107.h,
-                        decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/token_schedule.jpg"),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
+                beginOffset: const Offset(0, 0.3),
+                endOffset: const Offset(0, 0),
+                slideCurve: Curves.linearToEaseOut,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        size.width > 400
+                            ? VerticalSpacingWidget(height: 20)
+                            : VerticalSpacingWidget(height: 30),
+
+                        //! first section (Daily shedule)
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) =>
+                                        const ScheduleTokenDetailsScreen()));
+                          },
+                          child: FadedScaleAnimation(
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: Container(
+                              height: size.width > 400 ? 140.h : 115.h,
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/token_schedule.jpg"),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                        const VerticalSpacingWidget(height: 8),
+                        //! second section (custom schedule late,early,break)
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) =>
+                                        const CustomScheduleScreen()));
+                          },
+                          child: FadedScaleAnimation(
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: Container(
+                              height: size.width > 400 ? 140.h : 115.h,
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/customize schedule.jpg"),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                        //! third section (manage shedule)
+                        const VerticalSpacingWidget(height: 8),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) =>
+                                        const RemoveTokenScreen()));
+                          },
+                          child: FadedScaleAnimation(
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: Container(
+                              height: size.width > 400 ? 140.h : 115.h,
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/remove_token.jpg"),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                        //! fourth section (leave shedule)
+                        const VerticalSpacingWidget(height: 8),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) => const LeaveScreen()));
+                          },
+                          child: FadedScaleAnimation(
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: Container(
+                              height: size.width > 400 ? 140.h : 115.h,
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/Leave_Banner.jpg"),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                        const VerticalSpacingWidget(height: 8),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) =>
+                                        const ReservationScreen()));
+                          },
+                          child: FadedScaleAnimation(
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: Container(
+                              height: size.width > 400 ? 140.h : 115.h,
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/reservation.jpg"),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const VerticalSpacingWidget(height: 8),
-                  //! second section (custom schedule late,early,break)
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) =>
-                              const CustomScheduleScreen()));
-                    },
-                    child: FadedScaleAnimation(
-                      scaleDuration:
-                      const Duration(milliseconds: 400),
-                      fadeDuration: const Duration(milliseconds: 400),
-                      child: Container(
-                        height: 107.h,
-                        decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/customize schedule.jpg"),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                  //! third section (manage shedule)
-                  const VerticalSpacingWidget(height: 8),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) =>
-                              const RemoveTokenScreen()));
-                    },
-                    child: FadedScaleAnimation(
-                      scaleDuration:
-                      const Duration(milliseconds: 400),
-                      fadeDuration: const Duration(milliseconds: 400),
-                      child: Container(
-                        height: 107.h,
-                        decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/remove_token.jpg"),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                  //! fourth section (leave shedule)
-                  const VerticalSpacingWidget(height: 8),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) => const LeaveScreen()));
-                    },
-                    child: FadedScaleAnimation(
-                      scaleDuration:
-                      const Duration(milliseconds: 400),
-                      fadeDuration: const Duration(milliseconds: 400),
-                      child: Container(
-                        height: 107.h,
-                        decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/Leave_Banner.jpg"),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                  const VerticalSpacingWidget(height: 8),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) =>
-                              const ReservationScreen()));
-                    },
-                    child: FadedScaleAnimation(
-                      scaleDuration:
-                      const Duration(milliseconds: 400),
-                      fadeDuration: const Duration(milliseconds: 400),
-                      child: Container(
-                        height: 107.h,
-                        decoration: BoxDecoration(
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    "assets/images/reservation.jpg"),
-                                fit: BoxFit.fill),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
 
   Widget _buildLoadingWidget() {
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: ListView.builder(
         itemCount: 5, // Number of shimmer items
         itemBuilder: (context, index) {

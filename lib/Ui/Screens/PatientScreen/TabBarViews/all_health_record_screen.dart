@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/health_records_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/AllHealthRecords/all_health_records_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -31,6 +32,7 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     // final mWidth = MediaQuery.of(context).size.width;
     return BlocBuilder<AllHealthRecordsBloc, AllHealthRecordsState>(
       builder: (context, state) {
@@ -59,15 +61,13 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
           return Column(
             children: [
               Expanded(
-              child:   ListView.separated(
+                child: ListView.separated(
                   padding: EdgeInsets.zero,
-                  itemCount:
-                  healthRecordsModel.documentData!.length,
+                  itemCount: healthRecordsModel.documentData!.length,
                   separatorBuilder: (BuildContext context, int index) =>
-                  const VerticalSpacingWidget(height: 3),
+                      const VerticalSpacingWidget(height: 3),
                   itemBuilder: (context, index) {
-                    var allDocument =
-                    healthRecordsModel.documentData![index];
+                    var allDocument = healthRecordsModel.documentData![index];
                     return Padding(
                       padding: EdgeInsets.fromLTRB(8.w, 5.h, 8.w, 2.h),
                       child: Container(
@@ -84,10 +84,8 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) => ViewFileWidget(
-                                      viewFile:
-                                      healthRecordsModel
-                                          .documentData![index]
-                                          .documentPath
+                                      viewFile: healthRecordsModel
+                                          .documentData![index].documentPath
                                           .toString(),
                                     ),
                                   ),
@@ -96,27 +94,28 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  height: 90.h,
-                                  width: 80.w,
+                                  height: size.width > 400 ? 100.h : 90.h,
+                                  width: size.width > 400 ? 60.w : 80.w,
                                   decoration: BoxDecoration(
                                     color: kScaffoldColor,
-                                    borderRadius:
-                                    BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: const Column(
+                                  child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image(
-                                        height: 30,
-                                        width: 30,
-                                        image: AssetImage(
+                                        height: 30.h,
+                                        width: 30.w,
+                                        image: const AssetImage(
                                           'assets/icons/file.png',
                                         ),
                                       ),
-                                      Text("View File")
+                                      Text("View File",
+                                          style: size.width > 400
+                                              ? blackTab9B400
+                                              : black12B500)
                                     ],
                                   ),
                                 ),
@@ -125,38 +124,33 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        allDocument.type == 1
-                                            ? "Lab report"
-                                            : (allDocument.type == 2)
-                                            ? "Prescription"
-                                            : (allDocument.type == 3)
-                                            ? "Discharge summary"
-                                            : "Scan Report",
-                                        style: TextStyle(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const HorizontalSpacingWidget(
-                                          width: 10),
+                                          allDocument.type == 1
+                                              ? "Lab report"
+                                              : (allDocument.type == 2)
+                                                  ? "Prescription"
+                                                  : (allDocument.type == 3)
+                                                      ? "Discharge summary"
+                                                      : "Scan Report",
+                                          style: size.width > 400
+                                              ? blackTabMainText
+                                              : blackMainText),
+                                      const HorizontalSpacingWidget(width: 10),
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Text(
                                         "Patient :",
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTabMain
+                                            : greyMain,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -164,10 +158,9 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                         healthRecordsModel
                                             .documentData![index].patient
                                             .toString(),
-                                        style: TextStyle(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: size.width > 400
+                                            ? blackTabMainText
+                                            : blackMainText,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -179,12 +172,11 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                         allDocument.type == 1
                                             ? "Test name : "
                                             : (allDocument.type == 4)
-                                            ? "Scan name : "
-                                            : "Doctor name : ",
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: kSubTextColor),
+                                                ? "Scan name : "
+                                                : "Doctor name : ",
+                                        style: size.width > 400
+                                            ? greyTabMain
+                                            : greyMain,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -192,32 +184,31 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                         width: 140.w,
                                         child: Text(
                                           allDocument.labReport != null &&
-                                              allDocument.labReport!
-                                                  .isNotEmpty
+                                                  allDocument
+                                                      .labReport!.isNotEmpty
                                               ? "${allDocument.labReport!.first.testName}"
                                               : allDocument.patientPrescription !=
-                                              null &&
-                                              allDocument
-                                                  .patientPrescription!
-                                                  .isNotEmpty
-                                              ? "Dr ${allDocument.patientPrescription!.first.doctorName}"
-                                              : allDocument.dischargeSummary !=
-                                              null &&
-                                              allDocument
-                                                  .dischargeSummary!
-                                                  .isNotEmpty
-                                              ? "Dr ${allDocument.dischargeSummary!.first.doctorName}"
-                                              : allDocument.scanReport !=
-                                              null &&
-                                              allDocument
-                                                  .scanReport!
-                                                  .isNotEmpty
-                                              ? "${allDocument.scanReport!.first.admittedFor}"
-                                              : 'Doctor Name Not Available',
-                                          style: TextStyle(
-                                            fontSize: 13.sp,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                                          null &&
+                                                      allDocument
+                                                          .patientPrescription!
+                                                          .isNotEmpty
+                                                  ? "Dr ${allDocument.patientPrescription!.first.doctorName}"
+                                                  : allDocument.dischargeSummary !=
+                                                              null &&
+                                                          allDocument
+                                                              .dischargeSummary!
+                                                              .isNotEmpty
+                                                      ? "Dr ${allDocument.dischargeSummary!.first.doctorName}"
+                                                      : allDocument.scanReport !=
+                                                                  null &&
+                                                              allDocument
+                                                                  .scanReport!
+                                                                  .isNotEmpty
+                                                          ? "${allDocument.scanReport!.first.admittedFor}"
+                                                          : 'Doctor Name Not Available',
+                                          style: size.width > 400
+                                              ? blackTabMainText
+                                              : blackMainText,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -228,10 +219,9 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                     children: [
                                       Text(
                                         "Record date :",
-                                        style: TextStyle(
-                                            fontSize: 12.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTabMain
+                                            : greyMain,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -239,10 +229,9 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                         healthRecordsModel
                                             .documentData![index].date
                                             .toString(),
-                                        style: TextStyle(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: size.width > 400
+                                            ? blackTabMainText
+                                            : blackMainText,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -250,10 +239,9 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
                                   ),
                                   Text(
                                     "Last updated - ${healthRecordsModel.documentData![index].hoursAgo.toString()}",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),

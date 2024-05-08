@@ -4,17 +4,15 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
-
 class ApiClient {
   // static const String basePath = "https://mediezy.com/api/";
   static const String basePath = "https://test.mediezy.com/api/";
 
-
   String orignalToken = '';
   Future<Response> invokeAPI(
       {required String path,
-        required String method,
-        required Object? body}) async {
+      required String method,
+      required Object? body}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? prefs.getString('tokenD');
 
@@ -86,9 +84,7 @@ class ApiClient {
       case "PUT_":
         response = await post(
           Uri.parse(url),
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: {'Content-Type': 'application/json'},
           body: body,
         );
       case "GET_":

@@ -1,26 +1,24 @@
 import 'dart:developer';
-
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
 import 'package:mediezy_doctor/Model/PreviousAppointments/previous_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/get_all_previous_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_details_screen.dart';
+
+import '../../../CommonWidgets/text_style_widget.dart';
 
 class PreviousBookingScreen extends StatefulWidget {
   const PreviousBookingScreen({super.key});
@@ -61,6 +59,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Previous Bookings"),
@@ -77,10 +76,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
             children: [
               Text(
                 "Select Clinic",
-                style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
-                    color: kSubTextColor),
+                style: size.width > 400 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               GetBuilder<HospitalController>(
@@ -109,7 +105,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                 },
               ),
               const VerticalSpacingWidget(height: 10),
-              InkWell(
+              GestureDetector(
                 onTap: () async {
                   await selectDate(
                     context: context,
@@ -132,10 +128,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                   children: [
                     Text(
                       "Select Date",
-                      style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w600,
-                          color: kSubTextColor),
+                      style: size.width > 400 ? greyTab10B600 : grey13B600,
                     ),
                     IconButton(
                       onPressed: () async {
@@ -160,6 +153,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                       icon: Icon(
                         IconlyLight.calendar,
                         color: kMainColor,
+                        size: size.width > 400 ? 12.sp : 20.sp,
                       ),
                     ),
                   ],
@@ -167,10 +161,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
               ),
               Text(
                 '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
-                style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
-                    color: kTextColor),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
               ),
               const VerticalSpacingWidget(height: 10),
               BlocBuilder<GetAllPreviousAppointmentsBloc,
@@ -188,9 +179,10 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                       BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
                           .previousAppointmentsModel;
                   return previousAppointmentsModel.previousAppointments!.isEmpty
-                      ? const Center(
+                      ? Center(
                           child: Image(
-                              image: AssetImage(
+                              height: size.height * .55,
+                              image: const AssetImage(
                                   "assets/images/No Appointment to day-01.png")))
                       : SingleChildScrollView(
                           child: Column(
@@ -233,8 +225,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                                           .tokenNumber
                                           .toString(),
                                       patientImage: previousAppointmentsModel
-                                                  .previousAppointments![
-                                                      index]
+                                                  .previousAppointments![index]
                                                   .userImage ==
                                               null
                                           ? ""
@@ -251,8 +242,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                                           .startingtime
                                           .toString(),
                                       mediezyId: previousAppointmentsModel
-                                                  .previousAppointments![
-                                                      index]
+                                                  .previousAppointments![index]
                                                   .mediezyPatientId ==
                                               null
                                           ? ""

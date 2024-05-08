@@ -7,6 +7,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllScanningCentre/get_all
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllLab/get_all_lab_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/get_lab_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/Labs/search_lab_screen.dart';
 
@@ -32,6 +33,7 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Lab and Scan"),
@@ -90,21 +92,22 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
                                 padding: EdgeInsets.only(left: 10.w),
                                 child: Text(
                                   "Search lab and scanning centre",
-                                  style: TextStyle(
-                                      fontSize: 15.sp, color: kSubTextColor),
+                                  style: size.width > 400
+                                      ? greyTab10B400
+                                      : grey13B600,
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(right: 10.w),
                                 child: CircleAvatar(
                                   backgroundColor: kMainColor,
-                                  radius: 16,
+                                  radius: size.width > 400 ? 13.r : 16.r,
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Icon(
                                       IconlyLight.search,
                                       color: kCardColor,
-                                      size: 16.sp,
+                                      size: size.width > 400 ? 12.sp : 18.sp,
                                     ),
                                   ),
                                 ),

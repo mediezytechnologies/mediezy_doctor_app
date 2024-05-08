@@ -7,6 +7,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../CommonWidgets/text_style_widget.dart';
+
 class SuggestionScreen extends StatefulWidget {
   const SuggestionScreen({super.key});
 
@@ -19,6 +21,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -26,7 +29,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
         title: const Text("Suggestions"),
       ),
       bottomNavigationBar: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: CommonButtonWidget(
             title: "Add",
             onTapFunction: () {
@@ -50,7 +53,6 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
             //   Navigator.pop(context);
             // });
           }
-          // TODO: implement listener
         },
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -59,23 +61,23 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
             children: [
               Text(
                 "We would love your feedback",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: size.width > 400 ? 14.sp : 20.sp),
               ),
               const VerticalSpacingWidget(height: 15),
               Text(
                 "You've been using mediezy for a while now,\nand we'd love to know what you think about it",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+                style: size.width > 400 ? blackTab13B500 : black14B400,
               ),
               const VerticalSpacingWidget(height: 10),
               Text(
                 "Share your feedback",
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp),
+                style: size.width > 400 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               TextFormField(
+                style: TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                 autofocus: true,
                 cursorColor: kMainColor,
                 controller: suggestionController,
@@ -83,7 +85,9 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                 textInputAction: TextInputAction.newline,
                 maxLines: 10,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                  hintStyle: TextStyle(
+                      fontSize: size.width > 400 ? 12.sp : 15.sp,
+                      color: kSubTextColor),
                   hintText: "Describe your experience",
                   filled: true,
                   fillColor: kCardColor,

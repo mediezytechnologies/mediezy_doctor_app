@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/discharge_summary_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/DischargeSummary/discharge_summary_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -33,6 +34,7 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     //! discharge summary
     return BlocBuilder<DischargeSummaryBloc, DischargeSummaryState>(
       builder: (context, state) {
@@ -89,24 +91,29 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 100.h,
-                                width: 80.w,
+                                height: size.width > 400 ? 100.h : 90.h,
+                                width: size.width > 400 ? 60.w : 80.w,
                                 decoration: BoxDecoration(
                                   color: kScaffoldColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Column(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image(
-                                      height: 30,
-                                      width: 30,
-                                      image: AssetImage(
+                                      height: 30.h,
+                                      width: 30.w,
+                                      image: const AssetImage(
                                         'assets/icons/Lab report.png',
                                       ),
                                     ),
-                                    Text("View File")
+                                    Text(
+                                      "View File",
+                                      style: size.width > 400
+                                          ? blackTab9B400
+                                          : black12B500,
+                                    )
                                   ],
                                 ),
                               ),
@@ -120,10 +127,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                 children: [
                                   Text(
                                     "Patient : ",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -131,10 +137,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                     dischargeSummaryModel
                                         .documentData![index].patient!
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -144,10 +149,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                 children: [
                                   Text(
                                     "Record Date : ",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -155,10 +159,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                     dischargeSummaryModel.documentData![index]
                                         .dischargeSummary!.first.date
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -168,19 +171,17 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                 children: [
                                   Text(
                                     "Doctor name : ",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
                                     "Dr ${dischargeSummaryModel.documentData![index].dischargeSummary!.first.doctorName.toString()}",
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -190,10 +191,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                 children: [
                                   Text(
                                     "Hospital name : ",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -201,10 +201,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                     dischargeSummaryModel.documentData![index]
                                         .dischargeSummary!.first.hospitalName
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -214,10 +213,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                 children: [
                                   Text(
                                     "Admitted for : ",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -225,10 +223,9 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                                     dischargeSummaryModel.documentData![index]
                                         .dischargeSummary!.first.admittedFor
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -236,10 +233,8 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
                               ),
                               Text(
                                 "Last updated - ${dischargeSummaryModel.documentData![index].hoursAgo}",
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: kSubTextColor),
+                                style:
+                                    size.width > 400 ? greyTabMain : greyMain,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

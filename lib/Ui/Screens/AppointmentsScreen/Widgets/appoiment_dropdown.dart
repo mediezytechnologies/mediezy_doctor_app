@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
@@ -53,13 +54,10 @@ class AppoimentDropdown extends StatelessWidget {
           children: [
             Text(
               "Select Schedule",
-              style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: kSubTextColor),
+              style: size.width > 400 ? greyTab10B600 : grey13B600,
             ),
             //dropdown==============//
-            const VerticalSpacingWidget(height: 5),
+            const VerticalSpacingWidget(height: 3),
             Obx(
               () {
                 return CustomDropDown(

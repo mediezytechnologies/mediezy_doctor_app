@@ -26,7 +26,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/DischargeSummary/di
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/GetPrescription/get_prescription_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/GetPrescriptionView/get_prescription_view_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/LabReport/lab_report_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/PatientsGet/patients_get_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/ScanReport/scan_report_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/TimeLine/time_line_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/completedAppointmentsHR/completed_appointments_health_record_bloc.dart';
@@ -55,6 +54,8 @@ import 'package:mediezy_doctor/Repositary/Bloc/ReserveToken/reserve_token_bloc.d
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Suggestions/suggestion_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/suggest_doctor/suggest_doctor_bloc.dart';
 import 'package:mediezy_doctor/Ui/Screens/demo.dart/demo/demo_bloc.dart';
 import 'package:mediezy_doctor/Ui/Screens/demo.dart/dropdown/dropdown_bloc.dart';
@@ -120,5 +121,6 @@ class AppBBlocProviders{
     BlocProvider(create: (context)=> LeaveCheckBloc()),
     BlocProvider(create: (context)=> GetAllVitalsBloc()),
     BlocProvider(create: (context)=> PreviousDetailsBloc()),
+    BlocProvider(create: (context)=> SearchPatientsBloc()),
   ];
 }

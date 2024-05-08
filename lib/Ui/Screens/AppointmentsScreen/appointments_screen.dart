@@ -14,6 +14,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
@@ -75,16 +76,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             children: [
               const VerticalSpacingWidget(height: 10),
               const AppoimentDropdown(),
-              const VerticalSpacingWidget(height: 10),
+              const VerticalSpacingWidget(height: 3),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: Text(
-                  "Your Appointments",
-                  style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      color: kSubTextColor),
-                ),
+                child: Text("Your Appointments",
+                    style: size.width > 400 ? greyTab10B600 : grey13B600),
               ),
               EasyDateTimeLine(
                 initialDate: controller.selectedDate,
@@ -110,25 +106,31 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   selectedDateFormat: SelectedDateFormat.monthOnly,
                 ),
                 dayProps: EasyDayProps(
-                  height: 50.h,
-                  width: 50.w,
+                  height:
+                      size.width > 400 ? size.height * .075 : size.height * .07,
+                  width: size.width > 400 ? size.width * .1 : size.width * .15,
                   dayStructure: DayStructure.dayNumDayStr,
                   inactiveDayStyle: DayStyle(
                     decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: kMainColor)),
-                    dayNumStyle: TextStyle(fontSize: 18.0, color: kTextColor),
+                    dayNumStyle: TextStyle(
+                        fontSize: size.width > 400 ? 19.sp : 15.sp,
+                        color: kTextColor),
                   ),
+                  inactiveDayStrStyle: TextStyle(
+                      fontSize: size.width > 400 ? 9.sp : 12.sp,
+                      color: Colors.grey),
                   activeDayStyle: DayStyle(
                     borderRadius: 10,
                     dayNumStyle: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: size.width > 400 ? 15.sp : 18.sp,
                         fontWeight: FontWeight.bold,
                         color: kCardColor),
                   ),
                   activeDayStrStyle: TextStyle(
-                      fontSize: 12.0,
+                      fontSize: size.width > 400 ? 9.sp : 12.sp,
                       fontWeight: FontWeight.w400,
                       color: kCardColor),
                 ),

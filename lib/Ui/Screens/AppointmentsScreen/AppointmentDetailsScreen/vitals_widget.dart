@@ -5,6 +5,7 @@ import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_mo
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
@@ -43,6 +44,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -57,16 +59,14 @@ class _VitalsWidgetState extends State<VitalsWidget> {
             children: [
               Text(
                 'Add Vitals',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15.sp,
-                ),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
               ),
-              const Icon(Icons.arrow_drop_down_circle)
+              Icon(Icons.arrow_drop_down_circle,
+                  size: size.width > 400 ? 12.sp : 18.sp)
             ],
           ),
         ),
-        // const VerticalSpacingWidget(height: 10),
+        const VerticalSpacingWidget(height: 5),
         Visibility(
           visible: showSecondContainer,
           child: Container(
@@ -86,13 +86,15 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Ht",
-                            style: TextStyle(color: Colors.grey),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           SizedBox(
                             width: 90.w,
                             child: TextFormField(
+                              style: TextStyle(
+                                  fontSize: size.width > 400 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
                               controller: heightController,
                               keyboardType: TextInputType.number,
@@ -100,8 +102,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 15),
-                                hintStyle: TextStyle(
-                                    fontSize: 13.sp, color: kSubTextColor),
+                                hintStyle: size.width > 400
+                                    ? greyTab10B600
+                                    : grey13B600,
                                 hintText: "Height",
                                 counterText: "",
                                 filled: true,
@@ -118,20 +121,24 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       const HorizontalSpacingWidget(width: 20),
                       Text(
                         "cms",
-                        style: TextStyle(
-                            fontSize: 18.sp, fontWeight: FontWeight.w400),
+                        style: size.width > 400
+                            ? blackTab14B500
+                            : TextStyle(
+                                fontSize: 18.sp, fontWeight: FontWeight.w400),
                       ),
                       const HorizontalSpacingWidget(width: 40),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Wt",
-                            style: TextStyle(color: Colors.grey),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           SizedBox(
                             width: 90.w,
                             child: TextFormField(
+                              style: TextStyle(
+                                  fontSize: size.width > 400 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
                               controller: weightController,
                               keyboardType: TextInputType.number,
@@ -140,8 +147,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                                 counterText: "",
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 15),
-                                hintStyle: TextStyle(
-                                    fontSize: 13.sp, color: kSubTextColor),
+                                hintStyle: size.width > 400
+                                    ? greyTab10B600
+                                    : grey13B600,
                                 hintText: "Weight",
                                 filled: true,
                                 fillColor: kCardColor,
@@ -157,8 +165,10 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       const HorizontalSpacingWidget(width: 20),
                       Text(
                         "Kg",
-                        style: TextStyle(
-                            fontSize: 18.sp, fontWeight: FontWeight.w400),
+                        style: size.width > 400
+                            ? blackTab14B500
+                            : TextStyle(
+                                fontSize: 18.sp, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
@@ -170,6 +180,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 90.w,
                         child: TextFormField(
+                          style: TextStyle(
+                              fontSize: size.width > 400 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: temperatureController,
                           keyboardType: TextInputType.number,
@@ -177,8 +189,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 15),
-                            hintStyle: TextStyle(
-                                fontSize: 13.sp, color: kSubTextColor),
+                            hintStyle:
+                                size.width > 400 ? greyTab10B600 : grey13B600,
                             hintText: "Temperature",
                             counterText: "",
                             filled: true,
@@ -192,7 +204,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       ),
                       const HorizontalSpacingWidget(width: 10),
                       Container(
-                        height: 42.h,
+                        height: size.width > 400 ? 35.h : 42.h,
                         width: 70.w,
                         color: kCardColor,
                         child: Padding(
@@ -203,10 +215,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                               decoration:
                                   const InputDecoration.collapsed(hintText: ''),
                               value: dropdownVitalsValue,
-                              style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                               icon: const Icon(Icons.keyboard_arrow_down),
                               items: vitalItems.map((String items) {
                                 return DropdownMenuItem(
@@ -229,13 +240,15 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Spo2",
-                            style: TextStyle(color: Colors.grey),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           SizedBox(
                             width: 135.w,
                             child: TextFormField(
+                              style: TextStyle(
+                                  fontSize: size.width > 400 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
                               controller: spo2Controller,
                               keyboardType: TextInputType.number,
@@ -244,8 +257,10 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 15),
                                 counterText: "",
-                                hintStyle: TextStyle(
-                                    fontSize: 13.sp, color: kSubTextColor),
+                                hintStyle: size.width > 400
+                                    ? greyTab10B600
+                                    : grey13B600,
+                                hintText: 'Spo2',
                                 filled: true,
                                 fillColor: kCardColor,
                                 border: OutlineInputBorder(
@@ -266,13 +281,17 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                     children: [
                       Text(
                         "BP",
-                        style: TextStyle(
-                            fontSize: 18.sp, fontWeight: FontWeight.w400),
+                        style: size.width > 400
+                            ? blackTab14B500
+                            : TextStyle(
+                                fontSize: 18.sp, fontWeight: FontWeight.w400),
                       ),
                       const HorizontalSpacingWidget(width: 10),
                       SizedBox(
                         width: 70.w,
                         child: TextFormField(
+                          style: TextStyle(
+                              fontSize: size.width > 400 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: sysController,
                           keyboardType: TextInputType.number,
@@ -280,8 +299,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 15),
-                            hintStyle: TextStyle(
-                                fontSize: 13.sp, color: kSubTextColor),
+                            hintStyle:
+                                size.width > 400 ? greyTab10B600 : grey13B600,
                             counterText: "",
                             hintText: "sys",
                             filled: true,
@@ -296,12 +315,16 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       const HorizontalSpacingWidget(width: 10),
                       Text(
                         "/",
-                        style: TextStyle(color: Colors.grey, fontSize: 25.sp),
+                        style: size.width > 400
+                            ? TextStyle(color: Colors.grey, fontSize: 15.sp)
+                            : TextStyle(color: Colors.grey, fontSize: 25.sp),
                       ),
                       const HorizontalSpacingWidget(width: 10),
                       SizedBox(
                         width: 70.w,
                         child: TextFormField(
+                          style: TextStyle(
+                              fontSize: size.width > 400 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: diaController,
                           keyboardType: TextInputType.number,
@@ -309,8 +332,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 15),
-                            hintStyle: TextStyle(
-                                fontSize: 13.sp, color: kSubTextColor),
+                            hintStyle:
+                                size.width > 400 ? greyTab10B600 : grey13B600,
                             counterText: "",
                             hintText: "dia",
                             filled: true,
@@ -326,6 +349,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 110.w,
                         child: TextFormField(
+                          style: TextStyle(
+                              fontSize: size.width > 400 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: heartRateController,
                           keyboardType: TextInputType.number,
@@ -333,8 +358,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 15),
-                            hintStyle: TextStyle(
-                                fontSize: 13.sp, color: kSubTextColor),
+                            hintStyle:
+                                size.width > 400 ? greyTab10B600 : grey13B600,
                             hintText: "Heart rate",
                             counterText: "",
                             filled: true,
@@ -348,7 +373,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       ),
                     ],
                   ),
-                  const VerticalSpacingWidget(height: 10),
+                  const VerticalSpacingWidget(height: 15),
                   InkWell(
                     onTap: () {
                       showSecondContainer = false;
@@ -386,10 +411,15 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       child: Center(
                           child: Text(
                         editingVitalsIndex != -1 ? "Update" : "Save",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold),
+                        style: size.width > 400
+                            ? TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold)
+                            : TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold),
                       )),
                     ),
                   )
@@ -398,16 +428,15 @@ class _VitalsWidgetState extends State<VitalsWidget> {
             ),
           ),
         ),
-        // const VerticalSpacingWidget(height: 5),
+        widget.appointmentDetailsPageModel.bookingData!.vitals == null
+            ? Container()
+            : const VerticalSpacingWidget(height: 5),
         // if (isSecondContainerVisible)
         widget.appointmentDetailsPageModel.bookingData!.vitals == null
             ? Container()
             : Text(
                 'Added Vitals',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                    color: Colors.grey),
+                style: size.width > 400 ? greyTabMain : greyMain,
               ),
         // const VerticalSpacingWidget(height: 5),
         widget.appointmentDetailsPageModel.bookingData!.vitals == null
@@ -472,7 +501,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                     Column(
                       children: [
                         PopupMenuButton(
-                          iconSize: 20.sp,
+                          iconSize: size.width > 400 ? 14.sp : 20.sp,
                           icon: Icon(
                             Icons.more_vert,
                             color: kMainColor,
@@ -534,9 +563,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                               },
                               child: Text(
                                 "Edit",
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700),
+                                style: size.width > 400
+                                    ? blackTabMainText
+                                    : blackMainText,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -552,9 +581,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                               },
                               child: Text(
                                 "Delete",
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w700),
+                                style: size.width > 400
+                                    ? blackTabMainText
+                                    : blackMainText,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

@@ -12,7 +12,7 @@ import 'package:mediezy_doctor/Ui/Screens/GetTokensScreen/get_tokens_screen.dart
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/patient_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/shedule_token_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/TokenScreen/token_screen.dart';
-import 'package:mediezy_doctor/Ui/Screens/d.dart';
+
 
 // ignore: must_be_immutable
 class BottomNavigationControlWidget extends StatefulWidget {

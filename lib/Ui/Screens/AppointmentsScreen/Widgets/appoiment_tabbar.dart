@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/get_all_completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
@@ -37,6 +38,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocBuilder<GetAllAppointmentsBloc, GetAllAppointmentsState>(
         builder: (context, state) {
       if (state is GetAllAppointmentsLoading) {
@@ -55,13 +57,15 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VerticalSpacingWidget(height: 10),
+              const VerticalSpacingWidget(height: 5),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Container(
+                  height: size.width > 400
+                      ? size.height * .065
+                      : size.height * .055,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    // Set the background color of the tab bar
                     borderRadius:
                         BorderRadius.circular(10), // Set border radius
                   ),
@@ -92,11 +96,11 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                       }
                     },
                     unselectedLabelStyle: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: size.width > 400 ? 11.sp : 12.sp,
                     ),
                     labelStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 14.sp,
+                        fontSize: size.width > 400 ? 11.sp : 12.sp,
                         fontWeight: FontWeight.w600),
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
@@ -154,11 +158,12 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                       EdgeInsets.symmetric(horizontal: 10.w),
                                   child: Text(
                                     "Patient Count (${getAllAppointmentsModel.appointments!.length.toString()})",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
+                                    style: size.width > 400
+                                        ? blackTab9B600
+                                        : black11Bbold,
                                   ),
                                 ),
-                                VerticalSpacingWidget(height: 5.h),
+                                const VerticalSpacingWidget(height: 3),
                                 ListView.separated(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),

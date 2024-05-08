@@ -10,6 +10,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../CommonWidgets/text_style_widget.dart';
+
 class ContactUsScreen extends StatefulWidget {
   const ContactUsScreen({super.key});
 
@@ -24,6 +26,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Contact Us"),
@@ -39,7 +42,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             GeneralServices.instance
                 .showSuccessMessage(context, state.successMessage);
           }
-          // TODO: implement listener
         },
         child: FadedSlideAnimation(
           beginOffset: const Offset(0, 0.3),
@@ -54,20 +56,20 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   const VerticalSpacingWidget(height: 10),
                   Text(
                     "How may we\nhelp you?",
-                    style:
-                        TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: size.width > 400 ? 18.sp : 28.sp,
+                        fontWeight: FontWeight.bold),
                   ),
                   const VerticalSpacingWidget(height: 13),
                   Text(
                     "Let us know your queries & feedbacks",
-                    style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w500,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                   ),
                   const VerticalSpacingWidget(height: 20),
                   //! email
                   TextFormField(
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -76,9 +78,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       prefixIcon: Icon(
                         Icons.email_outlined,
                         color: kMainColor,
+                        size: size.width > 400 ? 13.sp : 20.sp,
                       ),
-                      hintStyle:
-                          TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "philipeaugustine@gmail.com",
                       filled: true,
                       fillColor: kCardColor,
@@ -100,9 +102,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       prefixIcon: Icon(
                         IconlyLight.edit,
                         color: kMainColor,
+                        size: size.width > 400 ? 13.sp : 20.sp,
                       ),
-                      hintStyle:
-                          TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Write your message",
                       filled: true,
                       fillColor: kCardColor,
@@ -128,7 +130,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     child: FadedScaleAnimation(
                       scaleDuration: const Duration(milliseconds: 400),
                       fadeDuration: const Duration(milliseconds: 400),
-                      child: Image.asset('assets/images/hero_image.png'),
+                      child: Image.asset(
+                        'assets/images/hero_image.png',
+                        height: size.width > 400
+                            ? size.height * .41
+                            : size.height * .35,
+                      ),
                     ),
                   )
                 ],

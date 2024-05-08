@@ -17,6 +17,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/GetAllLeaves/get_all_
 import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/LeaveUpdate/leave_update_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LeaveUpdate/leave_check/leave_check_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
@@ -56,12 +57,18 @@ class LeaveScreenState extends State<LeaveScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    BlocProvider.of<GetAllLeavesBloc>(context)
+        .add(FetchAllLeaves(hospitalId: dController.initialIndex!));
+    BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
+        clinicId: dController.initialIndex!,
+        fromDate: DateFormat('yyyy-MM-dd').format(leaveStartDate),
+        toDate: DateFormat('yyyy-MM-dd').format(leaveEndDate)));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
       listener: (context, state) {
         BlocProvider.of<GetAllLeavesBloc>(context)
@@ -70,12 +77,8 @@ class LeaveScreenState extends State<LeaveScreen> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Leave",
-            style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: kTextColor),
           ),
         ),
         body: BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
@@ -108,10 +111,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                       children: [
                         Text(
                           "Select Clinic",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
+                          style: size.width > 400 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 5),
                         GetBuilder<HospitalController>(builder: (clx) {
@@ -141,111 +141,6 @@ class LeaveScreenState extends State<LeaveScreen> {
                             },
                           );
                         }),
-                        // BlocBuilder<GetClinicBloc, GetClinicState>(
-                        //   builder: (context, state) {
-                        //     if (state is GetClinicLoaded) {
-                        //       clinicGetModel =
-                        //           BlocProvider.of<GetClinicBloc>(context)
-                        //               .clinicGetModel;
-                        //
-                        //       if (clinicValuesLeave.isEmpty) {
-                        //         clinicValuesLeave
-                        //             .addAll(clinicGetModel.hospitalDetails!);
-                        //         dropValueLeaveNotifier = ValueNotifier(
-                        //             clinicValuesLeave.first.clinicName!);
-                        //         clinicLeaveId =
-                        //             clinicValuesLeave.first.clinicId.toString();
-                        //         dController.initialIndex! =
-                        //             clinicValuesLeave.first.clinicId.toString();
-                        //       }
-                        //
-                        //       BlocProvider.of<GetAllLeavesBloc>(context).add(
-                        //           FetchAllLeaves(
-                        //               hospitalId: dController.initialIndex!));
-                        //       BlocProvider.of<LeaveCheckBloc>(context).add(
-                        //           FetchLeaveCheck(
-                        //               clinicId: dController.initialIndex!,
-                        //               fromDate: DateFormat('yyyy-MM-dd')
-                        //                   .format(leaveStartDate),
-                        //               toDate: DateFormat('yyyy-MM-dd')
-                        //                   .format(leaveEndDate)));
-                        //       return Container(
-                        //         height: 40.h,
-                        //         width: double.infinity,
-                        //         decoration: BoxDecoration(
-                        //             color: kCardColor,
-                        //             borderRadius: BorderRadius.circular(5),
-                        //             border: Border.all(
-                        //                 color: const Color(0xFF9C9C9C))),
-                        //         child: Padding(
-                        //           padding:
-                        //               EdgeInsets.symmetric(horizontal: 8.w),
-                        //           child: Center(
-                        //             child: ValueListenableBuilder(
-                        //               valueListenable: dropValueLeaveNotifier,
-                        //               builder: (BuildContext context,
-                        //                   String dropValue, _) {
-                        //                 return DropdownButtonFormField(
-                        //                   iconEnabledColor: kMainColor,
-                        //                   decoration:
-                        //                       const InputDecoration.collapsed(
-                        //                           hintText: ''),
-                        //                   value: dropValue,
-                        //                   style: TextStyle(
-                        //                       fontSize: 14.sp,
-                        //                       fontWeight: FontWeight.w500,
-                        //                       color: kTextColor),
-                        //                   icon: const Icon(
-                        //                       Icons.keyboard_arrow_down),
-                        //                   onChanged: (String? value) {
-                        //                     dropValue = value!;
-                        //                     dropValueLeaveNotifier.value =
-                        //                         value;
-                        //                     clinicLeaveId = value;
-                        //                     dController.initialIndex! =
-                        //                         clinicValuesLeave
-                        //                             .where((element) => element
-                        //                                 .clinicName!
-                        //                                 .contains(value))
-                        //                             .toList()
-                        //                             .first
-                        //                             .clinicId
-                        //                             .toString();
-                        //                     BlocProvider.of<GetAllLeavesBloc>(
-                        //                             context)
-                        //                         .add(FetchAllLeaves(
-                        //                             hospitalId:
-                        //                                 dController.initialIndex!));
-                        //                     BlocProvider.of<LeaveCheckBloc>(
-                        //                             context)
-                        //                         .add(FetchLeaveCheck(
-                        //                             clinicId:
-                        //                                 dController.initialIndex!,
-                        //                             fromDate: DateFormat(
-                        //                                     'yyyy-MM-dd')
-                        //                                 .format(leaveStartDate),
-                        //                             toDate: DateFormat(
-                        //                                     'yyyy-MM-dd')
-                        //                                 .format(leaveEndDate)));
-                        //                   },
-                        //                   items: clinicValuesLeave
-                        //                       .map<DropdownMenuItem<String>>(
-                        //                           (value) {
-                        //                     return DropdownMenuItem<String>(
-                        //                       value: value.clinicName!,
-                        //                       child: Text(value.clinicName!),
-                        //                     );
-                        //                   }).toList(),
-                        //                 );
-                        //               },
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       );
-                        //     }
-                        //     return Container();
-                        //   },
-                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -269,10 +164,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     children: [
                                       Text(
                                         "Start Date",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTab10B600
+                                            : grey13B600,
                                       ),
                                       IconButton(
                                         onPressed: () {
@@ -341,10 +235,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 Text(
                                   DateFormat("dd-MM-yyy")
                                       .format(leaveStartDate),
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kTextColor),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : black14B600,
                                 ),
                               ],
                             ),
@@ -367,10 +260,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     children: [
                                       Text(
                                         "End Date",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTab10B600
+                                            : grey13B600,
                                       ),
                                       IconButton(
                                         onPressed: () {
@@ -436,17 +328,15 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 ),
                                 Text(
                                   DateFormat("dd-MM-yyy").format(leaveEndDate),
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kTextColor),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : black14B600,
                                 ),
                               ],
                             ),
                           ],
                         ),
                         const VerticalSpacingWidget(height: 5),
-
                         // VerticalSpacingWidget(height: 10.h),
                         BlocBuilder<LeaveCheckBloc, LeaveCheckState>(
                           builder: (context, state) {
@@ -496,10 +386,15 @@ class LeaveScreenState extends State<LeaveScreen> {
                                   child: Center(
                                     child: Text(
                                       "Confirm as a Leave",
-                                      style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white),
+                                      style: size.width > 400
+                                          ? TextStyle(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white)
+                                          : TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -508,7 +403,6 @@ class LeaveScreenState extends State<LeaveScreen> {
                             return Container();
                           },
                         ),
-
                         VerticalSpacingWidget(height: 10.h),
                         // getAllLeavesModel.leavesData==null?Container():
                         BlocBuilder<GetAllLeavesBloc, GetAllLeavesState>(
@@ -525,10 +419,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 children: [
                                   Text(
                                     "Your upcoming leaves",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15.sp,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTab10B600
+                                        : grey13B600,
                                   ),
                                   VerticalSpacingWidget(height: 5.h),
                                   SizedBox(
@@ -538,52 +431,59 @@ class LeaveScreenState extends State<LeaveScreen> {
                                             const NeverScrollableScrollPhysics(),
                                         padding: EdgeInsets.zero,
                                         itemBuilder: (context, index) {
-                                          return Container(
-                                            height: 40.h,
-                                            width: double.infinity,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            decoration: BoxDecoration(
-                                              color: kScaffoldColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  getAllLeavesModel
-                                                      .leavesData![index].date!
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: kTextColor),
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      BlocProvider.of<
-                                                                  LeaveUpdateBloc>(
-                                                              context)
-                                                          .add(
-                                                        LeaveDelete(
-                                                          clinicId: dController
-                                                              .initialIndex!,
-                                                          date:
-                                                              getAllLeavesModel
-                                                                  .leavesData![
-                                                                      index]
-                                                                  .date
-                                                                  .toString(),
-                                                        ),
-                                                      );
-                                                    },
-                                                    icon: Icon(Icons.delete,
-                                                        color: kMainColor))
-                                              ],
+                                          return Card(
+                                            child: Container(
+                                              height: 40.h,
+                                              width: double.infinity,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5),
+                                              decoration: BoxDecoration(
+                                                color: kScaffoldColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    getAllLeavesModel
+                                                        .leavesData![index]
+                                                        .date!
+                                                        .toString(),
+                                                    style: size.width > 400
+                                                        ? blackTabMainText
+                                                        : black14B600,
+                                                  ),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        BlocProvider.of<
+                                                                    LeaveUpdateBloc>(
+                                                                context)
+                                                            .add(
+                                                          LeaveDelete(
+                                                            clinicId: dController
+                                                                .initialIndex!,
+                                                            date:
+                                                                getAllLeavesModel
+                                                                    .leavesData![
+                                                                        index]
+                                                                    .date
+                                                                    .toString(),
+                                                          ),
+                                                        );
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: kMainColor,
+                                                        size: size.width > 400
+                                                            ? 14.sp
+                                                            : 20.sp,
+                                                      ))
+                                                ],
+                                              ),
                                             ),
                                           );
                                         },

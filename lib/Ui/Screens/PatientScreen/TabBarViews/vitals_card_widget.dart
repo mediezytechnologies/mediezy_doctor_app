@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class VitalsCardWidget extends StatelessWidget {
@@ -33,6 +34,7 @@ class VitalsCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(8),
       margin: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
@@ -46,19 +48,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Patient name : ",
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    color: kSubTextColor),
+                style: size.width > 400 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 patientName,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -68,19 +64,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Appointment date : ",
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    color: kSubTextColor),
+                style: size.width > 400 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 appointmentDate,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -90,19 +80,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Doctor name : ",
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    color: kSubTextColor),
+                style: size.width > 400 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 doctorName,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -114,19 +98,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Height : ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$height cm",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -137,19 +115,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Weight: ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$weight Kg",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -163,19 +135,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Temperature : ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$temperature °$temperatureType",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -186,19 +152,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Heart rate : ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$heartRate BPM",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -212,19 +172,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Spo2 : ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$spo2 %",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -235,19 +189,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Bp : ",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "${sys == "" ? "N/A" : sys} / ${dia == "" ? "N/A" : dia}",
-                    style: TextStyle(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -18,6 +18,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_help_screen.dart';
@@ -117,7 +118,6 @@ class _ScheduleTokenDetailsScreenState
   // late String selectedClinicId;
   // List<HospitalDetails> clinicValues = [];
 
-
   final HospitalController dController = Get.put(HospitalController());
 
   bool generateToken1 = false;
@@ -174,16 +174,18 @@ class _ScheduleTokenDetailsScreenState
       appBar: AppBar(
         backgroundColor: kCardColor,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Schedule Token",
-          style: TextStyle(
-              fontSize: 18.sp, fontWeight: FontWeight.bold, color: kTextColor),
         ),
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => const ScheduleHelpScreen(clinicName: "",)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (ctx) => const ScheduleHelpScreen(
+                              clinicName: "",
+                            )));
               },
               icon: const Icon(Icons.help_outline))
         ],
@@ -243,18 +245,19 @@ class _ScheduleTokenDetailsScreenState
                                   children: [
                                     Text(
                                       "Select Clinic",
-                                      style: TextStyle(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: kSubTextColor),
+                                      style: size.width > 400
+                                          ? greyTab10B600
+                                          : grey13B600,
                                     ),
                                     // const VerticalSpacingWidget(height: 5),
                                     //! select clinic
-                                    GetBuilder<HospitalController>(builder: (clx) {
+                                    GetBuilder<HospitalController>(
+                                        builder: (clx) {
                                       return CustomDropDown(
                                         width: 195.w,
                                         value: dController.initialIndex,
-                                        items: dController.hospitalDetails!.map((e) {
+                                        items: dController.hospitalDetails!
+                                            .map((e) {
                                           return DropdownMenuItem(
                                             value: e.clinicId.toString(),
                                             child: Text(e.clinicName!),
@@ -263,7 +266,8 @@ class _ScheduleTokenDetailsScreenState
                                         onChanged: (newValue) {
                                           log(newValue!);
                                           dController.dropdownValueChanging(
-                                              newValue, dController.initialIndex!);
+                                              newValue,
+                                              dController.initialIndex!);
                                         },
                                       );
                                     }),
@@ -274,13 +278,12 @@ class _ScheduleTokenDetailsScreenState
                                   children: [
                                     Text(
                                       "Select Schedule",
-                                      style: TextStyle(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: kSubTextColor),
+                                      style: size.width > 400
+                                          ? greyTab10B600
+                                          : grey13B600,
                                     ),
                                     Container(
-                                      height:size.height*0.055,
+                                      height: size.height * 0.055,
                                       width: 145.w,
                                       decoration: BoxDecoration(
                                           color: kCardColor,
@@ -298,10 +301,9 @@ class _ScheduleTokenDetailsScreenState
                                                 const InputDecoration.collapsed(
                                                     hintText: ''),
                                             value: dropdownValue,
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: kTextColor),
+                                            style: size.width > 400
+                                                ? blackTabMainText
+                                                : blackMainText,
                                             icon: const Icon(
                                                 Icons.keyboard_arrow_down),
                                             items: items.entries.map(
@@ -363,10 +365,9 @@ class _ScheduleTokenDetailsScreenState
                                             children: [
                                               Text(
                                                 "Start Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
+                                                style: size.width > 400
+                                                    ? greyTab10B600
+                                                    : grey13B600,
                                               ),
                                               IconButton(
                                                 onPressed: () {
@@ -417,6 +418,9 @@ class _ScheduleTokenDetailsScreenState
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
+                                                  size: size.width > 400
+                                                      ? 12.sp
+                                                      : 19.sp,
                                                 ),
                                               )
                                             ],
@@ -424,10 +428,9 @@ class _ScheduleTokenDetailsScreenState
                                           Text(
                                             DateFormat("dd-MM-yyy")
                                                 .format(startSchedule1Date),
-                                            style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: kTextColor),
+                                            style: size.width > 400
+                                                ? blackTabMainText
+                                                : black14B600,
                                           ),
                                         ],
                                       ),
@@ -466,10 +469,9 @@ class _ScheduleTokenDetailsScreenState
                                             children: [
                                               Text(
                                                 "End Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
+                                                style: size.width > 400
+                                                    ? greyTab10B600
+                                                    : grey13B600,
                                               ),
                                               IconButton(
                                                 onPressed: () {
@@ -504,6 +506,9 @@ class _ScheduleTokenDetailsScreenState
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
+                                                  size: size.width > 400
+                                                      ? 12.sp
+                                                      : 19.sp,
                                                 ),
                                               )
                                             ],
@@ -512,10 +517,9 @@ class _ScheduleTokenDetailsScreenState
                                             DateFormat('dd-MM-yyy')
                                                 .format(endScheduleDate),
                                             // Display the selected and formatted date
-                                            style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: kTextColor),
+                                            style: size.width > 400
+                                                ? blackTabMainText
+                                                : black14B600,
                                           ),
                                         ],
                                       ),
@@ -531,19 +535,22 @@ class _ScheduleTokenDetailsScreenState
                               children: [
                                 //! starting time
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
                                         Text(
                                           "Starting Time",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kSubTextColor),
+                                          style: size.width > 400
+                                              ? greyTab10B600
+                                              : grey13B600,
                                         ),
+                                        const HorizontalSpacingWidget(width: 5),
                                         Icon(
                                           IconlyLight.timeCircle,
                                           color: kMainColor,
+                                          size:
+                                              size.width > 400 ? 12.sp : 18.sp,
                                         ),
                                       ],
                                     ),
@@ -566,10 +573,9 @@ class _ScheduleTokenDetailsScreenState
                                           child: Text(
                                             selectedSchedule1StartingTime
                                                 .format(context),
-                                            style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: kTextColor),
+                                            style: size.width > 400
+                                                ? blackTabMainText
+                                                : black14B600,
                                           ),
                                         ),
                                       ),
@@ -578,19 +584,22 @@ class _ScheduleTokenDetailsScreenState
                                 ),
                                 //! ending time
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
                                         Text(
                                           "Ending Time",
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kSubTextColor),
+                                          style: size.width > 400
+                                              ? greyTab10B600
+                                              : grey13B600,
                                         ),
+                                        const HorizontalSpacingWidget(width: 5),
                                         Icon(
                                           IconlyLight.timeCircle,
                                           color: kMainColor,
+                                          size:
+                                              size.width > 400 ? 12.sp : 18.sp,
                                         ),
                                       ],
                                     ),
@@ -612,10 +621,9 @@ class _ScheduleTokenDetailsScreenState
                                           child: Text(
                                             selectedSchedule1EndingTime
                                                 .format(context),
-                                            style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: kTextColor),
+                                            style: size.width > 400
+                                                ? blackTabMainText
+                                                : black14B600,
                                           ),
                                         ),
                                       ),
@@ -636,15 +644,18 @@ class _ScheduleTokenDetailsScreenState
                                     children: [
                                       Text(
                                         "Time Duration",
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTab10B600
+                                            : grey13B600,
                                       ),
                                       const VerticalSpacingWidget(height: 5),
                                       SizedBox(
                                         height: 40.h,
                                         child: TextFormField(
+                                          style: TextStyle(
+                                              fontSize: size.width > 400
+                                                  ? 10.sp
+                                                  : 14.sp),
                                           // autofocus: true,
                                           cursorColor: kMainColor,
                                           controller: timeDuration1Controller,
@@ -653,9 +664,9 @@ class _ScheduleTokenDetailsScreenState
                                           focusNode:
                                               timeDurationFocusController,
                                           decoration: InputDecoration(
-                                            hintStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: kSubTextColor),
+                                            hintStyle: size.width > 400
+                                                ? greyTab10B600
+                                                : grey13B600,
                                             hintText: "10 min",
                                             filled: true,
                                             fillColor: kCardColor,
@@ -681,10 +692,8 @@ class _ScheduleTokenDetailsScreenState
                             //! select days
                             Text(
                               "Select Days",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
+                              style:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                             ),
                             const VerticalSpacingWidget(height: 5),
                             //! sunday monday tuesday
@@ -692,7 +701,7 @@ class _ScheduleTokenDetailsScreenState
                               padding: EdgeInsets.symmetric(horizontal: 4.w),
                               child: SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * .12,
+                                    MediaQuery.of(context).size.height * .18,
                                 child: GridView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   padding: EdgeInsets.zero,
@@ -718,12 +727,17 @@ class _ScheduleTokenDetailsScreenState
                                         children: [
                                           SizedBox(
                                             width: 10.w,
-                                            child: Checkbox(
-                                              activeColor: kMainColor,
-                                              value: isChecked,
-                                              onChanged: (value) =>
-                                                  _handleCheckboxChange(
-                                                      day, value ?? false),
+                                            child: Transform.scale(
+                                              scale: size.width > 400
+                                                  ? 1.5
+                                                  : 0.9, // Adjust the scale factor as per your requirement
+                                              child: Checkbox(
+                                                activeColor: kMainColor,
+                                                value: isChecked,
+                                                onChanged: (value) =>
+                                                    _handleCheckboxChange(
+                                                        day, value ?? false),
+                                              ),
                                             ),
                                           ),
                                           const HorizontalSpacingWidget(
@@ -732,7 +746,9 @@ class _ScheduleTokenDetailsScreenState
                                             width: 68.w,
                                             child: Text(
                                               day,
-                                              style: TextStyle(fontSize: 12.sp),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : black12B500,
                                             ),
                                           ),
                                         ],

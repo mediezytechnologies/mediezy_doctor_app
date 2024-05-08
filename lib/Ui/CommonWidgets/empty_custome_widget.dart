@@ -11,16 +11,20 @@ class EmptyCutomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Lottie.asset("assets/animations/emptyDoctor.json"),
+        Lottie.asset("assets/animations/emptyDoctor.json",
+            height: size.width > 400 ? 130.sp : 150.h),
         const VerticalSpacingWidget(height: 20),
         Text(
           text,
           style: TextStyle(
-              fontSize: 19.sp, fontWeight: FontWeight.w500, color: kMainColor),
+              fontSize: size.width > 400 ? 12.sp : 19.sp,
+              fontWeight: FontWeight.w500,
+              color: kMainColor),
           textAlign: TextAlign.center,
         )
       ],

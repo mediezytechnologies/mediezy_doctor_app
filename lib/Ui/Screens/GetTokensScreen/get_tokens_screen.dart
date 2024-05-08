@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:developer';
-
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,10 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/token_card_widget.dart';
@@ -66,6 +67,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () {
         Navigator.push(
@@ -99,14 +101,12 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Text(size.width.toString()),
                         Text(
                           "Select Clinic",
-                          style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w600,
-                              color: kSubTextColor),
+                          style: size.width > 400 ? greyTab10B600 : grey13B600,
                         ),
-                        const VerticalSpacingWidget(height: 5),
+                        const VerticalSpacingWidget(height: 3),
                         GetBuilder<HospitalController>(builder: (clx) {
                           return CustomDropDown(
                             width: double.infinity,
@@ -131,42 +131,18 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         const VerticalSpacingWidget(height: 5),
                         _isLoading
                             ? _buildCalenderLoadingWidget()
-                            : EasyDateTimeLine(
-                                initialDate: selectedDate,
-                                disabledDates: _getDisabledDates(),
+                            : DatePickerWidget(
                                 onDateChange: (date) {
                                   String formattedDate =
                                       DateFormat('yyyy-MM-dd').format(date);
-                                  selectedDate =
-                                      date; // Update the selectedDate
+                                  selectedDate = date;
                                   BlocProvider.of<GetTokenBloc>(context).add(
                                       FetchTokens(
                                           date: formattedDate,
-                                          clinicId:
-                                              dController.initialIndex!));
+                                          clinicId: dController.initialIndex!));
                                 },
-                                activeColor: kMainColor,
-                                dayProps: EasyDayProps(
-                                    height: 80.h,
-                                    width: 65.w,
-                                    activeDayNumStyle: TextStyle(
-                                        color: kCardColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.sp),
-                                    activeDayStrStyle: TextStyle(
-                                        color: kCardColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12.sp),
-                                    activeMothStrStyle: TextStyle(
-                                        color: kCardColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12.sp),
-                                    todayHighlightStyle:
-                                        TodayHighlightStyle.withBackground,
-                                    todayHighlightColor:
-                                        const Color(0xffE1ECC8),
-                                    borderColor: kMainColor),
                               ),
+
                         const VerticalSpacingWidget(height: 10),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -179,17 +155,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                     height: 20.h,
                                     width: 20.h,
                                     decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(5),
-                                        border:
-                                            Border.all(color: kMainColor)),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: kMainColor)),
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Available",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : black11Bbold,
                                   )
                                 ],
                               ),
@@ -200,17 +174,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                     width: 20.h,
                                     decoration: BoxDecoration(
                                         color: Colors.grey[200],
-                                        borderRadius:
-                                            BorderRadius.circular(5),
-                                        border:
-                                            Border.all(color: kMainColor)),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: kMainColor)),
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Timeout",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : black11Bbold,
                                   )
                                 ],
                               ),
@@ -222,14 +194,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                     decoration: BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(color: kMainColor),
                                     ),
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Booked",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : black11Bbold,
                                   )
                                 ],
                               ),
@@ -240,17 +213,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                     width: 20.h,
                                     decoration: BoxDecoration(
                                         color: Colors.greenAccent.shade100,
-                                        borderRadius:
-                                            BorderRadius.circular(5),
-                                        border:
-                                            Border.all(color: kMainColor)),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: kMainColor)),
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Reserved",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : black11Bbold,
                                   )
                                 ],
                               ),
@@ -286,8 +257,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                               if (getTokenModel.schedule == null) {
                                 return Center(
                                     child: EmptyCutomeWidget(
-                                        text: getTokenModel.message
-                                            .toString()));
+                                        text:
+                                            getTokenModel.message.toString()));
                               }
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,11 +267,11 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   if (getTokenModel
                                           .schedule?.schedule1?.isNotEmpty ==
                                       true)
-                                    const Text(
+                                    Text(
                                       "Schedule 1",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : black11Bbold,
                                     ),
                                   if (getTokenModel
                                           .schedule?.schedule1?.isNotEmpty ==
@@ -314,11 +285,13 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                       itemCount: getTokenModel
                                           .schedule!.schedule1!.length,
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        crossAxisCount: 5,
-                                        mainAxisExtent: 78,
+                                        crossAxisCount:
+                                            size.width > 400 ? 7 : 5,
+                                        mainAxisExtent:
+                                            size.width > 400 ? 130 : 78,
                                       ),
                                       itemBuilder: (context, index) {
                                         return TokenCardWidget(
@@ -336,10 +309,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                               .schedule1![index].isBooked!,
                                           isTimedOut: getTokenModel.schedule!
                                               .schedule1![index].isTimeout!,
-                                          scheduleType: getTokenModel
-                                              .schedule!
-                                              .schedule1![index]
-                                              .scheduleType!,
+                                          scheduleType: getTokenModel.schedule!
+                                              .schedule1![index].scheduleType!,
                                           isReserved: getTokenModel.schedule!
                                               .schedule1![index].isReserved!,
                                         );
@@ -349,11 +320,11 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   if (getTokenModel
                                           .schedule!.schedule2?.isNotEmpty ==
                                       true)
-                                    const Text(
+                                    Text(
                                       "Schedule 2",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : black11Bbold,
                                     ),
                                   if (getTokenModel
                                           .schedule!.schedule2?.isNotEmpty ==
@@ -367,11 +338,13 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                       itemCount: getTokenModel
                                           .schedule!.schedule2!.length,
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        crossAxisCount: 5,
-                                        mainAxisExtent: 78,
+                                        crossAxisCount:
+                                            size.width > 400 ? 7 : 5,
+                                        mainAxisExtent:
+                                            size.width > 400 ? 130 : 78,
                                       ),
                                       itemBuilder: (context, index) {
                                         return TokenCardWidget(
@@ -389,10 +362,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                               .toString(),
                                           isTimedOut: getTokenModel.schedule!
                                               .schedule2![index].isTimeout!,
-                                          scheduleType: getTokenModel
-                                              .schedule!
-                                              .schedule2![index]
-                                              .scheduleType!,
+                                          scheduleType: getTokenModel.schedule!
+                                              .schedule2![index].scheduleType!,
                                           isReserved: getTokenModel.schedule!
                                               .schedule2![index].isReserved!,
                                         );
@@ -401,11 +372,11 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   if (getTokenModel
                                           .schedule!.schedule3?.isNotEmpty ==
                                       true)
-                                    const Text(
+                                    Text(
                                       "Schedule 3",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : black11Bbold,
                                     ),
                                   if (getTokenModel
                                           .schedule!.schedule3?.isNotEmpty ==
@@ -419,11 +390,13 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                       itemCount: getTokenModel
                                           .schedule!.schedule3!.length,
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 10,
-                                        crossAxisCount: 5,
-                                        mainAxisExtent: 78,
+                                        crossAxisCount:
+                                            size.width > 400 ? 7 : 5,
+                                        mainAxisExtent:
+                                            size.width > 400 ? 130 : 78,
                                       ),
                                       itemBuilder: (context, index) {
                                         return TokenCardWidget(
@@ -441,10 +414,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                               .toString(),
                                           isTimedOut: getTokenModel.schedule!
                                               .schedule3![index].isTimeout!,
-                                          scheduleType: getTokenModel
-                                              .schedule!
-                                              .schedule3![index]
-                                              .scheduleType!,
+                                          scheduleType: getTokenModel.schedule!
+                                              .schedule3![index].scheduleType!,
                                           isReserved: getTokenModel.schedule!
                                               .schedule3![index].isReserved!,
                                         );
