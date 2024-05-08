@@ -226,27 +226,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               }),
                           const VerticalSpacingWidget(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Don't have an account? "),
-                              InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) =>
-                                                const DummyRegisterScreen()));
-                                  },
-                                  child: Text(
-                                    "Signup",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: kMainColor,
-                                        fontSize: 15.sp),
-                                  )),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     const Text("Don't have an account? "),
+                          //     InkWell(
+                          //         onTap: () {
+                          //           Navigator.push(
+                          //               context,
+                          //               MaterialPageRoute(
+                          //                   builder: (ctx) =>
+                          //                       const DummyRegisterScreen()));
+                          //         },
+                          //         child: Text(
+                          //           "Signup",
+                          //           style: TextStyle(
+                          //               fontWeight: FontWeight.bold,
+                          //               color: kMainColor,
+                          //               fontSize: 15.sp),
+                          //         )),
+                          //   ],
+                          // ),
                           const VerticalSpacingWidget(height: 10),
                         ],
                       ),

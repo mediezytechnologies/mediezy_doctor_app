@@ -4,12 +4,16 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:keyboard_actions/keyboard_actions_config.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
@@ -117,7 +121,6 @@ class _ScheduleTokenDetailsScreenState
   // late String selectedClinicId;
   // List<HospitalDetails> clinicValues = [];
 
-
   final HospitalController dController = Get.put(HospitalController());
 
   bool generateToken1 = false;
@@ -165,6 +168,19 @@ class _ScheduleTokenDetailsScreenState
     super.dispose();
   }
 
+  KeyboardActionsConfig buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+      keyboardBarColor: Colors.grey[200],
+      nextFocus: true,
+      actions: [
+        KeyboardActionsItem(
+          focusNode: timeDurationFocusController,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -182,8 +198,12 @@ class _ScheduleTokenDetailsScreenState
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => const ScheduleHelpScreen(clinicName: "",)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (ctx) => const ScheduleHelpScreen(
+                              clinicName: "",
+                            )));
               },
               icon: const Icon(Icons.help_outline))
         ],
@@ -250,11 +270,13 @@ class _ScheduleTokenDetailsScreenState
                                     ),
                                     // const VerticalSpacingWidget(height: 5),
                                     //! select clinic
-                                    GetBuilder<HospitalController>(builder: (clx) {
+                                    GetBuilder<HospitalController>(
+                                        builder: (clx) {
                                       return CustomDropDown(
                                         width: 195.w,
                                         value: dController.initialIndex,
-                                        items: dController.hospitalDetails!.map((e) {
+                                        items: dController.hospitalDetails!
+                                            .map((e) {
                                           return DropdownMenuItem(
                                             value: e.clinicId.toString(),
                                             child: Text(e.clinicName!),
@@ -263,7 +285,8 @@ class _ScheduleTokenDetailsScreenState
                                         onChanged: (newValue) {
                                           log(newValue!);
                                           dController.dropdownValueChanging(
-                                              newValue, dController.initialIndex!);
+                                              newValue,
+                                              dController.initialIndex!);
                                         },
                                       );
                                     }),
@@ -280,7 +303,7 @@ class _ScheduleTokenDetailsScreenState
                                           color: kSubTextColor),
                                     ),
                                     Container(
-                                      height:size.height*0.055,
+                                      height: size.height * 0.055,
                                       width: 145.w,
                                       decoration: BoxDecoration(
                                           color: kCardColor,
@@ -642,106 +665,113 @@ class _ScheduleTokenDetailsScreenState
                                             color: kSubTextColor),
                                       ),
                                       const VerticalSpacingWidget(height: 5),
-                                      SizedBox(
-                                        height: 40.h,
-                                        child: TextFormField(
-                                          // autofocus: true,
-                                          cursorColor: kMainColor,
-                                          controller: timeDuration1Controller,
-                                          keyboardType: TextInputType.number,
-                                          textInputAction: TextInputAction.done,
-                                          focusNode:
-                                              timeDurationFocusController,
-                                          decoration: InputDecoration(
-                                            hintStyle: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: kSubTextColor),
-                                            hintText: "10 min",
-                                            filled: true,
-                                            fillColor: kCardColor,
-                                            enabledBorder: OutlineInputBorder(
+                                      Container(
+                                        color: Colors.amber,
+                                        height: 50.h,
+                                        width: double.infinity,
+                                        child: KeyboardActions(
+                                          config: buildConfig(context),
+                                          child: TextFormField(
+                                            // autofocus: true,
+                                            cursorColor: kMainColor,
+                                            controller: timeDuration1Controller,
+                                            keyboardType: TextInputType.number,
+                                            // textInputAction:
+                                            //     TextInputAction.done,
+                                            focusNode:
+                                                timeDurationFocusController,
+                                            decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                  fontSize: 13.sp,
+                                                  color: kSubTextColor),
+                                              hintText: "10 min",
+                                              filled: true,
+                                              fillColor: kCardColor,
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: kMainColor)),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
                                                 borderSide: BorderSide(
-                                                    color: kMainColor)),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                              borderSide:
-                                                  BorderSide(color: kMainColor),
+                                                    color: kMainColor),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
+                                      const HorizontalSpacingWidget(width: 5),
+                                      const HorizontalSpacingWidget(width: 5),
                                     ],
                                   ),
                                 ),
-                                const HorizontalSpacingWidget(width: 5),
                               ],
                             ),
                             const VerticalSpacingWidget(height: 10),
                             //! select days
-                            Text(
-                              "Select Days",
-                              style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
-                            ),
-                            const VerticalSpacingWidget(height: 5),
+                            // Text(
+                            //   "Select Days",
+                            //   style: TextStyle(
+                            //       fontSize: 15.sp,
+                            //       fontWeight: FontWeight.w600,
+                            //       color: kSubTextColor),
+                            // ),
+                            // const VerticalSpacingWidget(height: 5),
                             //! sunday monday tuesday
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 4.w),
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * .12,
-                                child: GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10.0,
-                                    crossAxisSpacing: 0.0,
-                                    childAspectRatio: 5,
-                                  ),
-                                  itemCount: _days1.length,
-                                  itemBuilder: (context, index) {
-                                    // log("$_selectedDays1");
-                                    // log("$checkboxData");
-                                    log("$selectedDays");
-                                    final day = _days1[index];
-                                    final isChecked =
-                                        checkboxData[day] ?? false;
-                                    return GestureDetector(
-                                      onTap: () => _handleCheckboxChange(
-                                          day, !isChecked),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 10.w,
-                                            child: Checkbox(
-                                              activeColor: kMainColor,
-                                              value: isChecked,
-                                              onChanged: (value) =>
-                                                  _handleCheckboxChange(
-                                                      day, value ?? false),
-                                            ),
-                                          ),
-                                          const HorizontalSpacingWidget(
-                                              width: 10),
-                                          SizedBox(
-                                            width: 68.w,
-                                            child: Text(
-                                              day,
-                                              style: TextStyle(fontSize: 12.sp),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(horizontal: 4.w),
+                            //   child: SizedBox(
+                            //     height:
+                            //         MediaQuery.of(context).size.height * .12,
+                            //     child: GridView.builder(
+                            //       physics: const NeverScrollableScrollPhysics(),
+                            //       padding: EdgeInsets.zero,
+                            //       gridDelegate:
+                            //           const SliverGridDelegateWithFixedCrossAxisCount(
+                            //         crossAxisCount: 3,
+                            //         mainAxisSpacing: 10.0,
+                            //         crossAxisSpacing: 0.0,
+                            //         childAspectRatio: 5,
+                            //       ),
+                            //       itemCount: _days1.length,
+                            //       itemBuilder: (context, index) {
+                            //         // log("$_selectedDays1");
+                            //         // log("$checkboxData");
+                            //         log("$selectedDays");
+                            //         final day = _days1[index];
+                            //         final isChecked =
+                            //             checkboxData[day] ?? false;
+                            //         return GestureDetector(
+                            //           onTap: () => _handleCheckboxChange(
+                            //               day, !isChecked),
+                            //           child: Row(
+                            //             children: [
+                            //               SizedBox(
+                            //                 width: 10.w,
+                            //                 child: Checkbox(
+                            //                   activeColor: kMainColor,
+                            //                   value: isChecked,
+                            //                   onChanged: (value) =>
+                            //                       _handleCheckboxChange(
+                            //                           day, value ?? false),
+                            //                 ),
+                            //               ),
+                            //               const HorizontalSpacingWidget(
+                            //                   width: 10),
+                            //               SizedBox(
+                            //                 width: 68.w,
+                            //                 child: Text(
+                            //                   day,
+                            //                   style: TextStyle(fontSize: 12.sp),
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         );
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
                             // Container(color: kScaffoldColor,height: 2,width: mWidth*.99,),
                           ],
                         ),

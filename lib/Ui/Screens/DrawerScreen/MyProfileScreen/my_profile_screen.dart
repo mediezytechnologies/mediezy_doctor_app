@@ -64,7 +64,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("My Profile"),
+          title: const Text("Edit Profile"),
           centerTitle: true,
         ),
         bottomNavigationBar: Padding(
@@ -105,55 +105,56 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //! first section
-                    Container(
-                      decoration: BoxDecoration(
-                          color: kCardColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        //! image
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FadedScaleAnimation(
-                              scaleDuration: const Duration(milliseconds: 400),
-                              fadeDuration: const Duration(milliseconds: 400),
-                              child: Image.network(
-                                widget.drImage,
-                                height: 100.h,
-                                width: 110.w,
-                              ),
-                            ),
-                            const HorizontalSpacingWidget(width: 30),
-                            //! select image
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const VerticalSpacingWidget(height: 30),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: kMainColor,
-                                    size: 20.sp,
-                                  ),
-                                ),
-                                Text(
-                                  "Change Profile Picture",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kMainColor),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 10),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       color: kCardColor,
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     //! image
+                    //     child: Row(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         FadedScaleAnimation(
+                    //           scaleDuration: const Duration(milliseconds: 400),
+                    //           fadeDuration: const Duration(milliseconds: 400),
+                    //           child: Image.network(
+                    //             widget.drImage,
+                    //             height: 100.h,
+                    //             width: 110.w,
+                    //           ),
+                    //         ),
+                    //         const HorizontalSpacingWidget(width: 30),
+                    //         //! select image
+                    //         Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             const VerticalSpacingWidget(height: 30),
+                    //             IconButton(
+                    //               onPressed: () {},
+                    //               icon: Icon(
+                    //                 Icons.camera_alt_outlined,
+                    //                 color: kMainColor,
+                    //                 size: 20.sp,
+                    //               ),
+                    //             ),
+                    //             Text(
+                    //               "Change Profile Picture",
+                    //               style: TextStyle(
+                    //                   fontSize: 15.sp,
+                    //                   fontWeight: FontWeight.w600,
+                    //                   color: kMainColor),
+                    //             ),
+                    //           ],
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                   // const VerticalSpacingWidget(height: 10),
                     //! second section
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -262,226 +263,226 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         ],
                       ),
                     ),
-                    const VerticalSpacingWidget(height: 10),
+                    // const VerticalSpacingWidget(height: 10),
+                    // //! third section
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       color: kCardColor),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       Text(
+                    //         "About",
+                    //         style: TextStyle(
+                    //             fontSize: 18.sp,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: kSubTextColor),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 10),
+                    //       //! about
+                    //       TextFormField(
+                    //         cursorColor: kMainColor,
+                    //         controller: aboutController,
+                    //         keyboardType: TextInputType.text,
+                    //         focusNode: aboutFocusController,
+                    //         textInputAction: TextInputAction.next,
+                    //         maxLines: 3,
+                    //         decoration: InputDecoration(
+                    //           enabled: false,
+                    //           prefixIcon: Icon(
+                    //             Icons.description_outlined,
+                    //             color: kMainColor,
+                    //           ),
+                    //           hintStyle: TextStyle(
+                    //               fontSize: 15.sp, color: kSubTextColor),
+                    //           filled: true,
+                    //           fillColor: kScaffoldColor,
+                    //           hintText: widget.about,
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(4),
+                    //             borderSide: BorderSide.none,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 15)
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VerticalSpacingWidget(height: 10),
                     //! third section
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kCardColor),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const VerticalSpacingWidget(height: 15),
-                          Text(
-                            "About",
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color: kSubTextColor),
-                          ),
-                          const VerticalSpacingWidget(height: 10),
-                          //! about
-                          TextFormField(
-                            cursorColor: kMainColor,
-                            controller: aboutController,
-                            keyboardType: TextInputType.text,
-                            focusNode: aboutFocusController,
-                            textInputAction: TextInputAction.next,
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              enabled: false,
-                              prefixIcon: Icon(
-                                Icons.description_outlined,
-                                color: kMainColor,
-                              ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
-                              filled: true,
-                              fillColor: kScaffoldColor,
-                              hintText: widget.about,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          const VerticalSpacingWidget(height: 15)
-                        ],
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 10),
-                    //! third section
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kCardColor),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const VerticalSpacingWidget(height: 15),
-                          Text(
-                            "Works At",
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w500,
-                                color: kSubTextColor),
-                          ),
-                          const VerticalSpacingWidget(height: 10),
-                          //! hospital
-                          TextFormField(
-                            cursorColor: kMainColor,
-                            controller: workAtHospitalController,
-                            keyboardType: TextInputType.text,
-                            focusNode: workAtHospitalFocusController,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              enabled: false,
-                              prefixIcon: Icon(
-                                Icons.local_hospital_outlined,
-                                color: kMainColor,
-                              ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
-                              filled: true,
-                              fillColor: kScaffoldColor,
-                              hintText: widget.hospitalName,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          const VerticalSpacingWidget(height: 15),
-                          //! clinic
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kCardColor,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const VerticalSpacingWidget(height: 15),
-                                Text(
-                                  "Clinics",
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kSubTextColor),
-                                ),
-                                const VerticalSpacingWidget(height: 15),
-                                ListView.separated(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: widget.clinicName.length,
-                                  itemBuilder: (context, index) {
-                                    return Text(
-                                      widget.clinicName[index].clinicName
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: kTextColor),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) =>
-                                      const VerticalSpacingWidget(height: 3),
-                                ),
-                                const VerticalSpacingWidget(height: 10),
-                              ],
-                            ),
-                          ),
-                          const VerticalSpacingWidget(height: 15)
-                        ],
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 10),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //       color: kCardColor),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       Text(
+                    //         "Works At",
+                    //         style: TextStyle(
+                    //             fontSize: 18.sp,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: kSubTextColor),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 10),
+                    //       //! hospital
+                    //       TextFormField(
+                    //         cursorColor: kMainColor,
+                    //         controller: workAtHospitalController,
+                    //         keyboardType: TextInputType.text,
+                    //         focusNode: workAtHospitalFocusController,
+                    //         textInputAction: TextInputAction.next,
+                    //         decoration: InputDecoration(
+                    //           enabled: false,
+                    //           prefixIcon: Icon(
+                    //             Icons.local_hospital_outlined,
+                    //             color: kMainColor,
+                    //           ),
+                    //           hintStyle: TextStyle(
+                    //               fontSize: 15.sp, color: kSubTextColor),
+                    //           filled: true,
+                    //           fillColor: kScaffoldColor,
+                    //           hintText: widget.hospitalName,
+                    //           border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(4),
+                    //             borderSide: BorderSide.none,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       //! clinic
+                    //       Container(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //         width: double.infinity,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(10),
+                    //           color: kCardColor,
+                    //         ),
+                    //         child: Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             const VerticalSpacingWidget(height: 15),
+                    //             Text(
+                    //               "Clinics",
+                    //               style: TextStyle(
+                    //                   fontSize: 14.sp,
+                    //                   fontWeight: FontWeight.w600,
+                    //                   color: kSubTextColor),
+                    //             ),
+                    //             const VerticalSpacingWidget(height: 15),
+                    //             ListView.separated(
+                    //               physics: const NeverScrollableScrollPhysics(),
+                    //               shrinkWrap: true,
+                    //               itemCount: widget.clinicName.length,
+                    //               itemBuilder: (context, index) {
+                    //                 return Text(
+                    //                   widget.clinicName[index].clinicName
+                    //                       .toString(),
+                    //                   style: TextStyle(
+                    //                       fontSize: 15.sp,
+                    //                       fontWeight: FontWeight.w600,
+                    //                       color: kTextColor),
+                    //                 );
+                    //               },
+                    //               separatorBuilder: (context, index) =>
+                    //                   const VerticalSpacingWidget(height: 3),
+                    //             ),
+                    //             const VerticalSpacingWidget(height: 10),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 15)
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VerticalSpacingWidget(height: 10),
                     //! fourth section
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kCardColor,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const VerticalSpacingWidget(height: 15),
-                          Text(
-                            "Specifications",
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: kSubTextColor),
-                          ),
-                          const VerticalSpacingWidget(height: 15),
-                          ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: widget.specifications.length,
-                            itemBuilder: (context, index) {
-                              return Text(
-                                widget.specifications[index],
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: kTextColor),
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                const VerticalSpacingWidget(height: 3),
-                          ),
-                          const VerticalSpacingWidget(height: 10),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 10),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: kCardColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const VerticalSpacingWidget(height: 15),
-                          //! specifications
-                          Text(
-                            "Sub specifications",
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: kSubTextColor),
-                          ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     color: kCardColor,
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       Text(
+                    //         "Specifications",
+                    //         style: TextStyle(
+                    //             fontSize: 14.sp,
+                    //             fontWeight: FontWeight.w600,
+                    //             color: kSubTextColor),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       ListView.separated(
+                    //         physics: const NeverScrollableScrollPhysics(),
+                    //         shrinkWrap: true,
+                    //         itemCount: widget.specifications.length,
+                    //         itemBuilder: (context, index) {
+                    //           return Text(
+                    //             widget.specifications[index],
+                    //             style: TextStyle(
+                    //                 fontSize: 15.sp,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: kTextColor),
+                    //           );
+                    //         },
+                    //         separatorBuilder: (context, index) =>
+                    //             const VerticalSpacingWidget(height: 3),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 10),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VerticalSpacingWidget(height: 10),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //       color: kCardColor,
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       //! specifications
+                    //       Text(
+                    //         "Sub specifications",
+                    //         style: TextStyle(
+                    //             fontSize: 14.sp,
+                    //             fontWeight: FontWeight.w600,
+                    //             color: kSubTextColor),
+                    //       ),
 
-                          const VerticalSpacingWidget(height: 15),
-                          ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: widget.subSpecification.length,
-                            itemBuilder: (context, index) {
-                              return Text(
-                                widget.subSpecification[index],
-                                style: TextStyle(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: kTextColor),
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                const VerticalSpacingWidget(height: 3),
-                          ),
-                          const VerticalSpacingWidget(height: 10),
-                        ],
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 10)
+                    //       const VerticalSpacingWidget(height: 15),
+                    //       ListView.separated(
+                    //         physics: const NeverScrollableScrollPhysics(),
+                    //         shrinkWrap: true,
+                    //         itemCount: widget.subSpecification.length,
+                    //         itemBuilder: (context, index) {
+                    //           return Text(
+                    //             widget.subSpecification[index],
+                    //             style: TextStyle(
+                    //                 fontSize: 15.sp,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: kTextColor),
+                    //           );
+                    //         },
+                    //         separatorBuilder: (context, index) =>
+                    //             const VerticalSpacingWidget(height: 3),
+                    //       ),
+                    //       const VerticalSpacingWidget(height: 10),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const VerticalSpacingWidget(height: 10)
                   ],
                 ),
               ),

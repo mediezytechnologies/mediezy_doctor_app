@@ -51,6 +51,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
           endOffset: const Offset(0, 0),
           slideCurve: Curves.linearToEaseOut,
           child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Column(

@@ -32,6 +32,9 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       width: size.width * 0.7,
       child: ListView(
+        shrinkWrap: true,
+        
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
           BlocBuilder<ProfileGetBloc, ProfileGetState>(
