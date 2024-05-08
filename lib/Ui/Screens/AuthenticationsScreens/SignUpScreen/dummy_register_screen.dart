@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Login/login_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
@@ -44,6 +43,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is DummyRegisterLoaded) {
@@ -81,15 +81,14 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     //! heading
                     Text(
                       "You have not registered yet.\nLet us know basic details for registration",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: kSubTextColor,
-                          fontWeight: FontWeight.w500),
+                      style: size.width > 400 ? greyTabMain : greyMain,
                       textAlign: TextAlign.center,
                     ),
                     const VerticalSpacingWidget(height: 20),
                     //! first name
                     TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: firstNameController,
                       keyboardType: TextInputType.name,
@@ -107,7 +106,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Name",
                         filled: true,
                         fillColor: kCardColor,
@@ -120,6 +119,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     const VerticalSpacingWidget(height: 7),
                     //! email
                     TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -138,7 +139,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Email",
                         filled: true,
                         fillColor: kCardColor,
@@ -156,6 +157,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                         Container(
                           width: 220.w,
                           child: TextFormField(
+                            style: TextStyle(
+                                fontSize: size.width > 400 ? 11.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: phoneNumberController,
                             keyboardType: TextInputType.phone,
@@ -173,8 +176,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                                 Icons.phone_iphone,
                                 color: kMainColor,
                               ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
+                              hintStyle:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                               hintText: "Enter your Phone number",
                               filled: true,
                               fillColor: kCardColor,
@@ -204,9 +207,15 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                const Icon(Icons.calendar_month),
+                                Icon(
+                                  Icons.calendar_month,
+                                  size: size.width > 400 ? 12.sp : 20.sp,
+                                ),
                                 Text(
                                   DateFormat("dd-MM-yyy").format(selectDate),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
                                 ),
                               ],
                             ),
@@ -216,6 +225,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     ),
                     const VerticalSpacingWidget(height: 7),
                     TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: hospitalNameController,
                       keyboardType: TextInputType.text,
@@ -234,7 +245,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Hospital Name",
                         filled: true,
                         fillColor: kCardColor,
@@ -246,6 +257,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     ),
                     const VerticalSpacingWidget(height: 7),
                     TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: specializationController,
                       keyboardType: TextInputType.text,
@@ -264,7 +277,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Specialization",
                         filled: true,
                         fillColor: kCardColor,
@@ -276,6 +289,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     ),
                     const VerticalSpacingWidget(height: 7),
                     TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: locationController,
                       keyboardType: TextInputType.text,
@@ -294,7 +309,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Location",
                         filled: true,
                         fillColor: kCardColor,
@@ -329,10 +344,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                       children: [
                         Text(
                           "Already have an account?",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: size.width > 400 ? blackTab9B400 : black13B500,
                         ),
                         const HorizontalSpacingWidget(width: 5),
                         InkWell(
@@ -346,10 +358,15 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                           },
                           child: Text(
                             "Login",
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: kMainColor),
+                            style: size.width > 400
+                                ? TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: kMainColor,
+                                    fontSize: 11.sp)
+                                : TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: kMainColor,
+                                    fontSize: 15.sp),
                           ),
                         ),
                       ],

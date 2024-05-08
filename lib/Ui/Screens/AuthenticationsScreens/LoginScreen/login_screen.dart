@@ -17,6 +17,7 @@ import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../CommonWidgets/text_style_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginLoaded) {
@@ -81,23 +83,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: 400.h,
+                      width: double.infinity,
+                      height: size.width > 400
+                          ? size.height * .64
+                          : size.height * .59,
                       child: Swiper(
                         autoplay: true,
                         itemCount: loginScreenImages.length,
                         itemBuilder: ((context, index) {
                           return Image.asset(
                             loginScreenImages[index],
-                            fit: BoxFit.cover,
+                            fit: size.width > 400 ? BoxFit.fill : BoxFit.cover,
                           );
                         }),
                         pagination: SwiperPagination(
+                          margin: EdgeInsets.only(bottom: 10.h),
                           alignment: Alignment.bottomCenter,
                           builder: DotSwiperPaginationBuilder(
-                              color: Colors.grey,
-                              activeColor: Colors.grey[200],
-                              size: 8.sp,
-                              activeSize: 8.sp),
+                            color: Colors.grey,
+                            activeColor: Colors.grey[200],
+                            size: size.width > 400 ? 6.sp : 8.sp,
+                            activeSize: size.width > 400 ? 6.sp : 8.sp,
+                          ),
                         ),
                       ),
                     ),
@@ -105,9 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: Column(
                         children: [
-                          const VerticalSpacingWidget(height: 400),
+                          VerticalSpacingWidget(
+                              height: size.width > 400
+                                  ? size.height * .357
+                                  : size.height * .455),
                           //! email
                           TextFormField(
+                            style: TextStyle(
+                                fontSize: size.width > 400 ? 11.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -124,9 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Icon(
                                 Icons.email_outlined,
                                 color: kMainColor,
+                                size: size.width > 400 ? 12.sp : 20.sp,
                               ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
+                              hintStyle:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                               hintText: "Enter your email",
                               filled: true,
                               fillColor: kCardColor,
@@ -139,6 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           const VerticalSpacingWidget(height: 10),
                           //! password
                           TextFormField(
+                            style: TextStyle(
+                                fontSize: size.width > 400 ? 11.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: passwordController,
                             keyboardType: TextInputType.text,
@@ -153,8 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             decoration: InputDecoration(
-                              prefixIcon:
-                                  Icon(IconlyLight.password, color: kMainColor),
+                              prefixIcon: Icon(
+                                IconlyLight.password,
+                                color: kMainColor,
+                                size: size.width > 400 ? 12.sp : 20.sp,
+                              ),
                               suffixIcon: hidePassword
                                   ? IconButton(
                                       onPressed: () {
@@ -165,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       icon: Icon(
                                         IconlyLight.hide,
                                         color: kMainColor,
+                                        size: size.width > 400 ? 12.sp : 20.sp,
                                       ),
                                     )
                                   : IconButton(
@@ -176,10 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       icon: Icon(
                                         IconlyLight.show,
                                         color: kMainColor,
+                                        size: size.width > 400 ? 12.sp : 20.sp,
                                       ),
                                     ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
+                              hintStyle:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                               hintText: "Enter your password",
                               filled: true,
                               fillColor: kCardColor,
@@ -189,29 +209,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          // const VerticalSpacingWidget(height: 10),
-                          // //! forgetpassword
-                          // Align(
-                          //   alignment: Alignment.centerRight,
-                          //   child: InkWell(
-                          //     onTap: () {
-                          //       Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //           builder: (context) =>
-                          //               const ForgetPasswordScreen(),
-                          //         ),
-                          //       );
-                          //     },
-                          //     child: Text(
-                          //       "Forget password",
-                          //       style: TextStyle(
-                          //           fontSize: 15.sp,
-                          //           fontWeight: FontWeight.bold,
-                          //           color: kMainColor),
-                          //     ),
-                          //   ),
-                          // ),
                           const VerticalSpacingWidget(height: 30),
                           //! login
                           CommonButtonWidget(
@@ -229,22 +226,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text("Don't have an account? "),
+                              Text(
+                                "Don't have an account? ",
+                                style: size.width > 400
+                                    ? blackTab9B400
+                                    : black13B500,
+                              ),
                               InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) =>
-                                                const DummyRegisterScreen()));
-                                  },
-                                  child: Text(
-                                    "Signup",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: kMainColor,
-                                        fontSize: 15.sp),
-                                  )),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              const DummyRegisterScreen()));
+                                },
+                                child: Text(
+                                  "Signup",
+                                  style: size.width > 400
+                                      ? TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kMainColor,
+                                          fontSize: 11.sp)
+                                      : TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: kMainColor,
+                                          fontSize: 15.sp),
+                                ),
+                              ),
                             ],
                           ),
                           const VerticalSpacingWidget(height: 10),
