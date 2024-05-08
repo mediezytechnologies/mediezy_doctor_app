@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dart';
 
@@ -34,7 +35,7 @@ class PatientsCardWidget extends StatefulWidget {
 class _PatientsCardWidgetState extends State<PatientsCardWidget> {
   @override
   Widget build(BuildContext context) {
-    final size=MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -50,8 +51,8 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: 100.h,
-              width: double .infinity,
+              height: size.width > 400 ? 82.h : 70.h,
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: kCardColor,
                 borderRadius: BorderRadius.circular(10),
@@ -65,90 +66,80 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                     child: PatientImageWidget(
                         patientImage: widget.userImage, radius: 30.r),
                   ),
-                   HorizontalSpacingWidget(width: 7.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      //! name
-                      Text(
-                        widget.patientName,
-                        style: TextStyle(
-                          fontSize: size.width>450?13.sp: 15.sp,
-                          fontWeight: FontWeight.bold,
+                  const HorizontalSpacingWidget(width: 10),
+                  SizedBox(
+                    width: 180.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        //! name
+                        Text(
+                          widget.patientName,
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Patient Id : ",
-                            style: TextStyle(
-                                fontSize: size.width>450?8.sp:13.sp,
-                                fontWeight: FontWeight.w400,
-                                color: kSubTextColor),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            widget.mediezyPatientId,
-                            // patientsGetModel.patientData![index].age.toString(),
-                            style: TextStyle(
-                              fontSize:  size.width>450?9.sp:14.sp,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          children: [
+                            Text(
+                              "Patient Id : ",
+                              style: size.width > 400 ? greyTabMain : greyMain,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Age : ",
-                            style: TextStyle(
-                                fontSize:  size.width>450?8.sp:13.sp,
-                                fontWeight: FontWeight.w400,
-                                color: kSubTextColor),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            widget.age,
-                            // patientsGetModel.patientData![index].age.toString(),
-                            style: TextStyle(
-                              fontSize:  size.width>450?9.sp:14.sp,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              widget.mediezyPatientId,
+                              // patientsGetModel.patientData![index].age.toString(),
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Gender : ",
-                            style: TextStyle(
-                                fontSize:  size.width>450?8.sp:13.sp,
-                                fontWeight: FontWeight.w400,
-                                color: kSubTextColor),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            widget.gender == "1" ? "Male" : "Female",
-                            style: TextStyle(
-                              fontSize: size.width>450?9.sp:14.sp,
-                              fontWeight: FontWeight.bold,
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Age : ",
+                              style: size.width > 400 ? greyTabMain : greyMain,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text(
+                              widget.age,
+                              // patientsGetModel.patientData![index].age.toString(),
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Gender : ",
+                              style: size.width > 400 ? greyTabMain : greyMain,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              widget.gender == "1" ? "Male" : "Female",
+                              style: size.width > 400
+                                  ? blackTab9B600
+                                  : blackMainText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

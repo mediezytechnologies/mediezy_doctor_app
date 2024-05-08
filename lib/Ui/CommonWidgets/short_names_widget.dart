@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class ShortNamesWidget extends StatelessWidget {
@@ -11,19 +12,16 @@ class ShortNamesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Row(
       children: [
         Text(
           firstText,
-          style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 13.sp,
-              color: kSubTextColor),
+          style: size.width > 400 ? greyTabMain : greyMain,
         ),
         Text(
           secondText,
-          style: TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 14.sp, color: kTextColor),
+          style: size.width > 400 ? blackTabMainText : blackMainText,
         ),
       ],
     );

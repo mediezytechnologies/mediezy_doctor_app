@@ -24,12 +24,66 @@ class GeneralServices {
   //* to close the app
   appCloseDialogue(
       BuildContext context, String title, void Function()? yesFunction) {
-       Platform.isIOS
+    final size = MediaQuery.of(context).size;
+    Platform.isIOS
         ? showCupertinoDialog(
             barrierDismissible: false,
             context: context,
             builder: ((context) {
               return CupertinoAlertDialog(
+                content: Text(
+                  title,
+                  style: size.width > 400
+                      ? TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor)
+                      : TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text(
+                      "No",
+                      style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    onPressed: yesFunction,
+                    child: Text(
+                      "Yes",
+                      style: size.width > 400
+                          ? TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red)
+                          : TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red),
+                    ),
+                  )
+                ],
+              );
+            }),
+          )
+        : showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: ((context) {
+              return AlertDialog(
+                backgroundColor: Theme.of(context).cardColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 content: Text(
                   title,
                   style: TextStyle(
@@ -54,57 +108,21 @@ class GeneralServices {
                     onPressed: yesFunction,
                     child: Text(
                       "Yes",
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.red),
+                      style: size.width > 400
+                          ? TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red)
+                          : TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red),
                     ),
                   )
                 ],
               );
             }),
-          )
-        :  showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: ((context) {
-        return AlertDialog(
-          backgroundColor: Theme.of(context).cardColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          content: Text(
-            title,
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: kTextColor),
-          ),
-          actions: [
-            TextButton(
-              child: Text(
-                "No",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: kTextColor),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              onPressed: yesFunction,
-              child: Text(
-                "Yes",
-                style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.red),
-              ),
-            )
-          ],
-        );
-      }),
-    );
+          );
   }
 
   //*show dialogue
@@ -137,37 +155,39 @@ class GeneralServices {
               ],
             ),
           )
-        :  showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: ((context) {
-        return AlertDialog(
-          backgroundColor: Theme.of(context).cardColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          content: Text(
-            title,
-            style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: kTextColor),
-          ),
-          actions: [
-            TextButton(
-              child: const Text(
-                "Ok",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.red),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      }),
-    );
+        : showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: ((context) {
+              return AlertDialog(
+                backgroundColor: Theme.of(context).cardColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                content: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: kTextColor),
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text(
+                      "Ok",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            }),
+          );
   }
 
   //successfull pop up
@@ -175,7 +195,7 @@ class GeneralServices {
   void showSuccessMessage(BuildContext context, String title) {
     Platform.isIOS
         ? showCupertinoDialog(
-            barrierDismissible: false,
+            barrierDismissible: true,
             context: context,
             builder: (context) => CupertinoAlertDialog(
               title: Align(
@@ -183,73 +203,71 @@ class GeneralServices {
                 child: Lottie.asset("assets/animations/confirm booking.json",
                     height: 120.h),
               ),
-                content: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-             
+              content: Text(
+                title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
           )
-        :   showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Align(
-            alignment: Alignment.center,
-            child: Lottie.asset("assets/animations/confirm booking.json",
-                height: 120.h),
-          ),
-          content: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
+        : showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Align(
+                  alignment: Alignment.center,
+                  child: Lottie.asset("assets/animations/confirm booking.json",
+                      height: 120.h),
+                ),
+                content: Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
+          );
   }
 
   //error pop up
 
   void showErrorMessage(BuildContext context, String title) {
-  Platform.isIOS
+    Platform.isIOS
         ? showCupertinoDialog(
-            barrierDismissible: false,
+            barrierDismissible: true,
             context: context,
             builder: (context) => CupertinoAlertDialog(
-               title: Align(
-            alignment: Alignment.center,
-            child: Lottie.asset(
-                "assets/animations/Animation - 1708083154204.json",
-                height: 120.h),
-          ),
-          content: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-              
+              title: Align(
+                alignment: Alignment.center,
+                child: Lottie.asset(
+                    "assets/animations/Animation - 1708083154204.json",
+                    height: 120.h),
+              ),
+              content: Text(
+                title,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
           )
-        :    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Align(
-            alignment: Alignment.center,
-            child: Lottie.asset(
-                "assets/animations/Animation - 1708083154204.json",
-                height: 120.h),
-          ),
-          content: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
+        : showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Align(
+                  alignment: Alignment.center,
+                  child: Lottie.asset(
+                      "assets/animations/Animation - 1708083154204.json",
+                      height: 120.h),
+                ),
+                content: Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            },
+          );
   }
 
   //! select date
@@ -278,6 +296,7 @@ class GeneralServices {
       onDateSelected(picked);
     }
   }
+
   // Future<void> selectIosDate({
   //   required BuildContext context,
   //   required DateTime date,
@@ -302,30 +321,29 @@ class GeneralServices {
   //   );
   //}
   Future<void> selectIosDate({
-  required BuildContext context,
-  required DateTime date,
-  required Function(DateTime) onDateSelected,
-}) async {
-  var now = DateTime.now();
-    var today=  DateTime(now.year, now.month, now.day);
-  final DateTime? picked = await showModalBottomSheet<DateTime>(
-    context: context,
-    builder: (BuildContext builder) {
-      return Container(
-       // height: 200.0, 
-        child: CupertinoDatePicker(
-          mode: CupertinoDatePickerMode.date,        initialDateTime: date,
-          minimumDate: today,
-          maximumDate: DateTime(2101),
-          onDateTimeChanged: (DateTime newDateTime) {
-            onDateSelected(newDateTime);
-            // Do something when the date is changed (optional)
-          },
-        ),
-      );
-    },
-  );
-
-}
-
+    required BuildContext context,
+    required DateTime date,
+    required Function(DateTime) onDateSelected,
+  }) async {
+    var now = DateTime.now();
+    var today = DateTime(now.year, now.month, now.day);
+    final DateTime? picked = await showModalBottomSheet<DateTime>(
+      context: context,
+      builder: (BuildContext builder) {
+        return Container(
+          // height: 200.0,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: date,
+            minimumDate: today,
+            maximumDate: DateTime(2101),
+            onDateTimeChanged: (DateTime newDateTime) {
+              onDateSelected(newDateTime);
+              // Do something when the date is changed (optional)
+            },
+          ),
+        );
+      },
+    );
+  }
 }

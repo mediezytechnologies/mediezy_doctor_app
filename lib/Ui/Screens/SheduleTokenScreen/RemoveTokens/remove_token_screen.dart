@@ -17,9 +17,12 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/token_card_remove_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -87,6 +90,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     Color eveningContainerColor;
     Color morningContainerColor;
     return Scaffold(
@@ -94,10 +98,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Remove tokens",
-          style: TextStyle(
-              fontSize: 18.sp, fontWeight: FontWeight.bold, color: kTextColor),
         ),
       ),
       bottomNavigationBar: visible == 0
@@ -120,10 +122,15 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                   child: Center(
                     child: Text(
                       "Remove Token",
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                      style: size.width > 400
+                          ? TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white)
+                          : TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
                     ),
                   ),
                 ),
@@ -158,13 +165,19 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
               dividerColor: kCardColor,
               unselectedLabelColor: kTextColor,
               unselectedLabelStyle: TextStyle(
-                fontSize: 13.sp,
+                fontSize: size.width > 400 ? 10.sp : 13.sp,
               ),
-              labelStyle: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+              labelStyle: size.width > 400
+                  ? TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    )
+                  : TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
               indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(10), color: kMainColor),
@@ -203,7 +216,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabFirstController,
               children: [
-                //! late
+                //! remove
                 BlocListener<DeleteTokensBloc, DeleteTokensState>(
                   listener: (context, state) {
                     if (state is DeleteTokensLoaded) {
@@ -225,7 +238,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: Column(
                         children: [
-                          VerticalSpacingWidget(height: 10.h),
+                          const VerticalSpacingWidget(height: 5),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.w),
                             child: Column(
@@ -233,10 +246,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                               children: [
                                 Text(
                                   "Select Clinic",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kSubTextColor),
+                                  style: size.width > 400
+                                      ? greyTab10B600
+                                      : grey13B600,
                                 ),
                                 const VerticalSpacingWidget(height: 5),
                                 GetBuilder<HospitalController>(builder: (clx) {
@@ -263,115 +275,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     },
                                   );
                                 }),
-                                // BlocBuilder<GetClinicBloc, GetClinicState>(
-                                //   builder: (context, state) {
-                                //     if (state is GetClinicLoaded) {
-                                //       clinicGetModel =
-                                //           BlocProvider.of<GetClinicBloc>(
-                                //                   context)
-                                //               .clinicGetModel;
-                                //
-                                //       if (clinicValuesManage.isEmpty) {
-                                //         clinicValuesManage.addAll(
-                                //             clinicGetModel.hospitalDetails!);
-                                //         dropValueManageNotifier = ValueNotifier(
-                                //             clinicValuesManage
-                                //                 .first.clinicName!);
-                                //         clinicManageId = clinicValuesManage
-                                //             .first.clinicId
-                                //             .toString();
-                                //         selectedManageClinicId =
-                                //             clinicValuesManage.first.clinicId
-                                //                 .toString();
-                                //       }
-                                //
-                                //       BlocProvider.of<GetTokenBloc>(context)
-                                //           .add(
-                                //         FetchTokens(
-                                //             date: formatDate(),
-                                //             clinicId: selectedManageClinicId),
-                                //       );
-                                //       return Container(
-                                //         height: 40.h,
-                                //         width: double.infinity,
-                                //         decoration: BoxDecoration(
-                                //             color: kCardColor,
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color:
-                                //                     const Color(0xFF9C9C9C))),
-                                //         child: Padding(
-                                //           padding: EdgeInsets.symmetric(
-                                //               horizontal: 8.w),
-                                //           child: Center(
-                                //             child: ValueListenableBuilder(
-                                //               valueListenable:
-                                //                   dropValueManageNotifier,
-                                //               builder: (BuildContext context,
-                                //                   String dropValue, _) {
-                                //                 return DropdownButtonFormField(
-                                //                   iconEnabledColor: kMainColor,
-                                //                   decoration:
-                                //                       const InputDecoration
-                                //                           .collapsed(
-                                //                           hintText: ''),
-                                //                   value: dropValue,
-                                //                   style: TextStyle(
-                                //                       fontSize: 14.sp,
-                                //                       fontWeight:
-                                //                           FontWeight.w500,
-                                //                       color: kTextColor),
-                                //                   icon: const Icon(Icons
-                                //                       .keyboard_arrow_down),
-                                //                   onChanged: (String? value) {
-                                //                     dropValue = value!;
-                                //                     dropValueManageNotifier
-                                //                         .value = value;
-                                //                     clinicManageId = value;
-                                //                     selectedManageClinicId =
-                                //                         clinicValuesManage
-                                //                             .where((element) =>
-                                //                                 element
-                                //                                     .clinicName!
-                                //                                     .contains(
-                                //                                         value))
-                                //                             .toList()
-                                //                             .first
-                                //                             .clinicId
-                                //                             .toString();
-                                //                     BlocProvider.of<
-                                //                                 GetTokenBloc>(
-                                //                             context)
-                                //                         .add(FetchTokens(
-                                //                             date: formatDate(),
-                                //                             clinicId:
-                                //                                 selectedManageClinicId));
-                                //                     resetSelectedTokens();
-                                //                   },
-                                //                   items: clinicValuesManage.map<
-                                //                       DropdownMenuItem<
-                                //                           String>>((value) {
-                                //                     return DropdownMenuItem<
-                                //                         String>(
-                                //                       value: value.clinicName!,
-                                //                       child: Text(
-                                //                           value.clinicName!),
-                                //                     );
-                                //                   }).toList(),
-                                //                 );
-                                //               },
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }
-                                //     return Container();
-                                //   },
-                                // ),
-                                EasyDateTimeLine(
-                                  initialDate: selectedDate,
-                                  disabledDates: _getDisabledDates(),
+                                DatePickerWidget(
                                   onDateChange: (date) {
                                     String formattedDate =
                                         DateFormat('yyyy-MM-dd').format(date);
@@ -383,27 +287,6 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     ));
                                     resetSelectedTokens();
                                   },
-                                  activeColor: kMainColor,
-                                  dayProps: EasyDayProps(
-                                      height: 80.h,
-                                      width: 65.w,
-                                      activeDayNumStyle: TextStyle(
-                                          color: kCardColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.sp),
-                                      activeDayStrStyle: TextStyle(
-                                          color: kCardColor,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.sp),
-                                      activeMothStrStyle: TextStyle(
-                                          color: kCardColor,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.sp),
-                                      todayHighlightStyle:
-                                          TodayHighlightStyle.withBackground,
-                                      todayHighlightColor:
-                                          const Color(0xffE1ECC8),
-                                      borderColor: kMainColor),
                                 ),
                                 BlocBuilder<GetTokenBloc, GetTokenState>(
                                   builder: (context, state) {
@@ -447,11 +330,11 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                           if (getTokenModel.schedule?.schedule1
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 1",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -466,11 +349,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule1!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -540,54 +425,29 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          morningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1.w),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule1![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  kTextColor),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule1![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 9.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  kTextColor),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        morningContainerColor,
+                                                    textColor: selectedTokenNumbers
+                                                            .contains(
+                                                                getTokenModel
+                                                                    .schedule!
+                                                                    .schedule1![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString())
+                                                        ? Colors.white
+                                                        : kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
@@ -597,11 +457,11 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                           if (getTokenModel.schedule?.schedule2
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 2",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -616,11 +476,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule2!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -690,54 +552,29 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          eveningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1.w),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule2![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  kTextColor),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule2![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 9.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  kTextColor),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        eveningContainerColor,
+                                                    textColor: selectedTokenNumbers
+                                                            .contains(
+                                                                getTokenModel
+                                                                    .schedule!
+                                                                    .schedule2![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString())
+                                                        ? Colors.white
+                                                        : kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
@@ -747,11 +584,11 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                           if (getTokenModel.schedule?.schedule3
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 3",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -766,11 +603,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule3!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -840,88 +679,35 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          eveningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1.w),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule3![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  kTextColor),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule3![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 9.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  kTextColor),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        eveningContainerColor,
+                                                    textColor: selectedTokenNumbers
+                                                            .contains(
+                                                                getTokenModel
+                                                                    .schedule!
+                                                                    .schedule3![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString())
+                                                        ? Colors.white
+                                                        : kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
-                                          // InkWell(
-                                          //   onTap: () {
-                                          //     isClickedManage = true;
-                                          //     BlocProvider.of<DeleteTokensBloc>(context)
-                                          //         .add(FetchDeleteTokens(
-                                          //             tokenId: selectedTokenNumbers
-                                          //                 .toString()));
-                                          //   },
-                                          //   child: Container(
-                                          //     height: 50.h,
-                                          //     width: double.infinity,
-                                          //     decoration: BoxDecoration(
-                                          //       color: isClickedManage
-                                          //           ? Colors.grey
-                                          //           : kMainColor,
-                                          //       borderRadius: BorderRadius.circular(8),
-                                          //     ),
-                                          //     child: Center(
-                                          //       child: Text(
-                                          //         "Remove Token",
-                                          //         style: TextStyle(
-                                          //             fontSize: 18.sp,
-                                          //             fontWeight: FontWeight.w600,
-                                          //             color: Colors.white),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       );
                                     }
@@ -954,10 +740,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                         children: [
                           Text(
                             "Select Clinic",
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: kSubTextColor),
+                            style:
+                                size.width > 400 ? greyTab10B600 : grey13B600,
                           ),
                           const VerticalSpacingWidget(height: 2),
                           GetBuilder<HospitalController>(builder: (clx) {
@@ -981,97 +765,6 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                               },
                             );
                           }),
-                          // BlocBuilder<GetClinicBloc, GetClinicState>(
-                          //   builder: (context, state) {
-                          //     if (state is GetClinicLoaded) {
-                          //       clinicGetModel =
-                          //           BlocProvider.of<GetClinicBloc>(context)
-                          //               .clinicGetModel;
-                          //
-                          //       if (clinicValuesRestore.isEmpty) {
-                          //         clinicValuesRestore
-                          //             .addAll(clinicGetModel.hospitalDetails!);
-                          //         dropValueRestoreNotifier = ValueNotifier(
-                          //             clinicValuesRestore.first.clinicName!);
-                          //         clinicRestoreId = clinicValuesRestore
-                          //             .first.clinicId
-                          //             .toString();
-                          //         selectedRestoreClinicId = clinicValuesRestore
-                          //             .first.clinicId
-                          //             .toString();
-                          //       }
-                          //       // BlocProvider.of<RestoreTokensBloc>(context)
-                          //       //     .add(FetchRestoreDates(clinicId: selectedRestoreClinicId));
-                          //       BlocProvider.of<DeletedTokensBloc>(context)
-                          //           .add(FetchDeletedTokens(
-                          //         clinicId: selectedRestoreClinicId,
-                          //       ));
-                          //       return Container(
-                          //         height: 40.h,
-                          //         width: double.infinity,
-                          //         decoration: BoxDecoration(
-                          //             color: kCardColor,
-                          //             borderRadius: BorderRadius.circular(5),
-                          //             border: Border.all(
-                          //                 color: const Color(0xFF9C9C9C))),
-                          //         child: Padding(
-                          //           padding:
-                          //               EdgeInsets.symmetric(horizontal: 8.w),
-                          //           child: Center(
-                          //             child: ValueListenableBuilder(
-                          //               valueListenable: dropValueRestoreNotifier,
-                          //               builder: (BuildContext context,
-                          //                   String dropValue, _) {
-                          //                 return DropdownButtonFormField(
-                          //                   iconEnabledColor: kMainColor,
-                          //                   decoration:
-                          //                       const InputDecoration.collapsed(
-                          //                           hintText: ''),
-                          //                   value: dropValue,
-                          //                   style: TextStyle(
-                          //                       fontSize: 14.sp,
-                          //                       fontWeight: FontWeight.w500,
-                          //                       color: kTextColor),
-                          //                   icon: const Icon(
-                          //                       Icons.keyboard_arrow_down),
-                          //                   onChanged: (String? value) {
-                          //                     dropValue = value!;
-                          //                     dropValueRestoreNotifier.value =
-                          //                         value;
-                          //                     clinicRestoreId = value;
-                          //                     selectedRestoreClinicId =
-                          //                         clinicValuesRestore
-                          //                             .where((element) => element
-                          //                                 .clinicName!
-                          //                                 .contains(value))
-                          //                             .toList()
-                          //                             .first
-                          //                             .clinicId
-                          //                             .toString();
-                          //                     BlocProvider.of<DeletedTokensBloc>(
-                          //                             context)
-                          //                         .add(FetchDeletedTokens(
-                          //                       clinicId: selectedRestoreClinicId,
-                          //                     ));
-                          //                   },
-                          //                   items: clinicValuesRestore
-                          //                       .map<DropdownMenuItem<String>>(
-                          //                           (value) {
-                          //                     return DropdownMenuItem<String>(
-                          //                       value: value.clinicName!,
-                          //                       child: Text(value.clinicName!),
-                          //                     );
-                          //                   }).toList(),
-                          //                 );
-                          //               },
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     }
-                          //     return Container();
-                          //   },
-                          // ),
                           const VerticalSpacingWidget(height: 10),
                           BlocBuilder<DeletedTokensBloc, DeletedTokensState>(
                             builder: (context, state) {
@@ -1098,11 +791,12 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                 getDeleteTokensModel =
                                     BlocProvider.of<DeletedTokensBloc>(context)
                                         .getDeleteTokensModel;
-                    
+
                                 if (getDeleteTokensModel.data!.isEmpty) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       const VerticalSpacingWidget(height: 100),
                                       Center(
@@ -1126,11 +820,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                       itemCount:
                                           getDeleteTokensModel.data!.length,
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisSpacing: 5,
-                                        mainAxisSpacing: 5,
-                                        crossAxisCount: 4,
-                                        mainAxisExtent: 80,
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisSpacing: 1,
+                                        mainAxisSpacing: 10,
+                                        crossAxisCount:
+                                            size.width > 400 ? 6 : 4,
+                                        mainAxisExtent:
+                                            size.width > 400 ? 120 : 80,
                                       ),
                                       itemBuilder: (context, index) {
                                         return Stack(
@@ -1147,43 +843,65 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               ),
                                               child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
                                                   Text(
                                                     getDeleteTokensModel
-                                                        .data![index].tokenNumber
+                                                        .data![index]
+                                                        .tokenNumber
                                                         .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: kTextColor),
+                                                    style: size.width > 400
+                                                        ? TextStyle(
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor)
+                                                        : TextStyle(
+                                                            fontSize: 18.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor),
                                                   ),
                                                   Text(
                                                     getDeleteTokensModel
                                                         .data![index].time
                                                         .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 9.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: kTextColor),
+                                                    style: size.width > 400
+                                                        ? TextStyle(
+                                                            fontSize: 7.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor)
+                                                        : TextStyle(
+                                                            fontSize: 9.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor),
                                                   ),
                                                   Text(
                                                     getDeleteTokensModel
                                                         .data![index].formatdate
                                                         .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 9.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: kTextColor),
+                                                    style: size.width > 400
+                                                        ? TextStyle(
+                                                            fontSize: 7.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor)
+                                                        : TextStyle(
+                                                            fontSize: 9.sp,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kTextColor),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             Positioned(
-                                              left: 55.w,
+                                              left: size.width > 400
+                                                  ? 38.w
+                                                  : 55.w,
                                               child: InkWell(
                                                 onTap: () {
                                                   BlocProvider.of<
@@ -1196,13 +914,19 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                                   .tokenId
                                                                   .toString()));
                                                 },
-                                                child: const CircleAvatar(
+                                                child: CircleAvatar(
                                                   backgroundColor: Colors.black,
-                                                  radius: 10,
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                    color: Colors.white,
+                                                  radius: size.width > 400
+                                                      ? 7.r
+                                                      : 8.r,
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      size: size.width > 400
+                                                          ? 7.sp
+                                                          : 9.sp,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -1218,12 +942,6 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                             },
                           ),
                           const VerticalSpacingWidget(height: 10),
-                          // CommonButtonWidget(
-                          //     title: "Restore Token",
-                          //     onTapFunction: () {
-                          //       BlocProvider.of<RestoreTokensBloc>(context)
-                          //           .add(AddRestoreTokens(tokenId: selectedTokenNumbers));
-                          //     }),
                         ],
                       ),
                     ),

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Login/login_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -36,6 +39,8 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
   final FocusNode specializationFocusController = FocusNode();
   final FocusNode locationFocusController = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  DateTime selectDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -180,35 +185,30 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 110.w,
-                          child: TextFormField(
-                            cursorColor: kMainColor,
-                            controller: dobController,
-                            keyboardType: TextInputType.phone,
-                            focusNode: dobFocusController,
-                            textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 10) {
-                                return "Date of birth is missing";
-                              } else {
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.date_range,
-                                color: kMainColor,
-                              ),
-                              hintStyle: TextStyle(
-                                  fontSize: 15.sp, color: kSubTextColor),
-                              hintText: "DOB",
-                              filled: true,
-                              fillColor: kCardColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                                borderSide: BorderSide.none,
-                              ),
+                        InkWell(
+                          onTap: () {
+                            SelectDate(
+                              context: context,
+                              date: selectDate,
+                              onDateSelected: (DateTime picked) {
+                                setState(() {
+                                  selectDate = picked;
+                                });
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: 110.w,
+                            height: 50.h,
+                            color: kCardColor,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Icon(Icons.calendar_month),
+                                Text(
+                                  DateFormat("dd-MM-yyy").format(selectDate),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -310,15 +310,16 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                         title: "Sign up",
                         onTapFunction: () {
                           if (_formKey.currentState!.validate()) {
-                            BlocProvider.of<LoginBloc>(context).add(
-                                DummyRegister(
-                                    email: emailController.text,
-                                    firstname: firstNameController.text,
-                                    mobileNo: phoneNumberController.text,
-                                    location: locationController.text,
-                                    hospitalName: hospitalNameController.text,
-                                    specialization: specializationController.text, dob: dobController.text,
-                                    ));
+                            BlocProvider.of<LoginBloc>(context)
+                                .add(DummyRegister(
+                              email: emailController.text,
+                              firstname: firstNameController.text,
+                              mobileNo: phoneNumberController.text,
+                              location: locationController.text,
+                              hospitalName: hospitalNameController.text,
+                              specialization: specializationController.text,
+                              dob: DateFormat("yyy-MM-dd").format(selectDate),
+                            ));
                           }
                         }),
                     const VerticalSpacingWidget(height: 20),
@@ -361,5 +362,31 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> SelectDate({
+    required BuildContext context,
+    required DateTime date,
+    required Function(DateTime) onDateSelected,
+  }) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+      builder: ((context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: kMainColor,
+            ),
+          ),
+          child: child!,
+        );
+      }),
+    );
+    if (picked != null) {
+      onDateSelected(picked);
+    }
   }
 }

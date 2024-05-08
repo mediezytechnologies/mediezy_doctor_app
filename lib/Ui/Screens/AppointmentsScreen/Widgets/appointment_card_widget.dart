@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class AppointmentCardWidget extends StatelessWidget {
@@ -36,165 +37,163 @@ class AppointmentCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Container(
-        height: 90.h,
+        height: size.width > 400 ? size.height * .14 : size.height * .1,
         width: double.infinity,
         decoration: BoxDecoration(
           color: kCardColor,
         //  color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          children: [
-            FadedScaleAnimation(
-              scaleDuration: const Duration(milliseconds: 400),
-              fadeDuration: const Duration(milliseconds: 400),
-              child: PatientImageWidget(
-                patientImage: patientImage,
-                radius: 30.r,
+        child: Padding(
+          padding: size.width > 400
+              ? EdgeInsets.symmetric(vertical: 8.w)
+              : EdgeInsets.symmetric(vertical: .5.w),
+          child: Row(
+            children: [
+              FadedScaleAnimation(
+                scaleDuration: const Duration(milliseconds: 400),
+                fadeDuration: const Duration(milliseconds: 400),
+                child: PatientImageWidget(
+                  patientImage: patientImage,
+                  radius: size.width > 400 ? 50 : 30,
+                ),
               ),
-            ),
-            const HorizontalSpacingWidget(width: 10),
-            Container(
-      //color: const Color.fromARGB(255, 23, 22, 21),
-              width: 190.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //! name
-                  Text(
-                    patientName,
-                    style: TextStyle(
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  //! appointment for
-                  SizedBox(
-                    width: 300.w,
-                    child: Text(
-                      mainSymptoms,
-                      style: TextStyle(
-                          fontSize: 8.sp,
-                          fontWeight: FontWeight.w400,
-                          color: kSubTextColor),
+              const HorizontalSpacingWidget(width: 10),
+              SizedBox(
+                width: size.width > 400 ? size.width * .64 : size.width * .55,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //! name
+                    Text(
+                      patientName,
+                      style: size.width > 400 ? blackTab10B600 : blackTab15B600,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Row(
-                    children: [
-                      mediezyId == ""
-                          ? Container()
-                          : Text(
-                              "Patient Id : ",
-                              style: TextStyle(
-                                  fontSize: 9.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: kSubTextColor),
-                            ),
-                      mediezyId == ""
-                          ? Container()
-                          : Text(
-                              mediezyId,
-                              style: TextStyle(
-                                fontSize: 9.sp,
-                                fontWeight: FontWeight.bold,
+                    //! appointment for
+                    SizedBox(
+                      width: 300.w,
+                      child: Text(
+                        mainSymptoms,
+                        style: size.width > 400 ? greyTab8B400 : grey12B400,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        mediezyId == ""
+                            ? Container()
+                            : Text(
+                                "Patient Id : ",
+                                style: size.width > 400
+                                    ? greyTab8B400
+                                    : grey12B400,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                    ],
-                  ),
-                  //! date and time
-                  Row(
-                    children: [
-                      Text(
-                        "Token No : ${tokenNumber.toString()}",
-                        style: TextStyle(
-                          fontSize: 8.sp,
-                          color: kTextColor,
-                          fontWeight: FontWeight.bold,
+                        mediezyId == ""
+                            ? Container()
+                            : Text(
+                                mediezyId,
+                                style: size.width > 400
+                                    ? blackTab9B600
+                                    : black11Bbold,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                      ],
+                    ),
+                    //! date and time
+                    Row(
+                      children: [
+                        Text(
+                          "Token No : ${tokenNumber.toString()}",
+                          style:
+                              size.width > 400 ? blackTab9B600 : black11Bbold,
                         ),
-                      ),
-                      Text(
-                        " | ",
-                        style: TextStyle(
-                          fontSize: 9.sp,
-                          color: kTextColor,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          " | ",
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: kTextColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          fontSize: 9.sp,
-                          color: kTextColor,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          time,
+                          style:
+                              size.width > 400 ? blackTab9B600 : black11Bbold,
                         ),
-                      ),
-                      const HorizontalSpacingWidget(width: 8),
-                    ],
-                  ),
-                ],
+                        const HorizontalSpacingWidget(width: 8),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const HorizontalSpacingWidget(width: 10),
-            noStatus==1?Container():
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                onlineStatus == "offline"
-                    ? Row(
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: Colors.red,
-                            radius: 5,
-                          ),
-                          const HorizontalSpacingWidget(width: 5),
-                          Text(
-                            onlineStatus,
-                            style: const TextStyle(color: Colors.red),
-                          )
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: kMainColor,
-                            radius: 5.r,
-                          ),
-                          const HorizontalSpacingWidget(width: 5),
-                          Text(
-                            onlineStatus,
-                            style: TextStyle(color: kMainColor,fontSize: 9.sp),
-                          )
-                        ],
-                      ),
-                reachedStatus == "1"
-                    ? Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: kMainColor,
-                            radius: 5,
-                          ),
-                          const HorizontalSpacingWidget(width: 5),
-                          Text(
-                            reachedStatus == "1" ? "Reached" : "",
-                            style: TextStyle(color: kMainColor),
-                          )
-                        ],
-                      )
-                    : Container()
-              ],
-            ),
-          ],
+              const HorizontalSpacingWidget(width: 10),
+              noStatus == 1
+                  ? Container()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        onlineStatus == "offline"
+                            ? Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: size.width > 400 ? 9 : 5,
+                                  ),
+                                  const HorizontalSpacingWidget(width: 5),
+                                  Text(
+                                    onlineStatus,
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize:
+                                            size.width > 400 ? 9.sp : 12.sp),
+                                  )
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: kMainColor,
+                                    radius: size.width > 400 ? 9 : 5,
+                                  ),
+                                  const HorizontalSpacingWidget(width: 5),
+                                  Text(
+                                    onlineStatus,
+                                    style: TextStyle(
+                                        color: kMainColor,
+                                        fontSize:
+                                            size.width > 400 ? 9.sp : 12.sp),
+                                  )
+                                ],
+                              ),
+                        reachedStatus == "1"
+                            ? Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: kMainColor,
+                                    radius: 5,
+                                  ),
+                                  const HorizontalSpacingWidget(width: 5),
+                                  Text(
+                                    reachedStatus == "1" ? "Reached" : "",
+                                    style: TextStyle(color: kMainColor),
+                                  )
+                                ],
+                              )
+                            : Container()
+                      ],
+                    ),
+            ],
+          ),
         ),
       ),
     );

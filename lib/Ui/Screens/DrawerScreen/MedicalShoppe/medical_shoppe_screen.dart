@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_all_medical_shope_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllMedicalShoppe/get_all_medical_shoppe_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/get_edical_store_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MedicalShoppe/search_medical_store_screen.dart';
 
@@ -28,6 +29,7 @@ class _MedicalShoppeScreenState extends State<MedicalShoppeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     // final mHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -77,21 +79,21 @@ class _MedicalShoppeScreenState extends State<MedicalShoppeScreen> {
                           padding: EdgeInsets.only(left: 10.w),
                           child: Text(
                             "Search your Medical Store",
-                            style: TextStyle(
-                                fontSize: 15.sp, color: kSubTextColor),
+                            style:
+                                size.width > 400 ? greyTab10B400 : grey13B600,
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 10.w),
                           child: CircleAvatar(
                             backgroundColor: kMainColor,
-                            radius: 16,
+                            radius: size.width > 400 ? 13.r : 16.r,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(
                                 IconlyLight.search,
                                 color: kCardColor,
-                                size: 16.sp,
+                                size: size.width > 400 ? 12.sp : 18.sp,
                               ),
                             ),
                           ),

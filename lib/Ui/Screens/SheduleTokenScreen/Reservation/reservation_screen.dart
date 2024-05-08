@@ -9,13 +9,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GetToken/get_token_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/ReserveToken/reserve_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/token_card_remove_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/un_reserve_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -84,16 +87,15 @@ class _ReservationScreenState extends State<ReservationScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     Color eveningContainerColor;
     return Scaffold(
       backgroundColor: kCardColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Reserve token",
-          style: TextStyle(
-              fontSize: 18.sp, fontWeight: FontWeight.bold, color: kTextColor),
         ),
       ),
       bottomNavigationBar: visible == 0
@@ -115,13 +117,16 @@ class _ReservationScreenState extends State<ReservationScreen>
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
-                    child: Text(
-                      "Reserve Token",
-                      style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    ),
+                    child: Text("Reserve Token",
+                        style: size.width > 400
+                            ? TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white)
+                            : TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white)),
                   ),
                 ),
               ),
@@ -131,7 +136,7 @@ class _ReservationScreenState extends State<ReservationScreen>
         children: [
           // VerticalSpacingWidget(height: 10.h),
           Container(
-            height: 50.h,
+            height: size.width > 400 ? 60.h : 50.h,
             color: kCardColor,
             child: TabBar(
               onTap: (value) {
@@ -161,10 +166,10 @@ class _ReservationScreenState extends State<ReservationScreen>
               dividerColor: kCardColor,
               unselectedLabelColor: kTextColor,
               unselectedLabelStyle: TextStyle(
-                fontSize: 13.sp,
+                fontSize: size.width > 400 ? 10.sp : 13.sp,
               ),
               labelStyle: TextStyle(
-                fontSize: 15.sp,
+                fontSize: size.width > 400 ? 11.sp : 15.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
@@ -172,7 +177,7 @@ class _ReservationScreenState extends State<ReservationScreen>
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(10), color: kMainColor),
               tabs: [
-                //! late
+                //! reserve
                 Tab(
                   child: Container(
                     decoration: BoxDecoration(
@@ -186,7 +191,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                     ),
                   ),
                 ),
-                //! Early
+                //! unreserve
                 Tab(
                   child: Container(
                     decoration: BoxDecoration(
@@ -206,7 +211,7 @@ class _ReservationScreenState extends State<ReservationScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: tabFirstController,
               children: [
-                //! late
+                //! resreve
                 BlocListener<ReserveTokenBloc, ReserveTokenState>(
                   listener: (context, state) {
                     if (state is ReserveTokenLoaded) {
@@ -239,10 +244,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                               children: [
                                 Text(
                                   "Select Clinic",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kSubTextColor),
+                                  style: size.width > 400
+                                      ? greyTab10B600
+                                      : grey13B600,
                                 ),
                                 const VerticalSpacingWidget(height: 5),
                                 GetBuilder<HospitalController>(builder: (clx) {
@@ -271,117 +275,6 @@ class _ReservationScreenState extends State<ReservationScreen>
                                     },
                                   );
                                 }),
-                                // BlocBuilder<GetClinicBloc, GetClinicState>(
-                                //   builder: (context, state) {
-                                //     if (state is GetClinicLoaded) {
-                                //       clinicGetModel =
-                                //           BlocProvider.of<GetClinicBloc>(
-                                //                   context)
-                                //               .clinicGetModel;
-                                //
-                                //       if (clinicValuesManage.isEmpty) {
-                                //         clinicValuesManage.addAll(
-                                //             clinicGetModel.hospitalDetails!);
-                                //         dropValueManageNotifier =
-                                //             ValueNotifier(clinicValuesManage
-                                //                 .first.clinicName!);
-                                //         clinicManageId = clinicValuesManage
-                                //             .first.clinicId
-                                //             .toString();
-                                //         selectedManageClinicId =
-                                //             clinicValuesManage.first.clinicId
-                                //                 .toString();
-                                //       }
-                                //
-                                //       BlocProvider.of<GetTokenBloc>(context)
-                                //           .add(
-                                //         FetchTokens(
-                                //             date: formatDate(),
-                                //             clinicId: selectedManageClinicId),
-                                //       );
-                                //       return Container(
-                                //         height: 40.h,
-                                //         width: double.infinity,
-                                //         decoration: BoxDecoration(
-                                //             color: kCardColor,
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color:
-                                //                     const Color(0xFF9C9C9C))),
-                                //         child: Padding(
-                                //           padding: EdgeInsets.symmetric(
-                                //               horizontal: 8.w),
-                                //           child: Center(
-                                //             child: ValueListenableBuilder(
-                                //               valueListenable:
-                                //                   dropValueManageNotifier,
-                                //               builder: (BuildContext context,
-                                //                   String dropValue, _) {
-                                //                 return DropdownButtonFormField(
-                                //                   iconEnabledColor:
-                                //                       kMainColor,
-                                //                   decoration:
-                                //                       const InputDecoration
-                                //                           .collapsed(
-                                //                           hintText: ''),
-                                //                   value: dropValue,
-                                //                   style: TextStyle(
-                                //                       fontSize: 14.sp,
-                                //                       fontWeight:
-                                //                           FontWeight.w500,
-                                //                       color: kTextColor),
-                                //                   icon: const Icon(Icons
-                                //                       .keyboard_arrow_down),
-                                //                   onChanged: (String? value) {
-                                //                     dropValue = value!;
-                                //                     dropValueManageNotifier
-                                //                         .value = value;
-                                //                     clinicManageId = value;
-                                //                     selectedManageClinicId =
-                                //                         clinicValuesManage
-                                //                             .where((element) =>
-                                //                                 element
-                                //                                     .clinicName!
-                                //                                     .contains(
-                                //                                         value))
-                                //                             .toList()
-                                //                             .first
-                                //                             .clinicId
-                                //                             .toString();
-                                //                     BlocProvider.of<
-                                //                                 GetTokenBloc>(
-                                //                             context)
-                                //                         .add(FetchTokens(
-                                //                             date:
-                                //                                 formatDate(),
-                                //                             clinicId:
-                                //                                 selectedManageClinicId));
-                                //                     resetSelectedTokens();
-                                //                   },
-                                //                   items: clinicValuesManage
-                                //                       .map<
-                                //                               DropdownMenuItem<
-                                //                                   String>>(
-                                //                           (value) {
-                                //                     return DropdownMenuItem<
-                                //                         String>(
-                                //                       value:
-                                //                           value.clinicName!,
-                                //                       child: Text(
-                                //                           value.clinicName!),
-                                //                     );
-                                //                   }).toList(),
-                                //                 );
-                                //               },
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }
-                                //     return Container();
-                                //   },
-                                // ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -414,8 +307,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         (DateTime picked) {
                                                       setState(() {
                                                         selectedDate = picked;
-                                                        endDate =
-                                                            picked; // Update endDate as well
+                                                        endDate = picked;
                                                       });
                                                     },
                                                   );
@@ -424,11 +316,12 @@ class _ReservationScreenState extends State<ReservationScreen>
                                             children: [
                                               Text(
                                                 "Start Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
+                                                style: size.width > 400
+                                                    ? greyTab10B600
+                                                    : grey13B600,
                                               ),
+                                              const HorizontalSpacingWidget(
+                                                  width: 3),
                                               IconButton(
                                                 onPressed: () {
                                                   Platform.isIOS
@@ -490,6 +383,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
+                                                  size: size.width > 400
+                                                      ? 12.sp
+                                                      : 20.sp,
                                                 ),
                                               )
                                             ],
@@ -498,10 +394,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                         Text(
                                           DateFormat('dd-MM-yyy')
                                               .format(selectedDate),
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kTextColor),
+                                          style: size.width > 400
+                                              ? blackTabMainText
+                                              : black14B600,
                                         ),
                                       ],
                                     ),
@@ -541,42 +436,48 @@ class _ReservationScreenState extends State<ReservationScreen>
                                             children: [
                                               Text(
                                                 "End Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
+                                                style: size.width > 400
+                                                    ? greyTab10B600
+                                                    : grey13B600,
                                               ),
+                                              const HorizontalSpacingWidget(
+                                                  width: 3),
                                               IconButton(
                                                 onPressed: () {
-                                             Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                    context: context,
-                                                    date: endDate,
-                                                    onDateSelected: (DateTime
-                                                        picked) async {
-                                                      setState(() {
-                                                        endDate =
-                                                            picked; // Update endDate as well
-                                                      });
-                                                    },
-                                                  )
-                                                :         GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: endDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        endDate = picked;
-                                                        print(endDate);
-                                                      });
-                                                    },
-                                                  );
+                                                  Platform.isIOS
+                                                      ? GeneralServices.instance
+                                                          .selectIosDate(
+                                                          context: context,
+                                                          date: endDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) async {
+                                                            setState(() {
+                                                              endDate =
+                                                                  picked; // Update endDate as well
+                                                            });
+                                                          },
+                                                        )
+                                                      : GeneralServices.instance
+                                                          .selectDate(
+                                                          context: context,
+                                                          date: endDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              endDate = picked;
+                                                              print(endDate);
+                                                            });
+                                                          },
+                                                        );
                                                 },
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
+                                                  size: size.width > 400
+                                                      ? 12.sp
+                                                      : 20.sp,
                                                 ),
                                               )
                                             ],
@@ -585,10 +486,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                         Text(
                                           DateFormat('dd-MM-yyy')
                                               .format(endDate),
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kTextColor),
+                                          style: size.width > 400
+                                              ? blackTabMainText
+                                              : black14B600,
                                         ),
                                       ],
                                     ),
@@ -636,11 +536,11 @@ class _ReservationScreenState extends State<ReservationScreen>
                                           if (getTokenModel.schedule?.schedule1
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 1",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -655,11 +555,13 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule1!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 Color morningContainerColor =
@@ -735,52 +637,20 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          morningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule1![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: kTextColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule1![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 9,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: kTextColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        morningContainerColor,
+                                                    textColor: kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
@@ -790,11 +660,11 @@ class _ReservationScreenState extends State<ReservationScreen>
                                           if (getTokenModel.schedule?.schedule2
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 2",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -809,11 +679,13 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule2!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -890,93 +762,34 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          eveningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1.w),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule2![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  kTextColor),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule2![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize: 9.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color:
-                                                                  kTextColor),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        eveningContainerColor,
+                                                    textColor: kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
                                             ),
-                                          // GridView.builder(
-                                          //   physics: const NeverScrollableScrollPhysics(),
-                                          //   padding: EdgeInsets.zero,
-                                          //   shrinkWrap: true,
-                                          //   itemCount: getTokenModel.schedule!.schedule2!.length,
-                                          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                          //     crossAxisSpacing: 5,
-                                          //     mainAxisSpacing: 5,
-                                          //     crossAxisCount: 5,
-                                          //     mainAxisExtent: 70,
-                                          //   ),
-                                          //   itemBuilder: (context, index) {
-                                          //     return SelectionTokenWidget(
-                                          //       isBooked:
-                                          //       getTokenModel.schedule!.schedule2![index].isBooked!,
-                                          //       tokenNumber: getTokenModel.schedule!.schedule2![index].tokenNumber!,
-                                          //       time: getTokenModel.schedule!.schedule2![index].formattedStartTime.toString(),
-                                          //       isTimeout: getTokenModel.schedule!.schedule2![index].isTimeout!,
-                                          //       isReserved:
-                                          //       getTokenModel.schedule!.schedule2![index].isReserved!,
-                                          //       // onTokenSelectionChanged: updateSelectedTokens,
-                                          //       // onTokenSelectionChanged: updateSelectedTokens,
-                                          //     );
-                                          //   },
-                                          // ),
                                           const VerticalSpacingWidget(
                                               height: 10),
                                           if (getTokenModel.schedule?.schedule3
                                                   ?.isNotEmpty ==
                                               true)
-                                            const Text(
+                                            Text(
                                               "Schedule 3",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
+                                              style: size.width > 400
+                                                  ? blackTabMainText
+                                                  : blackMainText,
                                             ),
                                           const VerticalSpacingWidget(
                                               height: 10),
@@ -991,11 +804,13 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               itemCount: getTokenModel
                                                   .schedule!.schedule3!.length,
                                               gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
-                                                crossAxisCount: 5,
-                                                mainAxisExtent: 70,
+                                                crossAxisCount:
+                                                    size.width > 400 ? 8 : 5,
+                                                mainAxisExtent:
+                                                    size.width > 400 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 Color eveningContainerColor =
@@ -1070,52 +885,20 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                             }
                                                           });
                                                         },
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          eveningContainerColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: kMainColor,
-                                                          width: 1),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule3![index]
-                                                              .tokenNumber
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: kTextColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          getTokenModel
-                                                              .schedule!
-                                                              .schedule3![index]
-                                                              .formattedStartTime
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 9,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: kTextColor,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
+                                                  child: TokenCardRemoveWidget(
+                                                    color:
+                                                        eveningContainerColor,
+                                                    textColor: kTextColor,
+                                                    tokenNumber: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .tokenNumber
+                                                        .toString(),
+                                                    time: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .formattedStartTime
+                                                        .toString(),
                                                   ),
                                                 );
                                               },
@@ -1137,590 +920,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                     ),
                   ),
                 ),
-                BlocListener<ReserveTokenBloc, ReserveTokenState>(
-                  listener: (context, state) {
-                    if (state is UnReserveTokenLoaded) {
-                      BlocProvider.of<ReserveTokenBloc>(context).add(
-                          FetchReservedTokens(
-                              fromDate: DateFormat('yyy-MM-dd')
-                                  .format(selectedunreserveDate),
-                              toDate: DateFormat('yyy-MM-dd')
-                                  .format(unreserveendDate),
-                              clinicId: dController.initialIndex!));
-                    }
-                    if (state is UnReserveTokenError) {
-                      GeneralServices.instance
-                          .showErrorMessage(context, state.errorMessage);
-                      Future.delayed(const Duration(seconds: 3), () {
-                        // Navigator.pop(context);
-                      });
-                    }
-                  },
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Select Clinic",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: kSubTextColor),
-                                ),
-                                const VerticalSpacingWidget(height: 5),
-                                GetBuilder<HospitalController>(builder: (clx) {
-                                  return CustomDropDown(
-                                    width: double.infinity,
-                                    value: dController.initialIndex,
-                                    items:
-                                        dController.hospitalDetails!.map((e) {
-                                      return DropdownMenuItem(
-                                        value: e.clinicId.toString(),
-                                        child: Text(e.clinicName!),
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      log(newValue!);
-                                      dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex!);
-                                      BlocProvider.of<ReserveTokenBloc>(context)
-                                          .add(FetchReservedTokens(
-                                              fromDate: DateFormat('yyy-MM-dd')
-                                                  .format(
-                                                      selectedunreserveDate),
-                                              toDate: DateFormat('yyy-MM-dd')
-                                                  .format(unreserveendDate),
-                                              clinicId:
-                                                  dController.initialIndex!));
-                                    },
-                                  );
-                                }),
-                                // BlocBuilder<GetClinicBloc, GetClinicState>(
-                                //   builder: (context, state) {
-                                //     if (state is GetClinicLoaded) {
-                                //       clinicGetModel =
-                                //           BlocProvider.of<GetClinicBloc>(
-                                //                   context)
-                                //               .clinicGetModel;
-                                //
-                                //       if (clinicValueUnReserve.isEmpty) {
-                                //         clinicValueUnReserve.addAll(
-                                //             clinicGetModel.hospitalDetails!);
-                                //         dropValueUnreserveNotifier =
-                                //             ValueNotifier(clinicValueUnReserve
-                                //                 .first.clinicName!);
-                                //         clinicUnreserveId =
-                                //             clinicValueUnReserve
-                                //                 .first.clinicId
-                                //                 .toString();
-                                //         selectedUnReserveClinicId =
-                                //             clinicValueUnReserve
-                                //                 .first.clinicId
-                                //                 .toString();
-                                //       }
-                                //
-                                //       BlocProvider.of<ReserveTokenBloc>(
-                                //               context)
-                                //           .add(FetchReservedTokens(
-                                //               fromDate: DateFormat(
-                                //                       'yyy-MM-dd')
-                                //                   .format(
-                                //                       selectedunreserveDate),
-                                //               toDate: DateFormat('yyy-MM-dd')
-                                //                   .format(unreserveendDate),
-                                //               clinicId:
-                                //                   selectedUnReserveClinicId));
-                                //       return Container(
-                                //         height: 40.h,
-                                //         width: double.infinity,
-                                //         decoration: BoxDecoration(
-                                //             color: kCardColor,
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color:
-                                //                     const Color(0xFF9C9C9C))),
-                                //         child: Padding(
-                                //           padding: EdgeInsets.symmetric(
-                                //               horizontal: 8.w),
-                                //           child: Center(
-                                //             child: ValueListenableBuilder(
-                                //               valueListenable:
-                                //                   dropValueUnreserveNotifier,
-                                //               builder: (BuildContext context,
-                                //                   String dropValue, _) {
-                                //                 return DropdownButtonFormField(
-                                //                   iconEnabledColor:
-                                //                       kMainColor,
-                                //                   decoration:
-                                //                       const InputDecoration
-                                //                           .collapsed(
-                                //                           hintText: ''),
-                                //                   value: dropValue,
-                                //                   style: TextStyle(
-                                //                       fontSize: 14.sp,
-                                //                       fontWeight:
-                                //                           FontWeight.w500,
-                                //                       color: kTextColor),
-                                //                   icon: const Icon(Icons
-                                //                       .keyboard_arrow_down),
-                                //                   onChanged: (String? value) {
-                                //                     dropValue = value!;
-                                //                     dropValueUnreserveNotifier
-                                //                         .value = value;
-                                //                     clinicUnreserveId = value;
-                                //                     selectedUnReserveClinicId =
-                                //                         clinicValueUnReserve
-                                //                             .where((element) =>
-                                //                                 element
-                                //                                     .clinicName!
-                                //                                     .contains(
-                                //                                         value))
-                                //                             .toList()
-                                //                             .first
-                                //                             .clinicId
-                                //                             .toString();
-                                //                     BlocProvider.of<
-                                //                                 ReserveTokenBloc>(
-                                //                             context)
-                                //                         .add(FetchReservedTokens(
-                                //                             fromDate:
-                                //                                 DateFormat(
-                                //                                         'yyy-MM-dd')
-                                //                                     .format(
-                                //                                         selectedunreserveDate),
-                                //                             toDate: DateFormat(
-                                //                                     'yyy-MM-dd')
-                                //                                 .format(
-                                //                                     unreserveendDate),
-                                //                             clinicId:
-                                //                                 selectedUnReserveClinicId));
-                                //                     // resetSelectedTokens();
-                                //                   },
-                                //                   items: clinicValueUnReserve
-                                //                       .map<
-                                //                               DropdownMenuItem<
-                                //                                   String>>(
-                                //                           (value) {
-                                //                     return DropdownMenuItem<
-                                //                         String>(
-                                //                       value:
-                                //                           value.clinicName!,
-                                //                       child: Text(
-                                //                           value.clinicName!),
-                                //                     );
-                                //                   }).toList(),
-                                //                 );
-                                //               },
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }
-                                //     return Container();
-                                //   },
-                                // ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                    Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                    context: context,
-                                              date: selectedunreserveDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  selectedunreserveDate =
-                                                      picked;
-                                                  unreserveendDate =
-                                                      picked; // Update unreserveendDate as well
-                                                });
-                                              },
-                                                  )
-                                                :            GeneralServices.instance.selectDate(
-                                              context: context,
-                                              date: selectedunreserveDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  selectedunreserveDate =
-                                                      picked;
-                                                  unreserveendDate =
-                                                      picked; // Update unreserveendDate as well
-                                                });
-                                              },
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Start Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                             Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                context: context,
-                                                    date: selectedunreserveDate,
-                                                    onDateSelected: (DateTime
-                                                        picked) async {
-                                                      setState(() {
-                                                        selectedunreserveDate =
-                                                            picked;
-                                                        unreserveendDate =
-                                                            picked; // Update unreserveendDate as well
-                                                      });
-                                                      BlocProvider.of<
-                                                                  ReserveTokenBloc>(
-                                                              context)
-                                                          .add(FetchReservedTokens(
-                                                              fromDate:
-                                                                  DateFormat(
-                                                                          'yyy-MM-dd')
-                                                                      .format(
-                                                                          selectedunreserveDate),
-                                                              toDate: DateFormat(
-                                                                      'yyy-MM-dd')
-                                                                  .format(
-                                                                      unreserveendDate),
-                                                              clinicId: dController
-                                                                  .initialIndex!));
-                                                    },
-                                                  )
-                                                :       GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: selectedunreserveDate,
-                                                    onDateSelected: (DateTime
-                                                        picked) async {
-                                                      setState(() {
-                                                        selectedunreserveDate =
-                                                            picked;
-                                                        unreserveendDate =
-                                                            picked; // Update unreserveendDate as well
-                                                      });
-                                                      BlocProvider.of<
-                                                                  ReserveTokenBloc>(
-                                                              context)
-                                                          .add(FetchReservedTokens(
-                                                              fromDate:
-                                                                  DateFormat(
-                                                                          'yyy-MM-dd')
-                                                                      .format(
-                                                                          selectedunreserveDate),
-                                                              toDate: DateFormat(
-                                                                      'yyy-MM-dd')
-                                                                  .format(
-                                                                      unreserveendDate),
-                                                              clinicId: dController
-                                                                  .initialIndex!));
-                                                    },
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  IconlyLight.calendar,
-                                                  color: kMainColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Text(
-                                          DateFormat('dd-MM-yyy')
-                                              .format(selectedunreserveDate),
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kTextColor),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                           Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                context: context,
-                                              date: unreserveendDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  unreserveendDate = picked;
-                                                  print(unreserveendDate);
-                                                });
-                                              },
-                                                  )
-                                                :    GeneralServices.instance.selectDate(
-                                              context: context,
-                                              date: unreserveendDate,
-                                              onDateSelected:
-                                                  (DateTime picked) {
-                                                setState(() {
-                                                  unreserveendDate = picked;
-                                                  print(unreserveendDate);
-                                                });
-                                              },
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "End Date",
-                                                style: TextStyle(
-                                                    fontSize: 15.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: kSubTextColor),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                            Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                 context: context,
-                                                    date: unreserveendDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        unreserveendDate =
-                                                            picked;
-                                                        print(unreserveendDate);
-                                                      });
-                                                    },
-                                                  )
-                                                :         GeneralServices.instance
-                                                      .selectDate(
-                                                    context: context,
-                                                    date: unreserveendDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        unreserveendDate =
-                                                            picked;
-                                                        print(unreserveendDate);
-                                                      });
-                                                    },
-                                                  );
-                                                },
-                                                icon: Icon(
-                                                  IconlyLight.calendar,
-                                                  color: kMainColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Text(
-                                          DateFormat('dd-MM-yyy')
-                                              .format(unreserveendDate),
-                                          style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: kTextColor),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                BlocBuilder<ReserveTokenBloc,
-                                    ReserveTokenState>(
-                                  builder: (context, state) {
-                                    if (state is ReservedTokensLoading) {
-                                      return _buildLoadingWidget();
-                                    }
-                                    if (state is ReservedTokensError) {
-                                      return Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          const VerticalSpacingWidget(
-                                              height: 100),
-                                          Center(
-                                            child: SizedBox(
-                                              height: 300.h,
-                                              width: 300.w,
-                                              child: const Image(
-                                                image: AssetImage(
-                                                    "assets/images/something went wrong-01.png"),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                    if (state is ReservedTokensLoaded) {
-                                      final getReservedTokensModel =
-                                          state.getReservedTokensModel;
-                                      if (getReservedTokensModel
-                                          .getTokenDetails!.isEmpty) {
-                                        return Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const VerticalSpacingWidget(
-                                                height: 100),
-                                            Center(
-                                              child: Image(
-                                                height: 150.h,
-                                                image: const AssetImage(
-                                                    "assets/images/no_data.jpg"),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const VerticalSpacingWidget(
-                                              height: 10),
-                                          GridView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            itemCount: getReservedTokensModel
-                                                .getTokenDetails!.length,
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisSpacing: 1,
-                                              mainAxisSpacing: 10,
-                                              crossAxisCount: 5,
-                                              mainAxisExtent: 70,
-                                            ),
-                                            itemBuilder: (context, index) {
-                                              return Stack(
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                        color: kMainColor,
-                                                        width: 1.w,
-                                                      ),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          getReservedTokensModel
-                                                              .getTokenDetails![
-                                                                  index]
-                                                              .tokenNumber!
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 18.sp,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: kTextColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          getReservedTokensModel
-                                                              .getTokenDetails![
-                                                                  index]
-                                                              .tokenStartTime!
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            fontSize: 9.sp,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: kTextColor,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    left: 45.w,
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        BlocProvider.of<ReserveTokenBloc>(context).add(UnReserveToken(
-                                                            tokenNumber:
-                                                                getReservedTokensModel
-                                                                    .getTokenDetails![
-                                                                        index]
-                                                                    .tokenNumber
-                                                                    .toString(),
-                                                            fromDate:
-                                                                DateFormat(
-                                                                        'yyy-MM-dd')
-                                                                    .format(
-                                                                        selectedunreserveDate),
-                                                            toDate: DateFormat(
-                                                                    'yyy-MM-dd')
-                                                                .format(
-                                                                    unreserveendDate),
-                                                            clinicId: dController
-                                                                .initialIndex!));
-                                                      },
-                                                      child: const CircleAvatar(
-                                                        backgroundColor:
-                                                            Colors.black,
-                                                        radius: 10,
-                                                        child: Icon(
-                                                          Icons.close,
-                                                          size: 15,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                          const VerticalSpacingWidget(
-                                              height: 10),
-                                        ],
-                                      );
-                                    }
-                                    return Container();
-                                  },
-                                ),
-                                const VerticalSpacingWidget(height: 5),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                const UnReserveTokenScreen(),
               ],
             ),
           ),

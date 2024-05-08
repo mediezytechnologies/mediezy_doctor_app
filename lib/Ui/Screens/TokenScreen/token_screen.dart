@@ -20,6 +20,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
@@ -82,6 +83,7 @@ class _TokenScreenState extends State<TokenScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     // int? selectedValue = items['Schedule 1'];
     final size =MediaQuery.of(context).size;
     return RefreshIndicator(
@@ -151,12 +153,10 @@ class _TokenScreenState extends State<TokenScreen> {
                           children: [
                             Text(
                               "Select Schedule",
-                              style: TextStyle(
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSubTextColor),
+                              style:
+                                  size.width > 400 ? greyTab10B600 : grey13B600,
                             ),
-                            const VerticalSpacingWidget(height: 5),
+                            const VerticalSpacingWidget(height: 3),
                             BlocBuilder<DropdownBloc, DropdownState>(
                               builder: (context, state) {
                                 return CustomDropDown(
@@ -191,7 +191,7 @@ class _TokenScreenState extends State<TokenScreen> {
                         ),
                       ],
                     ),
-                    const VerticalSpacingWidget(height: 10),
+                    const VerticalSpacingWidget(height: 15),
                     //! token
                     BlocBuilder<GetCurrentTokenBloc, GetCurrentTokenState>(
                       builder: (context, state) {
@@ -255,7 +255,10 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   .jumpToPage(currentIndex - 1);
                                             },
                                             icon: Icon(Icons.arrow_back_ios,
-                                                color: kMainColor, size: 25.sp),
+                                                color: kMainColor,
+                                                size: size.width > 400
+                                                    ? 22.sp
+                                                    : 30.sp),
                                           ),
                                           TokenShowCardWidget(
                                             tokenNumber: getCurrentTokenModel
@@ -271,7 +274,10 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   .jumpToPage(currentIndex + 1);
                                             },
                                             icon: Icon(Icons.arrow_forward_ios,
-                                                color: kMainColor, size: 25.sp),
+                                                color: kMainColor,
+                                                size: size.width > 400
+                                                    ? 22.sp
+                                                    : 30.sp),
                                           ),
                                         ],
                                       ),
@@ -307,7 +313,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                 .tokens![index]
                                                                 .userImage
                                                                 .toString(),
-                                                        radius: 45.r)),
+                                                        radius: 35.r)),
                                                 // const HorizontalSpacingWidget(
                                                 //     width: 40),
                                                 //! name
@@ -323,16 +329,15 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .tokens![index]
                                                             .patientName
                                                             .toString(),
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 12.sp),
+                                                        style: size.width > 400
+                                                            ? blackTab10B600
+                                                            : blackTab15B600,
                                                         maxLines: 1,
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                       ),
-                                                      VerticalSpacingWidget(
-                                                          height: 5.h),
+                                                      const VerticalSpacingWidget(
+                                                          height: 5),
                                                       Row(
                                                         children: [
                                                           getCurrentTokenModel
@@ -352,13 +357,10 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           .tokens![
                                                                               index]
                                                                           .mediezyPatientId!,
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            12.sp,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
+                                                                      style: size.width >
+                                                                              400
+                                                                          ? blackTab10B600
+                                                                          : black11Bbold,
                                                                       maxLines:
                                                                           1,
                                                                       overflow:
@@ -374,12 +376,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .tokens![index]
                                                             .displayAge
                                                             .toString(),
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 13.sp,
-                                                            color:
-                                                                kSubTextColor),
+                                                        style: size.width > 400
+                                                            ? greyTab10B400
+                                                            : grey12B400,
                                                       ),
                                                       const HorizontalSpacingWidget(
                                                           width: 60),
@@ -410,18 +409,32 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   right: 5.w),
                                                           child: Text(
                                                             "Pending",
-                                                            style: TextStyle(
-                                                              fontSize: 10.sp,
-                                                              color: kCardColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                            style:
+                                                                size.width > 400
+                                                                    ? TextStyle(
+                                                                        fontSize:
+                                                                            10.sp,
+                                                                        color:
+                                                                            kCardColor,
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                      )
+                                                                    : TextStyle(
+                                                                        fontSize:
+                                                                            15.sp,
+                                                                        color:
+                                                                            kCardColor,
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                      ),
                                                           ),
                                                         ),
                                                         Container(
                                                           height: 25.h,
-                                                          width: 28.w,
+                                                          width:
+                                                              size.width > 400
+                                                                  ? 20.w
+                                                                  : 28.w,
                                                           decoration:
                                                               BoxDecoration(
                                                             color: kCardColor,
@@ -434,14 +447,10 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             child: Text(
                                                               // "12",
                                                               "${length! - currentTokenLength!}",
-                                                              style: TextStyle(
-                                                                fontSize: 12.sp,
-                                                                color:
-                                                                    kTextColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
+                                                              style: size.width >
+                                                                      400
+                                                                  ? blackTab12B600
+                                                                  : black15B600,
                                                             ),
                                                           ),
                                                         )
@@ -461,19 +470,15 @@ class _TokenScreenState extends State<TokenScreen> {
                                               children: [
                                                 Text(
                                                   "Mobile No",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 12.sp,
-                                                      color: kSubTextColor),
+                                                  style: size.width > 400
+                                                      ? greyTabMain
+                                                      : greyMain,
                                                 ),
                                                 Text(
                                                   "Schedule ${getCurrentTokenModel.tokens![index].scheduleType}",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 12.sp,
-                                                      color: kSubTextColor),
+                                                  style: size.width > 400
+                                                      ? greyTabMain
+                                                      : greyMain,
                                                 ),
                                               ],
                                             ),
@@ -486,11 +491,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   getCurrentTokenModel
                                                       .tokens![index].mobileNo
                                                       .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 13.sp,
-                                                      color: kTextColor),
+                                                  style: size.width > 400
+                                                      ? blackTabMainText
+                                                      : blackMainText,
                                                 ),
                                                 IconButton(
                                                   onPressed: () {
@@ -507,7 +510,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   },
                                                   icon: Icon(
                                                     Icons.call,
-                                                    size: 16.sp,
+                                                    size: size.width > 400
+                                                        ? 15.sp
+                                                        : 25.sp,
                                                     color: kMainColor,
                                                   ),
                                                 )
@@ -516,10 +521,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                             //! appointment for
                                             Text(
                                               'Appointment for',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 12.sp,
-                                                  color: kSubTextColor),
+                                              style: size.width > 400
+                                                  ? greyTabMain
+                                                  : greyMain,
                                             ),
                                             const VerticalSpacingWidget(
                                                 height: 3),
@@ -533,11 +537,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                         .first
                                                         .mainsymptoms
                                                         .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14.sp,
-                                                        color: kTextColor),
+                                                    style: size.width > 400
+                                                        ? blackTabMainText
+                                                        : blackMainText,
                                                   ),
                                             // const VerticalSpacingWidget(height: 5),
                                             getCurrentTokenModel.tokens![index]
@@ -552,12 +554,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .map((symptom) =>
                                                                 "${symptom.symtoms}")
                                                             .join(', '),
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 14.sp,
-                                                          color: kTextColor,
-                                                        ),
+                                                        style: size.width > 400
+                                                            ? blackTabMainText
+                                                            : blackMainText,
                                                       ),
                                                     ],
                                                   ),
@@ -574,11 +573,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   children: [
                                                     Text(
                                                       'Intensity',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp,
-                                                          color: kSubTextColor),
+                                                      style: size.width > 400
+                                                          ? greyTabMain
+                                                          : greyMain,
                                                     ),
                                                     const VerticalSpacingWidget(
                                                         height: 3),
@@ -587,11 +584,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .tokens![index]
                                                           .whenitstart
                                                           .toString(),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp,
-                                                          color: kTextColor),
+                                                      style: size.width > 400
+                                                          ? blackTabMainText
+                                                          : blackMainText,
                                                     ),
                                                   ],
                                                 ),
@@ -601,11 +596,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   children: [
                                                     Text(
                                                       'When it Start',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp,
-                                                          color: kSubTextColor),
+                                                      style: size.width > 400
+                                                          ? greyTabMain
+                                                          : greyMain,
                                                     ),
                                                     const VerticalSpacingWidget(
                                                         height: 3),
@@ -614,18 +607,21 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .tokens![index]
                                                           .whenitcomes
                                                           .toString(),
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 12.sp,
-                                                          color: kTextColor),
+                                                      style: size.width > 400
+                                                          ? blackTabMainText
+                                                          : blackMainText,
                                                     ),
                                                   ],
                                                 )
                                               ],
                                             ),
-                                            const VerticalSpacingWidget(
-                                                height: 20),
+                                            getCurrentTokenModel.tokens![index]
+                                                        .isCompleted ==
+                                                    1
+                                                ? const VerticalSpacingWidget(
+                                                    height: 0)
+                                                : const VerticalSpacingWidget(
+                                                    height: 50),
                                             getCurrentTokenModel.tokens![index]
                                                         .isCompleted ==
                                                     1
@@ -708,52 +704,40 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   children: [
                                                                     Text(
                                                                       "Medicine time : ",
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          fontSize: 13
-                                                                              .sp,
-                                                                          color:
-                                                                              kSubTextColor),
+                                                                      style: size.width >
+                                                                              400
+                                                                          ? greyTabMain
+                                                                          : greyMain,
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].morning ==
                                                                               1
                                                                           ? "Morning,"
                                                                           : "",
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          fontSize: 14
-                                                                              .sp,
-                                                                          color:
-                                                                              kTextColor),
+                                                                      style: size.width >
+                                                                              400
+                                                                          ? blackTabMainText
+                                                                          : blackMainText,
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].noon ==
                                                                               1
                                                                           ? "Noon,"
                                                                           : "",
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          fontSize: 14
-                                                                              .sp,
-                                                                          color:
-                                                                              kTextColor),
+                                                                      style: size.width >
+                                                                              400
+                                                                          ? blackTabMainText
+                                                                          : blackMainText,
                                                                     ),
                                                                     Text(
                                                                       getCurrentTokenModel.tokens![index].medicine![indexx].night ==
                                                                               1
                                                                           ? "Night"
                                                                           : "",
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight
-                                                                              .w500,
-                                                                          fontSize: 14
-                                                                              .sp,
-                                                                          color:
-                                                                              kTextColor),
+                                                                      style: size.width >
+                                                                              400
+                                                                          ? blackTabMainText
+                                                                          : blackMainText,
                                                                     )
                                                                   ],
                                                                 ),
@@ -836,27 +820,43 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         1
                                                                     ? kMainColor
                                                                     : kCardColor,
-                                                                height: 30.h,
-                                                                width: 30.w,
+                                                                height:
+                                                                    size.width >
+                                                                            400
+                                                                        ? 30.h
+                                                                        : 40.h,
+                                                                width:
+                                                                    size.width >
+                                                                            400
+                                                                        ? 30.w
+                                                                        : 40.w,
                                                               ),
                                                               const HorizontalSpacingWidget(
                                                                   width: 5),
                                                               Text(
                                                                 "Reached",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize:
-                                                                      12.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: getCurrentTokenModel
-                                                                              .tokens![index]
-                                                                              .isReached ==
-                                                                          1
-                                                                      ? kMainColor
-                                                                      : kCardColor,
-                                                                ),
+                                                                style: size.width >
+                                                                        400
+                                                                    ? TextStyle(
+                                                                        fontSize:
+                                                                            13.sp,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        color: getCurrentTokenModel.tokens![index].isReached ==
+                                                                                1
+                                                                            ? kMainColor
+                                                                            : kCardColor,
+                                                                      )
+                                                                    : TextStyle(
+                                                                        fontSize:
+                                                                            16.sp,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        color: getCurrentTokenModel.tokens![index].isReached ==
+                                                                                1
+                                                                            ? kMainColor
+                                                                            : kCardColor,
+                                                                      ),
                                                               ),
                                                             ],
                                                           ),
@@ -971,18 +971,26 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   ),
                                                                   Text(
                                                                     "Check In",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color: getCurrentTokenModel.tokens![index].isCheckIn ==
-                                                                              1
-                                                                          ? kMainColor
-                                                                          : kCardColor,
-                                                                    ),
+                                                                    style: size.width >
+                                                                            400
+                                                                        ? TextStyle(
+                                                                            fontSize:
+                                                                                13.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                                ? kMainColor
+                                                                                : kCardColor,
+                                                                          )
+                                                                        : TextStyle(
+                                                                            fontSize:
+                                                                                16.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                                ? kMainColor
+                                                                                : kCardColor,
+                                                                          ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -1056,16 +1064,26 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   ),
                                                                   Text(
                                                                     "Check Out",
-                                                                    style: TextStyle(
-                                                                        fontSize: 12
-                                                                            .sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w600,
-                                                                        color: getCurrentTokenModel.tokens![index].isCompleted ==
-                                                                                1
-                                                                            ? kMainColor
-                                                                            : Colors.white),
+                                                                    style: size.width >
+                                                                            400
+                                                                        ? TextStyle(
+                                                                            fontSize:
+                                                                                13.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                                ? kMainColor
+                                                                                : kCardColor,
+                                                                          )
+                                                                        : TextStyle(
+                                                                            fontSize:
+                                                                                16.sp,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                                ? kMainColor
+                                                                                : kCardColor,
+                                                                          ),
                                                                   ),
                                                                 ],
                                                               ),

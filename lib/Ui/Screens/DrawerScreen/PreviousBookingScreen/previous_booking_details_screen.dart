@@ -9,8 +9,9 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_completed_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_patient_details_widget.dart';
+
+import '../../../CommonWidgets/text_style_widget.dart';
 
 class PreviousBookingDetailsScreen extends StatefulWidget {
   const PreviousBookingDetailsScreen({
@@ -39,6 +40,7 @@ class _PreviousBookingDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Patient details"),
@@ -87,7 +89,7 @@ class _PreviousBookingDetailsScreenState
                                         .first
                                         .patientUserImage
                                         .toString(),
-                                radius: 40)),
+                                radius: 40.r)),
                         const HorizontalSpacingWidget(width: 40),
                         //! name
                         Column(
@@ -97,8 +99,9 @@ class _PreviousBookingDetailsScreenState
                               previousAppointmentDetailsModel
                                   .previousappointmentdetails!.first.patientName
                                   .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16.sp),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                             const VerticalSpacingWidget(height: 15),
                             Row(
@@ -111,10 +114,9 @@ class _PreviousBookingDetailsScreenState
                                     ? Container()
                                     : Text(
                                         "Patient Id : ",
-                                        style: TextStyle(
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.w400,
-                                            color: kSubTextColor),
+                                        style: size.width > 400
+                                            ? greyTabMain
+                                            : greyMain,
                                       ),
                                 previousAppointmentDetailsModel
                                             .previousappointmentdetails!
@@ -127,10 +129,9 @@ class _PreviousBookingDetailsScreenState
                                             .previousappointmentdetails!
                                             .first
                                             .mediezyPatientId!,
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: size.width > 400
+                                            ? blackTabMainText
+                                            : blackMainText,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -139,10 +140,9 @@ class _PreviousBookingDetailsScreenState
                             const VerticalSpacingWidget(height: 15),
                             Text(
                               '${previousAppointmentDetailsModel.previousappointmentdetails!.first.patientAge.toString()} years old',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp,
-                              ),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
@@ -157,19 +157,15 @@ class _PreviousBookingDetailsScreenState
                           children: [
                             Text(
                               'Appointment Date : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                             ),
                             Text(
                               previousAppointmentDetailsModel
                                   .previousappointmentdetails!.first.date
                                   .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
@@ -177,10 +173,7 @@ class _PreviousBookingDetailsScreenState
                           children: [
                             Text(
                               'Appointment time : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                             ),
                             Text(
                               previousAppointmentDetailsModel
@@ -188,10 +181,9 @@ class _PreviousBookingDetailsScreenState
                                   .first
                                   .tokenStartTime
                                   .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
@@ -199,10 +191,7 @@ class _PreviousBookingDetailsScreenState
                           children: [
                             Text(
                               'Checkout time : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                             ),
                             Text(
                               previousAppointmentDetailsModel
@@ -210,10 +199,9 @@ class _PreviousBookingDetailsScreenState
                                   .first
                                   .checkoutTime
                                   .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
@@ -222,19 +210,15 @@ class _PreviousBookingDetailsScreenState
                           children: [
                             Text(
                               'Token Number : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: kSubTextColor),
+                              style: size.width > 400 ? greyTabMain : greyMain,
                             ),
                             Text(
                               previousAppointmentDetailsModel
                                   .previousappointmentdetails!.first.tokenNumber
                                   .toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  color: kTextColor),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
@@ -249,10 +233,8 @@ class _PreviousBookingDetailsScreenState
                             ? Container()
                             : Text(
                                 'Added Vitals : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.sp,
-                                    color: Colors.grey),
+                                style:
+                                    size.width > 400 ? greyTabMain : greyMain,
                               ),
                         const VerticalSpacingWidget(height: 5),
                         previousAppointmentDetailsModel
@@ -332,10 +314,8 @@ class _PreviousBookingDetailsScreenState
                             ? Container()
                             : Text(
                                 'Added Medicines :',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13.sp,
-                                    color: kSubTextColor),
+                                style:
+                                    size.width > 400 ? greyTabMain : greyMain,
                               ),
                         previousAppointmentDetailsModel
                                 .previousappointmentdetails!
@@ -466,11 +446,9 @@ class _PreviousBookingDetailsScreenState
                                                                 1
                                                             ? "Morning,"
                                                             : "",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 15.sp,
-                                                            color: kTextColor),
+                                                        style: size.width > 400
+                                                            ? blackTabMainText
+                                                            : blackMainText,
                                                       ),
                                                       Text(
                                                         previousAppointmentDetailsModel
@@ -482,11 +460,9 @@ class _PreviousBookingDetailsScreenState
                                                                 1
                                                             ? "Noon,"
                                                             : "",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 15.sp,
-                                                            color: kTextColor),
+                                                        style: size.width > 400
+                                                            ? blackTabMainText
+                                                            : blackMainText,
                                                       ),
                                                       Text(
                                                         previousAppointmentDetailsModel
@@ -498,11 +474,9 @@ class _PreviousBookingDetailsScreenState
                                                                 1
                                                             ? "Evening,"
                                                             : "",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 15.sp,
-                                                            color: kTextColor),
+                                                        style: size.width > 400
+                                                            ? blackTabMainText
+                                                            : blackMainText,
                                                       ),
                                                       Text(
                                                         previousAppointmentDetailsModel
@@ -514,11 +488,9 @@ class _PreviousBookingDetailsScreenState
                                                                 1
                                                             ? "Night"
                                                             : "",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 15.sp,
-                                                            color: kTextColor),
+                                                        style: size.width > 400
+                                                            ? blackTabMainText
+                                                            : blackMainText,
                                                       )
                                                     ],
                                                   ),
@@ -588,19 +560,17 @@ class _PreviousBookingDetailsScreenState
                                 children: [
                                   Text(
                                     "Additional Note : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13.sp,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                   ),
                                   Text(
                                     previousAppointmentDetailsModel
                                         .previousappointmentdetails!.first.notes
                                         .toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.sp,
-                                        color: kTextColor),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                   ),
                                 ],
                               ),
@@ -616,10 +586,9 @@ class _PreviousBookingDetailsScreenState
                                 children: [
                                   Text(
                                     "Added Prescription Image : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13.sp,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                   ),
                                   const VerticalSpacingWidget(height: 5),
                                   InkWell(

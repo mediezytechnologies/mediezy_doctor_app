@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
@@ -22,6 +23,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final mWidth = MediaQuery.of(context).size.width;
     final mHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -29,23 +31,15 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
       children: [
         const VerticalSpacingWidget(height: 10),
         //! appointment for
-        Text(
-          'Appointment for',
-          style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 13.sp,
-              color: kSubTextColor),
-        ),
+        Text('Appointment for',
+            style: size.width > 400 ? greyTabMain : greyMain),
         widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!.isEmpty
             ? Container()
             : Text(
                 widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!
                     .first.name
                     .toString(),
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                    color: kTextColor),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
               ),
         // const VerticalSpacingWidget(height: 5),
         widget.appointmentDetailsPageModel.bookingData!.otherSymptoms!.isEmpty
@@ -57,11 +51,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         .appointmentDetailsPageModel.bookingData!.otherSymptoms!
                         .map((symptom) => "${symptom.name}")
                         .join(', '),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
-                      color: kTextColor,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                   ),
                 ],
               ),
@@ -91,10 +81,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Allergy : ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.sp,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: SizedBox(
@@ -129,11 +116,9 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
-                                    color: kTextColor,
-                                  ),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
                                 ),
                               );
                             },
@@ -151,10 +136,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Surgery name : ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.sp,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -168,19 +150,17 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         final index = entry.key;
                         final name = entry.value;
                         final isLastItem = index ==
-                            widget
-                                .appointmentDetailsPageModel.bookingData!.surgeryName!.length - 1;
+                            widget.appointmentDetailsPageModel.bookingData!
+                                    .surgeryName!.length -
+                                1;
                         return Text(
                           name == "Other"
-                              ? "${widget
-                              .appointmentDetailsPageModel.bookingData!.surgeryDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.appointmentDetailsPageModel.bookingData!.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
-                            color: kTextColor,
-                          ),
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
                         );
                       }).toList(),
                     ),
@@ -195,10 +175,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Treatment taken : ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.sp,
-                        color: kSubTextColor),
+                    style: size.width > 400 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -213,18 +190,16 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         final name = entry.value;
                         final isLastItem = index ==
                             widget.appointmentDetailsPageModel.bookingData!
-                                .treatmentTaken!.length - 1;
+                                    .treatmentTaken!.length -
+                                1;
                         return Text(
                           name == "Other"
-                              ? "${widget.appointmentDetailsPageModel.bookingData!
-                              .treatmentTakenDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.appointmentDetailsPageModel.bookingData!.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
-                            color: kTextColor,
-                          ),
+                          style: size.width > 400
+                              ? blackTabMainText
+                              : blackMainText,
                         );
                       }).toList(),
                     ),
@@ -236,20 +211,13 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
           children: [
             Text(
               "Regular Medicines : ",
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13.sp,
-                  color: kSubTextColor),
+              style: size.width > 400 ? greyTabMain : greyMain,
             ),
             widget.appointmentDetailsPageModel.bookingData!.medicineDetails!
                     .isEmpty
                 ? Text(
                     "No",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
-                      color: kTextColor,
-                    ),
+                    style: size.width > 400 ? blackTabMainText : blackMainText,
                   )
                 : Expanded(
                     child: SizedBox(
@@ -279,11 +247,9 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.sp,
-                                    color: kTextColor,
-                                  ),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
                                 ),
                               );
                             },
@@ -294,41 +260,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                   ),
           ],
         ),
-        // SizedBox(
-        //   width: double.infinity,
-        //   child: SingleChildScrollView(
-        //     scrollDirection: Axis.horizontal,
-        //     child: Column(
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: List.generate(
-        //         widget.appointmentDetailsPageModel.bookingData!.medicineDetails!
-        //             .length,
-        //         (index) {
-        //           final item = widget.appointmentDetailsPageModel.bookingData!
-        //               .medicineDetails![index];
-        //           final text =
-        //               "${item.illness.toString()} - ${item.regularMedicine.toString()}";
-        //           final isLastItem = index ==
-        //               widget.appointmentDetailsPageModel.bookingData!
-        //                       .medicineDetails!.length -
-        //                   1;
-        //
-        //           return Padding(
-        //             padding: EdgeInsets.only(right: isLastItem ? 0 : 8.0),
-        //             child: Text(
-        //               isLastItem ? text : '$text,',
-        //               style: TextStyle(
-        //                 fontWeight: FontWeight.w500,
-        //                 fontSize: 14.sp,
-        //                 color: kTextColor,
-        //               ),
-        //             ),
-        //           );
-        //         },
-        //       ),
-        //     ),
-        //   ),
-        // ),
+
         const VerticalSpacingWidget(height: 5),
         widget.appointmentDetailsPageModel.bookingData!.patientId == 0
             ? Container()
@@ -364,15 +296,17 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         Row(
                           children: [
                             HorizontalSpacingWidget(width: 5.w),
-                            const Text(
+                            Text(
                               "Patient Reports",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: size.width > 400
+                                  ? blackTabMainText
+                                  : blackMainText,
                             ),
                           ],
                         ),
-                        const Icon(
+                        Icon(
                           Icons.arrow_forward_ios,
-                          size: 17,
+                          size: size.width > 400 ? 13.sp : 17.sp,
                         )
                       ],
                     ),

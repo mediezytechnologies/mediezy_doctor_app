@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/AddMedicalShope/add_medical_shope_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/RemoveMedicalShope/remove_medical_shope_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'horizontal_spacing_widget.dart';
@@ -47,6 +48,7 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -64,14 +66,18 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
                     child: widget.imageUrl == "null"
                         ? Image.asset(
                             "assets/images/no image.jpg",
-                            height: 50.h,
-                            width: 60.w,
+                            height: size.height * .08,
+                            width: size.width > 400
+                                ? size.width * .12
+                                : size.width * .18,
                             fit: BoxFit.fill,
                           )
                         : Image.network(
                             widget.imageUrl,
-                            height: 50.h,
-                            width: 60.w,
+                            height: size.height * .08,
+                            width: size.width > 400
+                                ? size.width * .12
+                                : size.width * .18,
                             fit: BoxFit.fill,
                           ),
                   ),
@@ -82,10 +88,8 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
                       const VerticalSpacingWidget(height: 5),
                       Text(
                         widget.labName,
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            size.width > 400 ? blackTabMainText : blackMainText,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -94,13 +98,13 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
                         children: [
                           Text(
                             "Mobile No: ",
-                            style: TextStyle(
-                                fontSize: 12.sp, color: kSubTextColor),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.mobileNo,
-                            style:
-                                TextStyle(fontSize: 12.sp, color: Colors.black),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                           ),
                           const HorizontalSpacingWidget(width: 8),
                         ],
@@ -110,13 +114,13 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
                         children: [
                           Text(
                             "Location:",
-                            style: TextStyle(
-                                fontSize: 12.sp, color: kSubTextColor),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.location,
-                            style:
-                                TextStyle(fontSize: 12.sp, color: Colors.black),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                           ),
                           const HorizontalSpacingWidget(width: 8),
                         ],
@@ -128,31 +132,44 @@ class _GetMedicalStoreWidgetState extends State<GetMedicalStoreWidget> {
               Column(
                 children: [
                   isAddButtonVisible
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green),
-                          onPressed: () {
-                            BlocProvider.of<AddMedicalShopeBloc>(context).add(
-                                AddMedicalShope(medicalShopeId: widget.labId));
-                            toggleButton();
-                          },
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(color: Colors.white),
+                      ? SizedBox(
+                          height: size.height * .04,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green),
+                            onPressed: () {
+                              BlocProvider.of<AddMedicalShopeBloc>(context).add(
+                                  AddMedicalShope(
+                                      medicalShopeId: widget.labId));
+                              toggleButton();
+                            },
+                            child: Text(
+                              'Add',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.width > 400 ? 9.sp : 13.sp,
+                              ),
+                            ),
                           ),
                         )
-                      : ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red),
-                          onPressed: () {
-                            BlocProvider.of<RemoveMedicalShopeBloc>(context)
-                                .add(RemoveMedicalShope(
-                                    medicalShopeId: widget.labId));
-                            toggleButton();
-                          },
-                          child: const Text(
-                            'Remove',
-                            style: TextStyle(color: Colors.white),
+                      : SizedBox(
+                          height: size.height * .04,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            onPressed: () {
+                              BlocProvider.of<RemoveMedicalShopeBloc>(context)
+                                  .add(RemoveMedicalShope(
+                                      medicalShopeId: widget.labId));
+                              toggleButton();
+                            },
+                            child: Text(
+                              'Remove',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.width > 400 ? 9.sp : 13.sp,
+                              ),
+                            ),
                           ),
                         ),
                 ],

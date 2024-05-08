@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/PatientsGet/patients_get_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/patients_card_widget.dart';
@@ -21,13 +22,14 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<PatientsGetBloc>(context)
+    BlocProvider.of<SearchPatientsBloc>(context)
         .add(FetchSearchPatients(searchQuery: ""));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -48,17 +50,17 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     onChanged: (newValue) {
-                      BlocProvider.of<PatientsGetBloc>(context)
+                      BlocProvider.of<SearchPatientsBloc>(context)
                           .add(FetchSearchPatients(searchQuery: newValue));
                     },
                     decoration: InputDecoration(
                       suffixIcon: Icon(
                         IconlyLight.search,
                         color: kMainColor,
+                        size: size.width > 400 ? 14.sp : 20.sp,
                       ),
-                      hintStyle:
-                          TextStyle(fontSize: 10.sp, color: kSubTextColor),
-                      hintText: "Search Your Patientsdsfdsfsdfgadsfasdf",
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                      hintText: "Search Your Patients",
                       filled: true,
                       fillColor: kCardColor,
                       border: OutlineInputBorder(
@@ -68,16 +70,16 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                     ),
                   ),
                 ),
-                BlocBuilder<PatientsGetBloc, PatientsGetState>(
+                BlocBuilder<SearchPatientsBloc, SearchPatientsState>(
                   builder: (context, state) {
-                    if (state is PatientsGetLoading) {
+                    if (state is SearchPatientsLoading) {
                       return Center(
                         child: CircularProgressIndicator(
                           color: kMainColor,
                         ),
                       );
                     }
-                    if (state is PatientsGetError) {
+                    if (state is SearchPatientsError) {
                       return Center(
                         child: Image(
                           image: const AssetImage(
@@ -87,9 +89,9 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                         ),
                       );
                     }
-                    if (state is PatientsGetLoaded) {
+                    if (state is SearchPatientsLoaded) {
                       patientsGetModel =
-                          BlocProvider.of<PatientsGetBloc>(context)
+                          BlocProvider.of<SearchPatientsBloc>(context)
                               .patientsGetModel;
                       if (patientsGetModel.patientData != null &&
                           patientsGetModel.patientData!.isNotEmpty) {
@@ -125,8 +127,10 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                             Center(
                               child: Image(
                                 image: const AssetImage(
-                                    "assets/images/You ahve no patients-01.png",),
-                                height: 200.h,color: kMainColor,
+                                  "assets/images/You ahve no patients-01.png",
+                                ),
+                                height: 200.h,
+                                color: kMainColor,
                                 width: 200.w,
                               ),
                             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 
 class NamesWidget extends StatelessWidget {
   const NamesWidget(
@@ -12,27 +12,22 @@ class NamesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SizedBox(
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               firstText,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13.sp,
-                  color: kSubTextColor),
+              style: size.width > 400 ? greyTabMain : greyMain,
             ),
             Expanded(
               child: Text(
                 secondText,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                    color: kTextColor),
+                style: size.width > 400 ? blackTabMainText : blackMainText,
               ),
             ),
           ],

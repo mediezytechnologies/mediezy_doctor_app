@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/Labs/search_lab_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/SearchLab/search_lab_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/get_lab_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
@@ -27,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Search"),
@@ -51,8 +53,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     suffixIcon: Icon(
                       IconlyLight.search,
                       color: kMainColor,
+                      size: size.width > 400 ? 12.sp : 18.sp,
                     ),
-                    hintStyle: TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                    hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                     hintText: "Search lab and scanning centre",
                     filled: true,
                     fillColor: kCardColor,

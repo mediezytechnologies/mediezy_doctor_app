@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/get_prescription_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/GetPrescription/get_prescription_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -33,6 +34,7 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final mWidth = MediaQuery.of(context).size.width;
     return BlocBuilder<GetPrescriptionBloc, GetPrescriptionState>(
       builder: (context, state) {
@@ -92,24 +94,27 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: 100.h,
-                                width: 80.w,
+                                height: size.width > 400 ? 100.h : 90.h,
+                                width: size.width > 400 ? 60.w : 80.w,
                                 decoration: BoxDecoration(
                                   color: kScaffoldColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Column(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image(
-                                      height: 30,
-                                      width: 30,
-                                      image: AssetImage(
+                                      height: 30.h,
+                                      width: 30.w,
+                                      image: const AssetImage(
                                         'assets/icons/file.png',
                                       ),
                                     ),
-                                    Text("View File")
+                                    Text("View File",
+                                        style: size.width > 400
+                                            ? blackTab9B400
+                                            : black12B500)
                                   ],
                                 ),
                               ),
@@ -124,19 +129,17 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                                 children: [
                                   Text(
                                     "Patient :",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                   ),
                                   Text(
                                     getPrescriptionModel
                                         .documentData![index].patient
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -146,10 +149,9 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                                 children: [
                                   Text(
                                     "Record Date :",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -157,10 +159,9 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                                     getPrescriptionModel.documentData![index]
                                         .patientPrescription!.first.date
                                         .toString(),
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -170,19 +171,17 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                                 children: [
                                   Text(
                                     "Prescribed by :",
-                                    style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: kSubTextColor),
+                                    style: size.width > 400
+                                        ? greyTabMain
+                                        : greyMain,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
                                     "Dr ${getPrescriptionModel.documentData![index].patientPrescription!.first.doctorName.toString()}",
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: size.width > 400
+                                        ? blackTabMainText
+                                        : blackMainText,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -190,10 +189,8 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                               ),
                               Text(
                                 "Last updated - ${getPrescriptionModel.documentData![index].hoursAgo}",
-                                style: TextStyle(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: kSubTextColor),
+                                style:
+                                    size.width > 400 ? greyTabMain : greyMain,
                               ),
                               InkWell(
                                 onTap: () {
@@ -214,11 +211,12 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                                 },
                                 child: Padding(
                                   padding:
-                                      EdgeInsets.only(left: 190.w, bottom: 5.h),
+                                      EdgeInsets.only(left: 200.w, bottom: 5.h),
                                   child: Text(
                                     "View",
                                     style: TextStyle(
-                                        fontSize: 12.sp,
+                                        fontSize:
+                                            size.width > 400 ? 10.sp : 12.sp,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.blue),
                                   ),

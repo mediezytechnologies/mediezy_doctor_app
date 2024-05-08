@@ -1,8 +1,5 @@
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
@@ -13,9 +10,9 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAppointmentDet
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 class MedicineWidget extends StatefulWidget {
@@ -78,10 +75,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
 
   String _medicineId = "";
 
-
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     log("${widget.medicalStoreId}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,10 +87,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
             ? Container()
             : Text(
                 'All Prescriptions',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                    color: Colors.grey),
+                style: size.width > 400 ? greyTabMain : greyMain,
               ),
         // const VerticalSpacingWidget(height: 5),
         ListView.builder(
@@ -174,11 +167,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                       1)
                                     Text(
                                       "Morning",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget
                                               .appointmentDetailsPageModel
@@ -206,22 +197,18 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                               1))
                                     Text(
                                       ",",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget.appointmentDetailsPageModel
                                           .bookingData!.medicine![index].noon ==
                                       1)
                                     Text(
                                       "Noon",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget
                                               .appointmentDetailsPageModel
@@ -243,11 +230,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                               1))
                                     Text(
                                       ",",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget
                                           .appointmentDetailsPageModel
@@ -257,11 +242,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                       1)
                                     Text(
                                       "Evening",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget
                                               .appointmentDetailsPageModel
@@ -277,11 +260,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                           1)
                                     Text(
                                       ",",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                   if (widget
                                           .appointmentDetailsPageModel
@@ -291,11 +272,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                       1)
                                     Text(
                                       "Night",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp,
-                                        color: kTextColor,
-                                      ),
+                                      style: size.width > 400
+                                          ? blackTabMainText
+                                          : blackMainText,
                                     ),
                                 ],
                               ),
@@ -308,7 +287,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                         // mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           PopupMenuButton(
-                            iconSize: 20.sp,
+                            iconSize: size.width > 400 ? 14.sp : 20.sp,
                             icon: Icon(
                               Icons.more_vert,
                               color: kMainColor,
@@ -430,9 +409,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 },
                                 child: Text(
                                   "Edit",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w700),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -454,9 +433,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 },
                                 child: Text(
                                   "Delete",
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w700),
+                                  style: size.width > 400
+                                      ? blackTabMainText
+                                      : blackMainText,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -474,8 +453,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
         const VerticalSpacingWidget(height: 5),
         Text(
           'Add Prescription',
-          style: TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 15.sp, color: Colors.grey),
+          style: size.width > 400 ? greyTabMain : greyMain,
         ),
         const VerticalSpacingWidget(height: 10),
         Container(
@@ -492,17 +470,19 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                   children: [
                     SizedBox(
                       // height: 40.h,
-                      width: 235.w,
+                      width: size.width > 400 ? 245.w : 235.w,
                       child: TextFormField(
+                        style: TextStyle(
+                            fontSize: size.width > 400 ? 9.sp : 14.sp),
                         cursorColor: kMainColor,
                         controller: medicineNameController,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 2.h, horizontal: 2.w),
+                              vertical: 10.h, horizontal: 2.w),
                           hintStyle:
-                              TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                              size.width > 400 ? greyTab10B600 : grey13B600,
                           hintText: "Medicine Name",
                           filled: true,
                           fillColor: kCardColor,
@@ -515,17 +495,19 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                     SizedBox(
                       // height: 40.h,
-                      width:90.w,
+                      width: 90.w,
                       child: TextFormField(
+                        style: TextStyle(
+                            fontSize: size.width > 400 ? 9.sp : 14.sp),
                         cursorColor: kMainColor,
                         controller: dosageController,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 2.h, horizontal: 2.w),
+                              vertical: 10.h, horizontal: 2.w),
                           hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                              size.width > 400 ? greyTab10B600 : grey13B600,
                           hintText: "Dosage",
                           filled: true,
                           fillColor: kCardColor,
@@ -538,6 +520,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ],
                 ),
+                size.width > 400
+                    ? const VerticalSpacingWidget(height: 5)
+                    : const VerticalSpacingWidget(height: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -558,6 +543,8 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           SizedBox(
                             width: 10.w,
                             child: Checkbox(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
                               activeColor: kMainColor,
                               value: morningValue,
                               onChanged: (newValue) {
@@ -703,6 +690,9 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ],
                 ),
+                size.width > 400
+                    ? const VerticalSpacingWidget(height: 5)
+                    : const VerticalSpacingWidget(height: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -718,17 +708,19 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           border: Border.all(color: Colors.grey.shade400),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child:  Center(
+                        child: Center(
                           child: Text(
                             "More",
-                            style: TextStyle(fontSize: 11.sp,fontWeight: FontWeight.bold),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                           ),
                         ),
                       ),
                     ),
                     Container(
                       height: 40.h,
-                      width: 160.w,
+                      width: size.width > 400 ? 170.w : 160.w,
                       color: kCardColor,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -736,12 +728,11 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           child: DropdownButtonFormField(
                             iconEnabledColor: kMainColor,
                             decoration:
-                            const InputDecoration.collapsed(hintText: ''),
+                                const InputDecoration.collapsed(hintText: ''),
                             value: dropdownvalue,
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w500,
-                                color: kTextColor),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                             icon: const Icon(Icons.keyboard_arrow_down),
                             items: items.map((String items) {
                               return DropdownMenuItem(
@@ -755,8 +746,8 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 passingFood = dropdownvalue == "After Food"
                                     ? "1"
                                     : dropdownvalue == "Before Food"
-                                    ? "2"
-                                    : "3";
+                                        ? "2"
+                                        : "3";
                                 print(">???????????$passingFood");
                               });
                             },
@@ -768,15 +759,17 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       // height: 40.h,
                       width: 90.w,
                       child: TextFormField(
+                        style: TextStyle(
+                            fontSize: size.width > 400 ? 9.sp : 14.sp),
                         cursorColor: kMainColor,
                         controller: daysController,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
-                              vertical: 2.h, horizontal: 2.w),
+                              vertical: 10.h, horizontal: 2.w),
                           hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                              size.width > 400 ? greyTab10B600 : grey13B600,
                           hintText: "Days",
                           filled: true,
                           fillColor: kCardColor,
@@ -790,7 +783,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     //! drop down before and after
                   ],
                 ),
-                const VerticalSpacingWidget(height: 5),
+                const VerticalSpacingWidget(height: 10),
                 //! select times
                 //! add
                 BlocListener<EditMedicineBloc, EditMedicineState>(
@@ -819,7 +812,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           if (medicineNameController.text.isEmpty) {
                             GeneralServices.instance.showErrorMessage(
                                 context, "Please fill medicine name");
-                          }  else if (dosageController.text.isEmpty) {
+                          } else if (dosageController.text.isEmpty) {
                             GeneralServices.instance.showErrorMessage(
                                 context, "Please fill dosage");
                           } else if (daysController.text.isEmpty) {
@@ -877,11 +870,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           child: Center(
                             child: Text(
                               editingMedicineIndex != -1 ? "UPDATE" : "ADD",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: kCardColor,
-                              ),
+                              style: size.width > 400
+                                  ? TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.bold)
+                                  : TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -899,6 +896,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
   }
 
   Future<dynamic> addInterval(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return showDialog(
       barrierDismissible: true,
       context: context,
@@ -920,15 +918,17 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     // height: 40.h,
                     width: 60.w,
                     child: TextFormField(
+                      style:
+                          TextStyle(fontSize: size.width > 400 ? 9.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: days1Controller,
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: 2.h, horizontal: 2.w),
+                            vertical: 10.h, horizontal: 2.w),
                         hintStyle:
-                        TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                            size.width > 400 ? greyTab10B600 : grey13B600,
                         hintText: "Interval",
                         filled: true,
                         fillColor: kCardColor,
@@ -960,17 +960,17 @@ class _MedicineWidgetState extends State<MedicineWidget> {
               const VerticalSpacingWidget(height: 5),
               SizedBox(
                 // height: 40.h,
-                width:double.infinity,
+                width: double.infinity,
                 child: TextFormField(
+                  style: TextStyle(fontSize: size.width > 400 ? 9.sp : 14.sp),
                   cursorColor: kMainColor,
                   controller: dosageController,
                   keyboardType: TextInputType.name,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: 2.h, horizontal: 2.w),
-                    hintStyle:
-                    TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 2.w),
+                    hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                     hintText: "Dosage",
                     filled: true,
                     fillColor: kCardColor,
@@ -985,12 +985,28 @@ class _MedicineWidgetState extends State<MedicineWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: () {
-                    Navigator.pop(context);
-                  }, child: Text("Cancel")),
-                  TextButton(onPressed: () {
-                    Navigator.pop(context);
-                  }, child: Text("OK")),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: size.width > 400
+                          ? TextStyle(fontSize: 9.sp)
+                          : TextStyle(fontSize: 12.sp),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "OK",
+                      style: size.width > 400
+                          ? TextStyle(fontSize: 9.sp)
+                          : TextStyle(fontSize: 12.sp),
+                    ),
+                  ),
                 ],
               )
             ],

@@ -11,6 +11,7 @@ class CommonButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         onTapFunction();
@@ -26,7 +27,7 @@ class CommonButtonWidget extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: size.width > 400 ? 12.sp : 18.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white),
           ),

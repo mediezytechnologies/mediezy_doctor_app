@@ -7,6 +7,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../CommonWidgets/text_style_widget.dart';
+
 class SuggestDoctorScreen extends StatefulWidget {
   const SuggestDoctorScreen({super.key});
 
@@ -24,13 +26,14 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Recommend Doctor"),
         centerTitle: true,
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         child: CommonButtonWidget(
             title: "Done",
             onTapFunction: () {
@@ -69,27 +72,24 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const VerticalSpacingWidget(height: 10),
+                const VerticalSpacingWidget(height: 5),
                 Text(
                   "Dotor name",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.sp,
-                      color: kSubTextColor),
+                  style: size.width > 400 ? greyTabMain : greyMain,
                 ),
-                VerticalSpacingWidget(height: 5.h),
+                const VerticalSpacingWidget(height: 5),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 13.sp, color: kTextColor),
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: doctorNameController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Enter doctor name",
                       filled: true,
                       fillColor: kCardColor,
@@ -102,27 +102,24 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
                     ),
                   ),
                 ),
-                const VerticalSpacingWidget(height: 10),
+                const VerticalSpacingWidget(height: 5),
                 Text(
                   "Location",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.sp,
-                      color: kSubTextColor),
+                  style: size.width > 400 ? greyTabMain : greyMain,
                 ),
-                VerticalSpacingWidget(height: 5.h),
+                const VerticalSpacingWidget(height: 5),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 13.sp, color: kTextColor),
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: locationController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Enter loaction",
                       filled: true,
                       fillColor: kCardColor,
@@ -135,27 +132,24 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
                     ),
                   ),
                 ),
-                const VerticalSpacingWidget(height: 10),
+                const VerticalSpacingWidget(height: 5),
                 Text(
                   "Clinic name",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.sp,
-                      color: kSubTextColor),
+                  style: size.width > 400 ? greyTabMain : greyMain,
                 ),
-                VerticalSpacingWidget(height: 5.h),
+                const VerticalSpacingWidget(height: 5),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 13.sp, color: kTextColor),
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: clinicNameController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Enter clinic name",
                       filled: true,
                       fillColor: kCardColor,
@@ -168,27 +162,24 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
                     ),
                   ),
                 ),
-                const VerticalSpacingWidget(height: 10),
+                const VerticalSpacingWidget(height: 5),
                 Text(
                   "Specialization",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.sp,
-                      color: kSubTextColor),
+                  style: size.width > 400 ? greyTabMain : greyMain,
                 ),
-                VerticalSpacingWidget(height: 5.h),
+                const VerticalSpacingWidget(height: 5),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 13.sp, color: kTextColor),
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: specializationController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Enter specialization",
                       filled: true,
                       fillColor: kCardColor,
@@ -201,27 +192,24 @@ class _SuggestDoctorScreenState extends State<SuggestDoctorScreen> {
                     ),
                   ),
                 ),
-                const VerticalSpacingWidget(height: 10),
+                const VerticalSpacingWidget(height: 5),
                 Text(
                   "Phone number",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13.sp,
-                      color: kSubTextColor),
+                  style: size.width > 400 ? greyTabMain : greyMain,
                 ),
-                VerticalSpacingWidget(height: 5.h),
+                const VerticalSpacingWidget(height: 5),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: TextFormField(
-                    style: TextStyle(fontSize: 13.sp, color: kTextColor),
+                    style:
+                        TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: phoneNumberController,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintStyle:
-                          TextStyle(fontSize: 13.sp, color: kSubTextColor),
+                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
                       hintText: "Enter phone number",
                       filled: true,
                       fillColor: kCardColor,

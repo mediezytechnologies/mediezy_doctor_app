@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/AddFavouritesLab/add_favourites_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/RemoveFavLab/remove_fav_labs_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:shimmer/shimmer.dart';
 import 'horizontal_spacing_widget.dart';
 
 class GetLabWidget extends StatefulWidget {
@@ -48,6 +48,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -66,8 +67,10 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
                           "assets/images/no image.jpg",
-                          height: 50.h,
-                          width: 50.h,
+                          height: size.height * .08,
+                          width: size.width > 400
+                              ? size.width * .12
+                              : size.width * .18,
                         );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
@@ -78,8 +81,10 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                           child: CircularProgressIndicator(),
                         );
                       },
-                      height: 50.h,
-                      width: 60.w,
+                      height: size.height * .08,
+                      width: size.width > 400
+                          ? size.width * .12
+                          : size.width * .18,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -90,10 +95,8 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                       const VerticalSpacingWidget(height: 5),
                       Text(
                         widget.labName,
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            size.width > 400 ? blackTabMainText : blackMainText,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -102,13 +105,13 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         children: [
                           Text(
                             "Mobile No: ",
-                            style: TextStyle(
-                                fontSize: 12.sp, color: kSubTextColor),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.mobileNo,
-                            style:
-                                TextStyle(fontSize: 12.sp, color: Colors.black),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                           ),
                           const HorizontalSpacingWidget(width: 8),
                         ],
@@ -118,13 +121,13 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         children: [
                           Text(
                             "Location:",
-                            style: TextStyle(
-                                fontSize: 12.sp, color: kSubTextColor),
+                            style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.location,
-                            style:
-                                TextStyle(fontSize: 12.sp, color: Colors.black),
+                            style: size.width > 400
+                                ? blackTabMainText
+                                : blackMainText,
                           ),
                           const HorizontalSpacingWidget(width: 8),
                         ],
@@ -136,31 +139,43 @@ class _GetLabWidgetState extends State<GetLabWidget> {
               Column(
                 children: [
                   isAddButtonVisible
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green),
-                          onPressed: () {
-                            BlocProvider.of<AddFavouritesLabBloc>(context).add(
-                              AddFavouritesLab(labId: widget.labId),
-                            );
-                            toggleButton();
-                          },
-                          child: const Text(
-                            'Add',
-                            style: TextStyle(color: Colors.white),
+                      ? SizedBox(
+                          height: size.height * .04,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green),
+                            onPressed: () {
+                              BlocProvider.of<AddFavouritesLabBloc>(context)
+                                  .add(
+                                AddFavouritesLab(labId: widget.labId),
+                              );
+                              toggleButton();
+                            },
+                            child: Text(
+                              'Add',
+                              style: TextStyle(
+                                  fontSize: size.width > 400 ? 9.sp : 13.sp,
+                                  color: Colors.white),
+                            ),
                           ),
                         )
-                      : ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red),
-                          onPressed: () {
-                            BlocProvider.of<RemoveFavLabsBloc>(context)
-                                .add(RemoveFavouritesLab(labId: widget.labId));
-                            toggleButton();
-                          },
-                          child: const Text(
-                            'Remove',
-                            style: TextStyle(color: Colors.white),
+                      : SizedBox(
+                          height: size.height * .04,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red),
+                            onPressed: () {
+                              BlocProvider.of<RemoveFavLabsBloc>(context).add(
+                                  RemoveFavouritesLab(labId: widget.labId));
+                              toggleButton();
+                            },
+                            child: Text(
+                              'Remove',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size.width > 400 ? 9.sp : 13.sp,
+                              ),
+                            ),
                           ),
                         ),
                 ],

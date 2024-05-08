@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/search_medical_store_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/SearchMedicalStore/search_medical_store_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/get_lab_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
@@ -29,6 +30,7 @@ class _SearchMedicalStoreScreenState extends State<SearchMedicalStoreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Search"),
@@ -53,8 +55,9 @@ class _SearchMedicalStoreScreenState extends State<SearchMedicalStoreScreen> {
                     suffixIcon: Icon(
                       IconlyLight.search,
                       color: kMainColor,
+                      size: size.width > 400 ? 12.sp : 18.sp,
                     ),
-                    hintStyle: TextStyle(fontSize: 15.sp, color: kSubTextColor),
+                    hintStyle: size.width > 400 ? greyTab10B400 : grey13B600,
                     hintText: "Search Medical Store",
                     filled: true,
                     fillColor: kCardColor,
