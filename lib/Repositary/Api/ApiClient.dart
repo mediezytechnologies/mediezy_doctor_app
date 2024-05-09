@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
 class ApiClient {
- //static const String basePath = "https://mediezy.com/api/";
-  static const String basePath = "https://test.mediezy.com/api/";
+ static const String basePath = "https://mediezy.com/api/";
+ //  static const String basePath = "https://test.mediezy.com/api/";
 
   String orignalToken = '';
   Future<Response> invokeAPI(

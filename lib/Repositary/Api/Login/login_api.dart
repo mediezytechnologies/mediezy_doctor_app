@@ -82,4 +82,33 @@ class LoginApi {
     print(body);
     return response.body;
   }
+
+  //guest register api
+
+  // Future<String> addGuestRegister(
+  //     {required String email,
+  //       required String firstname,
+  //       required String dob,
+  //       required String mobileNo,
+  //       required String location,
+  //       required String hospitalName,
+  //       required String specialization,
+  //       // required String doctorImage,
+  //     }) async {
+  //   String basePath = "docter/doctor_register";
+  //   final body = {
+  //     "email":email,
+  //     "first_name":firstname,
+  //     "dob":dob,
+  //     "mobile_number":mobileNo,
+  //     "location":location,
+  //     "hospital_name":hospitalName,
+  //     "specialization":specialization,
+  //     // "doctor_image":doctorImage,
+  //   };
+  //   Response response =
+  //   await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+  //   print(body);
+  //   return response.body;
+  // }
 }

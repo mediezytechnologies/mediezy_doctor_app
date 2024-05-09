@@ -431,7 +431,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                           }),
                           const VerticalSpacingWidget(height: 5),
                           _isLoading
-                              ? _buildCalenderLoadingWidget()
+                              ? _buildCalenderLoadingWidget(context)
                               : EasyDateTimeLine(
                                   initialDate: selectedDate,
                                   disabledDates: _getDisabledDates(),
@@ -562,7 +562,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                           BlocBuilder<GetTokenBloc, GetTokenState>(
                             builder: (context, state) {
                               if (state is GetTokenLoading) {
-                                return _buildLoadingWidget();
+                                return _buildLoadingWidget(context);
                               }
                               if (state is GetTokenError) {
                                 return Column(
