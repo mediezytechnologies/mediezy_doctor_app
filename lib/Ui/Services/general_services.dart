@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:shimmer/shimmer.dart';
 
 class GeneralServices {
   static GeneralServices instance = GeneralServices();
@@ -123,6 +124,39 @@ class GeneralServices {
               );
             }),
           );
+  }
+
+  buildLoadingWidget(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: 400.h,
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          shrinkWrap: true,
+          itemCount: 60,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: size.width > 400 ? 8 : 5,
+            mainAxisExtent: size.width > 400 ? 100 : 70,
+          ),
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: kMainColor, width: 1.w),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   //*show dialogue

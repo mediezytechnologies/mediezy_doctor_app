@@ -291,7 +291,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                 BlocBuilder<GetTokenBloc, GetTokenState>(
                                   builder: (context, state) {
                                     if (state is GetTokenLoading) {
-                                      return _buildLoadingWidget();
+                                      return GeneralServices.instance
+                                          .buildLoadingWidget(context);
                                     }
                                     if (state is GetTokenError) {
                                       return Column(
@@ -769,7 +770,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                           BlocBuilder<DeletedTokensBloc, DeletedTokensState>(
                             builder: (context, state) {
                               if (state is DeletedTokensLoading) {
-                                // return _buildLoadingWidget();
+                                return GeneralServices.instance
+                                    .buildLoadingWidget(context);
                               }
                               if (state is DeletedTokensError) {
                                 return Column(

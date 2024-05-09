@@ -130,7 +130,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         }),
                         const VerticalSpacingWidget(height: 5),
                         _isLoading
-                            ? _buildCalenderLoadingWidget()
+                            ? _buildCalenderLoadingWidget(context)
                             : DatePickerWidget(
                                 onDateChange: (date) {
                                   String formattedDate =
@@ -232,7 +232,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         BlocBuilder<GetTokenBloc, GetTokenState>(
                           builder: (context, state) {
                             if (state is GetTokenLoading) {
-                              return _buildLoadingWidget();
+                              return _buildLoadingWidget(context);
                             }
                             if (state is GetTokenError) {
                               return Column(
@@ -260,6 +260,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                         text:
                                             getTokenModel.message.toString()));
                               }
+
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -441,7 +442,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
     );
   }
 
-  Widget _buildLoadingWidget() {
+  Widget _buildLoadingWidget(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SizedBox(
       height: 400.h,
       child: Shimmer.fromColors(
@@ -461,11 +463,11 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,
               itemCount: 25,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 8,
-                crossAxisCount: 5,
-                mainAxisExtent: 78,
+                crossAxisCount: size.width > 400 ? 7 : 5,
+                mainAxisExtent: size.width > 400 ? 130 : 78,
               ),
               itemBuilder: (context, index) {
                 return Container(
@@ -484,7 +486,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
     );
   }
 
-  Widget _buildCalenderLoadingWidget() {
+  Widget _buildCalenderLoadingWidget(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -517,12 +520,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.zero,
-              itemCount: 6, // Choose a number of shimmer items
+              itemCount: 7, // Choose a number of shimmer items
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: Container(
-                    width: 65.w,
+                    height:
+                        size.width > 400 ? size.height * .1 : size.height * .11,
+                    width:
+                        size.width > 400 ? size.width * .12 : size.width * .17,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),

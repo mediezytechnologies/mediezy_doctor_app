@@ -9,8 +9,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import '../../../../Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 

@@ -57,9 +57,8 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         size.width > 400
-                            ? VerticalSpacingWidget(height: 20)
-                            : VerticalSpacingWidget(height: 30),
-
+                            ? const VerticalSpacingWidget(height: 20)
+                            : const VerticalSpacingWidget(height: 30),
                         //! first section (Daily shedule)
                         InkWell(
                           onTap: () {

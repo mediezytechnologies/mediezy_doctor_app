@@ -20,8 +20,6 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/token_card_remove_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/un_reserve_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-import 'package:shimmer/shimmer.dart';
-
 import '../../../../Model/GenerateToken/clinic_get_model.dart';
 
 class ReservationScreen extends StatefulWidget {
@@ -427,7 +425,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         (DateTime picked) {
                                                       setState(() {
                                                         endDate = picked;
-                                                        print(endDate);
+                                                        // print(endDate);
                                                       });
                                                     },
                                                   );
@@ -467,7 +465,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                   picked) {
                                                             setState(() {
                                                               endDate = picked;
-                                                              print(endDate);
+                                                              // print(endDate);
                                                             });
                                                           },
                                                         );
@@ -497,7 +495,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                 BlocBuilder<GetTokenBloc, GetTokenState>(
                                   builder: (context, state) {
                                     if (state is GetTokenLoading) {
-                                      return _buildLoadingWidget();
+                                      return GeneralServices.instance
+                                          .buildLoadingWidget(context);
                                     }
                                     if (state is GetTokenError) {
                                       return Column(
@@ -925,38 +924,6 @@ class _ReservationScreenState extends State<ReservationScreen>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildLoadingWidget() {
-    return SizedBox(
-      height: 400.h,
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          shrinkWrap: true,
-          itemCount: 30,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 5,
-            mainAxisExtent: 78,
-          ),
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: kMainColor, width: 1.w),
-              ),
-            );
-          },
-        ),
       ),
     );
   }
