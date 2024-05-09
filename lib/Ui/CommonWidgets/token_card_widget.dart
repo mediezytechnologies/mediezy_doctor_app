@@ -67,10 +67,10 @@ class _TokenCardWidgetState extends State<TokenCardWidget> {
         }
       },
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding:  EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: containerColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: kMainColor, width: 1.w),
         ),
         child: Column(

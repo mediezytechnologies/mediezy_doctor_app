@@ -39,7 +39,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: SizedBox(
         height: size.width > 400 ? size.height * 0.17 : size.height * 0.27,
         child: Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.bottomLeft,
           child: BlocBuilder<ProfileGetBloc, ProfileGetState>(
             builder: (context, state) {
               if (state is ProfileGetLoading) {

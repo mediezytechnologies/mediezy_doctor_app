@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/Profile/ProfileGetModel.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileEdit/profile_edit_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
@@ -67,7 +68,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: const Text("My Profile"),
+          title: const Text("Edit Profile"),
           centerTitle: true,
           actions: [
             TextButton(
@@ -75,10 +76,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen()));
+                          builder: (context) =>  EditProfileScreen( 
+                            
+                            
+                            patientImage: widget.drImage,
+                            firstname:widget.drFirstName ,
+                            lastnamae:widget.drSecondName ,
+                            number:widget.phNo ,
+                            
+                            
+                            )));
                 },
                 child: Text(
-                  "Edit profile",
+                  "My profile",
                   style: TextStyle(fontSize: size.width > 400 ? 10.sp : 14.sp),
                 ))
           ],

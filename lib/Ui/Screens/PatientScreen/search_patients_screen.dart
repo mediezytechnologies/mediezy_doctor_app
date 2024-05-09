@@ -64,7 +64,7 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                       filled: true,
                       fillColor: kCardColor,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30.r),
                         borderSide: BorderSide.none,
                       ),
                     ),

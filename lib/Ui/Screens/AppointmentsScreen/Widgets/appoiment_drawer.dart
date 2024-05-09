@@ -1,6 +1,7 @@
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -19,7 +20,6 @@ import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/privacy_policy/privacy_po
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/suggest_doctor/suggest_doctor_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../Model/Profile/ProfileGetModel.dart';
 
 // ignore: must_be_immutable
@@ -33,6 +33,9 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       width: size.width > 400 ? 170.w : 250.w,
       child: ListView(
+        shrinkWrap: true,
+        
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
           BlocBuilder<ProfileGetBloc, ProfileGetState>(

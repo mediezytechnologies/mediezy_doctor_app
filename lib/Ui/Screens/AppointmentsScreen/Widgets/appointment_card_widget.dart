@@ -1,5 +1,7 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -43,6 +45,7 @@ class AppointmentCardWidget extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: kCardColor,
+        //  color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(

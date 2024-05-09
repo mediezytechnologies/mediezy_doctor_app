@@ -428,13 +428,343 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                             return Container(
                               color: Colors.yellow,
                             );
-                          },
-                        ),
-                      ],
+                          }),
+                          const VerticalSpacingWidget(height: 5),
+                          _isLoading
+                              ? _buildCalenderLoadingWidget()
+                              : EasyDateTimeLine(
+                                  initialDate: selectedDate,
+                                  disabledDates: _getDisabledDates(),
+                                  onDateChange: (date) {
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd').format(date);
+                                    selectedDate =
+                                        date; // Update the selectedDate
+                                    BlocProvider.of<GetTokenBloc>(context).add(
+                                        FetchTokens(
+                                            date: formattedDate,
+                                            clinicId:
+                                                dController.initialIndex!));
+                                  },
+                                  activeColor: kMainColor,
+                                  dayProps: EasyDayProps(
+                                      height: 80.h,
+                                      width: 65.w,
+                                      activeDayNumStyle: TextStyle(
+                                          color: kCardColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.sp),
+                                      activeDayStrStyle: TextStyle(
+                                          color: kCardColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.sp),
+                                      activeMothStrStyle: TextStyle(
+                                          color: kCardColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.sp),
+                                      todayHighlightStyle:
+                                          TodayHighlightStyle.withBackground,
+                                      todayHighlightColor:
+                                          const Color(0xffE1ECC8),
+                                      borderColor: kMainColor),
+                                ),
+                          const VerticalSpacingWidget(height: 10),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 20.h,
+                                      width: 20.h,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border:
+                                              Border.all(color: kMainColor)),
+                                    ),
+                                    const HorizontalSpacingWidget(width: 5),
+                                    Text(
+                                      "Available",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 20.h,
+                                      width: 20.h,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border:
+                                              Border.all(color: kMainColor)),
+                                    ),
+                                    const HorizontalSpacingWidget(width: 5),
+                                    Text(
+                                      "Timeout",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 20.h,
+                                      width: 20.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    const HorizontalSpacingWidget(width: 5),
+                                    Text(
+                                      "Booked",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 20.h,
+                                      width: 20.h,
+                                      decoration: BoxDecoration(
+                                          color: Colors.greenAccent.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border:
+                                              Border.all(color: kMainColor)),
+                                    ),
+                                    const HorizontalSpacingWidget(width: 5),
+                                    Text(
+                                      "Reserved",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //  ! select date
+                          BlocBuilder<GetTokenBloc, GetTokenState>(
+                            builder: (context, state) {
+                              if (state is GetTokenLoading) {
+                                return _buildLoadingWidget();
+                              }
+                              if (state is GetTokenError) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const VerticalSpacingWidget(height: 100),
+                                    Center(
+                                      child: Image(
+                                        height: 120.h,
+                                        image: const AssetImage(
+                                            "assets/images/something went wrong-01.png"),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                              if (state is GetTokenLoaded) {
+                                getTokenModel =
+                                    BlocProvider.of<GetTokenBloc>(context)
+                                        .getTokenModel;
+                                if (getTokenModel.schedule == null) {
+                                  return Center(
+                                      child: EmptyCutomeWidget(
+                                          text: getTokenModel.message
+                                              .toString()));
+                                }
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const VerticalSpacingWidget(height: 10),
+                                    if (getTokenModel
+                                            .schedule?.schedule1?.isNotEmpty ==
+                                        true)
+                                      const Text(
+                                        "Schedule 1",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    if (getTokenModel
+                                            .schedule?.schedule1?.isNotEmpty ==
+                                        true)
+                                      GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        shrinkWrap: true,
+                                        itemCount: getTokenModel
+                                            .schedule!.schedule1!.length,
+                                        gridDelegate:
+                                             SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 5,
+                                          mainAxisExtent:size.width>450? size.height*0.13:size.height*0.09,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return TokenCardWidget(
+                                            clinicId: dController.initialIndex!,
+                                            date: selectedDate,
+                                            tokenNumber: getTokenModel.schedule!
+                                                .schedule1![index].tokenNumber
+                                                .toString(),
+                                            formatedTime: getTokenModel
+                                                .schedule!
+                                                .schedule1![index]
+                                                .formattedStartTime
+                                                .toString(),
+                                            isBooked: getTokenModel.schedule!
+                                                .schedule1![index].isBooked!,
+                                            isTimedOut: getTokenModel.schedule!
+                                                .schedule1![index].isTimeout!,
+                                            scheduleType: getTokenModel
+                                                .schedule!
+                                                .schedule1![index]
+                                                .scheduleType!,
+                                            isReserved: getTokenModel.schedule!
+                                                .schedule1![index].isReserved!,
+                                          );
+                                        },
+                                      ),
+                                    const VerticalSpacingWidget(height: 10),
+                                    if (getTokenModel
+                                            .schedule!.schedule2?.isNotEmpty ==
+                                        true)
+                                      const Text(
+                                        "Schedule 2",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    if (getTokenModel
+                                            .schedule!.schedule2?.isNotEmpty ==
+                                        true)
+                                      GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        shrinkWrap: true,
+                                        itemCount: getTokenModel
+                                            .schedule!.schedule2!.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 5,
+                                          mainAxisExtent: 78,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return TokenCardWidget(
+                                            clinicId: dController.initialIndex!,
+                                            date: selectedDate,
+                                            tokenNumber: getTokenModel.schedule!
+                                                .schedule2![index].tokenNumber
+                                                .toString(),
+                                            isBooked: getTokenModel.schedule!
+                                                .schedule2![index].isBooked!,
+                                            formatedTime: getTokenModel
+                                                .schedule!
+                                                .schedule2![index]
+                                                .formattedStartTime
+                                                .toString(),
+                                            isTimedOut: getTokenModel.schedule!
+                                                .schedule2![index].isTimeout!,
+                                            scheduleType: getTokenModel
+                                                .schedule!
+                                                .schedule2![index]
+                                                .scheduleType!,
+                                            isReserved: getTokenModel.schedule!
+                                                .schedule2![index].isReserved!,
+                                          );
+                                        },
+                                      ),
+                                    if (getTokenModel
+                                            .schedule!.schedule3?.isNotEmpty ==
+                                        true)
+                                      const Text(
+                                        "Schedule 3",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    if (getTokenModel
+                                            .schedule!.schedule3?.isNotEmpty ==
+                                        true)
+                                      GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        shrinkWrap: true,
+                                        itemCount: getTokenModel
+                                            .schedule!.schedule3!.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 5,
+                                          mainAxisExtent: 78,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return TokenCardWidget(
+                                            clinicId: dController.initialIndex!,
+                                            date: selectedDate,
+                                            tokenNumber: getTokenModel.schedule!
+                                                .schedule3![index].tokenNumber
+                                                .toString(),
+                                            isBooked: getTokenModel.schedule!
+                                                .schedule3![index].isBooked!,
+                                            formatedTime: getTokenModel
+                                                .schedule!
+                                                .schedule3![index]
+                                                .formattedStartTime
+                                                .toString(),
+                                            isTimedOut: getTokenModel.schedule!
+                                                .schedule3![index].isTimeout!,
+                                            scheduleType: getTokenModel
+                                                .schedule!
+                                                .schedule3![index]
+                                                .scheduleType!,
+                                            isReserved: getTokenModel.schedule!
+                                                .schedule3![index].isReserved!,
+                                          );
+                                        },
+                                      ),
+                                  ],
+                                );
+                              }
+                              return Container(
+                                color: Colors.yellow,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              
             );
           }),
         ),
