@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +13,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -22,9 +20,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/token_card_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/GetTokensScreen/ScreenOne%20.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../Model/GenerateToken/clinic_get_model.dart';
 
 class GetTokensScreen extends StatefulWidget {
