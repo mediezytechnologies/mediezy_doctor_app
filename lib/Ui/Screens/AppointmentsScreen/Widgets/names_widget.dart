@@ -22,12 +22,12 @@ class NamesWidget extends StatelessWidget {
           children: [
             Text(
               firstText,
-              style: size.width > 400 ? greyTabMain : greyMain,
+              style: size.width > 450 ? greyTabMain : greyMain,
             ),
             Expanded(
               child: Text(
                 secondText,
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
               ),
             ),
           ],

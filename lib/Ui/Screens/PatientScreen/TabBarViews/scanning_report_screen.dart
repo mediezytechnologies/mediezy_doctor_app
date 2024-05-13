@@ -91,8 +91,8 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: size.width > 400 ? 100.h : 90.h,
-                                width: size.width > 400 ? 60.w : 80.w,
+                                height: size.width > 450 ? 100.h : 90.h,
+                                width: size.width > 450 ? 60.w : 80.w,
                                 decoration: BoxDecoration(
                                   color: kScaffoldColor,
                                   borderRadius: BorderRadius.circular(10),
@@ -109,7 +109,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                       ),
                                     ),
                                     Text("View File",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? blackTab9B400
                                             : black12B500)
                                   ],
@@ -125,7 +125,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                 children: [
                                   Text(
                                     "Patient : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -135,7 +135,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                     getUploadedScanReportModel
                                         .documentData![index].patient!
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -147,7 +147,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                 children: [
                                   Text(
                                     "Record Date : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -160,7 +160,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                         .first
                                         .date
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -172,7 +172,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                 children: [
                                   Text(
                                     "Doctor name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -180,7 +180,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                   ),
                                   Text(
                                     "Dr ${getUploadedScanReportModel.documentData![index].scanReport!.first.doctorName.toString()}",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -192,7 +192,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                 children: [
                                   Text(
                                     "Center name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -205,7 +205,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                         .first
                                         .labName
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -217,7 +217,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                 children: [
                                   Text(
                                     "Scan test name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -230,7 +230,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                                         .first
                                         .testName
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -241,7 +241,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
                               Text(
                                 "Last updated - ${getUploadedScanReportModel.documentData![index].hoursAgo}",
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

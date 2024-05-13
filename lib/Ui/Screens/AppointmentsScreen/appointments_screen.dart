@@ -80,7 +80,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Text("Your Appointments",
-                    style: size.width > 400 ? greyTab10B600 : grey13B600),
+                    style: size.width > 450 ? greyTab10B600 : grey13B600),
               ),
               EasyDateTimeLine(
                 initialDate: controller.selectedDate,
@@ -107,8 +107,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
                 dayProps: EasyDayProps(
                   height:
-                      size.width > 400 ? size.height * .075 : size.height * .07,
-                  width: size.width > 400 ? size.width * .1 : size.width * .15,
+                      size.width > 450 ? size.height * .075 : size.height * .07,
+                  width: size.width > 450 ? size.width * .1 : size.width * .15,
                   dayStructure: DayStructure.dayNumDayStr,
                   inactiveDayStyle: DayStyle(
                     decoration: BoxDecoration(
@@ -116,27 +116,27 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                             const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: kMainColor)),
                     dayNumStyle: TextStyle(
-                        fontSize: size.width > 400 ? 19.sp : 15.sp,
+                        fontSize: size.width > 450 ? 19.sp : 15.sp,
                         color: kTextColor),
                   ),
                   inactiveDayStrStyle: TextStyle(
-                      fontSize: size.width > 400 ? 9.sp : 12.sp,
+                      fontSize: size.width > 450 ? 9.sp : 12.sp,
                       color: Colors.grey),
                   activeDayStyle: DayStyle(
                     borderRadius: 10,
                     dayNumStyle: TextStyle(
-                        fontSize: size.width > 400 ? 15.sp : 18.sp,
+                        fontSize: size.width > 450 ? 15.sp : 18.sp,
                         fontWeight: FontWeight.bold,
                         color: kCardColor),
                   ),
                   activeDayStrStyle: TextStyle(
-                      fontSize: size.width > 400 ? 9.sp : 12.sp,
+                      fontSize: size.width > 450 ? 9.sp : 12.sp,
                       fontWeight: FontWeight.w400,
                       color: kCardColor),
                 ),
               ),
               const VerticalSpacingWidget(height: 5),
-              AppoimentTabbar(),
+              const AppoimentTabbar(),
             ],
           ),
         ),

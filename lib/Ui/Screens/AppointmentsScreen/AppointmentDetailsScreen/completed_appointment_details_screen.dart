@@ -123,7 +123,7 @@ class CompletedAppointmentDetailsScreenState
                                 getAllCompletedAppointmentDetailsModel
                                     .appointmentDetails!.first.patientName
                                     .toString(),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -138,7 +138,7 @@ class CompletedAppointmentDetailsScreenState
                                       ? Container()
                                       : Text(
                                           "Patient Id : ",
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? greyTabMain
                                               : greyMain,
                                         ),
@@ -153,7 +153,7 @@ class CompletedAppointmentDetailsScreenState
                                               .appointmentDetails!
                                               .first
                                               .mediezyPatientId!,
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : blackMainText,
                                           maxLines: 1,
@@ -164,7 +164,7 @@ class CompletedAppointmentDetailsScreenState
                               const VerticalSpacingWidget(height: 15),
                               Text(
                                 '${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.patientAge.toString()} years old',
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -182,13 +182,13 @@ class CompletedAppointmentDetailsScreenState
                               Text(
                                 'Appointment Date : ',
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                               ),
                               Text(
                                 getAllCompletedAppointmentDetailsModel
                                     .appointmentDetails!.first.date
                                     .toString(),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -199,13 +199,13 @@ class CompletedAppointmentDetailsScreenState
                               Text(
                                 'Appointment time : ',
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                               ),
                               Text(
                                 getAllCompletedAppointmentDetailsModel
                                     .appointmentDetails!.first.tokenStartTime
                                     .toString(),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -216,13 +216,13 @@ class CompletedAppointmentDetailsScreenState
                               Text(
                                 'Checkout time : ',
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                               ),
                               Text(
                                 getAllCompletedAppointmentDetailsModel
                                     .appointmentDetails!.first.checkoutTime
                                     .toString(),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -234,13 +234,13 @@ class CompletedAppointmentDetailsScreenState
                               Text(
                                 'Token Number : ',
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                               ),
                               Text(
                                 getAllCompletedAppointmentDetailsModel
                                     .appointmentDetails!.first.tokenNumber
                                     .toString(),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -257,7 +257,7 @@ class CompletedAppointmentDetailsScreenState
                               : Text(
                                   'Added Vitals : ',
                                   style:
-                                      size.width > 400 ? greyTabMain : greyMain,
+                                      size.width > 450 ? greyTabMain : greyMain,
                                 ),
                           const VerticalSpacingWidget(height: 5),
                           getAllCompletedAppointmentDetailsModel
@@ -338,7 +338,7 @@ class CompletedAppointmentDetailsScreenState
                               : Text(
                                   'Added Medicines :',
                                   style:
-                                      size.width > 400 ? greyTabMain : greyMain,
+                                      size.width > 450 ? greyTabMain : greyMain,
                                 ),
                           getAllCompletedAppointmentDetailsModel
                                   .appointmentDetails!
@@ -587,7 +587,7 @@ class CompletedAppointmentDetailsScreenState
                                   children: [
                                     Text(
                                       "Additional Note : ",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTabMain
                                           : greyMain,
                                     ),
@@ -595,7 +595,7 @@ class CompletedAppointmentDetailsScreenState
                                       getAllCompletedAppointmentDetailsModel
                                           .appointmentDetails!.first.notes
                                           .toString(),
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTabMainText
                                           : blackMainText,
                                     ),
@@ -613,7 +613,7 @@ class CompletedAppointmentDetailsScreenState
                                   children: [
                                     Text(
                                       "Added Prescription Image : ",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTabMain
                                           : greyMain,
                                     ),

@@ -104,18 +104,18 @@ class _PatientScreenState extends State<PatientScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Search your Patients",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? greyTab10B400
                                   : grey15B500),
                           CircleAvatar(
                             backgroundColor: kMainColor,
-                            radius: size.width > 400 ? 13.r : 16.r,
+                            radius: size.width > 450 ? 13.r : 16.r,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(
                                 IconlyLight.search,
                                 color: kCardColor,
-                                size: size.width > 400 ? 12.sp : 18.sp,
+                                size: size.width > 450 ? 12.sp : 18.sp,
                               ),
                             ),
                           )
@@ -144,7 +144,7 @@ class _PatientScreenState extends State<PatientScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 8.w),
                         child: Text(
                           "Sort",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                       ),
                       const VerticalSpacingWidget(height: 3),
@@ -265,13 +265,13 @@ class _PatientScreenState extends State<PatientScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Text(
                             "Patient Count (${patientsGetModel.patientData!.length.toString()})",
-                            style: size.width > 400
+                            style: size.width > 450
                                 ? blackTabMainText
                                 : blackMainText,
                           ),
                         ),
                         SizedBox(
-                          height: size.width > 400 ? 470.h : 450.h,
+                          height: size.width > 450 ? 470.h : 450.h,
                           // color: Colors.yellow,
                           child: ListView.separated(
                             padding: EdgeInsets.zero,

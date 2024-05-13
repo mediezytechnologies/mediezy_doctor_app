@@ -55,9 +55,9 @@ class _SearchMedicalStoreScreenState extends State<SearchMedicalStoreScreen> {
                     suffixIcon: Icon(
                       IconlyLight.search,
                       color: kMainColor,
-                      size: size.width > 400 ? 12.sp : 18.sp,
+                      size: size.width > 450 ? 12.sp : 18.sp,
                     ),
-                    hintStyle: size.width > 400 ? greyTab10B400 : grey13B600,
+                    hintStyle: size.width > 450 ? greyTab10B400 : grey13B600,
                     hintText: "Search Medical Store",
                     filled: true,
                     fillColor: kCardColor,

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../Model/Profile/ProfileGetModel.dart';
 import '../../../../Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import '../../../CommonWidgets/patient_image_widget.dart';
@@ -27,7 +26,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: EdgeInsets.only(
-            right: size.width > 400 ? size.width * .00 : size.width * 0.04,
+            right: size.width > 450 ? size.width * .00 : size.width * 0.04,
           ),
           child: SizedBox(
             height: size.height * 0.04,
@@ -37,7 +36,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
         )
       ],
       flexibleSpace: SizedBox(
-        height: size.width > 400 ? size.height * 0.17 : size.height * 0.27,
+        height: size.width > 450 ? size.height * 0.17 : size.height * 0.27,
         child: Align(
           alignment: Alignment.bottomLeft,
           child: BlocBuilder<ProfileGetBloc, ProfileGetState>(
@@ -59,7 +58,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   height:
-                      size.width > 400 ? size.height * .1 : size.height * 0.13,
+                      size.width > 450 ? size.height * .1 : size.height * 0.13,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: kMainColor,
@@ -79,7 +78,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                               children: [
                                 Text(
                                   "Hi,",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? TextStyle(
                                           fontSize: 11.sp,
                                           fontWeight: FontWeight.w400,
@@ -91,7 +90,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 ),
                                 Text(
                                   "Dr.${profileGetModel.doctorDetails!.first.firstname.toString()} ${profileGetModel.doctorDetails!.first.secondname.toString()}",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? TextStyle(
                                           fontSize: 11.sp,
                                           fontWeight: FontWeight.bold,
@@ -103,7 +102,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 ),
                                 Text(
                                   "Manage Your Practice With Us",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? TextStyle(
                                           fontSize: 10.sp,
                                           fontWeight: FontWeight.w500,
@@ -126,7 +125,7 @@ class AppoimentAppbar extends StatelessWidget implements PreferredSizeWidget {
                                       : profileGetModel
                                           .doctorDetails!.first.docterImage
                                           .toString(),
-                                  radius: size.width > 400 ? 28.r : 35.r),
+                                  radius: size.width > 450 ? 28.r : 35.r),
                             ),
                           ],
                         )

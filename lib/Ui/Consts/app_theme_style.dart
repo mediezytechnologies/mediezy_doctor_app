@@ -13,11 +13,11 @@ ThemeData appThemeStyle(BuildContext context) {
     appBarTheme: AppBarTheme(
       backgroundColor: kScaffoldColor,
       iconTheme: IconThemeData(
-          size: size.width > 400 ? 13.sp : 20.sp, color: kMainColor),
+          size: size.width > 450 ? 13.sp : 20.sp, color: kMainColor),
       centerTitle: false,
       elevation: 0,
       titleTextStyle: TextStyle(
-          fontSize: size.width > 400 ? 12.sp : 18.sp,
+          fontSize: size.width > 450 ? 12.sp : 18.sp,
           fontWeight: FontWeight.w600,
           color: Colors.black),
     ),

@@ -53,9 +53,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     suffixIcon: Icon(
                       IconlyLight.search,
                       color: kMainColor,
-                      size: size.width > 400 ? 12.sp : 18.sp,
+                      size: size.width > 450 ? 12.sp : 18.sp,
                     ),
-                    hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                    hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
                     hintText: "Search lab and scanning centre",
                     filled: true,
                     fillColor: kCardColor,

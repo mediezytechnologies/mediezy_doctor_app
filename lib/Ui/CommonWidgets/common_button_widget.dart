@@ -27,7 +27,7 @@ class CommonButtonWidget extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                fontSize: size.width > 400 ? 12.sp : 18.sp,
+                fontSize: size.width > 450 ? 12.sp : 18.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white),
           ),

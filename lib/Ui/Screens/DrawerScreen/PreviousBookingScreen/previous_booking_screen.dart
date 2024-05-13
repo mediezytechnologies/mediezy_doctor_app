@@ -76,7 +76,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
             children: [
               Text(
                 "Select Clinic",
-                style: size.width > 400 ? greyTab10B600 : grey13B600,
+                style: size.width > 450 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               GetBuilder<HospitalController>(
@@ -128,7 +128,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                   children: [
                     Text(
                       "Select Date",
-                      style: size.width > 400 ? greyTab10B600 : grey13B600,
+                      style: size.width > 450 ? greyTab10B600 : grey13B600,
                     ),
                     IconButton(
                       onPressed: () async {
@@ -153,7 +153,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                       icon: Icon(
                         IconlyLight.calendar,
                         color: kMainColor,
-                        size: size.width > 400 ? 12.sp : 20.sp,
+                        size: size.width > 450 ? 12.sp : 20.sp,
                       ),
                     ),
                   ],
@@ -161,7 +161,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
               ),
               Text(
                 '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
               ),
               const VerticalSpacingWidget(height: 10),
               BlocBuilder<GetAllPreviousAppointmentsBloc,

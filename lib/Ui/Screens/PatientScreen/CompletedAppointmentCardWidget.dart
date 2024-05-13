@@ -80,8 +80,8 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                     fadeDuration: const Duration(milliseconds: 400),
                     child: Image.network(
                       doctorImage,
-                      height: size.width > 400 ? 90.h : 105.h,
-                      width: size.width > 400 ? 70.w : 80.w,
+                      height: size.width > 450 ? 90.h : 105.h,
+                      width: size.width > 450 ? 70.w : 80.w,
                     ),
                   ),
                   Padding(
@@ -92,7 +92,7 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                         const VerticalSpacingWidget(height: 10),
                         Text(
                           "Dr.$doctorName",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                           maxLines: 1,
@@ -100,11 +100,11 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                         ),
                         Text(
                           clinicName.toString(),
-                          style: size.width > 400 ? greyTabMain : greyMain,
+                          style: size.width > 450 ? greyTabMain : greyMain,
                         ),
                         Text(
                           symptoms,
-                          style: size.width > 400 ? greyTabMain : greyMain,
+                          style: size.width > 450 ? greyTabMain : greyMain,
                         ),
                         Row(
                           children: [
@@ -112,19 +112,19 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   tokenDate,
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
                                 Text(
                                   " | ",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
                                 Text(
                                   tokenTime,
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -136,11 +136,11 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                           children: [
                             Text(
                               "For : ",
-                              style: size.width > 400 ? greyTabMain : greyMain,
+                              style: size.width > 450 ? greyTabMain : greyMain,
                             ),
                             Text(
                               patientName,
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : blackMainText,
                             ),
@@ -159,7 +159,7 @@ class CompletedAppointmentCardWidget extends StatelessWidget {
                 child: Text(
                   "View More",
                   style: TextStyle(
-                      fontSize: size.width > 400 ? 10.sp : 15.sp,
+                      fontSize: size.width > 450 ? 10.sp : 15.sp,
                       color: Colors.blue),
                 ),
               ),

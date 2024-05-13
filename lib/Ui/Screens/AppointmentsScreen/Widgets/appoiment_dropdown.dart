@@ -52,7 +52,7 @@ class AppoimentDropdown extends StatelessWidget {
           children: [
             Text(
               "Select Schedule",
-              style: size.width > 400 ? greyTab10B600 : grey13B600,
+              style: size.width > 450 ? greyTab10B600 : grey13B600,
             ),
             //dropdown==============//
             const VerticalSpacingWidget(height: 3),

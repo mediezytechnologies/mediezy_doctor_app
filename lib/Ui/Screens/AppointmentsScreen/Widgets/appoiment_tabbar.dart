@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +15,7 @@ import '../../../CommonWidgets/vertical_spacing_widget.dart';
 import '../../../Consts/app_colors.dart';
 
 class AppoimentTabbar extends StatefulWidget {
- const AppoimentTabbar({super.key});
+  const AppoimentTabbar({super.key});
 
   @override
   State<AppoimentTabbar> createState() => _AppoimentTabbarState();
@@ -61,7 +60,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Container(
-                  height: size.width > 400
+                  height: size.width > 450
                       ? size.height * .065
                       : size.height * .055,
                   decoration: BoxDecoration(
@@ -96,11 +95,11 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                       }
                     },
                     unselectedLabelStyle: TextStyle(
-                      fontSize: size.width > 400 ? 11.sp : 12.sp,
+                      fontSize: size.width > 450 ? 11.sp : 12.sp,
                     ),
                     labelStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: size.width > 400 ? 11.sp : 12.sp,
+                        fontSize: size.width > 450 ? 11.sp : 12.sp,
                         fontWeight: FontWeight.w600),
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
@@ -158,7 +157,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                       EdgeInsets.symmetric(horizontal: 10.w),
                                   child: Text(
                                     "Patient Count (${getAllAppointmentsModel.appointments!.length.toString()})",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTab9B600
                                         : black11Bbold,
                                   ),

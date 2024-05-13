@@ -32,14 +32,14 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
         const VerticalSpacingWidget(height: 10),
         //! appointment for
         Text('Appointment for',
-            style: size.width > 400 ? greyTabMain : greyMain),
+            style: size.width > 450 ? greyTabMain : greyMain),
         widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!.isEmpty
             ? Container()
             : Text(
                 widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!
                     .first.name
                     .toString(),
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
               ),
         // const VerticalSpacingWidget(height: 5),
         widget.appointmentDetailsPageModel.bookingData!.otherSymptoms!.isEmpty
@@ -51,7 +51,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         .appointmentDetailsPageModel.bookingData!.otherSymptoms!
                         .map((symptom) => "${symptom.name}")
                         .join(', '),
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   ),
                 ],
               ),
@@ -81,7 +81,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Allergy : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: SizedBox(
@@ -116,7 +116,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -136,7 +136,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Surgery name : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -158,7 +158,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                               ? "${widget.appointmentDetailsPageModel.bookingData!.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -175,7 +175,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 children: [
                   Text(
                     "Treatment taken : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -197,7 +197,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                               ? "${widget.appointmentDetailsPageModel.bookingData!.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -211,13 +211,13 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
           children: [
             Text(
               "Regular Medicines : ",
-              style: size.width > 400 ? greyTabMain : greyMain,
+              style: size.width > 450 ? greyTabMain : greyMain,
             ),
             widget.appointmentDetailsPageModel.bookingData!.medicineDetails!
                     .isEmpty
                 ? Text(
                     "No",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   )
                 : Expanded(
                     child: SizedBox(
@@ -247,7 +247,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -298,7 +298,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                             HorizontalSpacingWidget(width: 5.w),
                             Text(
                               "Patient Reports",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : blackMainText,
                             ),
@@ -306,7 +306,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         ),
                         Icon(
                           Icons.arrow_forward_ios,
-                          size: size.width > 400 ? 13.sp : 17.sp,
+                          size: size.width > 450 ? 13.sp : 17.sp,
                         )
                       ],
                     ),

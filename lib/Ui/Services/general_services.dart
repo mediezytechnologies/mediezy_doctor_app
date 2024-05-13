@@ -34,7 +34,7 @@ class GeneralServices {
               return CupertinoAlertDialog(
                 content: Text(
                   title,
-                  style: size.width > 400
+                  style: size.width > 450
                       ? TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w600,
@@ -61,7 +61,7 @@ class GeneralServices {
                     onPressed: yesFunction,
                     child: Text(
                       "Yes",
-                      style: size.width > 400
+                      style: size.width > 450
                           ? TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w600,
@@ -109,7 +109,7 @@ class GeneralServices {
                     onPressed: yesFunction,
                     child: Text(
                       "Yes",
-                      style: size.width > 400
+                      style: size.width > 450
                           ? TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w600,
@@ -141,8 +141,8 @@ class GeneralServices {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            crossAxisCount: size.width > 400 ? 8 : 5,
-            mainAxisExtent: size.width > 400 ? 100 : 70,
+            crossAxisCount: size.width > 450 ? 8 : 5,
+            mainAxisExtent: size.width > 450 ? 100 : 70,
           ),
           itemBuilder: (context, index) {
             return Container(

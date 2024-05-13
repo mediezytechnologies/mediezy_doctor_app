@@ -116,7 +116,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                   ),
                   child: Center(
                     child: Text("Reserve Token",
-                        style: size.width > 400
+                        style: size.width > 450
                             ? TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,
@@ -134,7 +134,7 @@ class _ReservationScreenState extends State<ReservationScreen>
         children: [
           // VerticalSpacingWidget(height: 10.h),
           Container(
-            height: size.width > 400 ? 60.h : 50.h,
+            height: size.width > 450 ? 60.h : 50.h,
             color: kCardColor,
             child: TabBar(
               onTap: (value) {
@@ -164,10 +164,10 @@ class _ReservationScreenState extends State<ReservationScreen>
               dividerColor: kCardColor,
               unselectedLabelColor: kTextColor,
               unselectedLabelStyle: TextStyle(
-                fontSize: size.width > 400 ? 10.sp : 13.sp,
+                fontSize: size.width > 450 ? 10.sp : 13.sp,
               ),
               labelStyle: TextStyle(
-                fontSize: size.width > 400 ? 11.sp : 15.sp,
+                fontSize: size.width > 450 ? 11.sp : 15.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
@@ -242,7 +242,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                               children: [
                                 Text(
                                   "Select Clinic",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                 ),
@@ -314,7 +314,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                             children: [
                                               Text(
                                                 "Start Date",
-                                                style: size.width > 400
+                                                style: size.width > 450
                                                     ? greyTab10B600
                                                     : grey13B600,
                                               ),
@@ -381,7 +381,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
-                                                  size: size.width > 400
+                                                  size: size.width > 450
                                                       ? 12.sp
                                                       : 20.sp,
                                                 ),
@@ -392,7 +392,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                         Text(
                                           DateFormat('dd-MM-yyy')
                                               .format(selectedDate),
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : black14B600,
                                         ),
@@ -434,7 +434,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                             children: [
                                               Text(
                                                 "End Date",
-                                                style: size.width > 400
+                                                style: size.width > 450
                                                     ? greyTab10B600
                                                     : grey13B600,
                                               ),
@@ -473,7 +473,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
-                                                  size: size.width > 400
+                                                  size: size.width > 450
                                                       ? 12.sp
                                                       : 20.sp,
                                                 ),
@@ -484,7 +484,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                         Text(
                                           DateFormat('dd-MM-yyy')
                                               .format(endDate),
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : black14B600,
                                         ),
@@ -537,7 +537,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               true)
                                             Text(
                                               "Schedule 1",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -558,9 +558,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 100 : 70,
+                                                    size.width > 450 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 Color morningContainerColor =
@@ -694,7 +694,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               true)
                                             Text(
                                               "Schedule 2",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -715,9 +715,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 100 : 70,
+                                                    size.width > 450 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -852,7 +852,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               true)
                                             Text(
                                               "Schedule 3",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -873,9 +873,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 100 : 70,
+                                                    size.width > 450 ? 100 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 Color eveningContainerColor =

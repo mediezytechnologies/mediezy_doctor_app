@@ -131,10 +131,10 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                 dividerColor: kCardColor,
                 unselectedLabelColor: kTextColor,
                 unselectedLabelStyle: TextStyle(
-                  fontSize: size.width > 400 ? 10.sp : 13.sp,
+                  fontSize: size.width > 450 ? 10.sp : 13.sp,
                 ),
                 labelStyle: TextStyle(
-                  fontSize: size.width > 400 ? 11.sp : 15.sp,
+                  fontSize: size.width > 450 ? 11.sp : 15.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
@@ -196,7 +196,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                       children: [
                         Text(
                           "Select Clinic",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 5),
                         GetBuilder<HospitalController>(builder: (clx) {
@@ -241,7 +241,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     children: [
                                       Text(
                                         "Select Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -276,7 +276,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                           IconlyLight.calendar,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 15.sp : 20.sp,
+                                              size.width > 450 ? 15.sp : 20.sp,
                                         ),
                                       )
                                     ],
@@ -284,7 +284,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 ),
                                 Text(
                                   DateFormat('dd-MM-yyy').format(lateDate),
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -306,7 +306,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     decoration: const InputDecoration.collapsed(
                                         hintText: ''),
                                     value: dropdownLateValue,
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -333,19 +333,19 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         VerticalSpacingWidget(height: 10.h),
                         Text(
                           "Set late time",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 10),
                         TextFormField(
                           style: TextStyle(
-                              fontSize: size.width > 400 ? 10.sp : 14.sp),
+                              fontSize: size.width > 450 ? 10.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: lateTimeController,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             hintStyle:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                             hintText: "eg: 10 min late",
                             filled: true,
                             fillColor: kCardColor,
@@ -406,7 +406,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 children: [
                                   Text(
                                     "Your upcoming Late",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTab10B600
                                         : grey13B600,
                                   ),
@@ -473,7 +473,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                       children: [
                         Text(
                           "Select Clinic",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 5),
                         GetBuilder<HospitalController>(builder: (clx) {
@@ -518,7 +518,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     children: [
                                       Text(
                                         "Select Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -553,7 +553,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                           IconlyLight.calendar,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 15.sp : 20.sp,
+                                              size.width > 450 ? 15.sp : 20.sp,
                                         ),
                                       )
                                     ],
@@ -561,7 +561,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 ),
                                 Text(
                                   DateFormat('dd-MM-yyy').format(earlyDate),
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -583,7 +583,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     decoration: const InputDecoration.collapsed(
                                         hintText: ''),
                                     value: dropdownEarlyValue,
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     icon: const Icon(Icons.keyboard_arrow_down),
@@ -608,19 +608,19 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         VerticalSpacingWidget(height: 10.h),
                         Text(
                           "Set Early time",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 10),
                         TextFormField(
                           style: TextStyle(
-                              fontSize: size.width > 400 ? 10.sp : 14.sp),
+                              fontSize: size.width > 450 ? 10.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: earlyTimeController,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             hintStyle:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                             hintText: "eg: 10 min early",
                             filled: true,
                             fillColor: kCardColor,
@@ -681,7 +681,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 children: [
                                   Text(
                                     "Your upcoming Early",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTab10B600
                                         : grey13B600,
                                   ),
@@ -754,7 +754,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               children: [
                                 Text(
                                   "Select Clinic",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                 ),
@@ -789,7 +789,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               children: [
                                 Text(
                                   "Select Schedule",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                 ),
@@ -811,7 +811,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                             const InputDecoration.collapsed(
                                                 hintText: ''),
                                         value: dropdownBreakValue,
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? blackTabMainText
                                             : blackMainText,
                                         icon: const Icon(
@@ -860,7 +860,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     children: [
                                       Text(
                                         "Start Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -897,14 +897,14 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                           IconlyLight.calendar,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 15.sp : 20.sp,
+                                              size.width > 450 ? 15.sp : 20.sp,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Text(
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                   DateFormat('dd-MM-yyy')
@@ -944,7 +944,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     children: [
                                       Text(
                                         "End Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -979,14 +979,14 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                           IconlyLight.calendar,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 15.sp : 20.sp,
+                                              size.width > 450 ? 15.sp : 20.sp,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 Text(
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                   DateFormat('dd-MM-yyy').format(endBreakDate),
@@ -998,7 +998,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         VerticalSpacingWidget(height: 10.h),
                         Text(
                           "Select Break Time",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 10),
                         Row(
@@ -1012,14 +1012,14 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   children: [
                                     Text(
                                       "Starting Time",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                     ),
                                     const HorizontalSpacingWidget(width: 5),
                                     Icon(
                                       IconlyLight.timeCircle,
-                                      size: size.width > 400 ? 15.sp : 20.sp,
+                                      size: size.width > 450 ? 15.sp : 20.sp,
                                       color: kMainColor,
                                     ),
                                   ],
@@ -1040,7 +1040,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     child: Center(
                                       child: Text(
                                         selectedStartingTime.format(context),
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? blackTabMainText
                                             : blackMainText,
                                       ),
@@ -1057,7 +1057,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   children: [
                                     Text(
                                       "Ending Time",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                     ),
@@ -1065,7 +1065,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     Icon(
                                       IconlyLight.timeCircle,
                                       color: kMainColor,
-                                      size: size.width > 400 ? 15.sp : 20.sp,
+                                      size: size.width > 450 ? 15.sp : 20.sp,
                                     ),
                                   ],
                                 ),
@@ -1084,7 +1084,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     child: Center(
                                       child: Text(
                                         selectedEndingTime.format(context),
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? blackTabMainText
                                             : blackMainText,
                                       ),
@@ -1115,8 +1115,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 }
                                 if (state is BetweenScheduleError) {
                                   GeneralServices.instance.showErrorMessage(
-                                      context,
-                                      state.errorMessage);
+                                      context, state.errorMessage);
                                   // No need to delay if an error occurs
                                 }
                               },
@@ -1184,7 +1183,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   children: [
                                     Text(
                                       "Your upcoming Break's",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                     ),
@@ -1195,7 +1194,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                           padding: EdgeInsets.zero,
                                           itemBuilder: (context, index) {
                                             return Container(
-                                              height: size.width > 400
+                                              height: size.width > 450
                                                   ? 55.h
                                                   : 50.h,
                                               width: double.infinity,
@@ -1262,7 +1261,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                                         });
                                                       },
                                                       icon: Icon(Icons.delete,
-                                                          size: size.width > 400
+                                                          size: size.width > 450
                                                               ? 15.sp
                                                               : 20.sp,
                                                           color: kMainColor))

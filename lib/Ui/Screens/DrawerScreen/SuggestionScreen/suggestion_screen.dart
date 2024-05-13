@@ -63,21 +63,21 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                 "We would love your feedback",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: size.width > 400 ? 14.sp : 20.sp),
+                    fontSize: size.width > 450 ? 14.sp : 20.sp),
               ),
               const VerticalSpacingWidget(height: 15),
               Text(
                 "You've been using mediezy for a while now,\nand we'd love to know what you think about it",
-                style: size.width > 400 ? blackTab13B500 : black14B400,
+                style: size.width > 450 ? blackTab13B500 : black14B400,
               ),
               const VerticalSpacingWidget(height: 10),
               Text(
                 "Share your feedback",
-                style: size.width > 400 ? greyTab10B600 : grey13B600,
+                style: size.width > 450 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               TextFormField(
-                style: TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
+                style: TextStyle(fontSize: size.width > 450 ? 12.sp : 14.sp),
                 autofocus: true,
                 cursorColor: kMainColor,
                 controller: suggestionController,
@@ -86,7 +86,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                 maxLines: 10,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
-                      fontSize: size.width > 400 ? 12.sp : 15.sp,
+                      fontSize: size.width > 450 ? 12.sp : 15.sp,
                       color: kSubTextColor),
                   hintText: "Describe your experience",
                   filled: true,

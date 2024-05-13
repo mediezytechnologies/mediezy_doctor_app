@@ -91,8 +91,8 @@ class _LabReportScreenState extends State<LabReportScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                height: size.width > 400 ? 100.h : 90.h,
-                                width: size.width > 400 ? 60.w : 80.w,
+                                height: size.width > 450 ? 100.h : 90.h,
+                                width: size.width > 450 ? 60.w : 80.w,
                                 decoration: BoxDecoration(
                                   color: kScaffoldColor,
                                   borderRadius: BorderRadius.circular(10),
@@ -109,7 +109,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                       ),
                                     ),
                                     Text("View File",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? blackTab9B400
                                             : black12B500)
                                   ],
@@ -125,7 +125,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                 children: [
                                   Text(
                                     "Patient : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -134,7 +134,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                   Text(
                                     labReportModel.documentData![index].patient!
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -146,7 +146,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                 children: [
                                   Text(
                                     "Record Date : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -156,7 +156,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                     labReportModel.documentData![index]
                                         .labReport!.first.date
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -168,7 +168,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                 children: [
                                   Text(
                                     "Doctor name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -176,7 +176,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                   ),
                                   Text(
                                     "Dr ${labReportModel.documentData![index].labReport!.first.doctorName.toString()}",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -188,7 +188,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                 children: [
                                   Text(
                                     "Lab name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -198,7 +198,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                     labReportModel.documentData![index]
                                         .labReport!.first.labName
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -210,7 +210,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                 children: [
                                   Text(
                                     "Lab test name : ",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                     maxLines: 1,
@@ -220,7 +220,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                                     labReportModel.documentData![index]
                                         .labReport!.first.testName
                                         .toString(),
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText,
                                     maxLines: 1,
@@ -231,7 +231,7 @@ class _LabReportScreenState extends State<LabReportScreen> {
                               Text(
                                 "Last updated - ${labReportModel.documentData![index].hoursAgo}",
                                 style:
-                                    size.width > 400 ? greyTabMain : greyMain,
+                                    size.width > 450 ? greyTabMain : greyMain,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

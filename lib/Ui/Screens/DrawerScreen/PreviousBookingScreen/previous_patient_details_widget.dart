@@ -33,7 +33,7 @@ class _PreviousPatientDetailsWidgetState
       children: [
         Text(
           'Appointment for :',
-          style: size.width > 400 ? greyTabMain : greyMain,
+          style: size.width > 450 ? greyTabMain : greyMain,
         ),
         widget.previousAppointmentDetailsModel.previousappointmentdetails!.first
                     .mainSymptoms ==
@@ -47,7 +47,7 @@ class _PreviousPatientDetailsWidgetState
                     .mainSymptoms!
                     .mainsymptoms
                     .toString(),
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
               ),
         // const VerticalSpacingWidget(height: 5),
         widget.previousAppointmentDetailsModel.previousappointmentdetails!.first
@@ -60,7 +60,7 @@ class _PreviousPatientDetailsWidgetState
                         .previousappointmentdetails!.first.otherSymptoms!
                         .map((symptom) => "${symptom.symtoms}")
                         .join(', '),
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   ),
                 ],
               ),
@@ -92,7 +92,7 @@ class _PreviousPatientDetailsWidgetState
                 children: [
                   Text(
                     "Allergy : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: SizedBox(
@@ -135,7 +135,7 @@ class _PreviousPatientDetailsWidgetState
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -156,7 +156,7 @@ class _PreviousPatientDetailsWidgetState
                 children: [
                   Text(
                     "Surgery name : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -182,7 +182,7 @@ class _PreviousPatientDetailsWidgetState
                               ? "${widget.previousAppointmentDetailsModel.previousappointmentdetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -200,7 +200,7 @@ class _PreviousPatientDetailsWidgetState
                 children: [
                   Text(
                     "Treatment taken : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -226,7 +226,7 @@ class _PreviousPatientDetailsWidgetState
                               ? "${widget.previousAppointmentDetailsModel.previousappointmentdetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -240,13 +240,13 @@ class _PreviousPatientDetailsWidgetState
           children: [
             Text(
               "Regular Medicines : ",
-              style: size.width > 400 ? greyTabMain : greyMain,
+              style: size.width > 450 ? greyTabMain : greyMain,
             ),
             widget.previousAppointmentDetailsModel.previousappointmentdetails!
                     .first.patientMedicines!.isEmpty
                 ? Text(
                     "No",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   )
                 : Expanded(
                     child: SizedBox(
@@ -284,7 +284,7 @@ class _PreviousPatientDetailsWidgetState
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -337,7 +337,7 @@ class _PreviousPatientDetailsWidgetState
                             HorizontalSpacingWidget(width: 5.w),
                             Text(
                               "Patient Reports",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : blackMainText,
                             ),
@@ -345,7 +345,7 @@ class _PreviousPatientDetailsWidgetState
                         ),
                         Icon(
                           Icons.arrow_forward_ios,
-                          size: size.width > 400 ? 13.sp : 17.sp,
+                          size: size.width > 450 ? 13.sp : 17.sp,
                         )
                       ],
                     ),

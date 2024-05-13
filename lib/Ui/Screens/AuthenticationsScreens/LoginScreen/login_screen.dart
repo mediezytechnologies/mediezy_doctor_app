@@ -14,7 +14,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Data/app_data.dart';
-import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/guest_register.dart';
+import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/guest_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 import '../../../CommonWidgets/text_style_widget.dart';
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: size.width > 400
+                      height: size.width > 450
                           ? size.height * .64
                           : size.height * .59,
                       child: Swiper(
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         itemBuilder: ((context, index) {
                           return Image.asset(
                             loginScreenImages[index],
-                            fit: size.width > 400 ? BoxFit.fill : BoxFit.cover,
+                            fit: size.width > 450 ? BoxFit.fill : BoxFit.cover,
                           );
                         }),
                         pagination: SwiperPagination(
@@ -102,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: DotSwiperPaginationBuilder(
                             color: Colors.grey,
                             activeColor: Colors.grey[200],
-                            size: size.width > 400 ? 6.sp : 8.sp,
-                            activeSize: size.width > 400 ? 6.sp : 8.sp,
+                            size: size.width > 450 ? 6.sp : 8.sp,
+                            activeSize: size.width > 450 ? 6.sp : 8.sp,
                           ),
                         ),
                       ),
@@ -113,13 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: [
                           VerticalSpacingWidget(
-                              height: size.width > 400
+                              height: size.width > 450
                                   ? size.height * .357
                                   : size.height * .455),
                           //! email
                           TextFormField(
                             style: TextStyle(
-                                fontSize: size.width > 400 ? 11.sp : 14.sp),
+                                fontSize: size.width > 450 ? 11.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: emailController,
                             keyboardType: TextInputType.emailAddress,
@@ -136,10 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Icon(
                                 Icons.email_outlined,
                                 color: kMainColor,
-                                size: size.width > 400 ? 12.sp : 20.sp,
+                                size: size.width > 450 ? 12.sp : 20.sp,
                               ),
                               hintStyle:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                               hintText: "Enter your email",
                               filled: true,
                               fillColor: kCardColor,
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           //! password
                           TextFormField(
                             style: TextStyle(
-                                fontSize: size.width > 400 ? 11.sp : 14.sp),
+                                fontSize: size.width > 450 ? 11.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: passwordController,
                             keyboardType: TextInputType.text,
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               prefixIcon: Icon(
                                 IconlyLight.password,
                                 color: kMainColor,
-                                size: size.width > 400 ? 12.sp : 20.sp,
+                                size: size.width > 450 ? 12.sp : 20.sp,
                               ),
                               suffixIcon: hidePassword
                                   ? IconButton(
@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       icon: Icon(
                                         IconlyLight.hide,
                                         color: kMainColor,
-                                        size: size.width > 400 ? 12.sp : 20.sp,
+                                        size: size.width > 450 ? 12.sp : 20.sp,
                                       ),
                                     )
                                   : IconButton(
@@ -195,11 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       icon: Icon(
                                         IconlyLight.show,
                                         color: kMainColor,
-                                        size: size.width > 400 ? 12.sp : 20.sp,
+                                        size: size.width > 450 ? 12.sp : 20.sp,
                                       ),
                                     ),
                               hintStyle:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                               hintText: "Enter your password",
                               filled: true,
                               fillColor: kCardColor,
@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               Text(
                                 "Don't have an account? ",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTab9B400
                                     : black13B500,
                               ),
@@ -242,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: Text(
                                   "Signup",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: kMainColor,

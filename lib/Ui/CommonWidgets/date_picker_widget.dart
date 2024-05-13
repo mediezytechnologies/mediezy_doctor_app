@@ -18,34 +18,34 @@ class DatePickerWidget extends StatelessWidget {
       onDateChange: onDateChange,
       activeColor: kMainColor,
       dayProps: EasyDayProps(
-          height: size.width > 400 ? size.height * .1 : size.height * .11,
-          width: size.width > 400 ? size.width * .12 : size.width * .17,
+          height: size.width > 450 ? size.height * .1 : size.height * .11,
+          width: size.width > 450 ? size.width * .12 : size.width * .17,
           inactiveDayStrStyle:
-              TextStyle(fontSize: size.width > 400 ? 8.sp : 12.sp),
+              TextStyle(fontSize: size.width > 450 ? 8.sp : 12.sp),
           inactiveDayNumStyle: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: size.width > 400 ? 10.sp : 16.sp),
+              fontSize: size.width > 450 ? 10.sp : 16.sp),
           inactiveMothStrStyle: TextStyle(
               fontWeight: FontWeight.w400,
-              fontSize: size.width > 400 ? 8.sp : 12.sp),
+              fontSize: size.width > 450 ? 8.sp : 12.sp),
           activeDayNumStyle: TextStyle(
               color: kCardColor,
               fontWeight: FontWeight.bold,
-              fontSize: size.width > 400 ? 13.sp : 20.sp),
+              fontSize: size.width > 450 ? 13.sp : 20.sp),
           activeDayStrStyle: TextStyle(
               color: kCardColor,
               fontWeight: FontWeight.w400,
-              fontSize: size.width > 400 ? 8.sp : 12.sp),
+              fontSize: size.width > 450 ? 8.sp : 12.sp),
           activeMothStrStyle: TextStyle(
               color: kCardColor,
               fontWeight: FontWeight.w400,
-              fontSize: size.width > 400 ? 8.sp : 12.sp),
+              fontSize: size.width > 450 ? 8.sp : 12.sp),
           todayHighlightStyle: TodayHighlightStyle.withBackground,
           todayMonthStrStyle: TextStyle(
-              color: Colors.grey, fontSize: size.width > 400 ? 8.sp : 12.sp),
-          todayNumStyle: TextStyle(fontSize: size.width > 400 ? 13.sp : 20.sp),
+              color: Colors.grey, fontSize: size.width > 450 ? 8.sp : 12.sp),
+          todayNumStyle: TextStyle(fontSize: size.width > 450 ? 13.sp : 20.sp),
           todayStrStyle: TextStyle(
-              color: Colors.grey, fontSize: size.width > 400 ? 8.sp : 12.sp),
+              color: Colors.grey, fontSize: size.width > 450 ? 8.sp : 12.sp),
           todayHighlightColor: const Color(0xffE1ECC8),
           borderColor: kMainColor),
     );

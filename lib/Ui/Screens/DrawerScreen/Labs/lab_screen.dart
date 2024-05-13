@@ -92,7 +92,7 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
                                 padding: EdgeInsets.only(left: 10.w),
                                 child: Text(
                                   "Search lab and scanning centre",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B400
                                       : grey13B600,
                                 ),
@@ -101,13 +101,13 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
                                 padding: EdgeInsets.only(right: 10.w),
                                 child: CircleAvatar(
                                   backgroundColor: kMainColor,
-                                  radius: size.width > 400 ? 13.r : 16.r,
+                                  radius: size.width > 450 ? 13.r : 16.r,
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Icon(
                                       IconlyLight.search,
                                       color: kCardColor,
-                                      size: size.width > 400 ? 12.sp : 18.sp,
+                                      size: size.width > 450 ? 12.sp : 18.sp,
                                     ),
                                   ),
                                 ),

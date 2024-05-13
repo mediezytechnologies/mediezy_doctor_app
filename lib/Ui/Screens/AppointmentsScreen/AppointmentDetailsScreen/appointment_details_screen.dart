@@ -1,9 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: unused_local_variable, avoid_print
-
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
@@ -163,8 +158,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final mWidth = MediaQuery.of(context).size.width;
-    final mHeight = MediaQuery.of(context).size.height;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -290,7 +283,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 },
                                 icon: Icon(
                                   Icons.arrow_back_ios,
-                                  size: size.width > 400 ? 16.sp : 25.sp,
+                                  size: size.width > 450 ? 16.sp : 25.sp,
                                   color: kMainColor,
                                 )),
                             FadedScaleAnimation(
@@ -339,7 +332,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 icon: Icon(
                                   Icons.arrow_forward_ios_rounded,
                                   color: kMainColor,
-                                  size: size.width > 400 ? 16.sp : 25.sp,
+                                  size: size.width > 450 ? 16.sp : 25.sp,
                                 )),
                           ],
                         ),
@@ -349,7 +342,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         // Text("balance $balanceAppoiment"),
                         Container(
                           height: 30.h,
-                          width: size.width > 400 ? 80.w : 110.w,
+                          width: size.width > 450 ? 80.w : 110.w,
                           decoration: BoxDecoration(
                             color: kMainColor,
                             borderRadius: BorderRadius.circular(5),
@@ -363,7 +356,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   padding: EdgeInsets.only(right: 5.w),
                                   child: Text(
                                     "Pending",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? TextStyle(
                                             fontSize: 10.sp,
                                             color: kCardColor,
@@ -378,7 +371,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 ),
                                 Container(
                                   height: 25.h,
-                                  width: size.width > 400 ? 22.w : 28.w,
+                                  width: size.width > 450 ? 22.w : 28.w,
                                   decoration: BoxDecoration(
                                     color: kCardColor,
                                     borderRadius: BorderRadius.circular(4),
@@ -387,7 +380,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     child: Text(
                                       // "123",
                                       "$balanceAppoiment",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTab12B600
                                           : black15B600,
                                     ),
@@ -494,7 +487,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                       Text(
                                         "Check In",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
@@ -538,10 +531,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           appointmentDetailsPageModel:
                               appointmentDetailsPageModel,
                           medicalStoreId: dropValueMedicalStore,
-                          // medicalStoreId: ,
                         ),
-                        // const VerticalSpacingWidget(height: 10),
-                        // const VerticalSpacingWidget(height: 5),
                         //! upload attachments
                         Card(
                           color: Colors.white,
@@ -552,7 +542,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Upload attachments',
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : blackMainText),
                                 IconButton(
@@ -564,7 +554,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   icon: Icon(
                                     Icons.upload_file_outlined,
                                     color: kMainColor,
-                                    size: size.width > 400 ? 15.sp : 18.sp,
+                                    size: size.width > 450 ? 15.sp : 18.sp,
                                   ),
                                 ),
                               ],
@@ -586,7 +576,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   children: [
                                     Text(
                                       "View your uploaded image",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? TextStyle(
                                               fontSize: 11.sp,
                                               fontWeight: FontWeight.w600,
@@ -600,7 +590,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     Icon(
                                       Icons.image,
                                       color: Colors.blue,
-                                      size: size.width > 400 ? 20.sp : 28.sp,
+                                      size: size.width > 450 ? 20.sp : 28.sp,
                                     )
                                   ],
                                 ),
@@ -608,7 +598,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         const VerticalSpacingWidget(height: 5),
                         Text(
                           "Review After",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         ),
@@ -620,13 +610,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                               width: 120.w,
                               child: TextFormField(
                                 style: TextStyle(
-                                    fontSize: size.width > 400 ? 9.sp : 14.sp),
+                                    fontSize: size.width > 450 ? 9.sp : 14.sp),
                                 cursorColor: kMainColor,
                                 controller: afterDaysController,
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
-                                  hintStyle: size.width > 400
+                                  hintStyle: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                   hintText: "Days",
@@ -687,7 +677,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               const InputDecoration.collapsed(
                                                   hintText: ''),
                                           value: dropValue1,
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : blackMainText,
                                           icon: const Icon(
@@ -713,6 +703,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     value.id.toString();
                                                 print(
                                                     ".........................$dropValueMedicalStore");
+                                                log(dropValueMedicalStore);
                                               },
                                               value: value.laboratory!,
                                               child: Text(value.laboratory!),
@@ -733,14 +724,14 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           width: double.infinity,
                           child: TextFormField(
                             style: TextStyle(
-                                fontSize: size.width > 400 ? 9.sp : 14.sp),
+                                fontSize: size.width > 450 ? 9.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: labTestController,
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintStyle:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                               hintText: "Lab test",
                               filled: true,
                               fillColor: kCardColor,
@@ -754,7 +745,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         const VerticalSpacingWidget(height: 5),
                         Text(
                           "Select Lab",
-                          style: size.width > 400 ? greyTabMain : greyMain,
+                          style: size.width > 450 ? greyTabMain : greyMain,
                         ),
                         BlocBuilder<GetAllFavouriteLabBloc,
                             GetAllFavouriteLabState>(
@@ -798,7 +789,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               const InputDecoration.collapsed(
                                                   hintText: ''),
                                           value: dropValue,
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : blackMainText,
                                           icon: const Icon(
@@ -842,14 +833,14 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           width: double.infinity,
                           child: TextFormField(
                             style: TextStyle(
-                                fontSize: size.width > 400 ? 9.sp : 14.sp),
+                                fontSize: size.width > 450 ? 9.sp : 14.sp),
                             cursorColor: kMainColor,
                             controller: scanTestController,
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               hintStyle:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                               hintText: "Scan test",
                               filled: true,
                               fillColor: kCardColor,
@@ -863,7 +854,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         const VerticalSpacingWidget(height: 5),
                         Text(
                           "Select scanning centre",
-                          style: size.width > 400 ? greyTabMain : greyMain,
+                          style: size.width > 450 ? greyTabMain : greyMain,
                         ),
                         BlocBuilder<GetAllFavouriteLabBloc,
                             GetAllFavouriteLabState>(
@@ -908,7 +899,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               const InputDecoration.collapsed(
                                                   hintText: ''),
                                           value: dropValue,
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTabMainText
                                               : blackMainText,
                                           icon: const Icon(
@@ -952,12 +943,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         //! add note
                         Text(
                           'Add Note',
-                          style: size.width > 400 ? greyTabMain : greyMain,
+                          style: size.width > 450 ? greyTabMain : greyMain,
                         ),
                         const VerticalSpacingWidget(height: 5),
                         TextFormField(
                           style: TextStyle(
-                              fontSize: size.width > 400 ? 9.sp : 14.sp),
+                              fontSize: size.width > 450 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
                           controller: noteController,
                           keyboardType: TextInputType.emailAddress,
@@ -965,7 +956,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           maxLines: 3,
                           decoration: InputDecoration(
                             hintStyle:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                             hintText: "Add you notes",
                             filled: true,
                             fillColor: kCardColor,
@@ -988,11 +979,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       labId: dropValueLab,
                                       labTest: labTestController.text,
                                       // labTest: labTestValues.join(', '),
-                                      // medicalshopId: dropValueMedicalStore,
+                                      medicalshopId: dropValueMedicalStore,
                                       // medicalshopId: selectedValue.toString(),
-                                      medicalshopId: selectedValue == "null"
-                                          ? ""
-                                          : selectedValue.toString(),
+                                      // medicalshopId: selectedValue == "null"
+                                      //     ? ""
+                                      //     : selectedValue.toString(),
                                       imageFromCamera,
                                       reviewAfter: afterDaysController.text,
                                       notes: noteController.text,
@@ -1083,7 +1074,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                       Text(
                                         "Check Out",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? TextStyle(
                                                 fontSize: 12.sp,
                                                 fontWeight: FontWeight.w600,
@@ -1134,7 +1125,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         children: [
           Text(
             appointmentDetailsPageModel.bookingData!.patientName.toString(),
-            style: size.width > 400 ? blackTabMainText : blackMainText,
+            style: size.width > 450 ? blackTabMainText : blackMainText,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -1143,11 +1134,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             children: [
               Text(
                 "Token Number : ",
-                style: size.width > 400 ? greyTabMain : grey10B400,
+                style: size.width > 450 ? greyTabMain : grey10B400,
               ),
               Text(
                 appointmentDetailsPageModel.bookingData!.tokenNumber!,
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -1159,13 +1150,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   children: [
                     Text(
                       "Patient Id : ",
-                      style: size.width > 400 ? greyTabMain : grey10B400,
+                      style: size.width > 450 ? greyTabMain : grey10B400,
                     ),
                     Text(
                       appointmentDetailsPageModel
                           .bookingData!.mediezyPatientId!,
                       style:
-                          size.width > 400 ? blackTabMainText : blackMainText,
+                          size.width > 450 ? blackTabMainText : blackMainText,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -1180,13 +1171,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   children: [
                     Text(
                       "Age : ",
-                      style: size.width > 400 ? greyTabMain : grey10B400,
+                      style: size.width > 450 ? greyTabMain : grey10B400,
                     ),
                     Text(
                       appointmentDetailsPageModel.bookingData!.patient!.age
                           .toString(),
                       style:
-                          size.width > 400 ? blackTabMainText : blackMainText,
+                          size.width > 450 ? blackTabMainText : blackMainText,
                     ),
                   ],
                 ),

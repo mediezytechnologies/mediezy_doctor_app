@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Model/auth/login_model.dart';
 import 'package:mediezy_doctor/Model/auth/sign_up_model.dart.dart';
@@ -8,7 +7,6 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_event.dart';
-
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -60,32 +58,48 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
         emit(LoginError());
       }
-      // TODO: implement event handler
     });
 
     //signup
-    on<DummyRegister>((event, emit) async {
+    // on<DummyRegister>((event, emit) async {
+    //   emit(DummyRegisterLoading());
+    //   try {
+    //     updatedSuccessfully = await loginApi.addDummyRegister(
+    //         email: event.email,
+    //         firstname: event.firstname,
+    //         dob: event.dob,
+    //         mobileNo: event.mobileNo,
+    //         location: event.location,
+    //         hospitalName: event.hospitalName,
+    //         specialization: event.specialization,
+    //         // doctorImage: event.doctorImage
+    //     );
+    //     Map<String,dynamic> data =jsonDecode(updatedSuccessfully);
+    //     emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
+    //     print("loaded");
+    //   } catch (e) {
+    //     final String error ="$e";
+    //     print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+    //     emit(DummyRegisterError(errorMessage: error ));
+    //   }
+    // });
+
+    on<GuestRegister>((event, emit) async {
       emit(DummyRegisterLoading());
       try {
-        updatedSuccessfully = await loginApi.addDummyRegister(
-            email: event.email,
-            firstname: event.firstname,
-            dob: event.dob,
-            mobileNo: event.mobileNo,
-            location: event.location,
-            hospitalName: event.hospitalName,
-            specialization: event.specialization,
-            // doctorImage: event.doctorImage
+        updatedSuccessfully = await loginApi.addGuestRegister(
+          email: event.email,
+          name: event.name,
+          mobileNo: event.mobileNo,
         );
-        Map<String,dynamic> data =jsonDecode(updatedSuccessfully);
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
         print("loaded");
       } catch (e) {
-        final String error ="$e";
-        print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
-        emit(DummyRegisterError(errorMessage: error ));
+        final String error = "$e";
+        print("Error>>>>>>>>>>>>" + e.toString());
+        emit(DummyRegisterError(errorMessage: error));
       }
-      // TODO: implement event handler
     });
   }
 }

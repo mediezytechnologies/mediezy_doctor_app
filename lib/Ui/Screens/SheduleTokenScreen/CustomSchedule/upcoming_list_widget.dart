@@ -26,7 +26,7 @@ class UpcomingListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.width > 400 ? 55.h : 50.h,
+      height: size.width > 450 ? 55.h : 50.h,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
       decoration: BoxDecoration(
@@ -44,11 +44,11 @@ class UpcomingListWidget extends StatelessWidget {
               children: [
                 Text(
                   date,
-                  style: size.width > 400 ? blackTabMainText : blackMainText,
+                  style: size.width > 450 ? blackTabMainText : blackMainText,
                 ),
                 Text(
                   "Schedule $scheduleType - $time mint $section",
-                  style: size.width > 400 ? blackTabMainText : blackMainText,
+                  style: size.width > 450 ? blackTabMainText : blackMainText,
                 ),
               ],
             ),
@@ -58,7 +58,7 @@ class UpcomingListWidget extends StatelessWidget {
               icon: Icon(
                 Icons.delete,
                 color: kMainColor,
-                size: size.width > 400 ? 15.sp : 20.sp,
+                size: size.width > 450 ? 15.sp : 20.sp,
               ))
         ],
       ),

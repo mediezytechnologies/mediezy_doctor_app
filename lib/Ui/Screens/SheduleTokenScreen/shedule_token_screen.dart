@@ -1,5 +1,3 @@
-
-
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +58,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        size.width > 400
+                        size.width > 450
                             ? const VerticalSpacingWidget(height: 20)
                             : const VerticalSpacingWidget(height: 30),
                         //! first section (Daily shedule)
@@ -76,7 +74,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
                             child: Container(
-                              height: size.width > 400 ? 140.h : 115.h,
+                              height: size.width > 450 ? 140.h : 115.h,
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(
@@ -100,7 +98,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
                             child: Container(
-                              height: size.width > 400 ? 140.h : 115.h,
+                              height: size.width > 450 ? 140.h : 115.h,
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(
@@ -124,7 +122,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
                             child: Container(
-                              height: size.width > 400 ? 140.h : 115.h,
+                              height: size.width > 450 ? 140.h : 115.h,
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(
@@ -147,7 +145,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
                             child: Container(
-                              height: size.width > 400 ? 140.h : 115.h,
+                              height: size.width > 450 ? 140.h : 115.h,
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(
@@ -170,7 +168,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
                             child: Container(
-                              height: size.width > 400 ? 140.h : 115.h,
+                              height: size.width > 450 ? 140.h : 115.h,
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(

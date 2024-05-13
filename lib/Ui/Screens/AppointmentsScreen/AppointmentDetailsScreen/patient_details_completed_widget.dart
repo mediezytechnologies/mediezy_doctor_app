@@ -36,7 +36,7 @@ class _PatientDetailsCompletedWidgetState
         //! appointment for
         Text(
           'Appointment for : ',
-          style: size.width > 400 ? greyTabMain : greyMain,
+          style: size.width > 450 ? greyTabMain : greyMain,
         ),
         widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first
                     .mainSymptoms ==
@@ -46,7 +46,7 @@ class _PatientDetailsCompletedWidgetState
                 widget.getAllCompletedAppointmentDetailsModel
                     .appointmentDetails!.first.mainSymptoms!.mainsymptoms
                     .toString(),
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
               ),
         // const VerticalSpacingWidget(height: 5),
         widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first
@@ -59,7 +59,7 @@ class _PatientDetailsCompletedWidgetState
                         .appointmentDetails!.first.otherSymptoms!
                         .map((symptom) => "${symptom.symtoms}")
                         .join(', '),
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   ),
                 ],
               ),
@@ -91,7 +91,7 @@ class _PatientDetailsCompletedWidgetState
                 children: [
                   Text(
                     "Allergy : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: SizedBox(
@@ -130,7 +130,7 @@ class _PatientDetailsCompletedWidgetState
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -156,7 +156,7 @@ class _PatientDetailsCompletedWidgetState
                 children: [
                   Text(
                     "Surgery name : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -182,7 +182,7 @@ class _PatientDetailsCompletedWidgetState
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name" + (isLastItem ? '' : ','),
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -200,7 +200,7 @@ class _PatientDetailsCompletedWidgetState
                 children: [
                   Text(
                     "Treatment taken : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
                     child: Wrap(
@@ -226,7 +226,7 @@ class _PatientDetailsCompletedWidgetState
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name" + (isLastItem ? '' : ','),
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         );
@@ -240,13 +240,13 @@ class _PatientDetailsCompletedWidgetState
           children: [
             Text(
               "Regular Medicines : ",
-              style: size.width > 400 ? greyTabMain : greyMain,
+              style: size.width > 450 ? greyTabMain : greyMain,
             ),
             widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!
                     .first.patientMedicines!.isEmpty
                 ? Text(
                     "No",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                   )
                 : Expanded(
                     child: SizedBox(
@@ -284,7 +284,7 @@ class _PatientDetailsCompletedWidgetState
                                     right: isLastItem ? 0 : 8.0),
                                 child: Text(
                                   isLastItem ? text : '$text,',
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -336,7 +336,7 @@ class _PatientDetailsCompletedWidgetState
                             HorizontalSpacingWidget(width: 5.w),
                             Text(
                               "Patient Reports",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : blackMainText,
                             ),

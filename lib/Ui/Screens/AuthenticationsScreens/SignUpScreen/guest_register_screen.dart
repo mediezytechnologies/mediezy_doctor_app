@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Login/login_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -21,7 +21,7 @@ class GuestRegisterScreen extends StatefulWidget {
 }
 
 class GuestRegisterScreenState extends State<GuestRegisterScreen> {
-  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final FocusNode lastNameFocusController = FocusNode();
@@ -40,7 +40,8 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
           GeneralServices.instance.showToastMessage(state.successMessage);
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const BottomNavigationControlWidget()),
               (route) => false);
         }
         if (state is DummyRegisterError) {
@@ -71,16 +72,16 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                     //! heading
                     Text(
                       "You have not registered yet.\nLet us know basic details for registration",
-                      style: size.width > 400 ? greyTabMain : greyMain,
+                      style: size.width > 450 ? greyTabMain : greyMain,
                       textAlign: TextAlign.center,
                     ),
                     const VerticalSpacingWidget(height: 50),
                     //! first name
                     TextFormField(
                       style:
-                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
+                          TextStyle(fontSize: size.width > 450 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
-                      controller: firstNameController,
+                      controller: nameController,
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
@@ -96,7 +97,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            size.width > 400 ? greyTab10B600 : grey13B600,
+                            size.width > 450 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Name",
                         filled: true,
                         fillColor: kCardColor,
@@ -110,7 +111,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                     //! email
                     TextFormField(
                       style:
-                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
+                          TextStyle(fontSize: size.width > 450 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -129,7 +130,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            size.width > 400 ? greyTab10B600 : grey13B600,
+                            size.width > 450 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Email",
                         filled: true,
                         fillColor: kCardColor,
@@ -143,7 +144,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                     //! phone number
                     TextFormField(
                       style:
-                          TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
+                          TextStyle(fontSize: size.width > 450 ? 11.sp : 14.sp),
                       cursorColor: kMainColor,
                       maxLength: 10,
                       controller: phoneNumberController,
@@ -164,7 +165,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                           color: kMainColor,
                         ),
                         hintStyle:
-                            size.width > 400 ? greyTab10B600 : grey13B600,
+                            size.width > 450 ? greyTab10B600 : grey13B600,
                         hintText: "Enter your Phone number",
                         filled: true,
                         fillColor: kCardColor,
@@ -179,7 +180,12 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                     CommonButtonWidget(
                       title: "Sign up",
                       onTapFunction: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          BlocProvider.of<LoginBloc>(context).add(GuestRegister(
+                              email: emailController.text,
+                              name: nameController.text,
+                              mobileNo: phoneNumberController.text));
+                        }
                       },
                     ),
                     const VerticalSpacingWidget(height: 20),
@@ -189,7 +195,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                       children: [
                         Text(
                           "Already have an account?",
-                          style: size.width > 400 ? blackTab9B400 : black13B500,
+                          style: size.width > 450 ? blackTab9B400 : black13B500,
                         ),
                         const HorizontalSpacingWidget(width: 5),
                         InkWell(
@@ -203,7 +209,7 @@ class GuestRegisterScreenState extends State<GuestRegisterScreen> {
                           },
                           child: Text(
                             "Login",
-                            style: size.width > 400
+                            style: size.width > 450
                                 ? TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: kMainColor,

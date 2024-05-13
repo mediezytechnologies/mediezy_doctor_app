@@ -57,19 +57,19 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   Text(
                     "How may we\nhelp you?",
                     style: TextStyle(
-                        fontSize: size.width > 400 ? 18.sp : 28.sp,
+                        fontSize: size.width > 450 ? 18.sp : 28.sp,
                         fontWeight: FontWeight.bold),
                   ),
                   const VerticalSpacingWidget(height: 13),
                   Text(
                     "Let us know your queries & feedbacks",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   const VerticalSpacingWidget(height: 20),
                   //! email
                   TextFormField(
                     style:
-                        TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
+                        TextStyle(fontSize: size.width > 450 ? 11.sp : 14.sp),
                     cursorColor: kMainColor,
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -78,9 +78,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       prefixIcon: Icon(
                         Icons.email_outlined,
                         color: kMainColor,
-                        size: size.width > 400 ? 13.sp : 20.sp,
+                        size: size.width > 450 ? 13.sp : 20.sp,
                       ),
-                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                      hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
                       hintText: "philipeaugustine@gmail.com",
                       filled: true,
                       fillColor: kCardColor,
@@ -102,9 +102,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       prefixIcon: Icon(
                         IconlyLight.edit,
                         color: kMainColor,
-                        size: size.width > 400 ? 13.sp : 20.sp,
+                        size: size.width > 450 ? 13.sp : 20.sp,
                       ),
-                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                      hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
                       hintText: "Write your message",
                       filled: true,
                       fillColor: kCardColor,
@@ -132,7 +132,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       fadeDuration: const Duration(milliseconds: 400),
                       child: Image.asset(
                         'assets/images/hero_image.png',
-                        height: size.width > 400
+                        height: size.width > 450
                             ? size.height * .41
                             : size.height * .35,
                       ),

@@ -39,7 +39,7 @@ class TokenCardRemoveWidget extends StatelessWidget {
           Text(
             tokenNumber,
             style: TextStyle(
-              fontSize: size.width > 400 ? 12.sp : 18.sp,
+              fontSize: size.width > 450 ? 12.sp : 18.sp,
               fontWeight: FontWeight.bold,
               color: textColor, // Use the provided textColor
             ),
@@ -47,7 +47,7 @@ class TokenCardRemoveWidget extends StatelessWidget {
           Text(
             time,
             style: TextStyle(
-              fontSize: size.width > 400 ? 7.sp : 9.sp,
+              fontSize: size.width > 450 ? 7.sp : 9.sp,
               fontWeight: FontWeight.bold,
               color: textColor, // Use the provided textColor
             ),

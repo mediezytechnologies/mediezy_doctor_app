@@ -85,7 +85,7 @@ class _TokenScreenState extends State<TokenScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     // int? selectedValue = items['Schedule 1'];
-   
+
     return RefreshIndicator(
       onRefresh: () async {
         // Add your refresh logic here, such as fetching new data
@@ -131,7 +131,6 @@ class _TokenScreenState extends State<TokenScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -154,7 +153,7 @@ class _TokenScreenState extends State<TokenScreen> {
                             Text(
                               "Select Schedule",
                               style:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                             ),
                             const VerticalSpacingWidget(height: 3),
                             BlocBuilder<DropdownBloc, DropdownState>(
@@ -256,7 +255,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                             },
                                             icon: Icon(Icons.arrow_back_ios,
                                                 color: kMainColor,
-                                                size: size.width > 400
+                                                size: size.width > 450
                                                     ? 22.sp
                                                     : 30.sp),
                                           ),
@@ -275,7 +274,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                             },
                                             icon: Icon(Icons.arrow_forward_ios,
                                                 color: kMainColor,
-                                                size: size.width > 400
+                                                size: size.width > 450
                                                     ? 22.sp
                                                     : 30.sp),
                                           ),
@@ -329,7 +328,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .tokens![index]
                                                             .patientName
                                                             .toString(),
-                                                        style: size.width > 400
+                                                        style: size.width > 450
                                                             ? blackTab10B600
                                                             : blackTab15B600,
                                                         maxLines: 1,
@@ -376,7 +375,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .tokens![index]
                                                             .displayAge
                                                             .toString(),
-                                                        style: size.width > 400
+                                                        style: size.width > 450
                                                             ? greyTab10B400
                                                             : grey12B400,
                                                       ),
@@ -410,7 +409,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           child: Text(
                                                             "Pending",
                                                             style:
-                                                                size.width > 400
+                                                                size.width > 450
                                                                     ? TextStyle(
                                                                         fontSize:
                                                                             10.sp,
@@ -432,7 +431,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                         Container(
                                                           height: 25.h,
                                                           width:
-                                                              size.width > 400
+                                                              size.width > 450
                                                                   ? 20.w
                                                                   : 28.w,
                                                           decoration:
@@ -470,13 +469,13 @@ class _TokenScreenState extends State<TokenScreen> {
                                               children: [
                                                 Text(
                                                   "Mobile No",
-                                                  style: size.width > 400
+                                                  style: size.width > 450
                                                       ? greyTabMain
                                                       : greyMain,
                                                 ),
                                                 Text(
                                                   "Schedule ${getCurrentTokenModel.tokens![index].scheduleType}",
-                                                  style: size.width > 400
+                                                  style: size.width > 450
                                                       ? greyTabMain
                                                       : greyMain,
                                                 ),
@@ -491,7 +490,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   getCurrentTokenModel
                                                       .tokens![index].mobileNo
                                                       .toString(),
-                                                  style: size.width > 400
+                                                  style: size.width > 450
                                                       ? blackTabMainText
                                                       : blackMainText,
                                                 ),
@@ -510,7 +509,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   },
                                                   icon: Icon(
                                                     Icons.call,
-                                                    size: size.width > 400
+                                                    size: size.width > 450
                                                         ? 15.sp
                                                         : 25.sp,
                                                     color: kMainColor,
@@ -521,7 +520,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                             //! appointment for
                                             Text(
                                               'Appointment for',
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? greyTabMain
                                                   : greyMain,
                                             ),
@@ -537,7 +536,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                         .first
                                                         .mainsymptoms
                                                         .toString(),
-                                                    style: size.width > 400
+                                                    style: size.width > 450
                                                         ? blackTabMainText
                                                         : blackMainText,
                                                   ),
@@ -554,7 +553,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                             .map((symptom) =>
                                                                 "${symptom.symtoms}")
                                                             .join(', '),
-                                                        style: size.width > 400
+                                                        style: size.width > 450
                                                             ? blackTabMainText
                                                             : blackMainText,
                                                       ),
@@ -573,7 +572,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   children: [
                                                     Text(
                                                       'Intensity',
-                                                      style: size.width > 400
+                                                      style: size.width > 450
                                                           ? greyTabMain
                                                           : greyMain,
                                                     ),
@@ -584,7 +583,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .tokens![index]
                                                           .whenitstart
                                                           .toString(),
-                                                      style: size.width > 400
+                                                      style: size.width > 450
                                                           ? blackTabMainText
                                                           : blackMainText,
                                                     ),
@@ -596,7 +595,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                   children: [
                                                     Text(
                                                       'When it Start',
-                                                      style: size.width > 400
+                                                      style: size.width > 450
                                                           ? greyTabMain
                                                           : greyMain,
                                                     ),
@@ -607,7 +606,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .tokens![index]
                                                           .whenitcomes
                                                           .toString(),
-                                                      style: size.width > 400
+                                                      style: size.width > 450
                                                           ? blackTabMainText
                                                           : blackMainText,
                                                     ),

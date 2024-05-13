@@ -68,7 +68,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         return Image.asset(
                           "assets/images/no image.jpg",
                           height: size.height * .08,
-                          width: size.width > 400
+                          width: size.width > 450
                               ? size.width * .12
                               : size.width * .18,
                         );
@@ -82,7 +82,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         );
                       },
                       height: size.height * .08,
-                      width: size.width > 400
+                      width: size.width > 450
                           ? size.width * .12
                           : size.width * .18,
                       fit: BoxFit.fill,
@@ -96,7 +96,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                       Text(
                         widget.labName,
                         style:
-                            size.width > 400 ? blackTabMainText : blackMainText,
+                            size.width > 450 ? blackTabMainText : blackMainText,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -105,11 +105,11 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         children: [
                           Text(
                             "Mobile No: ",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.mobileNo,
-                            style: size.width > 400
+                            style: size.width > 450
                                 ? blackTabMainText
                                 : blackMainText,
                           ),
@@ -121,11 +121,11 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         children: [
                           Text(
                             "Location:",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           Text(
                             widget.location,
-                            style: size.width > 400
+                            style: size.width > 450
                                 ? blackTabMainText
                                 : blackMainText,
                           ),
@@ -154,7 +154,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                             child: Text(
                               'Add',
                               style: TextStyle(
-                                  fontSize: size.width > 400 ? 9.sp : 13.sp,
+                                  fontSize: size.width > 450 ? 9.sp : 13.sp,
                                   color: Colors.white),
                             ),
                           ),
@@ -173,7 +173,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                               'Remove',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: size.width > 400 ? 9.sp : 13.sp,
+                                fontSize: size.width > 450 ? 9.sp : 13.sp,
                               ),
                             ),
                           ),

@@ -48,13 +48,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Patient name : ",
-                style: size.width > 400 ? greyTabMain : greyMain,
+                style: size.width > 450 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 patientName,
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -64,13 +64,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Appointment date : ",
-                style: size.width > 400 ? greyTabMain : greyMain,
+                style: size.width > 450 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 appointmentDate,
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -80,13 +80,13 @@ class VitalsCardWidget extends StatelessWidget {
             children: [
               Text(
                 "Doctor name : ",
-                style: size.width > 400 ? greyTabMain : greyMain,
+                style: size.width > 450 ? greyTabMain : greyMain,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 doctorName,
-                style: size.width > 400 ? blackTabMainText : blackMainText,
+                style: size.width > 450 ? blackTabMainText : blackMainText,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -98,13 +98,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Height : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$height cm",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -115,13 +115,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Weight: ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$weight Kg",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -135,13 +135,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Temperature : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$temperature °$temperatureType",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -152,13 +152,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Heart rate : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$heartRate BPM",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -172,13 +172,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Spo2 : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "$spo2 %",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -189,13 +189,13 @@ class VitalsCardWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Bp : ",
-                    style: size.width > 400 ? greyTabMain : greyMain,
+                    style: size.width > 450 ? greyTabMain : greyMain,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     "${sys == "" ? "N/A" : sys} / ${dia == "" ? "N/A" : dia}",
-                    style: size.width > 400 ? blackTabMainText : blackMainText,
+                    style: size.width > 450 ? blackTabMainText : blackMainText,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

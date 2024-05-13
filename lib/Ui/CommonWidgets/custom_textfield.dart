@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return SizedBox(
       child: TextFormField(
-        style: TextStyle(fontSize: size.width > 400 ? 12.sp : 14.sp),
+        style: TextStyle(fontSize: size.width > 450 ? 12.sp : 14.sp),
         cursorColor: kMainColor,
         controller: controller,
         keyboardType: TextInputType.text,
@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 13.h),
-          hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+          hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
           hintText: hintText,
           filled: true,
           fillColor: kCardColor,

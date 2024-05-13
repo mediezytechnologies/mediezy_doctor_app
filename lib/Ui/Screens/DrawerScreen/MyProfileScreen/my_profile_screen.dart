@@ -44,8 +44,6 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -68,7 +66,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 },
                 child: Text(
                   "Edit profile",
-                  style: TextStyle(fontSize: size.width > 400 ? 10.sp : 14.sp),
+                  style: TextStyle(fontSize: size.width > 450 ? 10.sp : 14.sp),
                 ))
           ],
         ),
@@ -144,19 +142,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   children: [
                                     Text(
                                       "Dr.${widget.drFirstName} ${widget.drSecondName}",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTabMainText
                                           : blackMainText,
                                     ),
                                     Text(
                                       widget.email,
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTabMainText
                                           : blackMainText,
                                     ),
                                     Text(
                                       widget.phNo,
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTabMainText
                                           : blackMainText,
                                     ),
@@ -183,12 +181,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           Text(
                             "About",
                             style:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                           ),
                           const VerticalSpacingWidget(height: 10),
                           Text(
                             widget.about,
-                            style: size.width > 400
+                            style: size.width > 450
                                 ? blackTabMainText
                                 : blackMainText,
                           ),
@@ -220,7 +218,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 const VerticalSpacingWidget(height: 15),
                                 Text(
                                   "Clinics",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                 ),
@@ -233,7 +231,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     return Text(
                                       widget.clinicName[index].clinicName
                                           .toString(),
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? blackTabMainText
                                           : blackMainText,
                                     );
@@ -265,7 +263,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           Text(
                             "Specifications",
                             style:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                           ),
                           const VerticalSpacingWidget(height: 15),
                           ListView.separated(
@@ -275,7 +273,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             itemBuilder: (context, index) {
                               return Text(
                                 widget.specifications[index],
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               );
@@ -302,7 +300,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           Text(
                             "Sub specifications",
                             style:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                           ),
 
                           const VerticalSpacingWidget(height: 15),
@@ -313,7 +311,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             itemBuilder: (context, index) {
                               return Text(
                                 widget.subSpecification[index],
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               );

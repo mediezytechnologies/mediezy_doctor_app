@@ -111,7 +111,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                       children: [
                         Text(
                           "Select Clinic",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 5),
                         GetBuilder<HospitalController>(builder: (clx) {
@@ -164,7 +164,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     children: [
                                       Text(
                                         "Start Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -235,7 +235,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 Text(
                                   DateFormat("dd-MM-yyy")
                                       .format(leaveStartDate),
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : black14B600,
                                 ),
@@ -260,7 +260,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     children: [
                                       Text(
                                         "End Date",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -328,7 +328,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 ),
                                 Text(
                                   DateFormat("dd-MM-yyy").format(leaveEndDate),
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : black14B600,
                                 ),
@@ -386,7 +386,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                   child: Center(
                                     child: Text(
                                       "Confirm as a Leave",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? TextStyle(
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w600,
@@ -419,7 +419,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 children: [
                                   Text(
                                     "Your upcoming leaves",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTab10B600
                                         : grey13B600,
                                   ),
@@ -455,7 +455,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                 .leavesData![
                                                                     index]
                                                                 .date!)),
-                                                    style: size.width > 400
+                                                    style: size.width > 450
                                                         ? blackTabMainText
                                                         : black14B600,
                                                   ),
@@ -480,7 +480,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                     icon: Icon(
                                                       Icons.delete,
                                                       color: kMainColor,
-                                                      size: size.width > 400
+                                                      size: size.width > 450
                                                           ? 14.sp
                                                           : 20.sp,
                                                     ),

@@ -57,9 +57,9 @@ class _SearchPatientsScreenState extends State<SearchPatientsScreen> {
                       suffixIcon: Icon(
                         IconlyLight.search,
                         color: kMainColor,
-                        size: size.width > 400 ? 14.sp : 20.sp,
+                        size: size.width > 450 ? 14.sp : 20.sp,
                       ),
-                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                      hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
                       hintText: "Search Your Patients",
                       filled: true,
                       fillColor: kCardColor,

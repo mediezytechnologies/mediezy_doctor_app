@@ -117,7 +117,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                       children: [
                         Text(
                           "Select Clinic",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         Container(
                           height: 40.h,
@@ -134,7 +134,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                               children: [
                                 Text(
                                   "Your clinic",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -158,7 +158,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                       children: [
                         Text(
                           "Select Schedule",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         Container(
                           height: 40.h,
@@ -175,7 +175,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                               children: [
                                 Text(
                                   "Schedule 1",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
@@ -207,7 +207,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             Text(
                               "Start Date",
                               style:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                             ),
                             IconButton(
                               onPressed: () {},
@@ -220,7 +220,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                         ),
                         Text(
                           "24-04-2024",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         ),
@@ -242,7 +242,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             Text(
                               "End Date",
                               style:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                             ),
                             IconButton(
                               onPressed: () {},
@@ -255,7 +255,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                         ),
                         Text(
                           "30-04-2024",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                         ),
@@ -285,7 +285,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             Text(
                               "Starting Time",
                               style:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                             ),
                             Icon(
                               IconlyLight.timeCircle,
@@ -305,7 +305,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                           child: Center(
                             child: Text(
                               "11:00 AM",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : blackMainText,
                             ),
@@ -329,7 +329,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             children: [
                               Text(
                                 "Ending Time",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? greyTab10B600
                                     : grey13B600,
                               ),
@@ -350,7 +350,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                             child: Center(
                               child: Text(
                                 "1:00 PM",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
@@ -373,20 +373,20 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                   children: [
                     Text(
                       "Time Duration",
-                      style: size.width > 400 ? greyTab10B600 : grey13B600,
+                      style: size.width > 450 ? greyTab10B600 : grey13B600,
                     ),
                     const VerticalSpacingWidget(height: 5),
                     SizedBox(
                       height: 40.h,
                       child: TextFormField(
                         style: TextStyle(
-                            fontSize: size.width > 400 ? 10.sp : 14.sp),
+                            fontSize: size.width > 450 ? 10.sp : 14.sp),
                         cursorColor: kMainColor,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                         decoration: InputDecoration(
                           hintStyle:
-                              size.width > 400 ? greyTab10B600 : grey13B600,
+                              size.width > 450 ? greyTab10B600 : grey13B600,
                           hintText: "10 min",
                           filled: true,
                           fillColor: kCardColor,
@@ -405,7 +405,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
               const VerticalSpacingWidget(height: 10),
               Text(
                 "Select Days",
-                style: size.width > 400 ? greyTab10B600 : grey13B600,
+                style: size.width > 450 ? greyTab10B600 : grey13B600,
               ),
               const VerticalSpacingWidget(height: 5),
               //! sunday monday tuesday
@@ -444,7 +444,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                               SizedBox(
                                 width: 10.w,
                                 child: Transform.scale(
-                                  scale: size.width > 400 ? 1.5 : 0.9,
+                                  scale: size.width > 450 ? 1.5 : 0.9,
                                   child: Checkbox(
                                     activeColor: kMainColor,
                                     value: isChecked,
@@ -461,7 +461,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                 width: 68.w,
                                 child: Text(
                                   day,
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? blackTabMainText
                                       : black12B500,
                                 ),

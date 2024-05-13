@@ -67,7 +67,7 @@ class _TokenCardWidgetState extends State<TokenCardWidget> {
         }
       },
       child: Container(
-        padding:  EdgeInsets.all(8.r),
+        padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: containerColor,
           borderRadius: BorderRadius.circular(10.r),
@@ -78,7 +78,7 @@ class _TokenCardWidgetState extends State<TokenCardWidget> {
           children: [
             Text(
               widget.tokenNumber,
-              style: size.width > 400
+              style: size.width > 450
                   ? TextStyle(
                       fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _TokenCardWidgetState extends State<TokenCardWidget> {
             ),
             Text(
               widget.formatedTime,
-              style: size.width > 400
+              style: size.width > 450
                   ? TextStyle(
                       fontSize: 7.sp,
                       fontWeight: FontWeight.bold,

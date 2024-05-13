@@ -17,12 +17,12 @@ class EmptyCutomeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Lottie.asset("assets/animations/emptyDoctor.json",
-            height: size.width > 400 ? 130.sp : 150.h),
+            height: size.width > 450 ? 130.sp : 150.h),
         const VerticalSpacingWidget(height: 20),
         Text(
           text,
           style: TextStyle(
-              fontSize: size.width > 400 ? 12.sp : 19.sp,
+              fontSize: size.width > 450 ? 12.sp : 19.sp,
               fontWeight: FontWeight.w500,
               color: kMainColor),
           textAlign: TextAlign.center,

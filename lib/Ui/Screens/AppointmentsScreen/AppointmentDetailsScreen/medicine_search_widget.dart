@@ -19,7 +19,7 @@ class MedicineSearchWidget extends StatefulWidget {
 class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
   final TextEditingController searchController = TextEditingController();
 
-  TextEditingController _textEditingController = TextEditingController();
+  TextEditingController textEditingController = TextEditingController();
 
   String searchText = '';
   @override
@@ -59,9 +59,9 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                       suffixIcon: Icon(
                         IconlyLight.search,
                         color: kMainColor,
-                        size: size.width > 400 ? 14.sp : 20.sp,
+                        size: size.width > 450 ? 14.sp : 20.sp,
                       ),
-                      hintStyle: size.width > 400 ? greyTab10B600 : grey13B600,
+                      hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
                       hintText: "Search your medicines",
                       filled: true,
                       fillColor: kCardColor,
@@ -92,8 +92,7 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                       );
                     }
                     if (state is GetAllMedicinesLoaded) {
-                      final getAllMedicinesModel =
-                          state.getAllMedicinesModel;
+                      final getAllMedicinesModel = state.getAllMedicinesModel;
                       if (getAllMedicinesModel.medicines != null &&
                           getAllMedicinesModel.medicines!.isNotEmpty) {
                         return ListView.builder(
@@ -103,16 +102,16 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                             itemCount: getAllMedicinesModel.medicines!.length,
                             itemBuilder: (context, index) {
                               var medicineData =
-                              getAllMedicinesModel.medicines![index];
+                                  getAllMedicinesModel.medicines![index];
                               return ListTile(
-                                title: Text(medicineData.medicineName
-                                    .toString()),
+                                title:
+                                    Text(medicineData.medicineName.toString()),
                                 onTap: () {
                                   setState(() {
-                                    _textEditingController.text =
-                                        medicineData.medicineName
-                                            .toString();
-                                    widget.onMedicineSelected(medicineData.medicineName.toString());
+                                    textEditingController.text =
+                                        medicineData.medicineName.toString();
+                                    widget.onMedicineSelected(
+                                        medicineData.medicineName.toString());
                                     Navigator.pop(context);
                                     // log("${_textEditingController.text}");
                                   });
@@ -140,52 +139,6 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                     return Container();
                   },
                 ),
-          // BlocBuilder<GetAllMedicinesBloc, GetAllMedicinesState>(
-          //   builder: (context, state) {
-          //     if (state is GetAllMedicinesError) {
-          //       return Center(
-          //         child: Text("Something went wrong"),
-          //       );
-          //     }
-          //     if (state is GetAllMedicinesLoaded) {
-          //       final getAllMedicinesModel =
-          //           state.getAllMedicinesModel;
-          //       return Column(
-          //         children: [
-          //           ListView.builder(
-          //             itemCount: getAllMedicinesModel
-          //                 .medicines!.length,
-          //             itemBuilder: (context, index) {
-          //               final medicine = getAllMedicinesModel
-          //                   .medicines![index];
-          //               if (searchText.isEmpty ||
-          //                   medicine.medicineName
-          //                       .toString()
-          //                       .toLowerCase()
-          //                       .contains(
-          //                       searchText.toLowerCase())) {
-          //                 return ListTile(
-          //                   title: Text(medicine.medicineName
-          //                       .toString()),
-          //                   onTap: () {
-          //                     setState(() {
-          //                       _textEditingController.text =
-          //                           medicine.medicineName
-          //                               .toString();
-          //                     });
-          //                   },
-          //                 );
-          //               } else {
-          //                 return SizedBox.shrink();
-          //               }
-          //             },
-          //           ),
-          //         ],
-          //       );
-          //     }
-          //     return Container();
-          //   },
-          // ),
               ],
             ),
           ),
@@ -198,45 +151,3 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
     super.dispose();
   }
 }
-//
-// Column(
-// children: [
-// SizedBox(
-// width: 250,
-// child: TextField(
-// controller: _textEditingController,
-// onChanged: (newValue) {
-// BlocProvider.of<GetAllMedicinesBloc>(context)
-//     .add(FetchMedicines(searchQuery: newValue));
-// },
-// decoration: InputDecoration(
-// hintText: 'Search...',
-// ),
-// ),
-// ),
-// // Container(
-// //   color: Colors.yellow,
-// //   height: 200,
-// //   width: 250,
-// //   child: ListView.builder(
-// //     itemCount: getAllMedicinesModel.medicines!.length,
-// //     itemBuilder: (context, index) {
-// //       final medicine = getAllMedicinesModel.medicines![index];
-// //       if (searchText.isEmpty ||
-// //           medicine.medicineName.toString().toLowerCase().contains(searchText.toLowerCase())) {
-// //         return ListTile(
-// //           title: Text(medicine.medicineName.toString()),
-// //           onTap: () {
-// //             setState(() {
-// //               _textEditingController.text = medicine.medicineName.toString();
-// //             });
-// //           },
-// //         );
-// //       } else {
-// //         return SizedBox.shrink();
-// //       }
-// //     },
-// //   ),
-// // ),
-// ],
-// ),

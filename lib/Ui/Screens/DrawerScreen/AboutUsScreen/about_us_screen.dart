@@ -20,7 +20,7 @@ class AboutUsScreen extends StatelessWidget {
             const VerticalSpacingWidget(height: 10),
             Text(
               "Welcome to Mediezy technologies, where health meets technology to empower individuals on their wellness journey. We are a dedicated team of healthcare professionals, technologists, and enthusiasts united by a common goal: to revolutionize healthcare accessibility and empower users to take control of their well-being",
-              style: TextStyle(fontSize: size.width > 400 ? 11.sp : 14.sp),
+              style: TextStyle(fontSize: size.width > 450 ? 11.sp : 14.sp),
             )
           ],
         ),

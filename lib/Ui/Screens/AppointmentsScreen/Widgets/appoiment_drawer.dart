@@ -31,10 +31,9 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Drawer(
-      width: size.width > 400 ? 170.w : 250.w,
+      width: size.width > 450 ? 170.w : 250.w,
       child: ListView(
         shrinkWrap: true,
-        
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
@@ -44,7 +43,7 @@ class CustomDrawer extends StatelessWidget {
                 profileGetModel =
                     BlocProvider.of<ProfileGetBloc>(context).profileGetModel;
                 return SizedBox(
-                  height: size.width > 400 ? 160.h : 170.h,
+                  height: size.width > 450 ? 160.h : 180.h,
                   child: DrawerHeader(
                     decoration: BoxDecoration(color: kMainColor),
                     child: Column(
@@ -65,7 +64,7 @@ class CustomDrawer extends StatelessWidget {
                         ),
                         Text(
                           "Dr.${profileGetModel.doctorDetails!.first.firstname.toString()} ${profileGetModel.doctorDetails!.first.secondname.toString()}",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? TextStyle(
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.bold,
@@ -78,13 +77,13 @@ class CustomDrawer extends StatelessWidget {
                         Text(
                           profileGetModel.doctorDetails!.first.mediezyDoctorId
                               .toString(),
-                          style: size.width > 400
+                          style: size.width > 450
                               ? TextStyle(fontSize: 9.sp, color: Colors.white)
                               : TextStyle(fontSize: 14.sp, color: Colors.white),
                         ),
                         Text(
                           "+91 ${profileGetModel.doctorDetails!.first.mobileNumber.toString()}",
-                          style: size.width > 400
+                          style: size.width > 450
                               ? TextStyle(fontSize: 9.sp, color: Colors.white)
                               : TextStyle(fontSize: 14.sp, color: Colors.white),
                         ),
@@ -98,10 +97,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Edit Profile',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.edit,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -142,11 +141,11 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'Labs',
-              style: size.width > 400 ? blackTab9B400 : black14B400,
+              style: size.width > 450 ? blackTab9B400 : black14B400,
             ),
             trailing: Icon(
               Icons.science,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -160,11 +159,11 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'Medical Store',
-              style: size.width > 400 ? blackTab9B400 : black14B400,
+              style: size.width > 450 ? blackTab9B400 : black14B400,
             ),
             trailing: Icon(
               Icons.medical_services_outlined,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -177,10 +176,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Previous Bookings',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.book_online_outlined,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -193,9 +192,9 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Suggest doctor',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Image(
-                height: size.width > 400 ? 17.h : 18.h,
+                height: size.width > 450 ? 17.h : 18.h,
                 image: const AssetImage("assets/icons/doctor_icon.png")),
             onTap: () {
               Navigator.push(
@@ -208,10 +207,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Feedback',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.edit_note_outlined,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -224,10 +223,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Terms & Conditions',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.assignment_outlined,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               // Handle item 2 tap
@@ -241,9 +240,9 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Privacy policy',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(Icons.assignment_outlined,
-                size: size.width > 400 ? 13.sp : 20.sp),
+                size: size.width > 450 ? 13.sp : 20.sp),
             onTap: () {
               // Handle item 2 tap
               Navigator.push(
@@ -256,9 +255,9 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('About Us',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(Icons.assignment_turned_in_outlined,
-                size: size.width > 400 ? 13.sp : 20.sp),
+                size: size.width > 450 ? 13.sp : 20.sp),
             onTap: () {
               Navigator.push(
                 context,
@@ -270,10 +269,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Contact Us',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.mail_outline_outlined,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () {
               Navigator.push(
@@ -286,10 +285,10 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('Log out',
-                style: size.width > 400 ? blackTab9B400 : black14B400),
+                style: size.width > 450 ? blackTab9B400 : black14B400),
             trailing: Icon(
               Icons.logout,
-              size: size.width > 400 ? 13.sp : 20.sp,
+              size: size.width > 450 ? 13.sp : 20.sp,
             ),
             onTap: () async {
               GeneralServices.instance.appCloseDialogue(

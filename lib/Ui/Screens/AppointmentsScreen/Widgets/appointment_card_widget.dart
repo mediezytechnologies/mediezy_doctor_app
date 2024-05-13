@@ -41,15 +41,15 @@ class AppointmentCardWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Container(
-        height: size.width > 400 ? size.height * .14 : size.height * .1,
+        height: size.width > 450 ? size.height * .14 : size.height * .1,
         width: double.infinity,
         decoration: BoxDecoration(
           color: kCardColor,
-        //  color: Colors.amber,
+          //  color: Colors.amber,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: size.width > 400
+          padding: size.width > 450
               ? EdgeInsets.symmetric(vertical: 8.w)
               : EdgeInsets.symmetric(vertical: .5.w),
           child: Row(
@@ -59,12 +59,12 @@ class AppointmentCardWidget extends StatelessWidget {
                 fadeDuration: const Duration(milliseconds: 400),
                 child: PatientImageWidget(
                   patientImage: patientImage,
-                  radius: size.width > 400 ? 50 : 30,
+                  radius: size.width > 450 ? 50 : 30,
                 ),
               ),
               const HorizontalSpacingWidget(width: 10),
               SizedBox(
-                width: size.width > 400 ? size.width * .64 : size.width * .55,
+                width: size.width > 450 ? size.width * .64 : size.width * .55,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -72,7 +72,7 @@ class AppointmentCardWidget extends StatelessWidget {
                     //! name
                     Text(
                       patientName,
-                      style: size.width > 400 ? blackTab10B600 : blackTab15B600,
+                      style: size.width > 450 ? blackTab10B600 : blackTab15B600,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -81,7 +81,7 @@ class AppointmentCardWidget extends StatelessWidget {
                       width: 300.w,
                       child: Text(
                         mainSymptoms,
-                        style: size.width > 400 ? greyTab8B400 : grey12B400,
+                        style: size.width > 450 ? greyTab8B400 : grey12B400,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -92,7 +92,7 @@ class AppointmentCardWidget extends StatelessWidget {
                             ? Container()
                             : Text(
                                 "Patient Id : ",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? greyTab8B400
                                     : grey12B400,
                               ),
@@ -100,7 +100,7 @@ class AppointmentCardWidget extends StatelessWidget {
                             ? Container()
                             : Text(
                                 mediezyId,
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTab9B600
                                     : black11Bbold,
                                 maxLines: 1,
@@ -114,7 +114,7 @@ class AppointmentCardWidget extends StatelessWidget {
                         Text(
                           "Token No : ${tokenNumber.toString()}",
                           style:
-                              size.width > 400 ? blackTab9B600 : black11Bbold,
+                              size.width > 450 ? blackTab9B600 : black11Bbold,
                         ),
                         Text(
                           " | ",
@@ -127,7 +127,7 @@ class AppointmentCardWidget extends StatelessWidget {
                         Text(
                           time,
                           style:
-                              size.width > 400 ? blackTab9B600 : black11Bbold,
+                              size.width > 450 ? blackTab9B600 : black11Bbold,
                         ),
                         const HorizontalSpacingWidget(width: 8),
                       ],
@@ -147,7 +147,7 @@ class AppointmentCardWidget extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: Colors.red,
-                                    radius: size.width > 400 ? 9 : 5,
+                                    radius: size.width > 450 ? 9 : 5,
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
@@ -155,7 +155,7 @@ class AppointmentCardWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize:
-                                            size.width > 400 ? 9.sp : 12.sp),
+                                            size.width > 450 ? 9.sp : 12.sp),
                                   )
                                 ],
                               )
@@ -163,7 +163,7 @@ class AppointmentCardWidget extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundColor: kMainColor,
-                                    radius: size.width > 400 ? 9 : 5,
+                                    radius: size.width > 450 ? 9 : 5,
                                   ),
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
@@ -171,7 +171,7 @@ class AppointmentCardWidget extends StatelessWidget {
                                     style: TextStyle(
                                         color: kMainColor,
                                         fontSize:
-                                            size.width > 400 ? 9.sp : 12.sp),
+                                            size.width > 450 ? 9.sp : 12.sp),
                                   )
                                 ],
                               ),

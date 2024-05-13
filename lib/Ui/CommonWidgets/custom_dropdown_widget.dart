@@ -29,7 +29,7 @@ class CustomDropDown extends StatelessWidget {
           iconEnabledColor: kMainColor,
           decoration: const InputDecoration.collapsed(hintText: ''),
           value: value,
-          style: size.width > 400 ? blackTabMainText : blackMainText,
+          style: size.width > 450 ? blackTabMainText : blackMainText,
           icon: const Icon(Icons.keyboard_arrow_down),
           items: items,
           onChanged: onChanged,

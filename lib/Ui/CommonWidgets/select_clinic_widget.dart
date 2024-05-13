@@ -18,7 +18,7 @@ class SelectClinicWidget extends StatelessWidget {
       children: [
         Text(
           "Select Clinic",
-          style: size.width > 400 ? greyTab10B600 : grey13B600,
+          style: size.width > 450 ? greyTab10B600 : grey13B600,
         ),
         const VerticalSpacingWidget(height: 3),
         GetBuilder<HospitalController>(builder: (clx) {

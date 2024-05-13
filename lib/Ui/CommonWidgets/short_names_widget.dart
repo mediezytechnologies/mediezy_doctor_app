@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class ShortNamesWidget extends StatelessWidget {
   const ShortNamesWidget(
@@ -17,11 +15,11 @@ class ShortNamesWidget extends StatelessWidget {
       children: [
         Text(
           firstText,
-          style: size.width > 400 ? greyTabMain : greyMain,
+          style: size.width > 450 ? greyTabMain : greyMain,
         ),
         Text(
           secondText,
-          style: size.width > 400 ? blackTabMainText : blackMainText,
+          style: size.width > 450 ? blackTabMainText : blackMainText,
         ),
       ],
     );

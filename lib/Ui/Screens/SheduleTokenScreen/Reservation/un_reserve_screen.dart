@@ -78,7 +78,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                   children: [
                     Text(
                       "Select Clinic",
-                      style: size.width > 400 ? greyTab10B600 : grey13B600,
+                      style: size.width > 450 ? greyTab10B600 : grey13B600,
                     ),
                     const VerticalSpacingWidget(height: 5),
                     GetBuilder<HospitalController>(builder: (clx) {
@@ -141,7 +141,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                 children: [
                                   Text(
                                     "Start Date",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTab10B600
                                         : grey13B600,
                                   ),
@@ -208,7 +208,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                     icon: Icon(
                                       IconlyLight.calendar,
                                       color: kMainColor,
-                                      size: size.width > 400 ? 12.sp : 20.sp,
+                                      size: size.width > 450 ? 12.sp : 20.sp,
                                     ),
                                   )
                                 ],
@@ -217,7 +217,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                             Text(
                               DateFormat('dd-MM-yyy')
                                   .format(selectedunreserveDate),
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : black14B600,
                             ),
@@ -254,7 +254,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                 children: [
                                   Text(
                                     "End Date",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? greyTab10B600
                                         : grey13B600,
                                   ),
@@ -289,7 +289,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                     icon: Icon(
                                       IconlyLight.calendar,
                                       color: kMainColor,
-                                      size: size.width > 400 ? 12.sp : 20.sp,
+                                      size: size.width > 450 ? 12.sp : 20.sp,
                                     ),
                                   )
                                 ],
@@ -297,7 +297,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                             ),
                             Text(
                               DateFormat('dd-MM-yyy').format(unreserveendDate),
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTabMainText
                                   : black14B600,
                             ),
@@ -363,8 +363,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisSpacing: 1,
                                   mainAxisSpacing: 10,
-                                  crossAxisCount: size.width > 400 ? 7 : 5,
-                                  mainAxisExtent: size.width > 400 ? 100 : 70,
+                                  crossAxisCount: size.width > 450 ? 7 : 5,
+                                  mainAxisExtent: size.width > 450 ? 100 : 70,
                                 ),
                                 itemBuilder: (context, index) {
                                   return Stack(
@@ -379,10 +379,13 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                         time: getReservedTokensModel
                                             .getTokenDetails![index]
                                             .tokenStartTime!
-                                            .toString(), isTimedOut: 0, isReserved: 0, isBooked: 0,
+                                            .toString(),
+                                        isTimedOut: 0,
+                                        isReserved: 0,
+                                        isBooked: 0,
                                       ),
                                       Positioned(
-                                        left: size.width > 400 ? 32.w : 45.w,
+                                        left: size.width > 450 ? 32.w : 45.w,
                                         child: InkWell(
                                           onTap: () {
                                             BlocProvider.of<
@@ -408,7 +411,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                           child: CircleAvatar(
                                             backgroundColor: Colors.black,
                                             radius:
-                                                size.width > 400 ? 8.r : 8.r,
+                                                size.width > 450 ? 8.r : 8.r,
                                             child: const Icon(
                                               Icons.close,
                                               size: 15,

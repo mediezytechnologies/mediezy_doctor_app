@@ -14,6 +14,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -21,6 +22,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/token_card_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/GetTokensScreen/ScreenOne%20.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../Model/GenerateToken/clinic_get_model.dart';
@@ -104,7 +106,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         // Text(size.width.toString()),
                         Text(
                           "Select Clinic",
-                          style: size.width > 400 ? greyTab10B600 : grey13B600,
+                          style: size.width > 450 ? greyTab10B600 : grey13B600,
                         ),
                         const VerticalSpacingWidget(height: 3),
                         GetBuilder<HospitalController>(builder: (clx) {
@@ -144,6 +146,19 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                               ),
 
                         const VerticalSpacingWidget(height: 10),
+                        // Center(
+                        //   child: TextButton(
+                        //       onPressed: () {
+                        //         Navigator.push(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //                 builder: (context) =>
+                        //                     const ScreenOne()));
+                        //       },
+                        //       child: const Text("data")),
+                        // ),
+                        // Text(size.width.toString()),
+                        const VerticalSpacingWidget(height: 10),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 5.w),
                           child: Row(
@@ -161,7 +176,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Available",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : black11Bbold,
                                   )
@@ -180,7 +195,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Timeout",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : black11Bbold,
                                   )
@@ -200,7 +215,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Booked",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : black11Bbold,
                                   )
@@ -219,7 +234,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   const HorizontalSpacingWidget(width: 5),
                                   Text(
                                     "Reserved",
-                                    style: size.width > 400
+                                    style: size.width > 450
                                         ? blackTabMainText
                                         : black11Bbold,
                                   )
@@ -230,211 +245,206 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         ),
                         //  ! select date
                         BlocBuilder<GetTokenBloc, GetTokenState>(
-                          builder: (context, state) {
-                            if (state is GetTokenLoading) {
-                              return _buildLoadingWidget(context);
-                            }
-                            if (state is GetTokenError) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const VerticalSpacingWidget(height: 100),
-                                  Center(
-                                    child: Image(
-                                      height: 120.h,
-                                      image: const AssetImage(
-                                          "assets/images/something went wrong-01.png"),
-                                    ),
+                            builder: (context, state) {
+                          if (state is GetTokenLoading) {
+                            return _buildLoadingWidget(context);
+                          }
+                          if (state is GetTokenError) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const VerticalSpacingWidget(height: 100),
+                                Center(
+                                  child: Image(
+                                    height: 120.h,
+                                    image: const AssetImage(
+                                        "assets/images/something went wrong-01.png"),
                                   ),
-                                ],
-                              );
-                            }
-                            if (state is GetTokenLoaded) {
-                              getTokenModel =
-                                  BlocProvider.of<GetTokenBloc>(context)
-                                      .getTokenModel;
-                              if (getTokenModel.schedule == null) {
-                                return Center(
-                                    child: EmptyCutomeWidget(
-                                        text:
-                                            getTokenModel.message.toString()));
-                              }
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const VerticalSpacingWidget(height: 10),
-                                  if (getTokenModel
-                                          .schedule?.schedule1?.isNotEmpty ==
-                                      true)
-                                    Text(
-                                      "Schedule 1",
-                                      style: size.width > 400
-                                          ? blackTabMainText
-                                          : black11Bbold,
-                                    ),
-                                  if (getTokenModel
-                                          .schedule?.schedule1?.isNotEmpty ==
-                                      true)
-                                    GridView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      shrinkWrap: true,
-                                      itemCount: getTokenModel
-                                          .schedule!.schedule1!.length,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10,
-                                        crossAxisCount:
-                                            size.width > 400 ? 7 : 5,
-                                        mainAxisExtent:
-                                            size.width > 400 ? 130 : 78,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return TokenCardWidget(
-                                          clinicId: dController.initialIndex!,
-                                          date: selectedDate,
-                                          tokenNumber: getTokenModel.schedule!
-                                              .schedule1![index].tokenNumber
-                                              .toString(),
-                                          formatedTime: getTokenModel
-                                              .schedule!
-                                              .schedule1![index]
-                                              .formattedStartTime
-                                              .toString(),
-                                          isBooked: getTokenModel.schedule!
-                                              .schedule1![index].isBooked!,
-                                          isTimedOut: getTokenModel.schedule!
-                                              .schedule1![index].isTimeout!,
-                                          scheduleType: getTokenModel.schedule!
-                                              .schedule1![index].scheduleType!,
-                                          isReserved: getTokenModel.schedule!
-                                              .schedule1![index].isReserved!,
-                                        );
-                                      },
-                                    ),
-                                  const VerticalSpacingWidget(height: 10),
-                                  if (getTokenModel
-                                          .schedule!.schedule2?.isNotEmpty ==
-                                      true)
-                                    Text(
-                                      "Schedule 2",
-                                      style: size.width > 400
-                                          ? blackTabMainText
-                                          : black11Bbold,
-                                    ),
-                                  if (getTokenModel
-                                          .schedule!.schedule2?.isNotEmpty ==
-                                      true)
-                                    GridView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      shrinkWrap: true,
-                                      itemCount: getTokenModel
-                                          .schedule!.schedule2!.length,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10,
-                                        crossAxisCount:
-                                            size.width > 400 ? 7 : 5,
-                                        mainAxisExtent:
-                                            size.width > 400 ? 130 : 78,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return TokenCardWidget(
-                                          clinicId: dController.initialIndex!,
-                                          date: selectedDate,
-                                          tokenNumber: getTokenModel.schedule!
-                                              .schedule2![index].tokenNumber
-                                              .toString(),
-                                          isBooked: getTokenModel.schedule!
-                                              .schedule2![index].isBooked!,
-                                          formatedTime: getTokenModel
-                                              .schedule!
-                                              .schedule2![index]
-                                              .formattedStartTime
-                                              .toString(),
-                                          isTimedOut: getTokenModel.schedule!
-                                              .schedule2![index].isTimeout!,
-                                          scheduleType: getTokenModel.schedule!
-                                              .schedule2![index].scheduleType!,
-                                          isReserved: getTokenModel.schedule!
-                                              .schedule2![index].isReserved!,
-                                        );
-                                      },
-                                    ),
-                                  if (getTokenModel
-                                          .schedule!.schedule3?.isNotEmpty ==
-                                      true)
-                                    Text(
-                                      "Schedule 3",
-                                      style: size.width > 400
-                                          ? blackTabMainText
-                                          : black11Bbold,
-                                    ),
-                                  if (getTokenModel
-                                          .schedule!.schedule3?.isNotEmpty ==
-                                      true)
-                                    GridView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      shrinkWrap: true,
-                                      itemCount: getTokenModel
-                                          .schedule!.schedule3!.length,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10,
-                                        crossAxisCount:
-                                            size.width > 400 ? 7 : 5,
-                                        mainAxisExtent:
-                                            size.width > 400 ? 130 : 78,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return TokenCardWidget(
-                                          clinicId: dController.initialIndex!,
-                                          date: selectedDate,
-                                          tokenNumber: getTokenModel.schedule!
-                                              .schedule3![index].tokenNumber
-                                              .toString(),
-                                          isBooked: getTokenModel.schedule!
-                                              .schedule3![index].isBooked!,
-                                          formatedTime: getTokenModel
-                                              .schedule!
-                                              .schedule3![index]
-                                              .formattedStartTime
-                                              .toString(),
-                                          isTimedOut: getTokenModel.schedule!
-                                              .schedule3![index].isTimeout!,
-                                          scheduleType: getTokenModel.schedule!
-                                              .schedule3![index].scheduleType!,
-                                          isReserved: getTokenModel.schedule!
-                                              .schedule3![index].isReserved!,
-                                        );
-                                      },
-                                    ),
-                                ],
-                              );
-                            }
-                            return Container(
-                              color: Colors.yellow,
+                                ),
+                              ],
                             );
-                          }),
-                        ],
-                      ),
+                          }
+                          if (state is GetTokenLoaded) {
+                            getTokenModel =
+                                BlocProvider.of<GetTokenBloc>(context)
+                                    .getTokenModel;
+                            if (getTokenModel.schedule == null) {
+                              return Center(
+                                  child: EmptyCutomeWidget(
+                                      text: getTokenModel.message.toString()));
+                            }
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const VerticalSpacingWidget(height: 10),
+                                if (getTokenModel
+                                        .schedule?.schedule1?.isNotEmpty ==
+                                    true)
+                                  Text(
+                                    "Schedule 1",
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : black11Bbold,
+                                  ),
+                                if (getTokenModel
+                                        .schedule?.schedule1?.isNotEmpty ==
+                                    true)
+                                  GridView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    shrinkWrap: true,
+                                    itemCount: getTokenModel
+                                        .schedule!.schedule1!.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      crossAxisCount: size.width > 450 ? 7 : 5,
+                                      mainAxisExtent:
+                                          size.width > 450 ? 130 : 78,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return TokenCardWidget(
+                                        clinicId: dController.initialIndex!,
+                                        date: selectedDate,
+                                        tokenNumber: getTokenModel.schedule!
+                                            .schedule1![index].tokenNumber
+                                            .toString(),
+                                        formatedTime: getTokenModel
+                                            .schedule!
+                                            .schedule1![index]
+                                            .formattedStartTime
+                                            .toString(),
+                                        isBooked: getTokenModel.schedule!
+                                            .schedule1![index].isBooked!,
+                                        isTimedOut: getTokenModel.schedule!
+                                            .schedule1![index].isTimeout!,
+                                        scheduleType: getTokenModel.schedule!
+                                            .schedule1![index].scheduleType!,
+                                        isReserved: getTokenModel.schedule!
+                                            .schedule1![index].isReserved!,
+                                      );
+                                    },
+                                  ),
+                                const VerticalSpacingWidget(height: 10),
+                                if (getTokenModel
+                                        .schedule!.schedule2?.isNotEmpty ==
+                                    true)
+                                  Text(
+                                    "Schedule 2",
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : black11Bbold,
+                                  ),
+                                if (getTokenModel
+                                        .schedule!.schedule2?.isNotEmpty ==
+                                    true)
+                                  GridView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    shrinkWrap: true,
+                                    itemCount: getTokenModel
+                                        .schedule!.schedule2!.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      crossAxisCount: size.width > 450 ? 7 : 5,
+                                      mainAxisExtent:
+                                          size.width > 450 ? 130 : 78,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return TokenCardWidget(
+                                        clinicId: dController.initialIndex!,
+                                        date: selectedDate,
+                                        tokenNumber: getTokenModel.schedule!
+                                            .schedule2![index].tokenNumber
+                                            .toString(),
+                                        isBooked: getTokenModel.schedule!
+                                            .schedule2![index].isBooked!,
+                                        formatedTime: getTokenModel
+                                            .schedule!
+                                            .schedule2![index]
+                                            .formattedStartTime
+                                            .toString(),
+                                        isTimedOut: getTokenModel.schedule!
+                                            .schedule2![index].isTimeout!,
+                                        scheduleType: getTokenModel.schedule!
+                                            .schedule2![index].scheduleType!,
+                                        isReserved: getTokenModel.schedule!
+                                            .schedule2![index].isReserved!,
+                                      );
+                                    },
+                                  ),
+                                if (getTokenModel
+                                        .schedule!.schedule3?.isNotEmpty ==
+                                    true)
+                                  Text(
+                                    "Schedule 3",
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : black11Bbold,
+                                  ),
+                                if (getTokenModel
+                                        .schedule!.schedule3?.isNotEmpty ==
+                                    true)
+                                  GridView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    shrinkWrap: true,
+                                    itemCount: getTokenModel
+                                        .schedule!.schedule3!.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      crossAxisCount: size.width > 450 ? 7 : 5,
+                                      mainAxisExtent:
+                                          size.width > 450 ? 130 : 78,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return TokenCardWidget(
+                                        clinicId: dController.initialIndex!,
+                                        date: selectedDate,
+                                        tokenNumber: getTokenModel.schedule!
+                                            .schedule3![index].tokenNumber
+                                            .toString(),
+                                        isBooked: getTokenModel.schedule!
+                                            .schedule3![index].isBooked!,
+                                        formatedTime: getTokenModel
+                                            .schedule!
+                                            .schedule3![index]
+                                            .formattedStartTime
+                                            .toString(),
+                                        isTimedOut: getTokenModel.schedule!
+                                            .schedule3![index].isTimeout!,
+                                        scheduleType: getTokenModel.schedule!
+                                            .schedule3![index].scheduleType!,
+                                        isReserved: getTokenModel.schedule!
+                                            .schedule3![index].isReserved!,
+                                      );
+                                    },
+                                  ),
+                              ],
+                            );
+                          }
+                          return Container(
+                            color: Colors.yellow,
+                          );
+                        }),
+                      ],
                     ),
                   ),
                 ),
-              
+              ),
             );
           }),
         ),
@@ -466,8 +476,8 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 8,
-                crossAxisCount: size.width > 400 ? 7 : 5,
-                mainAxisExtent: size.width > 400 ? 130 : 78,
+                crossAxisCount: size.width > 450 ? 7 : 5,
+                mainAxisExtent: size.width > 450 ? 130 : 78,
               ),
               itemBuilder: (context, index) {
                 return Container(
@@ -526,9 +536,9 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: Container(
                     height:
-                        size.width > 400 ? size.height * .1 : size.height * .11,
+                        size.width > 450 ? size.height * .1 : size.height * .11,
                     width:
-                        size.width > 400 ? size.width * .12 : size.width * .17,
+                        size.width > 450 ? size.width * .12 : size.width * .17,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),

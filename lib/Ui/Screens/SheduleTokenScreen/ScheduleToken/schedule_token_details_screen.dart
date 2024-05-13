@@ -245,7 +245,7 @@ class _ScheduleTokenDetailsScreenState
                                   children: [
                                     Text(
                                       "Select Clinic",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                     ),
@@ -278,7 +278,7 @@ class _ScheduleTokenDetailsScreenState
                                   children: [
                                     Text(
                                       "Select Schedule",
-                                      style: size.width > 400
+                                      style: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                     ),
@@ -301,7 +301,7 @@ class _ScheduleTokenDetailsScreenState
                                                 const InputDecoration.collapsed(
                                                     hintText: ''),
                                             value: dropdownValue,
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : blackMainText,
                                             icon: const Icon(
@@ -365,7 +365,7 @@ class _ScheduleTokenDetailsScreenState
                                             children: [
                                               Text(
                                                 "Start Date",
-                                                style: size.width > 400
+                                                style: size.width > 450
                                                     ? greyTab10B600
                                                     : grey13B600,
                                               ),
@@ -418,7 +418,7 @@ class _ScheduleTokenDetailsScreenState
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
-                                                  size: size.width > 400
+                                                  size: size.width > 450
                                                       ? 12.sp
                                                       : 19.sp,
                                                 ),
@@ -428,7 +428,7 @@ class _ScheduleTokenDetailsScreenState
                                           Text(
                                             DateFormat("dd-MM-yyy")
                                                 .format(startSchedule1Date),
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : black14B600,
                                           ),
@@ -469,7 +469,7 @@ class _ScheduleTokenDetailsScreenState
                                             children: [
                                               Text(
                                                 "End Date",
-                                                style: size.width > 400
+                                                style: size.width > 450
                                                     ? greyTab10B600
                                                     : grey13B600,
                                               ),
@@ -506,7 +506,7 @@ class _ScheduleTokenDetailsScreenState
                                                 icon: Icon(
                                                   IconlyLight.calendar,
                                                   color: kMainColor,
-                                                  size: size.width > 400
+                                                  size: size.width > 450
                                                       ? 12.sp
                                                       : 19.sp,
                                                 ),
@@ -517,7 +517,7 @@ class _ScheduleTokenDetailsScreenState
                                             DateFormat('dd-MM-yyy')
                                                 .format(endScheduleDate),
                                             // Display the selected and formatted date
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : black14B600,
                                           ),
@@ -541,7 +541,7 @@ class _ScheduleTokenDetailsScreenState
                                       children: [
                                         Text(
                                           "Starting Time",
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? greyTab10B600
                                               : grey13B600,
                                         ),
@@ -550,7 +550,7 @@ class _ScheduleTokenDetailsScreenState
                                           IconlyLight.timeCircle,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 12.sp : 18.sp,
+                                              size.width > 450 ? 12.sp : 18.sp,
                                         ),
                                       ],
                                     ),
@@ -573,7 +573,7 @@ class _ScheduleTokenDetailsScreenState
                                           child: Text(
                                             selectedSchedule1StartingTime
                                                 .format(context),
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : black14B600,
                                           ),
@@ -590,7 +590,7 @@ class _ScheduleTokenDetailsScreenState
                                       children: [
                                         Text(
                                           "Ending Time",
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? greyTab10B600
                                               : grey13B600,
                                         ),
@@ -599,7 +599,7 @@ class _ScheduleTokenDetailsScreenState
                                           IconlyLight.timeCircle,
                                           color: kMainColor,
                                           size:
-                                              size.width > 400 ? 12.sp : 18.sp,
+                                              size.width > 450 ? 12.sp : 18.sp,
                                         ),
                                       ],
                                     ),
@@ -621,7 +621,7 @@ class _ScheduleTokenDetailsScreenState
                                           child: Text(
                                             selectedSchedule1EndingTime
                                                 .format(context),
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : black14B600,
                                           ),
@@ -644,7 +644,7 @@ class _ScheduleTokenDetailsScreenState
                                     children: [
                                       Text(
                                         "Time Duration",
-                                        style: size.width > 400
+                                        style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
@@ -653,7 +653,7 @@ class _ScheduleTokenDetailsScreenState
                                         height: 40.h,
                                         child: TextFormField(
                                           style: TextStyle(
-                                              fontSize: size.width > 400
+                                              fontSize: size.width > 450
                                                   ? 10.sp
                                                   : 14.sp),
                                           // autofocus: true,
@@ -664,7 +664,7 @@ class _ScheduleTokenDetailsScreenState
                                           focusNode:
                                               timeDurationFocusController,
                                           decoration: InputDecoration(
-                                            hintStyle: size.width > 400
+                                            hintStyle: size.width > 450
                                                 ? greyTab10B600
                                                 : grey13B600,
                                             hintText: "10 min",
@@ -693,7 +693,7 @@ class _ScheduleTokenDetailsScreenState
                             Text(
                               "Select Days",
                               style:
-                                  size.width > 400 ? greyTab10B600 : grey13B600,
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
                             ),
                             const VerticalSpacingWidget(height: 5),
                             //! sunday monday tuesday
@@ -728,7 +728,7 @@ class _ScheduleTokenDetailsScreenState
                                           SizedBox(
                                             width: 10.w,
                                             child: Transform.scale(
-                                              scale: size.width > 400
+                                              scale: size.width > 450
                                                   ? 1.5
                                                   : 0.9, // Adjust the scale factor as per your requirement
                                               child: Checkbox(
@@ -746,7 +746,7 @@ class _ScheduleTokenDetailsScreenState
                                             width: 68.w,
                                             child: Text(
                                               day,
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : black12B500,
                                             ),

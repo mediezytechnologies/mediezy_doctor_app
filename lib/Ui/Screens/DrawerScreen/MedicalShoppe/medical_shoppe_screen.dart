@@ -80,20 +80,20 @@ class _MedicalShoppeScreenState extends State<MedicalShoppeScreen> {
                           child: Text(
                             "Search your Medical Store",
                             style:
-                                size.width > 400 ? greyTab10B400 : grey13B600,
+                                size.width > 450 ? greyTab10B400 : grey13B600,
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 10.w),
                           child: CircleAvatar(
                             backgroundColor: kMainColor,
-                            radius: size.width > 400 ? 13.r : 16.r,
+                            radius: size.width > 450 ? 13.r : 16.r,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(
                                 IconlyLight.search,
                                 color: kCardColor,
-                                size: size.width > 400 ? 12.sp : 18.sp,
+                                size: size.width > 450 ? 12.sp : 18.sp,
                               ),
                             ),
                           ),

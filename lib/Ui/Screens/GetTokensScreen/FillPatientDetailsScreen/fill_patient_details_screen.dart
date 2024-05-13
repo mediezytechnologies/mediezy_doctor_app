@@ -181,7 +181,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                 child: Text(
                                   "Patient Name",
                                   style:
-                                      size.width > 400 ? greyTabMain : greyMain,
+                                      size.width > 450 ? greyTabMain : greyMain,
                                 ),
                               ),
                               const HorizontalSpacingWidget(width: 10),
@@ -190,7 +190,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                 child: Text(
                                   "Age",
                                   style:
-                                      size.width > 400 ? greyTabMain : greyMain,
+                                      size.width > 450 ? greyTabMain : greyMain,
                                 ),
                               ),
                             ],
@@ -204,7 +204,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   child: TextFormField(
                                     style: TextStyle(
                                         fontSize:
-                                            size.width > 400 ? 11.sp : 14.sp),
+                                            size.width > 450 ? 11.sp : 14.sp),
                                     autofocus: true,
                                     cursorColor: kMainColor,
                                     controller: patientNameController,
@@ -220,7 +220,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     decoration: InputDecoration(
                                       contentPadding:
                                           EdgeInsets.symmetric(vertical: 10.h),
-                                      hintStyle: size.width > 400
+                                      hintStyle: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                       hintText: "Enter Patient Name",
@@ -241,7 +241,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   child: TextFormField(
                                     style: TextStyle(
                                         fontSize:
-                                            size.width > 400 ? 12.sp : 14.sp),
+                                            size.width > 450 ? 12.sp : 14.sp),
                                     cursorColor: kMainColor,
                                     controller: patientAgeController,
                                     keyboardType: TextInputType.number,
@@ -258,7 +258,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       contentPadding:
                                           EdgeInsets.symmetric(vertical: 10.h),
                                       counterText: "",
-                                      hintStyle: size.width > 400
+                                      hintStyle: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                       hintText: "25 age",
@@ -278,7 +278,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                           //! phone number
                           Text(
                             "Contact Number",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           const VerticalSpacingWidget(height: 5),
                           Row(
@@ -289,7 +289,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   child: TextFormField(
                                     style: TextStyle(
                                         fontSize:
-                                            size.width > 400 ? 12.sp : 14.sp),
+                                            size.width > 450 ? 12.sp : 14.sp),
                                     cursorColor: kMainColor,
                                     controller: patientContactNumberController,
                                     keyboardType: TextInputType.phone,
@@ -308,7 +308,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       contentPadding:
                                           EdgeInsets.symmetric(vertical: 10.h),
                                       counterText: "",
-                                      hintStyle: size.width > 400
+                                      hintStyle: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                       hintText: "Enter patient Phone number",
@@ -326,7 +326,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                               Expanded(
                                 flex: 1,
                                 child: Container(
-                                  height: size.width > 400 ? 45.h : 40.h,
+                                  height: size.width > 450 ? 45.h : 40.h,
                                   color: kCardColor,
                                   child: DropdownButton<String>(
                                     underline:
@@ -338,7 +338,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       });
                                     },
                                     icon: Padding(
-                                      padding: size.width > 400
+                                      padding: size.width > 450
                                           ? EdgeInsets.only(top: 10.h)
                                           : EdgeInsets.symmetric(
                                               vertical: 10.h,
@@ -346,7 +346,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                             ),
                                       child: const Icon(Icons.arrow_drop_down),
                                     ), // Set the dropdown icon
-                                    iconSize: size.width > 400
+                                    iconSize: size.width > 450
                                         ? 30.0
                                         : 24.0, // Adjust icon size if needed
                                     items: <String>['Male', 'Female', 'Other']
@@ -355,7 +355,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Padding(
-                                          padding: size.width > 400
+                                          padding: size.width > 450
                                               ? EdgeInsets.only(
                                                   top: 10.h, left: 30.w)
                                               : EdgeInsets.symmetric(
@@ -364,7 +364,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                                 ),
                                           child: Text(
                                             value,
-                                            style: size.width > 400
+                                            style: size.width > 450
                                                 ? blackTabMainText
                                                 : blackMainText,
                                           ),
@@ -379,7 +379,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                           const VerticalSpacingWidget(height: 5),
                           Text(
                             "Appointment for",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           const VerticalSpacingWidget(height: 10),
                           CustomTextField(
@@ -427,7 +427,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize:
-                                                size.width > 400 ? 9.sp : 11.sp,
+                                                size.width > 450 ? 9.sp : 11.sp,
                                             color: selectedSymptoms.contains(
                                                     getSymptomsModel
                                                         .symptoms![index].id!)
@@ -443,7 +443,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                           const VerticalSpacingWidget(height: 10),
                           Text(
                             "When it's comes",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           const VerticalSpacingWidget(height: 5),
                           Wrap(
@@ -474,7 +474,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     deceaseStartingTime[index],
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: size.width > 400 ? 9.sp : 11.sp,
+                                      fontSize: size.width > 450 ? 9.sp : 11.sp,
                                       color: selectedStart == index
                                           ? Colors.white
                                           : kTextColor,
@@ -492,7 +492,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                 Text(
                                   "How many days",
                                   style:
-                                      size.width > 400 ? greyTabMain : greyMain,
+                                      size.width > 450 ? greyTabMain : greyMain,
                                 ),
                                 const VerticalSpacingWidget(height: 5),
                                 SizedBox(
@@ -503,7 +503,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     keyboardType: TextInputType.number,
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
-                                      hintStyle: size.width > 400
+                                      hintStyle: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
                                       hintText: "10 days",
@@ -521,7 +521,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                           const VerticalSpacingWidget(height: 10),
                           Text(
                             "How Frequently",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           const VerticalSpacingWidget(height: 5),
                           Wrap(
@@ -552,7 +552,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     deceaseRepeats[index],
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: size.width > 400 ? 9.sp : 11.sp,
+                                      fontSize: size.width > 450 ? 9.sp : 11.sp,
                                       color: selectedCome == index
                                           ? Colors.white
                                           : kTextColor,
@@ -567,7 +567,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             children: [
                               Text(
                                 "Using any regular medicines?",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? greyTab10B600
                                     : grey13B600,
                               ),
@@ -589,7 +589,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                             }),
                                         Text(
                                           "Yes",
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTab9B400
                                               : black12B500,
                                         ),
@@ -608,7 +608,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                             }),
                                         Text(
                                           "No",
-                                          style: size.width > 400
+                                          style: size.width > 450
                                               ? blackTab9B400
                                               : black12B500,
                                         ),
@@ -622,26 +622,26 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
 
                           Text(
                             "Appointment on",
-                            style: size.width > 400 ? greyTabMain : greyMain,
+                            style: size.width > 450 ? greyTabMain : greyMain,
                           ),
                           const VerticalSpacingWidget(height: 5),
                           Row(
                             children: [
                               Text(
                                 DateFormat("dd-MM-yyy").format(widget.date),
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
                               Text(
                                 " | ",
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),
                               Text(
                                 widget.tokenTime,
-                                style: size.width > 400
+                                style: size.width > 450
                                     ? blackTabMainText
                                     : blackMainText,
                               ),

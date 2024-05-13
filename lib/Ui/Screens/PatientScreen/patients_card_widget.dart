@@ -51,7 +51,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: size.width > 400 ? 82.h : 70.h,
+              height: size.width > 450 ? 82.h : 70.h,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: kCardColor,
@@ -76,7 +76,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                         //! name
                         Text(
                           widget.patientName,
-                          style: size.width > 400
+                          style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
                           maxLines: 1,
@@ -86,14 +86,14 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Patient Id : ",
-                              style: size.width > 400 ? greyTabMain : greyMain,
+                              style: size.width > 450 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.mediezyPatientId,
                               // patientsGetModel.patientData![index].age.toString(),
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTab9B600
                                   : blackMainText,
                               maxLines: 1,
@@ -105,14 +105,14 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Age : ",
-                              style: size.width > 400 ? greyTabMain : greyMain,
+                              style: size.width > 450 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.age,
                               // patientsGetModel.patientData![index].age.toString(),
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTab9B600
                                   : blackMainText,
                               maxLines: 1,
@@ -124,13 +124,13 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                           children: [
                             Text(
                               "Gender : ",
-                              style: size.width > 400 ? greyTabMain : greyMain,
+                              style: size.width > 450 ? greyTabMain : greyMain,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               widget.gender == "1" ? "Male" : "Female",
-                              style: size.width > 400
+                              style: size.width > 450
                                   ? blackTab9B600
                                   : blackMainText,
                               maxLines: 1,

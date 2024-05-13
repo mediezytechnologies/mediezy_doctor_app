@@ -122,7 +122,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                   child: Center(
                     child: Text(
                       "Remove Token",
-                      style: size.width > 400
+                      style: size.width > 450
                           ? TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
@@ -165,9 +165,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
               dividerColor: kCardColor,
               unselectedLabelColor: kTextColor,
               unselectedLabelStyle: TextStyle(
-                fontSize: size.width > 400 ? 10.sp : 13.sp,
+                fontSize: size.width > 450 ? 10.sp : 13.sp,
               ),
-              labelStyle: size.width > 400
+              labelStyle: size.width > 450
                   ? TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
@@ -246,7 +246,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                               children: [
                                 Text(
                                   "Select Clinic",
-                                  style: size.width > 400
+                                  style: size.width > 450
                                       ? greyTab10B600
                                       : grey13B600,
                                 ),
@@ -333,7 +333,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               true)
                                             Text(
                                               "Schedule 1",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -354,9 +354,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 110 : 70,
+                                                    size.width > 450 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -484,7 +484,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               true)
                                             Text(
                                               "Schedule 2",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -505,9 +505,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 110 : 70,
+                                                    size.width > 450 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -635,7 +635,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               true)
                                             Text(
                                               "Schedule 3",
-                                              style: size.width > 400
+                                              style: size.width > 450
                                                   ? blackTabMainText
                                                   : blackMainText,
                                             ),
@@ -656,9 +656,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                 crossAxisSpacing: 5,
                                                 mainAxisSpacing: 5,
                                                 crossAxisCount:
-                                                    size.width > 400 ? 8 : 5,
+                                                    size.width > 450 ? 8 : 5,
                                                 mainAxisExtent:
-                                                    size.width > 400 ? 110 : 70,
+                                                    size.width > 450 ? 110 : 70,
                                               ),
                                               itemBuilder: (context, index) {
                                                 if (getTokenModel
@@ -814,7 +814,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                           Text(
                             "Select Clinic",
                             style:
-                                size.width > 400 ? greyTab10B600 : grey13B600,
+                                size.width > 450 ? greyTab10B600 : grey13B600,
                           ),
                           const VerticalSpacingWidget(height: 2),
                           GetBuilder<HospitalController>(builder: (clx) {
@@ -898,9 +898,9 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                         crossAxisSpacing: 1,
                                         mainAxisSpacing: 10,
                                         crossAxisCount:
-                                            size.width > 400 ? 6 : 4,
+                                            size.width > 450 ? 6 : 4,
                                         mainAxisExtent:
-                                            size.width > 400 ? 120 : 80,
+                                            size.width > 450 ? 120 : 80,
                                       ),
                                       itemBuilder: (context, index) {
                                         return Stack(
@@ -925,7 +925,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                         .data![index]
                                                         .tokenNumber
                                                         .toString(),
-                                                    style: size.width > 400
+                                                    style: size.width > 450
                                                         ? TextStyle(
                                                             fontSize: 11.sp,
                                                             fontWeight:
@@ -941,7 +941,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                     getDeleteTokensModel
                                                         .data![index].time
                                                         .toString(),
-                                                    style: size.width > 400
+                                                    style: size.width > 450
                                                         ? TextStyle(
                                                             fontSize: 7.sp,
                                                             fontWeight:
@@ -957,7 +957,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                     getDeleteTokensModel
                                                         .data![index].formatdate
                                                         .toString(),
-                                                    style: size.width > 400
+                                                    style: size.width > 450
                                                         ? TextStyle(
                                                             fontSize: 7.sp,
                                                             fontWeight:
@@ -973,7 +973,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                               ),
                                             ),
                                             Positioned(
-                                              left: size.width > 400
+                                              left: size.width > 450
                                                   ? 38.w
                                                   : 55.w,
                                               child: InkWell(
@@ -990,13 +990,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                                 },
                                                 child: CircleAvatar(
                                                   backgroundColor: Colors.black,
-                                                  radius: size.width > 400
+                                                  radius: size.width > 450
                                                       ? 7.r
                                                       : 8.r,
                                                   child: Center(
                                                     child: Icon(
                                                       Icons.close,
-                                                      size: size.width > 400
+                                                      size: size.width > 450
                                                           ? 7.sp
                                                           : 9.sp,
                                                       color: Colors.white,

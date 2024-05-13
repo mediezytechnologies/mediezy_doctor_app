@@ -13,8 +13,8 @@ class TokenShowCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.width > 400 ? size.height * .17 : size.height * .16,
-      width: size.width > 400 ? size.width * .22 : size.width * .33,
+      height: size.width > 450 ? size.height * .17 : size.height * .16,
+      width: size.width > 450 ? size.width * .22 : size.width * .33,
       decoration: BoxDecoration(
         color: kMainColor,
         borderRadius: BorderRadius.circular(10),
@@ -24,7 +24,7 @@ class TokenShowCardWidget extends StatelessWidget {
         children: [
           Text(
             tokenNumber,
-            style: size.width > 400
+            style: size.width > 450
                 ? TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class TokenShowCardWidget extends StatelessWidget {
           ),
           Text(
             tokenTime,
-            style: size.width > 400
+            style: size.width > 450
                 ? TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w700,
