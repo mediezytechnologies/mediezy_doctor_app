@@ -522,9 +522,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                           BlocProvider.of<GetTokenBloc>(context)
                                               .getTokenModel;
                                       if (getTokenModel.schedule == null) {
-                                        return const EmptyCutomeWidget(
-                                            text:
-                                                "No Token available\non this date");
+                                        return EmptyCutomeWidget(
+                                            text: getTokenModel.message
+                                                .toString());
                                       }
                                       return Column(
                                         crossAxisAlignment:
@@ -639,7 +639,28 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                   child: TokenCardRemoveWidget(
                                                     color:
                                                         morningContainerColor,
-                                                    textColor: kTextColor,
+                                                    textColor: getTokenModel
+                                                                .schedule!
+                                                                .schedule1![
+                                                                    index]
+                                                                .isTimeout ==
+                                                            1
+                                                        ? Colors.grey
+                                                        : getTokenModel
+                                                                    .schedule!
+                                                                    .schedule1![
+                                                                        index]
+                                                                    .isBooked ==
+                                                                1
+                                                            ? Colors.grey
+                                                            : selectedTokenNumbers.contains(getTokenModel
+                                                                    .schedule!
+                                                                    .schedule1![
+                                                                        index]
+                                                                    .tokenNumber!
+                                                                    .toString())
+                                                                ? Colors.white
+                                                                : kTextColor,
                                                     tokenNumber: getTokenModel
                                                         .schedule!
                                                         .schedule1![index]
@@ -650,6 +671,18 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         .schedule1![index]
                                                         .formattedStartTime
                                                         .toString(),
+                                                    isTimedOut: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .isTimeout!,
+                                                    isReserved: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .isReserved!,
+                                                    isBooked: getTokenModel
+                                                        .schedule!
+                                                        .schedule1![index]
+                                                        .isBooked!,
                                                   ),
                                                 );
                                               },
@@ -764,7 +797,28 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                   child: TokenCardRemoveWidget(
                                                     color:
                                                         eveningContainerColor,
-                                                    textColor: kTextColor,
+                                                    textColor: getTokenModel
+                                                                .schedule!
+                                                                .schedule2![
+                                                                    index]
+                                                                .isTimeout ==
+                                                            1
+                                                        ? Colors.grey
+                                                        : getTokenModel
+                                                                    .schedule!
+                                                                    .schedule2![
+                                                                        index]
+                                                                    .isBooked ==
+                                                                1
+                                                            ? Colors.grey
+                                                            : selectedTokenNumbers.contains(getTokenModel
+                                                                    .schedule!
+                                                                    .schedule2![
+                                                                        index]
+                                                                    .tokenNumber!
+                                                                    .toString())
+                                                                ? Colors.white
+                                                                : kTextColor,
                                                     tokenNumber: getTokenModel
                                                         .schedule!
                                                         .schedule2![index]
@@ -775,6 +829,18 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         .schedule2![index]
                                                         .formattedStartTime
                                                         .toString(),
+                                                    isTimedOut: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .isTimeout!,
+                                                    isReserved: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .isReserved!,
+                                                    isBooked: getTokenModel
+                                                        .schedule!
+                                                        .schedule2![index]
+                                                        .isBooked!,
                                                   ),
                                                 );
                                               },
@@ -887,7 +953,28 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                   child: TokenCardRemoveWidget(
                                                     color:
                                                         eveningContainerColor,
-                                                    textColor: kTextColor,
+                                                    textColor: getTokenModel
+                                                                .schedule!
+                                                                .schedule3![
+                                                                    index]
+                                                                .isTimeout ==
+                                                            1
+                                                        ? Colors.grey
+                                                        : getTokenModel
+                                                                    .schedule!
+                                                                    .schedule3![
+                                                                        index]
+                                                                    .isBooked ==
+                                                                1
+                                                            ? Colors.grey
+                                                            : selectedTokenNumbers.contains(getTokenModel
+                                                                    .schedule!
+                                                                    .schedule3![
+                                                                        index]
+                                                                    .tokenNumber!
+                                                                    .toString())
+                                                                ? Colors.white
+                                                                : kTextColor,
                                                     tokenNumber: getTokenModel
                                                         .schedule!
                                                         .schedule3![index]
@@ -898,6 +985,18 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         .schedule3![index]
                                                         .formattedStartTime
                                                         .toString(),
+                                                    isTimedOut: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .isTimeout!,
+                                                    isReserved: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .isReserved!,
+                                                    isBooked: getTokenModel
+                                                        .schedule!
+                                                        .schedule3![index]
+                                                        .isBooked!,
                                                   ),
                                                 );
                                               },

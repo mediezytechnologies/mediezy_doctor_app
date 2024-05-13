@@ -164,7 +164,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       ),
                       const HorizontalSpacingWidget(width: 20),
                       Text(
-                        "Kg",
+                        "kg",
                         style: size.width > 400
                             ? blackTab14B500
                             : TextStyle(
@@ -241,7 +241,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Spo2",
+                            "SpO2",
                             style: size.width > 400 ? greyTabMain : greyMain,
                           ),
                           SizedBox(
@@ -260,7 +260,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                                 hintStyle: size.width > 400
                                     ? greyTab10B600
                                     : grey13B600,
-                                hintText: 'Spo2',
+                                hintText: 'SpO2',
                                 filled: true,
                                 fillColor: kCardColor,
                                 border: OutlineInputBorder(

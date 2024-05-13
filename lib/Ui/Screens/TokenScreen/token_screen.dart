@@ -978,7 +978,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 13.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
-                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                            color: getCurrentTokenModel.tokens![index].isCheckIn == 1
                                                                                 ? kMainColor
                                                                                 : kCardColor,
                                                                           )
@@ -987,7 +987,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 16.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
-                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                            color: getCurrentTokenModel.tokens![index].isCheckIn == 1
                                                                                 ? kMainColor
                                                                                 : kCardColor,
                                                                           ),
@@ -1071,7 +1071,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 13.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
-                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                            color: getCurrentTokenModel.tokens![index].isCompleted == 1
                                                                                 ? kMainColor
                                                                                 : kCardColor,
                                                                           )
@@ -1080,7 +1080,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 16.sp,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
-                                                                            color: getCurrentTokenModel.tokens![index].isReached == 1
+                                                                            color: getCurrentTokenModel.tokens![index].isCompleted == 1
                                                                                 ? kMainColor
                                                                                 : kCardColor,
                                                                           ),

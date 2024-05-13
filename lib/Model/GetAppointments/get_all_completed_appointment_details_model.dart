@@ -1,4 +1,4 @@
-class GetAllCompletedAppointmentDetailsModel {
+  class GetAllCompletedAppointmentDetailsModel {
   GetAllCompletedAppointmentDetailsModel({
     this.status,
     this.appointmentDetails,
@@ -38,6 +38,7 @@ class AppointmentDetails {
     this.symptomFrequency,
     this.prescriptionImage,
     this.scheduleType,
+    this.reviewAfter,
     this.notes,
     this.patientName,
     this.patientAge,
@@ -70,6 +71,7 @@ class AppointmentDetails {
     symptomFrequency = json['symptom_frequency'];
     prescriptionImage = json['prescription_image'];
     scheduleType = json['schedule_type'];
+    reviewAfter = json['review_after'];
     notes = json['notes'];
     patientName = json['patient_name'];
     patientAge = json['patient_age'];
@@ -126,6 +128,7 @@ class AppointmentDetails {
   String? symptomFrequency;
   dynamic prescriptionImage;
   String? scheduleType;
+  int? reviewAfter;
   dynamic notes;
   String? patientName;
   int? patientAge;
@@ -158,6 +161,7 @@ class AppointmentDetails {
     map['symptom_frequency'] = symptomFrequency;
     map['prescription_image'] = prescriptionImage;
     map['schedule_type'] = scheduleType;
+    map['review_after'] = reviewAfter;
     map['notes'] = notes;
     map['patient_name'] = patientName;
     map['patient_age'] = patientAge;

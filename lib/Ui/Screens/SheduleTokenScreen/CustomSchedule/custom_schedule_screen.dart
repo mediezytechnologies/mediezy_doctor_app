@@ -1116,7 +1116,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 if (state is BetweenScheduleError) {
                                   GeneralServices.instance.showErrorMessage(
                                       context,
-                                      "No matching token details found");
+                                      state.errorMessage);
                                   // No need to delay if an error occurs
                                 }
                               },

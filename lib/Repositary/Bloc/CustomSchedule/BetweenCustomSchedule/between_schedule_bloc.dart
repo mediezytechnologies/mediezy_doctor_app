@@ -31,7 +31,7 @@ class BetweenScheduleBloc
         emit(BetweenScheduleLoaded());
       } catch (e) {
         print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
-        emit(BetweenScheduleError());
+        emit(BetweenScheduleError(errorMessage: '$e'));
       }
     });
   }

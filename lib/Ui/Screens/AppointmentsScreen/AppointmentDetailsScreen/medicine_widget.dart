@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
@@ -7,13 +8,16 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/a
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/DeleteMedicine/delete_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/EditMedicine/edit_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAppointmentDetailsPage/get_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+import 'package:textfield_search/textfield_search.dart';
 
 class MedicineWidget extends StatefulWidget {
   const MedicineWidget({
@@ -26,6 +30,7 @@ class MedicineWidget extends StatefulWidget {
 
   final String tokenId;
   final String medicalStoreId;
+
   // final Function(String) onDropValueChanged;
 
   // final String medicalStoreId;
@@ -41,6 +46,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
   final TextEditingController daysController = TextEditingController();
   final TextEditingController days1Controller = TextEditingController();
   final TextEditingController hourlyController = TextEditingController();
+
+  TextEditingController _textEditingController = TextEditingController();
+
+  TextEditingController myController = TextEditingController();
+  void _onMedicineSelected(String medicineName) {
+    setState(() {
+      _textEditingController.text = medicineName;
+    });
+  }
 
   String dropdownHourlyValue = 'Hour interval';
   var itemsHourly = [
@@ -74,6 +88,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
   String selectedTime = "";
 
   String _medicineId = "";
+
+  String searchText = '';
+
+  @override
+  void initState() {
+    BlocProvider.of<GetAllMedicinesBloc>(context)
+        .add(FetchMedicines(searchQuery: ""));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -468,7 +491,44 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    // InkWell(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) =>
+                    //              MedicineSearchWidget(  onMedicineSelected: _onMedicineSelected,)));
+                    //   },
+                    //   child: Container(
+                    //     height: 40.h,
+                    //     width: size.width > 400 ? 245.w : 235.w,
+                    //     color: kCardColor,
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           "Medicine name",
+                    //           style: size.width > 400
+                    //               ? greyTab10B600
+                    //               : grey13B600,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 40.h,
+                    //   width: size.width > 400 ? 245.w : 235.w,
+                    //   child: TextFieldSearch(
+                    //       initialList: _testList,
+                    //       label: 'Simple List',
+                    //       controller: myController),
+                    // ),
+                    // Assuming you have some variable 'index' available in the context of your build method or loop
+
+                    // );
+                     SizedBox(
                       // height: 40.h,
                       width: size.width > 400 ? 245.w : 235.w,
                       child: TextFormField(
@@ -476,13 +536,18 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             fontSize: size.width > 400 ? 9.sp : 14.sp),
                         cursorColor: kMainColor,
                         controller: medicineNameController,
+                        onChanged: (newValue) {
+                          BlocProvider.of<GetAllMedicinesBloc>(context)
+                              .add(FetchMedicines(searchQuery: newValue));
+                        },
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 10.h, horizontal: 2.w),
-                          hintStyle:
-                              size.width > 400 ? greyTab10B600 : grey13B600,
+                          hintStyle: size.width > 400
+                              ? greyTab10B600
+                              : grey13B600,
                           hintText: "Medicine Name",
                           filled: true,
                           fillColor: kCardColor,
@@ -491,8 +556,8 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                      ),
-                    ),
+                      ),),
+                    // );
                     SizedBox(
                       // height: 40.h,
                       width: 90.w,

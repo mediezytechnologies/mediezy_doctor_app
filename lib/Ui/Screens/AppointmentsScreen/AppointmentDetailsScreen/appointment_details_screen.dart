@@ -3,7 +3,6 @@
 
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
@@ -347,7 +346,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         // Text("data:${length}"),
                         //
                         // Text("len : ${widget.length}"),
-                        // Text("balace $balanceAppoiment"),
+                        // Text("balance $balanceAppoiment"),
                         Container(
                           height: 30.h,
                           width: size.width > 400 ? 80.w : 110.w,

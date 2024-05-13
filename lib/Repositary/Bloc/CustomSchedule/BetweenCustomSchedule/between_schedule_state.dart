@@ -4,6 +4,13 @@ part of 'between_schedule_bloc.dart';
 abstract class BetweenScheduleState {}
 
 class BetweenScheduleInitial extends BetweenScheduleState {}
+
 class BetweenScheduleLoading extends BetweenScheduleState {}
+
 class BetweenScheduleLoaded extends BetweenScheduleState {}
-class BetweenScheduleError extends BetweenScheduleState {}
+
+class BetweenScheduleError extends BetweenScheduleState {
+  final String errorMessage;
+
+  BetweenScheduleError({required this.errorMessage});
+}

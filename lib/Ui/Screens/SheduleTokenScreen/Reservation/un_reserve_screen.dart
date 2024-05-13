@@ -379,7 +379,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                         time: getReservedTokensModel
                                             .getTokenDetails![index]
                                             .tokenStartTime!
-                                            .toString(),
+                                            .toString(), isTimedOut: 0, isReserved: 0, isBooked: 0,
                                       ),
                                       Positioned(
                                         left: size.width > 400 ? 32.w : 45.w,

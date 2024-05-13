@@ -628,7 +628,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                           Row(
                             children: [
                               Text(
-                                formatDate(),
+                                DateFormat("dd-MM-yyy").format(widget.date),
                                 style: size.width > 400
                                     ? blackTabMainText
                                     : blackMainText,

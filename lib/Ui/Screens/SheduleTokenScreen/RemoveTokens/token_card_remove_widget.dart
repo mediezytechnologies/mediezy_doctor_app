@@ -4,19 +4,28 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class TokenCardRemoveWidget extends StatelessWidget {
   final Color color;
-  final Color textColor;
   final String tokenNumber;
   final String time;
-  const TokenCardRemoveWidget(
-      {super.key,
-      required this.color,
-      required this.textColor,
-      required this.tokenNumber,
-      required this.time});
+  final int isBooked;
+  final int isTimedOut;
+  final int isReserved;
+  final Color textColor;
+
+  const TokenCardRemoveWidget({
+    Key? key,
+    required this.color,
+    required this.tokenNumber,
+    required this.isTimedOut,
+    required this.isReserved,
+    required this.isBooked,
+    required this.time,
+    required this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -29,28 +38,20 @@ class TokenCardRemoveWidget extends StatelessWidget {
         children: [
           Text(
             tokenNumber,
-            style: size.width > 400
-                ? TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)
-                : TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: textColor),
+            style: TextStyle(
+              fontSize: size.width > 400 ? 12.sp : 18.sp,
+              fontWeight: FontWeight.bold,
+              color: textColor, // Use the provided textColor
+            ),
           ),
           Text(
             time,
-            style: size.width > 400
-                ? TextStyle(
-                    fontSize: 7.sp,
-                    fontWeight: FontWeight.bold,
-                    color: textColor)
-                : TextStyle(
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.bold,
-                    color: textColor),
-          )
+            style: TextStyle(
+              fontSize: size.width > 400 ? 7.sp : 9.sp,
+              fontWeight: FontWeight.bold,
+              color: textColor, // Use the provided textColor
+            ),
+          ),
         ],
       ),
     );

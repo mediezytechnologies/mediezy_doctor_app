@@ -11,6 +11,8 @@ import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/GetAppointments/get_all_medicines_model.dart';
+
 class GetAppointmentApi {
   ApiClient apiClient = ApiClient();
   MultiFileApiClient2 multiFileApiClient = MultiFileApiClient2();
@@ -129,7 +131,7 @@ class GetAppointmentApi {
         "doctor/getallappointments/$id/$date/$clinicId/$scheduleType";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-          log("respose ste1 === : ${response.body}");
+    log("respose ste1 === : ${response.body}");
     print("<<<<<< Get All Appointments Are Worked >>>>>>");
     return GetAllAppointmentsModel.fromJson(json.decode(response.body));
   }
@@ -188,7 +190,7 @@ class GetAppointmentApi {
       "prescription_image": attachment,
       "ReviewAfter": reviewAfter,
       "notes": notes,
-      "scan_id":   scanId,
+      "scan_id": scanId,
       "scan_test": scanTest,
     };
     Response response = attachment == null
@@ -199,7 +201,6 @@ class GetAppointmentApi {
     print("<<<<<<<<<<Add All Appointments response worked>>>>>>>>>>");
     return response.body;
   }
-
 
   //* get all Completed AppointmentDetails
 
@@ -220,15 +221,15 @@ class GetAppointmentApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     print(body);
-    print("<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
+    print(
+        "<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
   }
 
   //* Add Vitals Api
 
-  Future<String> addVitals(
-    {
+  Future<String> addVitals({
     required String tokenId,
     required String height,
     required String weight,
@@ -260,18 +261,17 @@ class GetAppointmentApi {
 
   //* edit Vitals Api
 
-  Future<String> editVitals(
-      {
-        required String tokenId,
-        required String height,
-        required String weight,
-        required String temperature,
-        required String temperatureType,
-        required String spo2,
-        required String sys,
-        required String dia,
-        required String heartRate,
-      }) async {
+  Future<String> editVitals({
+    required String tokenId,
+    required String height,
+    required String weight,
+    required String temperature,
+    required String temperatureType,
+    required String spo2,
+    required String sys,
+    required String dia,
+    required String heartRate,
+  }) async {
     String basePath = "editVitals";
 
     final body = {
@@ -286,26 +286,35 @@ class GetAppointmentApi {
       "heart_rate": heartRate
     };
     Response response =
-    await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
+        await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
     print(body);
     return response.body;
   }
 
-
   //* delete Vitals Api
 
-  Future<String> deleteVitals(
-      {
-        required String tokenId,
-      }) async {
+  Future<String> deleteVitals({
+    required String tokenId,
+  }) async {
     String basePath = "deleteVitals";
 
     final body = {
       "token_id": tokenId,
     };
     Response response =
-    await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
+        await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
     print(body);
     return response.body;
+  }
+
+  Future<GetAllMedicinesModel> getAllMedicines({
+    required String searchQuery,
+  }) async {
+    String basePath = "doctor/getMedicineBySearch";
+    final body = {"medicine_name": searchQuery};
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
+    return GetAllMedicinesModel.fromJson(json.decode(response.body));
   }
 }

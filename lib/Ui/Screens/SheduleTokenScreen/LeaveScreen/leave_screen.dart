@@ -449,39 +449,42 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    getAllLeavesModel
-                                                        .leavesData![index]
-                                                        .date!
-                                                        .toString(),
+                                                    DateFormat('dd-MM-yyyy')
+                                                        .format(DateTime.parse(
+                                                            getAllLeavesModel
+                                                                .leavesData![
+                                                                    index]
+                                                                .date!)),
                                                     style: size.width > 400
                                                         ? blackTabMainText
                                                         : black14B600,
                                                   ),
                                                   IconButton(
-                                                      onPressed: () {
-                                                        BlocProvider.of<
-                                                                    LeaveUpdateBloc>(
-                                                                context)
-                                                            .add(
-                                                          LeaveDelete(
-                                                            clinicId: dController
-                                                                .initialIndex!,
-                                                            date:
-                                                                getAllLeavesModel
-                                                                    .leavesData![
-                                                                        index]
-                                                                    .date
-                                                                    .toString(),
-                                                          ),
-                                                        );
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: kMainColor,
-                                                        size: size.width > 400
-                                                            ? 14.sp
-                                                            : 20.sp,
-                                                      ))
+                                                    onPressed: () {
+                                                      BlocProvider.of<
+                                                                  LeaveUpdateBloc>(
+                                                              context)
+                                                          .add(
+                                                        LeaveDelete(
+                                                          clinicId: dController
+                                                              .initialIndex!,
+                                                          date:
+                                                              getAllLeavesModel
+                                                                  .leavesData![
+                                                                      index]
+                                                                  .date
+                                                                  .toString(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: kMainColor,
+                                                      size: size.width > 400
+                                                          ? 14.sp
+                                                          : 20.sp,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),

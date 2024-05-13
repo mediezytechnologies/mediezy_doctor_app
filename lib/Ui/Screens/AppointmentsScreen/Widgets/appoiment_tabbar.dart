@@ -1,11 +1,11 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/get_all_completed_appointment_details_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import '../../../../Model/GetAppointments/get_all_appointments_model.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -16,7 +16,7 @@ import '../../../CommonWidgets/vertical_spacing_widget.dart';
 import '../../../Consts/app_colors.dart';
 
 class AppoimentTabbar extends StatefulWidget {
-  AppoimentTabbar({super.key});
+ const AppoimentTabbar({super.key});
 
   @override
   State<AppoimentTabbar> createState() => _AppoimentTabbarState();
@@ -322,7 +322,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (ctx) =>
-                                                        GetAllCompletedAppointmentDetailsScreen(
+                                                        CompletedAppointmentDetailsScreen(
                                                           tokenId:
                                                               getAllCompletedAppointmentsModel
                                                                   .appointments![
@@ -369,26 +369,6 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                         .appointments![index]
                                                         .mediezyPatientId
                                                         .toString(),
-                                            // mainSymptoms: "",
-                                            // mainSymptoms: getAllCompletedAppointmentsModel
-                                            //     .appointments![
-                                            // index]
-                                            //     .otherSymptoms!
-                                            //     .isEmpty
-                                            //     ? getAllCompletedAppointmentsModel
-                                            //     .appointments![
-                                            // index]
-                                            //     .mainSymptoms!
-                                            //     .mainsymptoms
-                                            //     .toString()
-                                            //     : getAllCompletedAppointmentsModel
-                                            //     .appointments![
-                                            // index]
-                                            //     .otherSymptoms!
-                                            //     .first
-                                            //     .symtoms
-                                            //     .toString(),
-
                                             mainSymptoms:
                                                 getAllCompletedAppointmentsModel
                                                             .appointments![
@@ -413,18 +393,6 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                     .toString(),
                                             reachedStatus: "",
                                             noStatus: 0,
-                                            // reachedStatus: getAllCompletedAppointmentsModel
-                                            //                 .appointments![
-                                            //                     index]
-                                            //                 .isReached ==
-                                            //             1 ||
-                                            //         getAllCompletedAppointmentsModel
-                                            //                 .appointments![
-                                            //                     index]
-                                            //                 .isReached ==
-                                            //             null
-                                            //     ? ""
-                                            //     : "",
                                           ),
                                         ),
                                       );
