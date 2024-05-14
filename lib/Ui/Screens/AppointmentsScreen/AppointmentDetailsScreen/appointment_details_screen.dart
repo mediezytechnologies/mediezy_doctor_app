@@ -991,8 +991,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       scanTest: scanTestController.text,
                                     ),
                                   );
-                                  Future.delayed(
-                                          const Duration(milliseconds: 1000))
+                                  Future.delayed(const Duration(seconds: 2))
                                       .then((value) {
                                     if (appointmentDetailsPageModel
                                             .bookingData!.isCheckedout !=
@@ -1014,10 +1013,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           isReached: '',
                                         ),
                                       );
-                                      setState(() {
-                                        appointmentDetailsPageModel
-                                            .bookingData!.isCheckedout = 1;
-                                      });
+                                      // setState(() {
+                                      appointmentDetailsPageModel
+                                          .bookingData!.isCheckedout = 1;
+                                      // });
                                     }
                                     if (currentPosition >= 0 &&
                                         currentPosition <

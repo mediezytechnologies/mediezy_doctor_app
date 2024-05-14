@@ -47,11 +47,11 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is DummyRegisterLoaded) {
-          GeneralServices.instance.showToastMessage(state.successMessage);
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-              (route) => false);
+          GeneralServices.instance.showDialogue(context, state.successMessage);
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => const LoginScreen()),
+          //     (route) => false);
         }
         if (state is DummyRegisterError) {
           GeneralServices.instance.showToastMessage(state.errorMessage);
@@ -154,7 +154,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
+                        SizedBox(
                           width: 220.w,
                           child: TextFormField(
                             style: TextStyle(
@@ -322,6 +322,7 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 20),
+
                     //! signup
                     CommonButtonWidget(
                         title: "Sign up",

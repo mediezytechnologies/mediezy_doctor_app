@@ -160,6 +160,7 @@ class GeneralServices {
   }
 
   //*show dialogue
+
   showDialogue(BuildContext context, String title) {
     Platform.isIOS
         ? showCupertinoDialog(

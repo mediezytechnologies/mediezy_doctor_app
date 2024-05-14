@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
-
 import 'dart:async';
 import 'package:animation_wrappers/animation_wrappers.dart';
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -83,6 +81,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 child: Text("Your Appointments",
                     style: size.width > 450 ? greyTab10B600 : grey13B600),
               ),
+              const VerticalSpacingWidget(height: 5),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: DatePickerDemoClass(
@@ -110,6 +109,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value),
                     );
+                    // AppoimentTabbar();
                   },
                   dateTextStyle: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -120,59 +120,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       TextStyle(fontSize: size.width > 450 ? 8.sp : 12.sp),
                 ),
               ),
-              // EasyDateTimeLine(
-              //   initialDate: controller.selectedDate,
-              //   disabledDates: _getDisabledDates(),
-              //   onDateChange: (date) {
-              //     String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-              //     controller.selectedDate = date;
-              //     BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-              //       FetchAllAppointments(
-              //           date: formattedDate,
-              //           clinicId: controller.initialIndex!,
-              //           scheduleType: controller.scheduleIndex.value),
-              //     );
-              //     BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
-              //       FetchAllCompletedAppointments(
-              //           date: formattedDate,
-              //           clinicId: controller.initialIndex!,
-              //           scheduleType: controller.scheduleIndex.value),
-              //     );
-              //   },
-              //   activeColor: kMainColor,
-              //   headerProps: const EasyHeaderProps(
-              //     selectedDateFormat: SelectedDateFormat.monthOnly,
-              //   ),
-              //   dayProps: EasyDayProps(
-              //     height:
-              //         size.width > 450 ? size.height * .075 : size.height * .07,
-              //     width: size.width > 450 ? size.width * .1 : size.width * .15,
-              //     dayStructure: DayStructure.dayNumDayStr,
-              //     inactiveDayStyle: DayStyle(
-              //       decoration: BoxDecoration(
-              //           borderRadius:
-              //               const BorderRadius.all(Radius.circular(10)),
-              //           border: Border.all(color: kMainColor)),
-              //       dayNumStyle: TextStyle(
-              //           fontSize: size.width > 450 ? 19.sp : 15.sp,
-              //           color: kTextColor),
-              //     ),
-              //     inactiveDayStrStyle: TextStyle(
-              //         fontSize: size.width > 450 ? 9.sp : 12.sp,
-              //         color: Colors.grey),
-              //     activeDayStyle: DayStyle(
-              //       borderRadius: 10,
-              //       dayNumStyle: TextStyle(
-              //           fontSize: size.width > 450 ? 15.sp : 18.sp,
-              //           fontWeight: FontWeight.bold,
-              //           color: kCardColor),
-              //     ),
-              //     activeDayStrStyle: TextStyle(
-              //         fontSize: size.width > 450 ? 9.sp : 12.sp,
-              //         fontWeight: FontWeight.w400,
-              //         color: kCardColor),
-              //   ),
-              // ),
               const VerticalSpacingWidget(height: 5),
               const AppoimentTabbar(),
             ],
