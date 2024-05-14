@@ -13,6 +13,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -20,6 +21,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/token_card_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/GetTokensScreen/ScreenOne%20.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../Model/GenerateToken/clinic_get_model.dart';
 
@@ -129,7 +131,17 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                         const VerticalSpacingWidget(height: 5),
                         _isLoading
                             ? _buildCalenderLoadingWidget(context)
-                            : DatePickerWidget(
+                            : DatePickerDemoClass(
+                                height: size.width > 450
+                                    ? size.height * .1
+                                    : size.height * .14,
+                                width: size.width > 450
+                                    ? size.width * .12
+                                    : size.width * .17,
+                                DateTime.now(),
+                                initialSelectedDate: DateTime.now(),
+                                selectionColor: kMainColor,
+                                selectedTextColor: Colors.white,
                                 onDateChange: (date) {
                                   String formattedDate =
                                       DateFormat('yyyy-MM-dd').format(date);
@@ -139,9 +151,15 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                           date: formattedDate,
                                           clinicId: dController.initialIndex!));
                                 },
+                                dateTextStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: size.width > 450 ? 10.sp : 16.sp),
+                                dayTextStyle: TextStyle(
+                                    fontSize: size.width > 450 ? 8.sp : 12.sp),
+                                monthTextStyle: TextStyle(
+                                    fontSize: size.width > 450 ? 8.sp : 12.sp),
                               ),
-
-                        const VerticalSpacingWidget(height: 10),
+                        // const VerticalSpacingWidget(height: 10),
                         // Center(
                         //   child: TextButton(
                         //       onPressed: () {

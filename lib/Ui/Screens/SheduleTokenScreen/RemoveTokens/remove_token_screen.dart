@@ -17,6 +17,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -275,18 +276,38 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     },
                                   );
                                 }),
-                                DatePickerWidget(
+                                const VerticalSpacingWidget(height: 10),
+                                DatePickerDemoClass(
+                                  height: size.width > 450
+                                      ? size.height * .1
+                                      : size.height * .14,
+                                  width: size.width > 450
+                                      ? size.width * .12
+                                      : size.width * .17,
+                                  DateTime.now(),
+                                  initialSelectedDate: DateTime.now(),
+                                  selectionColor: kMainColor,
+                                  selectedTextColor: Colors.white,
                                   onDateChange: (date) {
                                     String formattedDate =
                                         DateFormat('yyyy-MM-dd').format(date);
-                                    selectedDate = date; //
-                                    BlocProvider.of<GetTokenBloc>(context)
-                                        .add(FetchTokens(
-                                      date: formattedDate,
-                                      clinicId: dController.initialIndex!,
-                                    ));
-                                    resetSelectedTokens();
+                                    selectedDate = date;
+                                    BlocProvider.of<GetTokenBloc>(context).add(
+                                      FetchTokens(
+                                          date: formattedDate,
+                                          clinicId: dController.initialIndex!),
+                                    );
                                   },
+                                  dateTextStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize:
+                                          size.width > 450 ? 10.sp : 16.sp),
+                                  dayTextStyle: TextStyle(
+                                      fontSize:
+                                          size.width > 450 ? 8.sp : 12.sp),
+                                  monthTextStyle: TextStyle(
+                                      fontSize:
+                                          size.width > 450 ? 8.sp : 12.sp),
                                 ),
                                 BlocBuilder<GetTokenBloc, GetTokenState>(
                                   builder: (context, state) {

@@ -173,10 +173,6 @@ class CustomScheduleApi {
   Future<String> deleteEarly({
     required String scheduleId,
   }) async {
-    String? doctorId;
-    final preference = await SharedPreferences.getInstance();
-    doctorId = preference.getString('DoctorId').toString();
-
     String basePath = "doctor/deleteDoctorEarlyReschedules";
     final body = {
       "reschedule_id": scheduleId,

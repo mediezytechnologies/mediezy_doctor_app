@@ -14,6 +14,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -82,59 +83,96 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 child: Text("Your Appointments",
                     style: size.width > 450 ? greyTab10B600 : grey13B600),
               ),
-              EasyDateTimeLine(
-                initialDate: controller.selectedDate,
-                disabledDates: _getDisabledDates(),
-                onDateChange: (date) {
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-                  controller.selectedDate = date;
-                  BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-                    FetchAllAppointments(
-                        date: formattedDate,
-                        clinicId: controller.initialIndex!,
-                        scheduleType: controller.scheduleIndex.value),
-                  );
-                  BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
-                    FetchAllCompletedAppointments(
-                        date: formattedDate,
-                        clinicId: controller.initialIndex!,
-                        scheduleType: controller.scheduleIndex.value),
-                  );
-                },
-                activeColor: kMainColor,
-                headerProps: const EasyHeaderProps(
-                  selectedDateFormat: SelectedDateFormat.monthOnly,
-                ),
-                dayProps: EasyDayProps(
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                child: DatePickerDemoClass(
                   height:
-                      size.width > 450 ? size.height * .075 : size.height * .07,
-                  width: size.width > 450 ? size.width * .1 : size.width * .15,
-                  dayStructure: DayStructure.dayNumDayStr,
-                  inactiveDayStyle: DayStyle(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(color: kMainColor)),
-                    dayNumStyle: TextStyle(
-                        fontSize: size.width > 450 ? 19.sp : 15.sp,
-                        color: kTextColor),
-                  ),
-                  inactiveDayStrStyle: TextStyle(
-                      fontSize: size.width > 450 ? 9.sp : 12.sp,
-                      color: Colors.grey),
-                  activeDayStyle: DayStyle(
-                    borderRadius: 10,
-                    dayNumStyle: TextStyle(
-                        fontSize: size.width > 450 ? 15.sp : 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: kCardColor),
-                  ),
-                  activeDayStrStyle: TextStyle(
-                      fontSize: size.width > 450 ? 9.sp : 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: kCardColor),
+                      size.width > 450 ? size.height * .1 : size.height * .13,
+                  width: size.width > 450 ? size.width * .12 : size.width * .17,
+                  DateTime.now(),
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: kMainColor,
+                  selectedTextColor: Colors.white,
+                  onDateChange: (date) {
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(date);
+                    controller.selectedDate = date;
+                    BlocProvider.of<GetAllAppointmentsBloc>(context).add(
+                      FetchAllAppointments(
+                          date: formattedDate,
+                          clinicId: controller.initialIndex!,
+                          scheduleType: controller.scheduleIndex.value),
+                    );
+                    BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
+                        .add(
+                      FetchAllCompletedAppointments(
+                          date: formattedDate,
+                          clinicId: controller.initialIndex!,
+                          scheduleType: controller.scheduleIndex.value),
+                    );
+                  },
+                  dateTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: size.width > 450 ? 10.sp : 16.sp),
+                  dayTextStyle:
+                      TextStyle(fontSize: size.width > 450 ? 8.sp : 12.sp),
+                  monthTextStyle:
+                      TextStyle(fontSize: size.width > 450 ? 8.sp : 12.sp),
                 ),
               ),
+              // EasyDateTimeLine(
+              //   initialDate: controller.selectedDate,
+              //   disabledDates: _getDisabledDates(),
+              //   onDateChange: (date) {
+              //     String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+              //     controller.selectedDate = date;
+              //     BlocProvider.of<GetAllAppointmentsBloc>(context).add(
+              //       FetchAllAppointments(
+              //           date: formattedDate,
+              //           clinicId: controller.initialIndex!,
+              //           scheduleType: controller.scheduleIndex.value),
+              //     );
+              //     BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
+              //       FetchAllCompletedAppointments(
+              //           date: formattedDate,
+              //           clinicId: controller.initialIndex!,
+              //           scheduleType: controller.scheduleIndex.value),
+              //     );
+              //   },
+              //   activeColor: kMainColor,
+              //   headerProps: const EasyHeaderProps(
+              //     selectedDateFormat: SelectedDateFormat.monthOnly,
+              //   ),
+              //   dayProps: EasyDayProps(
+              //     height:
+              //         size.width > 450 ? size.height * .075 : size.height * .07,
+              //     width: size.width > 450 ? size.width * .1 : size.width * .15,
+              //     dayStructure: DayStructure.dayNumDayStr,
+              //     inactiveDayStyle: DayStyle(
+              //       decoration: BoxDecoration(
+              //           borderRadius:
+              //               const BorderRadius.all(Radius.circular(10)),
+              //           border: Border.all(color: kMainColor)),
+              //       dayNumStyle: TextStyle(
+              //           fontSize: size.width > 450 ? 19.sp : 15.sp,
+              //           color: kTextColor),
+              //     ),
+              //     inactiveDayStrStyle: TextStyle(
+              //         fontSize: size.width > 450 ? 9.sp : 12.sp,
+              //         color: Colors.grey),
+              //     activeDayStyle: DayStyle(
+              //       borderRadius: 10,
+              //       dayNumStyle: TextStyle(
+              //           fontSize: size.width > 450 ? 15.sp : 18.sp,
+              //           fontWeight: FontWeight.bold,
+              //           color: kCardColor),
+              //     ),
+              //     activeDayStrStyle: TextStyle(
+              //         fontSize: size.width > 450 ? 9.sp : 12.sp,
+              //         fontWeight: FontWeight.w400,
+              //         color: kCardColor),
+              //   ),
+              // ),
               const VerticalSpacingWidget(height: 5),
               const AppoimentTabbar(),
             ],

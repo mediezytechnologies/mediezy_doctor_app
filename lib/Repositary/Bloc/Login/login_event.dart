@@ -30,38 +30,38 @@ class FetchSignup extends LoginEvent {
 
 //Dummy register
 
-// class DummyRegister extends LoginEvent {
-//   final String email;
-//   final String firstname;
-//   final String dob;
-//   final String mobileNo;
-//   final String location;
-//   final String hospitalName;
-//   final String specialization;
-//   // final String doctorImage;
+class DummyRegister extends LoginEvent {
+  final String email;
+  final String firstname;
+  final String dob;
+  final String mobileNo;
+  final String location;
+  final String hospitalName;
+  final String specialization;
+  // final String doctorImage;
 
-//   DummyRegister({
-//     required this.email,
-//     required this.firstname,
-//     required this.dob,
-//     required this.mobileNo,
-//     required this.location,
-//     required this.hospitalName,
-//     required this.specialization,
-//     // required this.doctorImage,
-//   });
-// }
+  DummyRegister({
+    required this.email,
+    required this.firstname,
+    required this.dob,
+    required this.mobileNo,
+    required this.location,
+    required this.hospitalName,
+    required this.specialization,
+    // required this.doctorImage,
+  });
+}
 
 //!guest register
 
-class GuestRegister extends LoginEvent {
-  final String email;
-  final String name;
-  final String mobileNo;
+// class GuestRegister extends LoginEvent {
+//   final String email;
+//   final String name;
+//   final String mobileNo;
 
-  GuestRegister({
-    required this.email,
-    required this.name,
-    required this.mobileNo,
-  });
-}
+//   GuestRegister({
+//     required this.email,
+//     required this.name,
+//     required this.mobileNo,
+//   });
+// }

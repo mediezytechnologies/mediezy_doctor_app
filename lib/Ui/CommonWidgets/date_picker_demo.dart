@@ -1,8 +1,10 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 
 class DatePickerDemoClass extends StatefulWidget {
   final DateTime startDate;
@@ -36,7 +38,7 @@ class DatePickerDemoClass extends StatefulWidget {
     this.initialSelectedDate,
     this.activeDates,
     this.inactiveDates,
-    this.daysCount = 500,
+    this.daysCount = 100000,
     this.onDateChange,
     this.locale = "en_US",
   }) : assert(
@@ -49,6 +51,16 @@ class DatePickerDemoClass extends StatefulWidget {
 }
 
 class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
+//   Widget _buildMonthPicker() {
+//   if (_showMonthPicker(pickerType: MonthPickerType.dropDown)) {
+//     return YourDropDownWidget(); // Replace YourDropDownWidget with your actual dropdown widget
+//   } else if (_showMonthPicker(pickerType: MonthPickerType.switcher)) {
+//     return YourMonthSwitcherWidget(); // Replace YourMonthSwitcherWidget with your actual month switcher widget
+//   } else {
+//     return Container(); // Return an empty container if none of the conditions are met
+//   }
+// }
+
   DateTime? _currentDate;
 
   ScrollController _controller = ScrollController();
@@ -61,11 +73,10 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
   late final TextStyle deactivatedMonthStyle;
   late final TextStyle deactivatedDayStyle;
 
-
-    DateTime? currentDate;
+  DateTime? currentDate;
   DateTime? date;
   String displayedMonth = DateFormat("MMM").format(DateTime.now());
-  String displayedYear =DateFormat("yyyy").format(DateTime.now());
+  String displayedYear = DateFormat("yyyy").format(DateTime.now());
   @override
   void initState() {
     initializeDateFormatting(widget.locale, null);
@@ -73,7 +84,7 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
     if (widget.controller != null) {
       widget.controller!.setDatePickerState(this);
     }
- _controller.addListener(_onScroll);
+    _controller.addListener(_onScroll);
     selectedDateStyle =
         widget.dateTextStyle.copyWith(color: widget.selectedTextColor);
     selectedMonthStyle =
@@ -90,51 +101,52 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
 
     super.initState();
   }
+
   void _onScroll() {
     final firstVisibleItemIndex = _controller.offset ~/ widget.width;
-    final currentDate = widget.startDate.add(Duration(days: firstVisibleItemIndex));
+    final currentDate =
+        widget.startDate.add(Duration(days: firstVisibleItemIndex));
     _updateDisplayedMonthAndYear(currentDate);
   }
+
   void _updateDisplayedMonthAndYear(DateTime date) {
     setState(() {
-      displayedMonth = DateFormat("MMM", widget.locale).format(date).toUpperCase();
-      displayedYear = DateFormat("yyyy", widget.locale).format(date).toUpperCase();
+      displayedMonth =
+          DateFormat("MMM", widget.locale).format(date).toUpperCase();
+      displayedYear =
+          DateFormat("yyyy", widget.locale).format(date).toUpperCase();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final size =MediaQuery.of(context).size;
-    return Container(
+    final size = MediaQuery.of(context).size;
+    return SizedBox(
       height: widget.height,
       child: Column(
         children: [
-           Padding(
-             padding:  EdgeInsets.symmetric(horizontal: size.width*0.03,),
-             child: Container(
-             // color: Color.fromARGB(255, 240, 241, 241),
-               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                 Text(
-                    displayedMonth,
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                        Text(
-                    displayedYear,
-                    style: TextStyle(
-                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-                         ),
-             ),
-           ),
-           SizedBox(height: size.height*0.03,),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.03,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  displayedMonth,
+                  style: size.width > 450 ? blackTabMainText : blackMainText,
+                ),
+                Text(
+                  displayedYear,
+                  style: size.width > 450 ? blackTabMainText : blackMainText,
+                ),
+              ],
+            ),
+          ),
+          const VerticalSpacingWidget(height: 5),
+          // SizedBox(
+          //   height: size.height * 0.03,
+          // ),
           Expanded(
             child: ListView.builder(
               itemCount: widget.daysCount,
@@ -157,7 +169,6 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                     }
                   }
                 }
-
                 if (widget.activeDates != null) {
                   isDeactivated = true;
                   for (DateTime activateDate in widget.activeDates!) {
@@ -172,9 +183,6 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                 bool isSelected = _currentDate != null
                     ? _compareDate(date, _currentDate!)
                     : false;
-
-
-
                 return DateWidgets(
                   date: date,
                   monthTextStyle: isDeactivated
@@ -204,8 +212,11 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                     }
                     setState(() {
                       _currentDate = selectedDate;
-
                     });
+                  },
+                  onMonthUpdated: (selectedDate) {
+                    // Pass the callback function
+                    _updateDisplayedMonthAndYear(selectedDate);
                   },
                 );
               },
@@ -286,12 +297,17 @@ class DatePickerController {
   }
 }
 
+// Add this callback function type definition at the end of your file
+typedef MonthUpdateCallback = void Function(DateTime selectedDate);
+
+// Modify the DateWidgets widget to accept the callback function
 class DateWidgets extends StatelessWidget {
   final double? width;
   final DateTime date;
   final TextStyle? monthTextStyle, dayTextStyle, dateTextStyle;
   final Color selectionColor;
   final DateSelectionCallback? onDateSelected;
+  final MonthUpdateCallback? onMonthUpdated; // Add this line
   final String? locale;
 
   const DateWidgets({
@@ -303,6 +319,7 @@ class DateWidgets extends StatelessWidget {
     required this.selectionColor,
     this.width,
     this.onDateSelected,
+    this.onMonthUpdated, // Add this line
     this.locale,
   });
 
@@ -313,6 +330,7 @@ class DateWidgets extends StatelessWidget {
         width: width,
         margin: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
           borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           color: selectionColor,
         ),
@@ -323,13 +341,17 @@ class DateWidgets extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                  DateFormat("E", locale).format(date).toUpperCase(), // WeekDay
-                  style: dayTextStyle),
-              Text(date.day.toString(), // Date
-                  style: dateTextStyle),
+                DateFormat("E", locale).format(date).toUpperCase(), // WeekDay
+                style: dayTextStyle,
+              ),
               Text(
-                  DateFormat("MMM", locale).format(date).toUpperCase(), // Month
-                  style: monthTextStyle),
+                date.day.toString(), // Date
+                style: dateTextStyle,
+              ),
+              Text(
+                DateFormat("MMM", locale).format(date).toUpperCase(), // Month
+                style: monthTextStyle,
+              ),
             ],
           ),
         ),
@@ -337,11 +359,16 @@ class DateWidgets extends StatelessWidget {
       onTap: () {
         if (onDateSelected != null) {
           onDateSelected!(date);
+          if (onMonthUpdated != null) {
+            // Call the callback function
+            onMonthUpdated!(date);
+          }
         }
       },
     );
   }
 }
+
 class AppColors {
   AppColors._();
 
@@ -364,7 +391,6 @@ const TextStyle defaultDateTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
-
 const TextStyle defaultDayTextStyle = TextStyle(
   color: AppColors.defaultDayColor,
   fontSize: Dimen.dayTextSize,
@@ -378,6 +404,7 @@ typedef DateSelectionCallback = void Function(DateTime selectedDate);
 ///
 /// Used by [DatePickerTimeline] for tap detection.
 typedef DateChangeListener = void Function(DateTime selectedDate);
+
 class Dimen {
   Dimen._();
 

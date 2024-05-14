@@ -60,46 +60,46 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
 
-    //signup
-    // on<DummyRegister>((event, emit) async {
-    //   emit(DummyRegisterLoading());
-    //   try {
-    //     updatedSuccessfully = await loginApi.addDummyRegister(
-    //         email: event.email,
-    //         firstname: event.firstname,
-    //         dob: event.dob,
-    //         mobileNo: event.mobileNo,
-    //         location: event.location,
-    //         hospitalName: event.hospitalName,
-    //         specialization: event.specialization,
-    //         // doctorImage: event.doctorImage
-    //     );
-    //     Map<String,dynamic> data =jsonDecode(updatedSuccessfully);
-    //     emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
-    //     print("loaded");
-    //   } catch (e) {
-    //     final String error ="$e";
-    //     print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
-    //     emit(DummyRegisterError(errorMessage: error ));
-    //   }
-    // });
-
-    on<GuestRegister>((event, emit) async {
+    // signup
+    on<DummyRegister>((event, emit) async {
       emit(DummyRegisterLoading());
       try {
-        updatedSuccessfully = await loginApi.addGuestRegister(
+        updatedSuccessfully = await loginApi.addDummyRegister(
           email: event.email,
-          name: event.name,
+          firstname: event.firstname,
+          dob: event.dob,
           mobileNo: event.mobileNo,
+          location: event.location,
+          hospitalName: event.hospitalName,
+          specialization: event.specialization,
+          // doctorImage: event.doctorImage
         );
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
         print("loaded");
       } catch (e) {
         final String error = "$e";
-        print("Error>>>>>>>>>>>>" + e.toString());
+        print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
         emit(DummyRegisterError(errorMessage: error));
       }
     });
+
+    // on<GuestRegister>((event, emit) async {
+    //   emit(DummyRegisterLoading());
+    //   try {
+    //     updatedSuccessfully = await loginApi.addGuestRegister(
+    //       email: event.email,
+    //       name: event.name,
+    //       mobileNo: event.mobileNo,
+    //     );
+    //     Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+    //     emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
+    //     print("loaded");
+    //   } catch (e) {
+    //     final String error = "$e";
+    //     print("Error>>>>>>>>>>>>" + e.toString());
+    //     emit(DummyRegisterError(errorMessage: error));
+    //   }
+    // });
   }
 }

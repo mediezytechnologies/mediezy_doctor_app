@@ -11,8 +11,6 @@ class LoginLoaded extends LoginState {}
 
 class LoginError extends LoginState {}
 
-
-
 class DummyRegisterInitial extends LoginState {}
 
 class DummyRegisterLoading extends LoginState {}
