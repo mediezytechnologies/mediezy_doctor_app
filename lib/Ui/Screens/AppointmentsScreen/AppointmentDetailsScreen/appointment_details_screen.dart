@@ -692,7 +692,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     .contains(value))
                                                 .toList();
                                             // widget.onDropValueChanged(dropValueMedicalStore);
-                                            (">>>>>>>>>$medicalStoreId");
+                                            log(dropValueMedicalStoreNotifier
+                                                .toString());
+                                            log(">>>>>>>>>$medicalStoreId");
                                           },
                                           items: medicalStoreValues
                                               .map<DropdownMenuItem<String>>(
@@ -1041,9 +1043,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
                                   print(selectedValue);
                                   // setState(() {
+                                  scanTestController.clear();
                                   afterDaysController.clear();
                                   noteController.clear();
                                   labTestController.clear();
+                                  dropValueMedicalStore = '';
                                   imageFromCamera = null;
                                   // });
                                 },

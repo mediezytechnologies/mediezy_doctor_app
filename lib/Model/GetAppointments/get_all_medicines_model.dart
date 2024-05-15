@@ -28,16 +28,24 @@ class GetAllMedicinesModel {
 
 class Medicines {
   Medicines({
-      this.medicineName,});
+      this.medicineName, 
+      this.id, 
+      this.favStatus,});
 
   Medicines.fromJson(dynamic json) {
     medicineName = json['medicine_name'];
+    id = json['id'];
+    favStatus = json['fav_status'];
   }
   String? medicineName;
+  int? id;
+  int? favStatus;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['medicine_name'] = medicineName;
+    map['id'] = id;
+    map['fav_status'] = favStatus;
     return map;
   }
 

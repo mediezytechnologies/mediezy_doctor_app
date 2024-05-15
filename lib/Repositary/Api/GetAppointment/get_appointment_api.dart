@@ -307,6 +307,8 @@ class GetAppointmentApi {
     return response.body;
   }
 
+  //! search medicine
+
   Future<GetAllMedicinesModel> getAllMedicines({
     required String searchQuery,
   }) async {
@@ -316,5 +318,21 @@ class GetAppointmentApi {
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     print(body);
     return GetAllMedicinesModel.fromJson(json.decode(response.body));
+  }
+
+  //! update favourite medicine
+
+  Future<String> updateFavouriteMedicine({
+    required String medicineId,
+  }) async {
+    String basePath = "doctor/updateFavoriteMedicines";
+
+    final body = {
+      "medicine_id": medicineId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
+    return response.body;
   }
 }
