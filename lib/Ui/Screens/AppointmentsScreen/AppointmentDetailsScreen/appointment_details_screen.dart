@@ -45,11 +45,13 @@ class AppointmentDetailsScreen extends StatefulWidget {
     //mahesh//====
     this.length,
     required this.firstIndex,
+    required this.date,
   }) : super(key: key);
 
   final String tokenId;
   final List<Appointments> appointmentsDetails;
   final int position;
+  final String date;
 
   //mahesh//====
   final int? length;
@@ -136,6 +138,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         .add(FetchAppointmentDetailsPage(tokenId: widget.tokenId));
     BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
         .add(FetchAllFavouriteMedicalStore());
+    BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
+      date: widget.date,
+      clinicId: controller.initialIndex!,
+      scheduleType: controller.scheduleIndex.value,
+    ));
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
         .add(FetchAllFavouriteLab());
     currentPosition = widget.position;
@@ -164,7 +171,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         Navigator.pop(context);
         BlocProvider.of<GetAllAppointmentsBloc>(context)
             .add(FetchAllAppointments(
-          date: controller.formatDate(),
+          date: widget.date,
           clinicId: controller.initialIndex!,
           scheduleType: controller.scheduleIndex.value,
         ));
@@ -177,7 +184,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                 Navigator.pop(context);
                 BlocProvider.of<GetAllAppointmentsBloc>(context)
                     .add(FetchAllAppointments(
-                  date: controller.formatDate(),
+                  date: widget.date,
                   clinicId: controller.initialIndex!,
                   scheduleType: controller.scheduleIndex.value,
                 ));
@@ -297,37 +304,51 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       : appointmentDetailsPageModel
                                           .bookingData!.userImage
                                           .toString(),
-                                  radius: 40),
+                                  radius: 40.r),
                             ),
                             // const HorizontalSpacingWidget(width: 25),
                             //! name
                             nameCard(context),
                             IconButton(
                                 onPressed: () {
-                                  if (currentPosition >= 0 &&
-                                      currentPosition <
-                                          widget.appointmentsDetails.length) {
-                                    currentPosition++;
-                                    BlocProvider.of<GetAppointmentsBloc>(
-                                            context)
-                                        .add(
-                                      FetchAppointmentDetailsPage(
-                                        tokenId: widget
-                                            .appointmentsDetails[
-                                                currentPosition]
-                                            .id
-                                            .toString(),
-                                      ),
-                                    );
-                                    setState(() {
+                                  setState(() {
+                                    if (currentPosition >= 0 &&
+                                        currentPosition <
+                                            widget.appointmentsDetails.length) {
+                                      currentPosition++;
+                                      // setState(() {
+                                      BlocProvider.of<GetAllAppointmentsBloc>(
+                                              context)
+                                          .add(FetchAllAppointments(
+                                        date: widget.date,
+                                        clinicId: controller.initialIndex!,
+                                        scheduleType:
+                                            controller.scheduleIndex.value,
+                                      ));
+                                      BlocProvider.of<GetAppointmentsBloc>(
+                                              context)
+                                          .add(
+                                        FetchAppointmentDetailsPage(
+                                          tokenId: widget
+                                              .appointmentsDetails[
+                                                  currentPosition]
+                                              .id
+                                              .toString(),
+                                        ),
+                                      );
+                                      // });
+                                      log("counttttttttttttttt${widget.appointmentsDetails.length.toString()}");
+
+                                      // setState(() {
                                       balanceAppoiment =
                                           widget.length! - 1 - currentPosition;
                                       log("pos-- $currentPosition");
-                                    });
-                                  } else {
-                                    GeneralServices.instance.showToastMessage(
-                                        "There are no more appointments");
-                                  }
+                                      // });
+                                    } else {
+                                      GeneralServices.instance.showToastMessage(
+                                          "There are no more appointments");
+                                    }
+                                  });
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward_ios_rounded,
@@ -406,7 +427,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 currentPosition]
                                             .firstIndexStatus ==
                                         1) {
-                                      // Show alert dialog only for the first token's check-in
                                       GeneralServices.instance.appCloseDialogue(
                                           context,
                                           "Are you sure you want to start the consultation",
@@ -416,7 +436,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           appointmentDetailsPageModel
                                               .bookingData!.isCheckedin = 1;
                                         });
-                                        // Execute the BlocProvider logic for the first token only when the user presses OK
                                         BlocProvider.of<
                                                     AddCheckinOrCheckoutBloc>(
                                                 context)
@@ -438,7 +457,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         isFirstCheckIn = false; // Update is
                                       });
                                     } else {
-                                      // For tokens other than the first one, directly execute the BlocProvider logic
                                       // clickedIndex = index;
                                       setState(() {
                                         appointmentDetailsPageModel
@@ -703,8 +721,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               onTap: () {
                                                 dropValueMedicalStore =
                                                     value.id.toString();
-                                                print(
-                                                    ".........................$dropValueMedicalStore");
+                                                log(".........................$dropValueMedicalStore");
                                                 log(dropValueMedicalStore);
                                               },
                                               value: value.laboratory!,
@@ -804,7 +821,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     .laboratory!
                                                     .contains(value))
                                                 .toList();
-                                            print(labId);
+                                            log("$labId");
                                           },
                                           items: labValues
                                               .map<DropdownMenuItem<String>>(
@@ -813,7 +830,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               onTap: () {
                                                 dropValueLab =
                                                     value.id.toString();
-                                                print(dropValueLab);
+                                                log(dropValueLab);
                                               },
                                               value: value.laboratory!,
                                               child: Text(value.laboratory!),
@@ -915,7 +932,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     .laboratory!
                                                     .contains(value))
                                                 .toList();
-                                            print(scanningId);
+                                            log("$scanningId");
                                           },
                                           items: scanningValues
                                               .map<DropdownMenuItem<String>>(
@@ -924,7 +941,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               onTap: () {
                                                 dropValueScanning =
                                                     value.id.toString();
-                                                print(dropValueScanning);
+                                                log(dropValueScanning);
                                               },
                                               value: value.laboratory!,
                                               child: Text(value.laboratory!),
@@ -1041,7 +1058,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     }
                                   });
 
-                                  print(selectedValue);
+                                  log("$selectedValue");
                                   // setState(() {
                                   scanTestController.clear();
                                   afterDaysController.clear();
@@ -1110,8 +1127,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                     ),
                   ),
                 );
+              } else {
+                return const Center(child: CircularProgressIndicator());
               }
-              return Container();
             },
           ),
         ),

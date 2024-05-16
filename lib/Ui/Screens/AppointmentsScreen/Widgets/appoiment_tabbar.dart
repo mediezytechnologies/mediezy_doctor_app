@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/details_demo.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import '../../../../Model/GetAppointments/get_all_appointments_model.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -93,6 +96,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                               scheduleType: controller.scheduleIndex.value),
                         );
                       }
+                      log(controller.formatDate());
                     },
                     unselectedLabelStyle: TextStyle(
                       fontSize: size.width > 450 ? 11.sp : 12.sp,
@@ -182,7 +186,39 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                             context,
                                             MaterialPageRoute(
                                               builder: (ctx) =>
+                                                  // DetailsDemo(
+                                                  //       firstIndex:
+                                                  //           getAllAppointmentsModel
+                                                  //               .appointments![
+                                                  //                   index]
+                                                  //               .firstIndexStatus!,
+                                                  //       length:
+                                                  //           getAllAppointmentsModel
+                                                  //               .appointments!
+                                                  //               .length,
+                                                  //       position: index,
+                                                  //       appointmentsDetails:
+                                                  //           getAllAppointmentsModel
+                                                  //               .appointments!,
+                                                  //       tokenId:
+                                                  //           getAllAppointmentsModel
+                                                  //               .appointments![
+                                                  //                   index]
+                                                  //               .id
+                                                  //               .toString(),
+                                                  //       date: controller
+                                                  //           .formatDate(),
+                                                  //       patientName:
+                                                  //           getAllAppointmentsModel
+                                                  //               .appointments![
+                                                  //                   index]
+                                                  //               .patientName
+                                                  //               .toString(),
+                                                  //     )
                                                   AppointmentDetailsScreen(
+                                                // itemCount:
+                                                //     getAllAppointmentsModel
+                                                //         .appointments!.length,
                                                 firstIndex:
                                                     getAllAppointmentsModel
                                                         .appointments![index]
@@ -196,6 +232,12 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                 tokenId: getAllAppointmentsModel
                                                     .appointments![index].id
                                                     .toString(),
+                                                date: controller.formatDate(),
+                                                // patientName:
+                                                //     getAllAppointmentsModel
+                                                //         .appointments![index]
+                                                //         .patientName
+                                                //         .toString(),
                                               ),
                                             ),
                                           );

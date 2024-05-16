@@ -147,11 +147,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 .bookingData!.medicine![index].dosage
                                 .toString(),
                           ),
-                          ShortNamesWidget(
-                            firstText: "Interval : ",
-                            secondText:
-                                "${widget.appointmentDetailsPageModel.bookingData!.medicine![index].interval.toString()} ${widget.appointmentDetailsPageModel.bookingData!.medicine![index].timeSection.toString()}",
-                          ),
+                          widget.appointmentDetailsPageModel.bookingData!
+                                      .medicine![index].interval ==
+                                  null
+                              ? Container()
+                              : ShortNamesWidget(
+                                  firstText: "Interval : ",
+                                  secondText:
+                                      "${widget.appointmentDetailsPageModel.bookingData!.medicine![index].interval.toString()} ${widget.appointmentDetailsPageModel.bookingData!.medicine![index].timeSection.toString()}",
+                                ),
                           ShortNamesWidget(
                             firstText: "Days : ",
                             secondText: widget.appointmentDetailsPageModel

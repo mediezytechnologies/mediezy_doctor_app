@@ -418,11 +418,20 @@ class CompletedAppointmentDetailsScreenState
                                                           .dosage
                                                           .toString(),
                                                 ),
-                                                ShortNamesWidget(
-                                                  firstText: "Interval : ",
-                                                  secondText:
-                                                      "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].interval == null ? "" : getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].interval.toString()} ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].timeSection.toString()}",
-                                                ),
+                                                getAllCompletedAppointmentDetailsModel
+                                                            .appointmentDetails!
+                                                            .first
+                                                            .doctorMedicines![
+                                                                index]
+                                                            .interval ==
+                                                        null
+                                                    ? Container()
+                                                    : ShortNamesWidget(
+                                                        firstText:
+                                                            "Interval : ",
+                                                        secondText:
+                                                            "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].interval.toString()} ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].timeSection.toString()}",
+                                                      ),
                                                 ShortNamesWidget(
                                                   firstText: "",
                                                   secondText: getAllCompletedAppointmentDetailsModel
