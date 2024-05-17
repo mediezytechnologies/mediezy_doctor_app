@@ -186,59 +186,59 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                             context,
                                             MaterialPageRoute(
                                               builder: (ctx) =>
-                                                  // DetailsDemo(
-                                                  //       firstIndex:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments![
-                                                  //                   index]
-                                                  //               .firstIndexStatus!,
-                                                  //       length:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments!
-                                                  //               .length,
-                                                  //       position: index,
-                                                  //       appointmentsDetails:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments!,
-                                                  //       tokenId:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments![
-                                                  //                   index]
-                                                  //               .id
-                                                  //               .toString(),
-                                                  //       date: controller
-                                                  //           .formatDate(),
-                                                  //       patientName:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments![
-                                                  //                   index]
-                                                  //               .patientName
-                                                  //               .toString(),
-                                                  //     )
-                                                  AppointmentDetailsScreen(
-                                                // itemCount:
-                                                //     getAllAppointmentsModel
-                                                //         .appointments!.length,
-                                                firstIndex:
-                                                    getAllAppointmentsModel
-                                                        .appointments![index]
-                                                        .firstIndexStatus!,
-                                                length: getAllAppointmentsModel
-                                                    .appointments!.length,
-                                                position: index,
-                                                appointmentsDetails:
-                                                    getAllAppointmentsModel
-                                                        .appointments!,
-                                                tokenId: getAllAppointmentsModel
-                                                    .appointments![index].id
-                                                    .toString(),
-                                                date: controller.formatDate(),
-                                                // patientName:
-                                                //     getAllAppointmentsModel
-                                                //         .appointments![index]
-                                                //         .patientName
-                                                //         .toString(),
-                                              ),
+                                                  DetailsDemo(
+                                                        firstIndex:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .firstIndexStatus!,
+                                                        length:
+                                                            getAllAppointmentsModel
+                                                                .appointments!
+                                                                .length,
+                                                        position: index,
+                                                        appointmentsDetails:
+                                                            getAllAppointmentsModel
+                                                                .appointments!,
+                                                        tokenId:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .id
+                                                                .toString(),
+                                                        date: controller
+                                                            .formatDate(),
+                                                        patientName:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .patientName
+                                                                .toString(),
+                                                      )
+                                              //     AppointmentDetailsScreen(
+                                              //   // itemCount:
+                                              //   //     getAllAppointmentsModel
+                                              //   //         .appointments!.length,
+                                              //   firstIndex:
+                                              //       getAllAppointmentsModel
+                                              //           .appointments![index]
+                                              //           .firstIndexStatus!,
+                                              //   length: getAllAppointmentsModel
+                                              //       .appointments!.length,
+                                              //   position: index,
+                                              //   appointmentsDetails:
+                                              //       getAllAppointmentsModel
+                                              //           .appointments!,
+                                              //   tokenId: getAllAppointmentsModel
+                                              //       .appointments![index].id
+                                              //       .toString(),
+                                              //   date: controller.formatDate(),
+                                              //   // patientName:
+                                              //   //     getAllAppointmentsModel
+                                              //   //         .appointments![index]
+                                              //   //         .patientName
+                                              //   //         .toString(),
+                                              // ),
                                             ),
                                           );
                                         },

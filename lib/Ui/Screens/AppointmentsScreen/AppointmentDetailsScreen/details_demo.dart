@@ -67,7 +67,7 @@ class DetailsDemo extends StatefulWidget {
 
 class _DetailsDemoState extends State<DetailsDemo> {
   final TextEditingController noteController = TextEditingController();
-  final PageController pageController = PageController();
+  //final PageController pageController = PageController();
 
   final TextEditingController afterDaysController = TextEditingController();
   final TextEditingController labTestController = TextEditingController();
@@ -113,6 +113,8 @@ class _DetailsDemoState extends State<DetailsDemo> {
   late GetAllAppointmentsModel getAllAppointmentsModel;
   File? imageFromCamera;
   int currentPosition = 0;
+  int currentPage = 0;
+  late PageController pageController;
 
   int? count = 0;
 
@@ -138,10 +140,15 @@ class _DetailsDemoState extends State<DetailsDemo> {
 
   int? currentTokenLength = 1;
   int clickedIndex = 0;
+
+  //new
   int currentIndex = 0;
+  int? scrollIndex;
 
   @override
   void initState() {
+    pageController = PageController(initialPage: currentPage);
+
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetAppointmentsBloc>(context)
         .add(FetchAppointmentDetailsPage(tokenId: widget.tokenId));
@@ -169,6 +176,12 @@ class _DetailsDemoState extends State<DetailsDemo> {
     //     ValueNotifier(medicalStoreValues.first.laboratory!);
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -233,6 +246,9 @@ class _DetailsDemoState extends State<DetailsDemo> {
                               .toString()));
                 }
                 if (state is DeleteVitalsLoaded) {
+                  getAllAppointmentsModel =
+                      BlocProvider.of<GetAllAppointmentsBloc>(context)
+                          .getAllAppointmentsModel;
                   BlocProvider.of<GetAppointmentsBloc>(context).add(
                       FetchAppointmentDetailsPage(
                           tokenId: appointmentDetailsPageModel
@@ -252,76 +268,132 @@ class _DetailsDemoState extends State<DetailsDemo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const VerticalSpacingWidget(height: 20),
-                  Container(
-                    color: Colors.yellow,
-                    height: 100.h,
-                    width: 400.w,
-                    child: PageView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.itemCount,
-                      controller: pageController,
-                      onPageChanged: (index) {
-                        currentTokenLength = index + 1;
-                        clickedIndex = index;
-                        currentIndex = index % widget.itemCount!;
-                      },
-                      itemBuilder: (context, index) {
-                        length = widget.itemCount;
 
-                        if (clickedIndex != 0) {
-                          index = clickedIndex;
-                        }
-                        return Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  pageController.jumpToPage(currentIndex - 1);
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  size: size.width > 450 ? 16.sp : 25.sp,
-                                  color: kMainColor,
-                                )),
+                  BlocBuilder<GetAllAppointmentsBloc, GetAllAppointmentsState>(
+                      builder: (context, state) {
+                    if (state is GetAllAppointmentsLoading) {
+                      // return _shimmerLoading();
+                    }
+                    if (state is GetAllAppointmentsError) {
+                      return const Center(
+                        child: Text("Something Went Wrong"),
+                      );
+                    }
+                    if (state is GetAllAppointmentsLoaded) {
+                      getAllAppointmentsModel =
+                          BlocProvider.of<GetAllAppointmentsBloc>(context)
+                              .getAllAppointmentsModel;
 
-                            // const HorizontalSpacingWidget(width: 25),
-                            //! name
-                            Text(
-                              widget.patientName,
-                              style: size.width > 450
-                                  ? blackTabMainText
-                                  : blackMainText,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  pageController.jumpToPage(currentIndex + 1);
-                                  BlocProvider.of<GetAppointmentsBloc>(context)
-                                      .add(
-                                    FetchAppointmentDetailsPage(
-                                      tokenId: widget
-                                          .appointmentsDetails[currentPosition]
-                                          .id
-                                          .toString(),
-                                    ),
+                      return Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                log("pressed");
+
+                                if (currentPage > 0) {
+                                  log("pressed no zero");
+                                  currentPage--;
+                                  pageController.animateToPage(
+                                    currentPage,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
                                   );
-                                  setState(() {
-                                    currentPosition = index;
-                                    currentPosition = clickedIndex;
-                                    log("button index : $currentPosition");
-                                    log("button index 2 : $currentPosition");
-                                  });
+                                }
+                                BlocProvider.of<GetAppointmentsBloc>(context)
+                                    .add(
+                                  FetchAppointmentDetailsPage(
+                                    tokenId: widget
+                                        .appointmentsDetails[currentPosition].id
+                                        .toString(),
+                                  ),
+                                );
+                                // pageController
+                                //     .jumpToPage(currentIndex - 1);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                size: size.width > 450 ? 16.sp : 25.sp,
+                                color: kMainColor,
+                              )),
+                          Container(
+                            color: Colors.yellow,
+                            height: 100.h,
+                            width: 200.w,
+                            child: SizedBox(
+                              width: 44,
+                              height: 200,
+                              child: PageView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: getAllAppointmentsModel
+                                    .appointments!.length,
+                                controller: pageController,
+                                onPageChanged: (index) {
+                                  currentTokenLength = index + 1;
+                                  clickedIndex = index;
+                                  currentIndex = index % widget.itemCount!;
                                 },
-                                icon: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: kMainColor,
-                                  size: size.width > 450 ? 16.sp : 25.sp,
-                                )),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                                itemBuilder: (context, index) {
+                                  // length = widget.itemCount;
+
+                                  // if (clickedIndex != 0) {
+                                  //   index = clickedIndex;
+                                  // }
+                                  return Text(
+                                    getAllAppointmentsModel
+                                        .appointments![index].patientName
+                                        .toString(),
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                if (currentPage <
+                                    getAllAppointmentsModel
+                                            .appointments!.length -
+                                        1) {
+                                  currentPage++;
+                                  pageController.animateToPage(
+                                    currentPage,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut,
+                                  );
+                                }
+
+                                // pageController
+                                //     .jumpToPage(currentIndex + 1);
+                                BlocProvider.of<GetAppointmentsBloc>(context)
+                                    .add(
+                                  FetchAppointmentDetailsPage(
+                                    tokenId: widget
+                                        .appointmentsDetails[currentPosition].id
+                                        .toString(),
+                                  ),
+                                );
+                                // setState(() {
+                                //   currentPosition = index;
+                                //   currentPosition = clickedIndex;
+                                //   log("button index : $currentPosition");
+                                //   log("button index 2 : $currentPosition");
+                                // });
+                              },
+                              icon: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: kMainColor,
+                                size: size.width > 450 ? 16.sp : 25.sp,
+                              )),
+                        ],
+                      );
+                    }
+                    return Container();
+                  }),
+
                   // BlocBuilder<GetAllAppointmentsBloc, GetAllAppointmentsState>(
                   //     builder: (context, state) {
                   //   if (state is GetAllAppointmentsLoading) {
@@ -1400,13 +1472,6 @@ class _DetailsDemoState extends State<DetailsDemo> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    noteController.dispose();
-    // imageFromCamera?.dispose();
   }
 
   Future<File> compressImage(String imagePath) async {
