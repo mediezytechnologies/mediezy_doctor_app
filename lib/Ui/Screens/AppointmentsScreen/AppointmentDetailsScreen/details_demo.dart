@@ -67,8 +67,6 @@ class DetailsDemo extends StatefulWidget {
 
 class _DetailsDemoState extends State<DetailsDemo> {
   final TextEditingController noteController = TextEditingController();
-  //final PageController pageController = PageController();
-
   final TextEditingController afterDaysController = TextEditingController();
   final TextEditingController labTestController = TextEditingController();
   final TextEditingController scanTestController = TextEditingController();
@@ -130,25 +128,33 @@ class _DetailsDemoState extends State<DetailsDemo> {
 
   void handleDropValueChanged(String newValue) {
     // Handle the value here in your first screen
+    
 
     setState(() {
       selectedValue = newValue;
     });
-    // print("Received value: $newValue");
-    // print("::::::::::::::::::$selectedValue");
   }
 
   int? currentTokenLength = 1;
   int clickedIndex = 0;
 
   //new
-  int currentIndex = 0;
+
   int? scrollIndex;
+  int? listLength;
 
   @override
   void initState() {
-    pageController = PageController(initialPage: currentPage);
+    listLength = widget.length;
+   
+    setState(() {
 
+      currentPosition = widget.position;
+       balanceAppoiment = widget.length! - 1 - currentPosition;
+      log("balance card : $balanceAppoiment");
+    });
+
+    pageController = PageController(initialPage: currentPosition);
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetAppointmentsBloc>(context)
         .add(FetchAppointmentDetailsPage(tokenId: widget.tokenId));
@@ -161,16 +167,11 @@ class _DetailsDemoState extends State<DetailsDemo> {
     ));
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
         .add(FetchAllFavouriteLab());
-    currentPosition = widget.position;
+    //currentPosition = widget.position;
     dropValueMedicalStoreNotifier =
         ValueNotifier(medicalStoreValues.first.laboratory!);
     dropValueLabNotifier = ValueNotifier(labValues.first.laboratory!);
     dropValueScanningNotifier = ValueNotifier(scanningValues.first.laboratory!);
-
-    setState(() {
-      // balanceAppoiment=widget.length!-1;
-      balanceAppoiment = widget.length! - 1 - widget.position;
-    });
 
     // dropValueMedicalStoreNotifier =
     //     ValueNotifier(medicalStoreValues.first.laboratory!);
@@ -192,12 +193,12 @@ class _DetailsDemoState extends State<DetailsDemo> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context);
-        BlocProvider.of<GetAllAppointmentsBloc>(context)
-            .add(FetchAllAppointments(
-          date: widget.date,
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value,
-        ));
+        // BlocProvider.of<GetAllAppointmentsBloc>(context)
+        //     .add(FetchAllAppointments(
+        //   date: widget.date,
+        //   clinicId: controller.initialIndex!,
+        //   scheduleType: controller.scheduleIndex.value,
+        // ));
         return Future.value(false);
       },
       child: Scaffold(
@@ -290,23 +291,45 @@ class _DetailsDemoState extends State<DetailsDemo> {
                               onPressed: () {
                                 log("pressed");
 
-                                if (currentPage > 0) {
+                                if (currentPosition > 0) {
                                   log("pressed no zero");
-                                  currentPage--;
+                                  currentPosition--;
                                   pageController.animateToPage(
-                                    currentPage,
+                                    currentPosition,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeInOut,
                                   );
+                                  BlocProvider.of<GetAppointmentsBloc>(context)
+                                      .add(
+                                    FetchAppointmentDetailsPage(
+                                      tokenId: widget
+                                          .appointmentsDetails[currentPosition]
+                                          .id
+                                          .toString(),
+                                    ),
+                                  );
+                                  BlocProvider.of<GetAllAppointmentsBloc>(
+                                          context)
+                                      .add(FetchAllAppointments(
+                                    date: widget.date,
+                                    clinicId: controller.initialIndex!,
+                                    scheduleType:
+                                        controller.scheduleIndex.value,
+                                  ));
+                                  setState(() {
+                                    // balanceAppoiment=widget.length!-1;
+                                    balanceAppoiment = getAllAppointmentsModel
+                                            .appointments!.length -
+                                        1 -
+                                        currentPosition;
+                                    log("balance card : $balanceAppoiment");
+                                  });
+
+                                  log("current date ==: ${widget.date}");
+                                  log("current clinicId ==: ${controller.initialIndex}");
+                                  log("current scheduleType ==: ${controller.scheduleIndex.value}");
                                 }
-                                BlocProvider.of<GetAppointmentsBloc>(context)
-                                    .add(
-                                  FetchAppointmentDetailsPage(
-                                    tokenId: widget
-                                        .appointmentsDetails[currentPosition].id
-                                        .toString(),
-                                  ),
-                                );
+
                                 // pageController
                                 //     .jumpToPage(currentIndex - 1);
                               },
@@ -330,9 +353,12 @@ class _DetailsDemoState extends State<DetailsDemo> {
                                 onPageChanged: (index) {
                                   currentTokenLength = index + 1;
                                   clickedIndex = index;
-                                  currentIndex = index % widget.itemCount!;
+                                  currentPosition = index;
+                                  currentPosition = index % widget.itemCount!;
+                                  log("current pos : $currentPosition");
                                 },
                                 itemBuilder: (context, index) {
+                                  log("current pos : $currentPosition");
                                   // length = widget.itemCount;
 
                                   // if (clickedIndex != 0) {
@@ -340,7 +366,8 @@ class _DetailsDemoState extends State<DetailsDemo> {
                                   // }
                                   return Text(
                                     getAllAppointmentsModel
-                                        .appointments![index].patientName
+                                        .appointments![currentPosition]
+                                        .patientName
                                         .toString(),
                                     style: size.width > 450
                                         ? blackTabMainText
@@ -354,28 +381,52 @@ class _DetailsDemoState extends State<DetailsDemo> {
                           ),
                           IconButton(
                               onPressed: () {
-                                if (currentPage <
+                                if (currentPosition <
                                     getAllAppointmentsModel
                                             .appointments!.length -
                                         1) {
-                                  currentPage++;
+                                  currentPosition++;
                                   pageController.animateToPage(
-                                    currentPage,
+                                    currentPosition,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeInOut,
                                   );
+                                  BlocProvider.of<GetAppointmentsBloc>(context)
+                                      .add(
+                                    FetchAppointmentDetailsPage(
+                                        tokenId: getAllAppointmentsModel
+                                            .appointments![currentPosition].id!
+                                            .toString()),
+                                  );
+                                  BlocProvider.of<GetAllAppointmentsBloc>(
+                                          context)
+                                      .add(FetchAllAppointments(
+                                    date: widget.date,
+                                    clinicId: controller.initialIndex!,
+                                    scheduleType:
+                                        controller.scheduleIndex.value,
+                                  ));
+                                  setState(() {
+                                    // balanceAppoiment=widget.length!-1;
+                                    balanceAppoiment = getAllAppointmentsModel
+                                            .appointments!.length -
+                                        1 -
+                                        currentPosition;
+                                    log("balance card : $balanceAppoiment");
+                                  });
                                 }
 
                                 // pageController
                                 //     .jumpToPage(currentIndex + 1);
-                                BlocProvider.of<GetAppointmentsBloc>(context)
-                                    .add(
-                                  FetchAppointmentDetailsPage(
-                                    tokenId: widget
-                                        .appointmentsDetails[currentPosition].id
-                                        .toString(),
-                                  ),
-                                );
+                                // BlocProvider.of<GetAppointmentsBloc>(context)
+                                //     .add(
+                                //   FetchAppointmentDetailsPage(
+                                //       tokenId: getAllAppointmentsModel
+                                //           .appointments![currentPosition].id!
+                                //           .toString()
+
+                                //       ),
+                                // );
                                 // setState(() {
                                 //   currentPosition = index;
                                 //   currentPosition = clickedIndex;
