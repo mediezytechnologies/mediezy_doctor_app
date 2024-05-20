@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_appointment_api.dart';
@@ -26,14 +26,15 @@ class AddVitalsBloc extends Bloc<AddVitalsEvent, AddVitalsState> {
             spo2: event.spo2,
             sys: event.sys,
             dia: event.dia,
-            heartRate: event.heartRate, temperatureType: event.temperatureType);
+            heartRate: event.heartRate,
+            temperatureType: event.temperatureType);
 
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(AddVitalsLoaded(successMessage: data['message'].toString()));
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         final errorWithTimestamp = "$e";
-        print("Error: $errorWithTimestamp");
+        log("Error: $errorWithTimestamp");
         emit(AddVitalsError(errorMessage: errorWithTimestamp));
       }
     });
@@ -51,18 +52,18 @@ class AddVitalsBloc extends Bloc<AddVitalsEvent, AddVitalsState> {
             spo2: event.spo2,
             sys: event.sys,
             dia: event.dia,
-            heartRate: event.heartRate, temperatureType: event.temperatureType);
+            heartRate: event.heartRate,
+            temperatureType: event.temperatureType);
 
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(EditVitalsLoaded(successMessage: data['message'].toString()));
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         final errorWithTimestamp = "$e";
-        print("Error: $errorWithTimestamp");
+        log("Error: $errorWithTimestamp");
         emit(EditVitalsError(errorMessage: errorWithTimestamp));
       }
     });
-
 
     //edit vitals
 
@@ -70,14 +71,15 @@ class AddVitalsBloc extends Bloc<AddVitalsEvent, AddVitalsState> {
       emit(DeleteVitalsLoading());
       try {
         updatedSuccessfully = await getAppointmentApi.deleteVitals(
-            tokenId: event.tokenId,);
+          tokenId: event.tokenId,
+        );
 
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(DeleteVitalsLoaded(successMessage: data['message'].toString()));
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         final errorWithTimestamp = "$e";
-        print("Error: $errorWithTimestamp");
+        log("Error: $errorWithTimestamp");
         emit(DeleteVitalsError(errorMessage: errorWithTimestamp));
       }
     });

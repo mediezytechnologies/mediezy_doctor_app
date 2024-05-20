@@ -13,7 +13,6 @@ import 'package:mediezy_doctor/Ui/Screens/PatientScreen/patient_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/shedule_token_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/TokenScreen/token_screen.dart';
 
-
 // ignore: must_be_immutable
 class BottomNavigationControlWidget extends StatefulWidget {
   const BottomNavigationControlWidget({super.key});
@@ -111,11 +110,21 @@ class _BottomNavigationControlWidgetState
           final connectivityResult = snapshot.data;
           if (connectivityResult == ConnectivityResult.none) {
             return Scaffold(
+              backgroundColor: kCardColor,
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/images/No internet.jpg"),
+                  Center(
+                    child: SizedBox(
+                      height: 180.h,
+                      width: 300.w,
+                      child: Image.asset(
+                        "assets/images/no connection.png",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
                   const VerticalSpacingWidget(height: 5),
                   Text(
                     "Please check your internet connection",

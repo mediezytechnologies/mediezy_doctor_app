@@ -15,7 +15,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
-import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/guest_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 import '../../../CommonWidgets/text_style_widget.dart';
@@ -41,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginLoaded) {
+          final HospitalController controller = Get.put(HospitalController());
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
@@ -216,12 +216,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               title: "Login",
                               onTapFunction: () {
                                 FocusScope.of(context).unfocus();
-                                if (_formKey.currentState!.validate()) {
-                                  BlocProvider.of<LoginBloc>(context).add(
-                                      FetchLogin(
-                                          email: emailController.text,
-                                          password: passwordController.text));
-                                }
+                                // if (_formKey.currentState!.validate()) {
+                                BlocProvider.of<LoginBloc>(context).add(
+                                    FetchLogin(
+                                        email: emailController.text,
+                                        password: passwordController.text));
+                                // }
                               }),
                           const VerticalSpacingWidget(height: 10),
                           Row(

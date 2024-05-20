@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/Labs/search_lab_model.dart';
@@ -22,10 +22,9 @@ class SearchScanningCentreBloc
             searchQuery: event.searchQuery);
         emit(SearchScanningCentreLoaded());
       } catch (e) {
-        print(">>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log(">>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(SearchScanningCentreError());
       }
-      // TODO: implement event handler
     });
   }
 }

@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/LiveToken/get_current_token_model.dart';
@@ -22,7 +22,7 @@ class GetCurrentTokenBloc
             clinicId: event.clinicId, scheduleType: event.scheduleType);
         emit(GetCurrentTokenLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetCurrentTokenError());
       }
     });

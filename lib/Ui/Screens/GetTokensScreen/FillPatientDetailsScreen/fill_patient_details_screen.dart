@@ -85,7 +85,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print(widget.scheduleType);
+    // print(widget.scheduleType);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Fill Patient Details"),
@@ -144,7 +144,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
       body: BlocListener<BookAppointmentBloc, BookAppointmentState>(
         listener: (context, state) {
           if (state is BookAppointmentLoaded) {
-            showToastMessage("Book Token Successfully");
+            // showToastMessage("Book Token Successfully");
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -152,7 +152,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                 (route) => false);
           }
           if (state is BookAppointmentError) {
-            showToastMessage("Something went wrong\nTry again later");
+            GeneralServices.instance.showToastMessage(state.errorMessage);
           }
         },
         child: BlocBuilder<GetSymptomsBloc, GetSymptomsState>(

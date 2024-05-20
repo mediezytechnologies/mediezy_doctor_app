@@ -1339,6 +1339,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   // Create a database with separate tables for starting and ending times
   Future<void> createBreakDatabase() async {
     // Open database
+    // ignore: unused_local_variable
     final Database db1 = await openDatabase('your_database.db1', version: 1,
         onCreate: (Database db1, int version) async {
       // Create the tables for starting and ending times

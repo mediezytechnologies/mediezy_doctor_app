@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
-import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_details_model.dart';
 import 'package:mediezy_doctor/Model/PreviousAppointments/previous_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/previous_appointments/previous_appointments_api.dart';
 import 'package:meta/meta.dart';
@@ -23,7 +24,7 @@ class GetAllPreviousAppointmentsBloc extends Bloc<
                 date: event.date, clinicId: event.clinicId);
         emit(GetAllPreviousAppointmentsLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error Previous Appointemts>>>>>>>>>>$error");
+        log("<<<<<<<<<<Error Previous Appointemts>>>>>>>>>>$error");
         emit(GetAllPreviousAppointmentsError());
       }
     });

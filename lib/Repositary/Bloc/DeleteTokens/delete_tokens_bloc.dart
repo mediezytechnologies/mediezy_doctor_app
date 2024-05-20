@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/custom_schedule_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DeleteTokens/delete_tokens_api.dart';
-import 'package:meta/meta.dart';
 
 part 'delete_tokens_event.dart';
 
@@ -32,7 +31,7 @@ class DeleteTokensBloc extends Bloc<DeleteTokensEvent, DeleteTokensState> {
         Map<String, dynamic> data = jsonDecode(uploadSuccessfully);
         showToastMessage(data['message']);
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(DeleteTokensError(errorMessage: '$e'));
       }
     });

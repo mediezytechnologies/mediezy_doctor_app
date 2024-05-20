@@ -1,8 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:developer';
-
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +16,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/delet
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';

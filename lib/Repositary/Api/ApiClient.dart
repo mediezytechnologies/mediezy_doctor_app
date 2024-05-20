@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart';
@@ -5,10 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
 class ApiClient {
- // static const String basePath = "https://mediezy.com/api/";
+  // static const String basePath = "https://mediezy.com/api/";
   static const String basePath = "https://test.mediezy.com/api/";
 
   String orignalToken = '';
+
   Future<Response> invokeAPI(
       {required String path,
       required String method,
@@ -17,6 +20,7 @@ class ApiClient {
     final token = prefs.getString('token') ?? prefs.getString('tokenD');
 
     print(prefs.getString('token'));
+
     print("Invoke Api worked");
     print(method);
     print(token);
@@ -26,7 +30,6 @@ class ApiClient {
       headerParams = {
         "authorization": "Bearer $token",
         'Accept': 'application/json',
-        // 'Content-Type': 'application/json'
         "content-type": "multipart/form-data"
       };
       print(jsonEncode(body));
@@ -34,7 +37,6 @@ class ApiClient {
     Response response;
     String url = basePath + path;
     print('========================================$url');
-
     final nullableHeaderParams = (headerParams.isEmpty) ? null : headerParams;
 
     switch (method) {
@@ -42,7 +44,8 @@ class ApiClient {
         response = await post(Uri.parse(url),
             headers: {
               "authorization": "Bearer $token",
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              //  "content-type": "multipart/form-data"
             },
             body: jsonEncode(body));
         break;
@@ -101,7 +104,7 @@ class ApiClient {
     print(response.body);
     print(response.headers);
     if (response.statusCode >= 400) {
-      log('$path : ${response.statusCode} : ${response.body}');
+      log("bloc calling" '$path : ${response.statusCode} : ${response.body}');
 
       throw ApiException(
           message: _decodeBodyBytes(response), statusCode: response.statusCode);

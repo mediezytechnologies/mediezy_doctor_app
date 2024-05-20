@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Model/auth/login_model.dart';
 import 'package:mediezy_doctor/Model/auth/sign_up_model.dart.dart';
@@ -19,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<FetchLogin>((event, emit) async {
       final preference = await SharedPreferences.getInstance();
       emit(LoginLoading());
-      print("loading");
+      log("loading");
       try {
         loginModel = await loginApi.getLogin(
             email: event.email, password: event.password);
@@ -30,12 +31,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             'doctorLastName', loginModel.doctor!.secondname.toString());
         preference.setString('DoctorId', loginModel.doctor!.id.toString());
         preference.setInt('DoctorId2', loginModel.doctor!.id!);
-        String? token = await preference.getString('token');
-        print("Tokken >>>>>>>>>>>>>>>>>>$token");
+        String? token = preference.getString('token');
+        log("Tokken >>>>>>>>>>>>>>>>>>$token");
         emit(LoginLoaded());
-        print("loaded");
+        log("loaded");
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LoginError());
       }
     });
@@ -43,7 +44,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     //signup
     on<FetchSignup>((event, emit) async {
       emit(LoginLoading());
-      print("loading");
+      log("loading");
       try {
         signupModel = await loginApi.getSignup(
             email: event.email,
@@ -53,9 +54,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             mobileNo: event.mobileNo);
 
         emit(LoginLoaded());
-        print("loaded");
+        log("loaded");
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LoginError());
       }
     });
@@ -76,10 +77,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
-        print("loaded");
+        log("loaded");
       } catch (e) {
         final String error = "$e";
-        print("Error>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(DummyRegisterError(errorMessage: error));
       }
     });
@@ -94,7 +95,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     //     );
     //     Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
     //     emit(DummyRegisterLoaded(successMessage: data['message'].toString()));
-    //     print("loaded");
+    //     log("loaded");
     //   } catch (e) {
     //     final String error = "$e";
     //     print("Error>>>>>>>>>>>>" + e.toString());

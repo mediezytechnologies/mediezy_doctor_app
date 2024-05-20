@@ -98,46 +98,51 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                     final getAllMedicinesModel = state.getAllMedicinesModel;
                     if (getAllMedicinesModel.medicines != null &&
                         getAllMedicinesModel.medicines!.isNotEmpty) {
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: getAllMedicinesModel.medicines!.length,
-                        itemBuilder: (context, index) {
-                          var medicineData =
-                              getAllMedicinesModel.medicines![index];
-                          return ListTile(
-                            title: Text(medicineData.medicineName ?? ''),
-                            trailing: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  medicineData.favStatus =
-                                      medicineData.favStatus == 1 ? 0 : 1;
-                                });
-                                BlocProvider.of<UpdateFavouriteMedicineBloc>(
-                                        context)
-                                    .add(UpdateFavouriteMedicine(
-                                        medicineId:
-                                            medicineData.id.toString()));
-                              },
-                              icon: Icon(
-                                medicineData.favStatus == 1
-                                    ? Icons.favorite
-                                    : Icons.favorite_border_outlined,
-                                color: medicineData.favStatus == 1
-                                    ? Colors.red
-                                    : null,
-                              ),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                widget.onMedicineSelected(
-                                    medicineData.medicineName.toString());
-                                Navigator.pop(context);
-                              });
+                      return Column(
+                        children: [
+                          ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: getAllMedicinesModel.medicines!.length,
+                            itemBuilder: (context, index) {
+                              var medicineData =
+                                  getAllMedicinesModel.medicines![index];
+                              return ListTile(
+                                title: Text(medicineData.medicineName ?? ''),
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      medicineData.favStatus =
+                                          medicineData.favStatus == 1 ? 0 : 1;
+                                    });
+                                    BlocProvider.of<
+                                                UpdateFavouriteMedicineBloc>(
+                                            context)
+                                        .add(UpdateFavouriteMedicine(
+                                            medicineId:
+                                                medicineData.id.toString()));
+                                  },
+                                  icon: Icon(
+                                    medicineData.favStatus == 1
+                                        ? Icons.favorite
+                                        : Icons.favorite_border_outlined,
+                                    color: medicineData.favStatus == 1
+                                        ? Colors.red
+                                        : null,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    widget.onMedicineSelected(
+                                        medicineData.medicineName.toString());
+                                    Navigator.pop(context);
+                                  });
+                                },
+                              );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       );
                     } else {
                       return Column(

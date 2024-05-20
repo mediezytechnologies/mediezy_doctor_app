@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,7 +24,8 @@ class ImageViewWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.yellow,
                   borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(image: FileImage(image!),fit: BoxFit.fill)),
+                  image: DecorationImage(
+                      image: FileImage(image!), fit: BoxFit.fill)),
               // child: Image.file(
               //   image!,
               //   fit: BoxFit.fill,

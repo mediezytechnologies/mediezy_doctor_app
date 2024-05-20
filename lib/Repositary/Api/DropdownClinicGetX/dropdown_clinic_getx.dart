@@ -45,7 +45,7 @@ class HospitalService {
 class HospitalController extends GetxController {
   RxBool loding = true.obs;
   String? initialIndex;
-  var scheduleIndex ='0'.obs;
+  var scheduleIndex = '0'.obs;
   RxList<HospitalDetails>? hospitalDetails = <HospitalDetails>[].obs;
 
   Future<List<HospitalDetails>?> gethospitalService() async {
@@ -56,6 +56,9 @@ class HospitalController extends GetxController {
       hospitalDetails!.value = data!;
       update();
       initialIndex = hospitalDetails!.first.clinicId.toString();
+      // log("initial index === ${initialIndex.toString()}");
+      // log("initial date === ${formatDate()}");
+      // log("initial value === ${scheduleIndex.value}");
       update();
       return hospitalDetails!;
     } catch (e) {
@@ -85,11 +88,11 @@ class HospitalController extends GetxController {
     if (checkingValue == initialIndex) {
       log("before  :: ${initialIndex!}");
       initialIndex = value;
-    //  update();
+      //  update();
     } else if (checkingValue == '0') {
-      scheduleIndex.value= value;
+      scheduleIndex.value = value;
       log("${scheduleIndex.toString()}");
-       update();
+      update();
     }
     update();
   }
@@ -97,7 +100,7 @@ class HospitalController extends GetxController {
   @override
   void onInit() {
     gethospitalService();
-    
+
     update();
 
     super.onInit();

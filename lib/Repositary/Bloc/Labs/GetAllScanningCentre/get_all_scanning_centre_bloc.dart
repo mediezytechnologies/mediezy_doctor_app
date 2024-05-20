@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_labs_model.dart';
@@ -19,7 +19,7 @@ class GetAllScanningCentreBloc
         getAllLabsModel = await labsApi.getAllScanning();
         emit(GetAllScanningCentreLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetAllScanningCentreError());
       }
     });

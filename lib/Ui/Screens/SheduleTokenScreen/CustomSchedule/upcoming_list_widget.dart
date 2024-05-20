@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
+// ignore: must_be_immutable
 class UpcomingListWidget extends StatelessWidget {
   UpcomingListWidget(
       {super.key,
