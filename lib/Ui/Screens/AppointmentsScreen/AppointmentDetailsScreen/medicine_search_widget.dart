@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_all_medicines_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/update_favourite_medicine/bloc/update_favourite_medicine_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -99,7 +100,78 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                     if (getAllMedicinesModel.medicines != null &&
                         getAllMedicinesModel.medicines!.isNotEmpty) {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Colors.grey.shade300)),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 2.w, vertical: 2.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Recently search",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  const VerticalSpacingWidget(height: 3),
+                                  Wrap(
+                                    children: List.generate(
+                                      getAllMedicinesModel
+                                          .medicineHistory!.length,
+                                      (index) => Builder(
+                                        builder: (BuildContext context) {
+                                          return InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                widget.onMedicineSelected(
+                                                    getAllMedicinesModel
+                                                        .medicineHistory![index]
+                                                        .medicineName
+                                                        .toString());
+                                                Navigator.pop(context);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: kMainColor,
+                                                    width: 1),
+                                              ),
+                                              margin: const EdgeInsets.all(3.0),
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Text(
+                                                getAllMedicinesModel
+                                                    .medicineHistory![index]
+                                                    .medicineName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: size.width > 450
+                                                        ? 9.sp
+                                                        : 11.sp,
+                                                    color: kTextColor),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
