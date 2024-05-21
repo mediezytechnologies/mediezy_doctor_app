@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/ap_demo.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
@@ -318,6 +319,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                         child: InkWell(
                                           onTap: () {
                                             Navigator.push(
+<<<<<<< Updated upstream
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (ctx) =>
@@ -329,6 +331,67 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                                   .id
                                                                   .toString(),
                                                         )));
+=======
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (ctx) =>
+                                                      // AppointmentDemo()
+                                                      AppointmentDetailsDemoScreen(
+                                                        firstIndex:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .firstIndexStatus!,
+                                                        length:
+                                                            getAllAppointmentsModel
+                                                                .appointments!
+                                                                .length,
+                                                        position: index,
+                                                        appointmentsDetails:
+                                                            getAllAppointmentsModel
+                                                                .appointments!,
+                                                        tokenId:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .id
+                                                                .toString(),
+                                                        date: controller
+                                                            .formatDate(),
+                                                        patientName:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    index]
+                                                                .patientName
+                                                                .toString(),
+                                                      )
+                                                  //     AppointmentDetailsScreen(
+                                                  //   // itemCount:
+                                                  //   //     getAllAppointmentsModel
+                                                  //   //         .appointments!.length,
+                                                  //   firstIndex:
+                                                  //       getAllAppointmentsModel
+                                                  //           .appointments![index]
+                                                  //           .firstIndexStatus!,
+                                                  //   length: getAllAppointmentsModel
+                                                  //       .appointments!.length,
+                                                  //   position: index,
+                                                  //   appointmentsDetails:
+                                                  //       getAllAppointmentsModel
+                                                  //           .appointments!,
+                                                  //   tokenId: getAllAppointmentsModel
+                                                  //       .appointments![index].id
+                                                  //       .toString(),
+                                                  //   date: controller.formatDate(),
+                                                  //   // patientName:
+                                                  //   //     getAllAppointmentsModel
+                                                  //   //         .appointments![index]
+                                                  //   //         .patientName
+                                                  //   //         .toString(),
+                                                  // ),
+                                                  ),
+                                            );
+>>>>>>> Stashed changes
                                           },
                                           child: AppointmentCardWidget(
                                             tokenNumber:

@@ -29,7 +29,7 @@ class ApiClient {
         // 'Content-Type': 'application/json'
         "content-type": "multipart/form-data"
       };
-      print(jsonEncode(body));
+    //  print(jsonEncode(body));
     }
     Response response;
     String url = basePath + path;
@@ -97,9 +97,9 @@ class ApiClient {
       default:
         response = await get(Uri.parse(url), headers: nullableHeaderParams);
     }
-    print('status of $path =>${response.statusCode}');
-    print(response.body);
-    print(response.headers);
+    // print('status of $path =>${response.statusCode}');
+    // print(response.body);
+    // print(response.headers);
     if (response.statusCode >= 400) {
       log('$path : ${response.statusCode} : ${response.body}');
 
