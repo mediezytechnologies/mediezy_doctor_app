@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/auth/login_model.dart';
 import 'package:mediezy_doctor/Model/auth/sign_up_model.dart.dart';
@@ -12,7 +13,7 @@ class LoginApi {
     final body = {"email": email, "password": password};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     print("<<<<<<<<<<Login Response Worked>>>>>>>>>>");
     return LoginModel.fromJson(json.decode(response.body));
   }

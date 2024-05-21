@@ -1,7 +1,8 @@
 class GetCurrentTokenModel {
   GetCurrentTokenModel({
-      this.message, 
-      this.tokens,});
+    this.message,
+    this.tokens,
+  });
 
   GetCurrentTokenModel.fromJson(dynamic json) {
     message = json['message'];
@@ -23,52 +24,52 @@ class GetCurrentTokenModel {
     }
     return map;
   }
-
 }
 
 class Tokens {
   Tokens({
-      this.id, 
-      this.bookedPersonId, 
-      this.doctorId, 
-      this.patientName, 
-      this.gender, 
-      this.age, 
-      this.mobileNo, 
-      this.appoinmentforId, 
-      this.date, 
-      this.tokenNumber, 
-      this.tokenTime, 
-      this.bookingtime, 
-      this.isCheckIn, 
-      this.isCompleted, 
-      this.isCanceled, 
-      this.whenitstart, 
-      this.whenitcomes, 
-      this.regularmedicine, 
-      this.patientId, 
-      this.clinicId, 
-      this.newTokenId, 
-      this.scheduleType, 
-      this.isReached, 
-      this.rescheduleType, 
-      this.height, 
-      this.weight, 
-      this.temperature, 
-      this.spo2, 
-      this.sys, 
-      this.dia, 
-      this.heartRate, 
-      this.temperatureType, 
-      this.scanTest, 
-      this.scanId, 
-      this.mainSymptoms, 
-      this.otherSymptoms, 
-      this.medicine, 
-      this.patientData, 
-      this.mediezyPatientId, 
-      this.userImage, 
-      this.displayAge,});
+    this.id,
+    this.bookedPersonId,
+    this.doctorId,
+    this.patientName,
+    this.gender,
+    this.age,
+    this.mobileNo,
+    this.appoinmentforId,
+    this.date,
+    this.tokenNumber,
+    this.tokenTime,
+    this.bookingtime,
+    this.isCheckIn,
+    this.isCompleted,
+    this.isCanceled,
+    this.whenitstart,
+    this.whenitcomes,
+    this.regularmedicine,
+    this.patientId,
+    this.clinicId,
+    this.newTokenId,
+    this.scheduleType,
+    this.isReached,
+    this.rescheduleType,
+    this.height,
+    this.weight,
+    this.temperature,
+    this.spo2,
+    this.sys,
+    this.dia,
+    this.heartRate,
+    this.temperatureType,
+    this.scanTest,
+    this.scanId,
+    this.mainSymptoms,
+    this.otherSymptoms,
+    this.medicine,
+    this.patientData,
+    this.mediezyPatientId,
+    this.userImage,
+    this.displayAge,
+  });
 
   Tokens.fromJson(dynamic json) {
     id = json['id'];
@@ -123,7 +124,9 @@ class Tokens {
         medicine?.add(Medicine.fromJson(v));
       });
     }
-    patientData = json['patient_data'] != null ? PatientData.fromJson(json['patient_data']) : null;
+    patientData = json['patient_data'] != null
+        ? PatientData.fromJson(json['patient_data'])
+        : null;
     mediezyPatientId = json['mediezy_patient_id'];
     userImage = json['user_image'];
     displayAge = json['displayAge'];
@@ -223,13 +226,13 @@ class Tokens {
     map['displayAge'] = displayAge;
     return map;
   }
-
 }
 
 class PatientData {
   PatientData({
-      this.labName, 
-      this.medicalShopName,});
+    this.labName,
+    this.medicalShopName,
+  });
 
   PatientData.fromJson(dynamic json) {
     labName = json['lab_name'];
@@ -244,32 +247,34 @@ class PatientData {
     map['medical_shop_name'] = medicalShopName;
     return map;
   }
-
 }
 
 class Medicine {
   Medicine({
-      this.id, 
-      this.mediezyDoctorId, 
-      this.userId, 
-      this.docterId, 
-      this.patientId, 
-      this.medicalShopId, 
-      this.medicineName, 
-      this.dosage, 
-      this.noOfDays, 
-      this.noon, 
-      this.night, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.tokenId, 
-      this.morning, 
-      this.type, 
-      this.notes, 
-      this.illness, 
-      this.evening, 
-      this.tokenNumber, 
-      this.medicineType,});
+    this.id,
+    this.mediezyDoctorId,
+    this.userId,
+    this.docterId,
+    this.patientId,
+    this.medicalShopId,
+    this.medicineName,
+    this.dosage,
+    this.interval,
+    this.timeSection,
+    this.noOfDays,
+    this.noon,
+    this.night,
+    this.createdAt,
+    this.updatedAt,
+    this.tokenId,
+    this.morning,
+    this.type,
+    this.notes,
+    this.illness,
+    this.evening,
+    this.tokenNumber,
+    this.medicineType,
+  });
 
   Medicine.fromJson(dynamic json) {
     id = json['id'];
@@ -280,6 +285,8 @@ class Medicine {
     medicalShopId = json['medical_shop_id'];
     medicineName = json['medicineName'];
     dosage = json['Dosage'];
+    interval = json['interval'];
+    timeSection = json['time_section'];
     noOfDays = json['NoOfDays'];
     noon = json['Noon'];
     night = json['night'];
@@ -302,6 +309,8 @@ class Medicine {
   int? medicalShopId;
   String? medicineName;
   String? dosage;
+  String? interval;
+  String? timeSection;
   String? noOfDays;
   int? noon;
   int? night;
@@ -326,6 +335,8 @@ class Medicine {
     map['medical_shop_id'] = medicalShopId;
     map['medicineName'] = medicineName;
     map['Dosage'] = dosage;
+    map['interval'] = interval;
+    map['time_section'] = timeSection;
     map['NoOfDays'] = noOfDays;
     map['Noon'] = noon;
     map['night'] = night;
@@ -341,13 +352,13 @@ class Medicine {
     map['medicine_type'] = medicineType;
     return map;
   }
-
 }
 
 class OtherSymptoms {
   OtherSymptoms({
-      this.id, 
-      this.symtoms,});
+    this.id,
+    this.symtoms,
+  });
 
   OtherSymptoms.fromJson(dynamic json) {
     id = json['id'];
@@ -362,13 +373,13 @@ class OtherSymptoms {
     map['symtoms'] = symtoms;
     return map;
   }
-
 }
 
 class MainSymptoms {
   MainSymptoms({
-      this.id, 
-      this.mainsymptoms,});
+    this.id,
+    this.mainsymptoms,
+  });
 
   MainSymptoms.fromJson(dynamic json) {
     id = json['id'];
@@ -383,5 +394,4 @@ class MainSymptoms {
     map['Mainsymptoms'] = mainsymptoms;
     return map;
   }
-
 }

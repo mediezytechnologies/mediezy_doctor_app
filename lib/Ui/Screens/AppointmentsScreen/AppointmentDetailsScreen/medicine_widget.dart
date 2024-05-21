@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
@@ -147,11 +146,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 .bookingData!.medicine![index].dosage
                                 .toString(),
                           ),
-                          ShortNamesWidget(
-                            firstText: "Interval : ",
-                            secondText:
-                                "${widget.appointmentDetailsPageModel.bookingData!.medicine![index].interval.toString()} ${widget.appointmentDetailsPageModel.bookingData!.medicine![index].timeSection.toString()}",
-                          ),
+                          widget.appointmentDetailsPageModel.bookingData!
+                                      .medicine![index].interval ==
+                                  null
+                              ? Container()
+                              : ShortNamesWidget(
+                                  firstText: "Interval : ",
+                                  secondText:
+                                      "${widget.appointmentDetailsPageModel.bookingData!.medicine![index].interval.toString()} ${widget.appointmentDetailsPageModel.bookingData!.medicine![index].timeSection.toString()}",
+                                ),
                           ShortNamesWidget(
                             firstText: "Days : ",
                             secondText: widget.appointmentDetailsPageModel

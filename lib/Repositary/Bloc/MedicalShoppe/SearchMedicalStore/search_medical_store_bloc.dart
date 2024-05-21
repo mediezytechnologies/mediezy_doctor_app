@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/search_medical_store_model.dart';
@@ -20,10 +20,9 @@ class SearchMedicalStoreBloc
             searchQuery: event.searchQuery);
         emit(SearchMedicalStoreLoaded());
       } catch (e) {
-        print("<>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("<>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(SearchMedicalStoreError());
       }
-      // TODO: implement event handler
     });
   }
 }

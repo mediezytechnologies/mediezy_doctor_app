@@ -104,6 +104,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                     fromDate: DateFormat('yyy-MM-dd').format(selectedDate),
                     toDate: DateFormat('yyy-MM-dd').format(endDate),
                     clinicId: dController.initialIndex!));
+                resetSelectedTokens();
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
@@ -295,6 +296,16 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         endDate =
                                                             picked; // Update endDate as well
                                                       });
+                                                      BlocProvider.of<
+                                                                  GetTokenBloc>(
+                                                              context)
+                                                          .add(
+                                                        FetchTokens(
+                                                            date: formatDate(),
+                                                            clinicId: dController
+                                                                .initialIndex!),
+                                                      );
+                                                      resetSelectedTokens();
                                                     },
                                                   )
                                                 : GeneralServices.instance
@@ -307,6 +318,16 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         selectedDate = picked;
                                                         endDate = picked;
                                                       });
+                                                      BlocProvider.of<
+                                                                  GetTokenBloc>(
+                                                              context)
+                                                          .add(
+                                                        FetchTokens(
+                                                            date: formatDate(),
+                                                            clinicId: dController
+                                                                .initialIndex!),
+                                                      );
+                                                      resetSelectedTokens();
                                                     },
                                                   );
                                           },
@@ -415,6 +436,16 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         endDate =
                                                             picked; // Update endDate as well
                                                       });
+                                                      BlocProvider.of<
+                                                                  GetTokenBloc>(
+                                                              context)
+                                                          .add(
+                                                        FetchTokens(
+                                                            date: formatDate(),
+                                                            clinicId: dController
+                                                                .initialIndex!),
+                                                      );
+                                                      resetSelectedTokens();
                                                     },
                                                   )
                                                 : GeneralServices.instance
@@ -427,6 +458,16 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         endDate = picked;
                                                         // print(endDate);
                                                       });
+                                                      BlocProvider.of<
+                                                                  GetTokenBloc>(
+                                                              context)
+                                                          .add(
+                                                        FetchTokens(
+                                                            date: formatDate(),
+                                                            clinicId: dController
+                                                                .initialIndex!),
+                                                      );
+                                                      resetSelectedTokens();
                                                     },
                                                   );
                                           },
@@ -454,6 +495,18 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                               endDate =
                                                                   picked; // Update endDate as well
                                                             });
+                                                            BlocProvider.of<
+                                                                        GetTokenBloc>(
+                                                                    context)
+                                                                .add(
+                                                              FetchTokens(
+                                                                  date:
+                                                                      formatDate(),
+                                                                  clinicId:
+                                                                      dController
+                                                                          .initialIndex!),
+                                                            );
+                                                            resetSelectedTokens();
                                                           },
                                                         )
                                                       : GeneralServices.instance
@@ -467,6 +520,18 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                               endDate = picked;
                                                               // print(endDate);
                                                             });
+                                                            BlocProvider.of<
+                                                                        GetTokenBloc>(
+                                                                    context)
+                                                                .add(
+                                                              FetchTokens(
+                                                                  date:
+                                                                      formatDate(),
+                                                                  clinicId:
+                                                                      dController
+                                                                          .initialIndex!),
+                                                            );
+                                                            resetSelectedTokens();
                                                           },
                                                         );
                                                 },

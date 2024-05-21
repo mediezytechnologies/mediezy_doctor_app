@@ -307,6 +307,8 @@ class GetAppointmentApi {
     return response.body;
   }
 
+  //! search medicine
+
   Future<GetAllMedicinesModel> getAllMedicines({
     required String searchQuery,
   }) async {
@@ -317,8 +319,11 @@ class GetAppointmentApi {
     //print(body);
     return GetAllMedicinesModel.fromJson(json.decode(response.body));
   }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> shameem
 
   //! update favourite medicine
 
@@ -332,8 +337,14 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+<<<<<<< HEAD
     //print(body);
     return response.body;
   }
 >>>>>>> Stashed changes
+=======
+    print(body);
+    return response.body;
+  }
+>>>>>>> shameem
 }

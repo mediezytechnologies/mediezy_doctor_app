@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/discharge_summary_model.dart';
@@ -23,7 +23,7 @@ class DischargeSummaryBloc
                 patientId: event.patientId, userId: event.userId);
         emit(DischargeSummaryLoaded());
       } catch (e) {
-        print("<<<<<<<<<<GetAllDischargeSummaryError>>>>>>>>>>" + e.toString());
+        log("<<<<<<<<<<GetAllDischargeSummaryError>>>>>>>>>>$e");
         emit(DischargeSummaryError());
       }
     });

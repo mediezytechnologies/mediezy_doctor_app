@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mediezy_doctor/Model/BookAppointment/book_appointment_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/BookAppointment/book_appointment_api.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/DeleteTokens/delete_tokens_bloc.dart';
+import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 part 'book_appointment_event.dart';
 
@@ -9,14 +13,14 @@ part 'book_appointment_state.dart';
 
 class BookAppointmentBloc
     extends Bloc<BookAppointmentEvent, BookAppointmentState> {
-  late BookAppointmentModel bookAppointmentModel;
+  late String uploadSuccessfully;
   BookAppointmentApi bookAppointmentApi = BookAppointmentApi();
 
   BookAppointmentBloc() : super(BookAppointmentInitial()) {
     on<PassBookAppointMentEvent>((event, emit) async {
       emit(BookAppointmentLoading());
       try {
-        bookAppointmentModel = await bookAppointmentApi.bookAppointment(
+        uploadSuccessfully = await bookAppointmentApi.bookAppointment(
           patientName: event.patientName,
           date: event.date,
           regularmedicine: event.regularmedicine,
@@ -34,9 +38,11 @@ class BookAppointmentBloc
           // endTokenTime: event.endTokenTime
         );
         emit(BookAppointmentLoaded());
+        Map<String, dynamic> data = jsonDecode(uploadSuccessfully);
+        GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
-        print("Error>>>>>>>>>>>>>><<<<<<<<<<<<<<>>>>>>>>>>>" + e.toString());
-        emit(BookAppointmentError());
+        log("Error>>>>>>>>>>>>>><<<<<<<<<<<<<<>>>>>>>>>>>$e");
+        emit(BookAppointmentError(errorMessage: '$e'));
       }
     });
   }

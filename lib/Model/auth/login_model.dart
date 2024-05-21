@@ -30,45 +30,73 @@ class Doctor {
       this.id, 
       this.firstname, 
       this.email, 
+      this.age, 
+      this.dateofbirth, 
+      this.dob, 
       this.emailVerifiedAt, 
       this.createdAt, 
       this.updatedAt, 
       this.userRole, 
       this.mobileNo, 
-      this.secondname,});
+      this.secondname, 
+      this.registrationStatus, 
+      this.providerName, 
+      this.providerId, 
+      this.fcmToken,});
 
   Doctor.fromJson(dynamic json) {
     id = json['id'];
     firstname = json['firstname'];
     email = json['email'];
+    age = json['age'];
+    dateofbirth = json['dateofbirth'];
+    dob = json['dob'];
     emailVerifiedAt = json['email_verified_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     userRole = json['user_role'];
     mobileNo = json['mobileNo'];
     secondname = json['secondname'];
+    registrationStatus = json['registration_status'];
+    providerName = json['provider_name'];
+    providerId = json['provider_id'];
+    fcmToken = json['fcm_token'];
   }
   int? id;
   String? firstname;
   String? email;
+  dynamic age;
+  String? dateofbirth;
+  dynamic dob;
   dynamic emailVerifiedAt;
   dynamic createdAt;
-  dynamic updatedAt;
+  String? updatedAt;
   String? userRole;
-  dynamic mobileNo;
+  String? mobileNo;
   String? secondname;
+  int? registrationStatus;
+  dynamic providerName;
+  dynamic providerId;
+  dynamic fcmToken;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['firstname'] = firstname;
     map['email'] = email;
+    map['age'] = age;
+    map['dateofbirth'] = dateofbirth;
+    map['dob'] = dob;
     map['email_verified_at'] = emailVerifiedAt;
     map['created_at'] = createdAt;
     map['updated_at'] = updatedAt;
     map['user_role'] = userRole;
     map['mobileNo'] = mobileNo;
     map['secondname'] = secondname;
+    map['registration_status'] = registrationStatus;
+    map['provider_name'] = providerName;
+    map['provider_id'] = providerId;
+    map['fcm_token'] = fcmToken;
     return map;
   }
 

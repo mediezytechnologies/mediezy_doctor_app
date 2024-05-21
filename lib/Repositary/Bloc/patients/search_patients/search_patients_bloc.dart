@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
@@ -22,7 +22,7 @@ class SearchPatientsBloc
             searchQuery: event.searchQuery);
         emit(SearchPatientsLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(SearchPatientsError());
       }
     });

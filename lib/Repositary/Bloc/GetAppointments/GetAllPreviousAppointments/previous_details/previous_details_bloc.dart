@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_details_model.dart';
@@ -8,19 +8,20 @@ import 'package:meta/meta.dart';
 part 'previous_details_event.dart';
 part 'previous_details_state.dart';
 
-class PreviousDetailsBloc extends Bloc<PreviousDetailsEvent, PreviousDetailsState> {
+class PreviousDetailsBloc
+    extends Bloc<PreviousDetailsEvent, PreviousDetailsState> {
   PreviousAppointmentsApi previousAppointmentsApi = PreviousAppointmentsApi();
   PreviousDetailsBloc() : super(PreviousDetailsInitial()) {
     on<FetchAllPreviousAppointmentDetails>((event, emit) async {
       emit(PreviousDetailsLoading());
       try {
         final previousAppointmentDetailsModel =
-        await previousAppointmentsApi.getAllPreviousAppointmentDetails(
-            patientId: event.patientId, appointmentId: event.appointmentId);
+            await previousAppointmentsApi.getAllPreviousAppointmentDetails(
+                patientId: event.patientId, appointmentId: event.appointmentId);
         emit(PreviousDetailsLoaded(
             previousAppointmentDetailsModel: previousAppointmentDetailsModel));
       } catch (error) {
-        print("<<<<<<<<<<Error Previous appointemt details>>>>>>>>>>$error");
+        log("<<<<<<<<<<Error Previous appointemt details>>>>>>>>>>$error");
         emit(PreviousDetailsError());
       }
     });

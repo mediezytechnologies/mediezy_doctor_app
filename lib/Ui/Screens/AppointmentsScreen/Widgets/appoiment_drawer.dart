@@ -7,6 +7,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bl
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/AboutUsScreen/about_us_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/ContactUsScreen/contact_us_screen.dart';
@@ -34,7 +35,7 @@ class CustomDrawer extends StatelessWidget {
       width: size.width > 450 ? 170.w : 250.w,
       child: ListView(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
           BlocBuilder<ProfileGetBloc, ProfileGetState>(
@@ -136,6 +137,24 @@ class CustomDrawer extends StatelessWidget {
                                 .doctorDetails!.first.docterImage
                                 .toString(),
                           ))); // Close the drawer
+            },
+          ),
+          ListTile(
+            title: Text('Medicines',
+                style: size.width > 450 ? blackTab9B400 : black14B400),
+            trailing: Icon(
+              Icons.medical_information_outlined,
+              size: size.width > 450 ? 13.sp : 20.sp,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MedicineSearchWidget(
+                    onMedicineSelected: (String) {},
+                  ),
+                ),
+              );
             },
           ),
           ListTile(

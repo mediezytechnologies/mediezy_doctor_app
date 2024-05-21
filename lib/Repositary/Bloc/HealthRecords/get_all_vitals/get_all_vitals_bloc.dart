@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/get_vitals_model.dart';
@@ -15,11 +15,11 @@ class GetAllVitalsBloc extends Bloc<GetAllVitalsEvent, GetAllVitalsState> {
       emit(GetAllVitalsLoading());
       try {
         final getVitalsModel =
-        await healthRecordsApi.getVitals(patientId: event.patientId);
+            await healthRecordsApi.getVitals(patientId: event.patientId);
         emit(GetAllVitalsLoaded(getVitalsModel: getVitalsModel));
       } catch (error) {
         emit(GetAllVitalsError(errorMessage: error.toString()));
-        print("<<<<<<<error ${error.toString()}");
+        log("<<<<<<<error ${error.toString()}");
       }
     });
   }

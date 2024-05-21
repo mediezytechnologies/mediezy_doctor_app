@@ -84,6 +84,7 @@ class _ScheduleTokenDetailsScreenState
     'Saturday'
   ];
 
+  // ignore: unused_element
   void _handleCheckboxChange1(String day, bool isChecked) {
     setState(() {
       if (isChecked) {
@@ -134,6 +135,7 @@ class _ScheduleTokenDetailsScreenState
     fetchSelectedEndingTime();
 
     setState(() {
+      // ignore: avoid_function_literals_in_foreach_calls
       _days1.forEach((day) {
         if (day != 'Sunday') {
           checkboxData[day] =
@@ -843,6 +845,7 @@ class _ScheduleTokenDetailsScreenState
   // Create a database with separate tables for starting and ending times
   Future<void> createDatabase() async {
     // Open database
+    // ignore: unused_local_variable
     final Database db = await openDatabase('your_database.db', version: 1,
         onCreate: (Database db, int version) async {
       // Create the tables for starting and ending times

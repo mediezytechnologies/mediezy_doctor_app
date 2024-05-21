@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_appointment_api.dart';
@@ -25,10 +25,9 @@ class DeleteMedicineBloc
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
-        print(">>>>>>>>>>>>>>>>" + e.toString());
+        log(">>>>>>>>>>>>>>>>$e");
         emit(DeleteMedicineError());
       }
-      // TODO: implement event handler
     });
   }
 }
