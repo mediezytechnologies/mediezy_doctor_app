@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'dart:async';
-import 'dart:developer';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -49,17 +48,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<ProfileGetBloc>(context).add(FetchProfileGet());
-    BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
-      date: controller.formatDate(),
-      clinicId: controller.initialIndex!,
-      scheduleType: controller.scheduleIndex.value,
-    ));
-    BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
-      FetchAllCompletedAppointments(
-          date: controller.formatDate(),
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value),
-    );
+    // BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
+    //   date: controller.formatDate(),
+    //   clinicId: controller.initialIndex!,
+    //   scheduleType: controller.scheduleIndex.value,
+    // ));
+    // BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
+    //   FetchAllCompletedAppointments(
+    //       date: controller.formatDate(),
+    //       clinicId: controller.initialIndex!,
+    //       scheduleType: controller.scheduleIndex.value),
+    // );
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {

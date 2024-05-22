@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,9 +48,13 @@ class _MedicineWidgetState extends State<MedicineWidget> {
 
   TextEditingController myController = TextEditingController();
 
-  void handleMedicineSelection(String selectedMedicine) {
+  String? _selectedMedicineId;
+
+  void handleMedicineSelection(
+      String selectedMedicine, String selectedMedicineId) {
     setState(() {
       medicineNameController.text = selectedMedicine;
+      _selectedMedicineId = selectedMedicineId;
     });
   }
 
@@ -98,7 +103,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    log("${widget.medicalStoreId}");
+    // log("${widget.medicalStoreId}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -147,8 +152,14 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 .toString(),
                           ),
                           widget.appointmentDetailsPageModel.bookingData!
-                                      .medicine![index].interval ==
-                                  null
+                                          .medicine![index].interval ==
+                                      null ||
+                                  widget
+                                          .appointmentDetailsPageModel
+                                          .bookingData!
+                                          .medicine![index]
+                                          .interval ==
+                                      "null"
                               ? Container()
                               : ShortNamesWidget(
                                   firstText: "Interval : ",
@@ -488,47 +499,11 @@ class _MedicineWidgetState extends State<MedicineWidget> {
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // InkWell(
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) =>
-                    //              MedicineSearchWidget(  onMedicineSelected: _onMedicineSelected,)));
-                    //   },
-                    //   child: Container(
-                    //     height: 40.h,
-                    //     width: size.width > 450 ? 245.w : 235.w,
-                    //     color: kCardColor,
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           "Medicine name",
-                    //           style: size.width > 450
-                    //               ? greyTab10B600
-                    //               : grey13B600,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 40.h,
-                    //   width: size.width > 450 ? 245.w : 235.w,
-                    //   child: TextFieldSearch(
-                    //       initialList: _testList,
-                    //       label: 'Simple List',
-                    //       controller: myController),
-                    // ),
-                    // Assuming you have some variable 'index' available in the context of your build method or loop
-
-                    // );
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -536,6 +511,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           MaterialPageRoute(
                             builder: (context) => MedicineSearchWidget(
                               onMedicineSelected: handleMedicineSelection,
+                              typeId: 0,
                             ),
                           ),
                         );
@@ -600,6 +576,11 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       ),
                     ),
                   ],
+                ),
+                const VerticalSpacingWidget(height: 5),
+                Text(
+                  "E.g: 1 tab,3 drops,etc..",
+                  style: TextStyle(fontSize: 8.7.sp),
                 ),
                 size.width > 450
                     ? const VerticalSpacingWidget(height: 5)
@@ -829,7 +810,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                     : dropdownvalue == "Before Food"
                                         ? "2"
                                         : "3";
-                                print(">???????????$passingFood");
+                                log(">???????????$passingFood");
                               });
                             },
                           ),
@@ -937,6 +918,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 medicalStoreId: widget.medicalStoreId,
                                 timeSection: dropdownHourlyValue,
                                 interval: days1Controller.text,
+                                medicineId: _selectedMedicineId!,
                               ),
                             );
                           }
@@ -989,15 +971,18 @@ class _MedicineWidgetState extends State<MedicineWidget> {
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const VerticalSpacingWidget(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    // height: 40.h,
-                    width: 60.w,
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: const Color(0xFF9C9C9C))),
+                    height: size.height * 0.055,
+                    width: size.width * .17,
                     child: TextFormField(
                       style:
                           TextStyle(fontSize: size.width > 450 ? 9.sp : 14.sp),
@@ -1024,7 +1009,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownHourlyValue = newValue!;
-                        print(">???????????$dropdownHourlyValue");
+                        log(">???????????$dropdownHourlyValue");
                       });
                     },
                     items: itemsHourly.map((String items) {
@@ -1039,8 +1024,16 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                 ],
               ),
               const VerticalSpacingWidget(height: 5),
-              SizedBox(
-                // height: 40.h,
+              Text(
+                "E.g:- 8 hour interval",
+                style: TextStyle(fontSize: 11.sp),
+              ),
+              const VerticalSpacingWidget(height: 5),
+              Container(
+                height: size.height * 0.055,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: const Color(0xFF9C9C9C))),
                 width: double.infinity,
                 child: TextFormField(
                   style: TextStyle(fontSize: size.width > 450 ? 9.sp : 14.sp),
@@ -1061,6 +1054,11 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ),
                 ),
+              ),
+              const VerticalSpacingWidget(height: 5),
+              Text(
+                "E.g:- 1 tablet,2 puffs,3 drops,10 ml etc...",
+                style: TextStyle(fontSize: 11.sp),
               ),
               const VerticalSpacingWidget(height: 10),
               Row(

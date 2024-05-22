@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -23,7 +24,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
             attachment: event.attachment);
         emit(ProfileEditLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(ProfileEditError());
       }
     });

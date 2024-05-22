@@ -138,7 +138,7 @@ class _ScheduleHelpScreenState extends State<ScheduleHelpScreen> {
                                       ? blackTabMainText
                                       : blackMainText,
                                 ),
-                                Icon(Icons.keyboard_arrow_down),
+                                const Icon(Icons.keyboard_arrow_down),
                               ],
                             ),
                           ),

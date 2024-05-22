@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_break_model.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_early_model.dart';
@@ -26,10 +28,9 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
             await customScheduleApi.getAllLate(clinicId: event.clinicId);
         emit(GetAllLateLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetAllLateError());
       }
-      // TODO: implement event handler
     });
 
     // get all early section
@@ -40,7 +41,7 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
             await customScheduleApi.getAllEarly(clinicId: event.clinicId);
         emit(GetAllEarlyLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetAllEarlyError());
       }
     });
@@ -53,7 +54,7 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
             await customScheduleApi.getAllBreak(clinicId: event.clinicId);
         emit(GetAllBreakLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetAllBreakError());
       }
     });
@@ -62,11 +63,11 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
     on<DeleteLate>((event, emit) async {
       emit(DeleteLateLoading());
       try {
-        updatedSuccessfully = await customScheduleApi.deleteLate(
-            scheduleId: event.scheduleId);
+        updatedSuccessfully =
+            await customScheduleApi.deleteLate(scheduleId: event.scheduleId);
         emit(DeleteLateLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(DeleteLateError());
       }
     });
@@ -75,11 +76,11 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
     on<DeleteEarly>((event, emit) async {
       emit(DeleteEarlyLoading());
       try {
-        updatedSuccessfully = await customScheduleApi.deleteEarly(
-            scheduleId: event.scheduleId);
+        updatedSuccessfully =
+            await customScheduleApi.deleteEarly(scheduleId: event.scheduleId);
         emit(DeleteEarlyLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(DeleteEarlyError());
       }
     });
@@ -89,10 +90,11 @@ class GetAllLateBloc extends Bloc<GetAllLateEvent, GetAllLateState> {
       emit(DeleteBreakLoading());
       try {
         updatedSuccessfully = await customScheduleApi.deleteBreak(
-            reScheduleId: event.reScheduleId,);
+          reScheduleId: event.reScheduleId,
+        );
         emit(DeleteBreakLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(DeleteBreakError());
       }
     });

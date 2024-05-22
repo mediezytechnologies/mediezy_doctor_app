@@ -28,7 +28,6 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
     BlocProvider.of<DischargeSummaryBloc>(context).add(
         FetchGetUploadedDischargeSummary(
             patientId: widget.patientId, userId: widget.userId));
-    // TODO: implement initState
     super.initState();
   }
 

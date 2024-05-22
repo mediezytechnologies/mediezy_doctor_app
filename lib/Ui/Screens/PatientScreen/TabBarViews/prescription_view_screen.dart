@@ -33,7 +33,6 @@ class _PrescriptionViewScreenState extends State<PrescriptionViewScreen> {
       patientId: widget.patientId,
       userId: widget.userId,
     ));
-    // TODO: implement initState
     super.initState();
   }
 

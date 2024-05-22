@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
@@ -20,7 +21,7 @@ class PatientScreenApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 
@@ -39,7 +40,7 @@ class PatientScreenApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 
@@ -60,11 +61,10 @@ class PatientScreenApi {
       "clinic_id": clinicId,
       "from_date": fromDate,
       "to_date": toDate,
-
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 }

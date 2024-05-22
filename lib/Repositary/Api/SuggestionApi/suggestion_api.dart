@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,8 +24,8 @@ class SuggestionApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
     return response.body;
   }
 }

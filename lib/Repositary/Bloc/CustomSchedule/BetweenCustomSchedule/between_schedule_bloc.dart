@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/CustomSchedule/custom_schedule_api.dart';
@@ -30,7 +31,7 @@ class BetweenScheduleBloc
         GeneralServices.instance.showToastMessage(data['message']);
         emit(BetweenScheduleLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(BetweenScheduleError(errorMessage: '$e'));
       }
     });

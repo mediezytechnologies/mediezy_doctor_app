@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/get_prescription_view_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/health_records_api.dart';
@@ -18,7 +20,7 @@ class GetPrescriptionViewBloc
             patientId: event.patientId, userId: event.userId);
         emit(GetPrescriptionViewLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetPrescriptionViewError());
       }
     });

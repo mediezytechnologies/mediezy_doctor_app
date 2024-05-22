@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_leaves_model.dart';
 import 'package:mediezy_doctor/Model/leave_check_model/leave_check_model.dart';
@@ -28,8 +29,8 @@ class LeaveUpdateApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Leave Schedule response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Leave Schedule response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -51,8 +52,8 @@ class LeaveUpdateApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
-    print(body);
-    print("<<<<<<<<<<Leave Schedule delete response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Leave Schedule delete response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -73,7 +74,7 @@ class LeaveUpdateApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
 
-    print("<<<<<<<<<<Get All Leaves response worked>>>>>>>>>>");
+    log("<<<<<<<<<<Get All Leaves response worked>>>>>>>>>>");
     return GetAllLeavesModel.fromJson(json.decode(response.body));
   }
 
@@ -97,9 +98,9 @@ class LeaveUpdateApi {
     };
 
     Response response =
-    await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<< get check leave successfull>>>>>>");
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
+    log("<<<<<< get check leave successfull>>>>>>");
     return LeaveCheckModel.fromJson(json.decode(response.body));
   }
 }

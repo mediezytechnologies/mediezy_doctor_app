@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_labs_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/Labs/labs_api.dart';
@@ -16,7 +18,7 @@ class GetAllLabBloc extends Bloc<GetAllLabEvent, GetAllLabState> {
         getAllLabsModel = await labsApi.getAllLabs();
         emit(GetAllLabLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetAllLabError());
       }
     });

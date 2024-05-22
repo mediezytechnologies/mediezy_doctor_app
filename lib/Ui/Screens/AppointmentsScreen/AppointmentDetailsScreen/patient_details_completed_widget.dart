@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
-import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_details_model.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dart';
 
@@ -180,7 +178,7 @@ class _PatientDetailsCompletedWidgetState
                         return Text(
                           name == "Other"
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
-                              : "$name" + (isLastItem ? '' : ','),
+                              : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
                               ? blackTabMainText
@@ -224,7 +222,7 @@ class _PatientDetailsCompletedWidgetState
                         return Text(
                           name == "Other"
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
-                              : "$name" + (isLastItem ? '' : ','),
+                              : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
                               ? blackTabMainText

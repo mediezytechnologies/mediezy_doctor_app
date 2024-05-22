@@ -14,10 +14,12 @@ class BaseSpaceExpandedTabBar extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BaseSpaceExpandedTabBarState createState() => _BaseSpaceExpandedTabBarState();
+  _BaseSpaceExpandedTabBarState createState() =>
+      _BaseSpaceExpandedTabBarState();
 }
 
-class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar> with SingleTickerProviderStateMixin {
+class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -36,9 +38,9 @@ class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar> with 
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpacingWidget(height: 5),
+        const VerticalSpacingWidget(height: 5),
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 8.w),
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white, // Set the background color of the tab bar
@@ -46,22 +48,27 @@ class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar> with 
             ),
             child: TabBar(
               indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: kMainColor),
+                  borderRadius: BorderRadius.circular(10), color: kMainColor),
               controller: _tabController,
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: Colors.white,
               tabAlignment: TabAlignment.start,
               tabs: widget.tabs,
               labelColor: Colors.white, // Set the color of selected tab text
-              labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), // Set style for selected tab text
-              unselectedLabelColor: Colors.black, // Set the color of unselected tab text
-              unselectedLabelStyle: const TextStyle(fontSize: 12), // Set style for unselected tab text
-              isScrollable: true, // Set to true for full view of text when selected
+              labelStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight:
+                      FontWeight.bold), // Set style for selected tab text
+              unselectedLabelColor:
+                  Colors.black, // Set the color of unselected tab text
+              unselectedLabelStyle: const TextStyle(
+                  fontSize: 12), // Set style for unselected tab text
+              isScrollable:
+                  true, // Set to true for full view of text when selected
             ),
           ),
         ),
-        VerticalSpacingWidget(height: 10),
+        const VerticalSpacingWidget(height: 10),
         Expanded(
           child: TabBarView(
             controller: _tabController,

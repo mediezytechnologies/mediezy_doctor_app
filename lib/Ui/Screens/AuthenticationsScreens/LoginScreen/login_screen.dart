@@ -16,17 +16,16 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-
 import '../../../CommonWidgets/text_style_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LogiScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LogiScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode passwordFocusController = FocusNode();
@@ -72,197 +71,183 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
-        body: Form(
-          key: _formKey,
-          child: FadedSlideAnimation(
-            beginOffset: const Offset(0, 0.3),
-            endOffset: const Offset(0, 0),
-            slideCurve: Curves.linearToEaseOut,
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: size.width > 450
-                          ? size.height * .64
-                          : size.height * .59,
-                      child: Swiper(
-                        autoplay: true,
-                        itemCount: loginScreenImages.length,
-                        itemBuilder: ((context, index) {
-                          return Image.asset(
-                            loginScreenImages[index],
-                            fit: size.width > 450 ? BoxFit.fill : BoxFit.cover,
-                          );
-                        }),
-                        pagination: SwiperPagination(
-                          margin: EdgeInsets.only(bottom: 10.h),
-                          alignment: Alignment.bottomCenter,
-                          builder: DotSwiperPaginationBuilder(
-                            color: Colors.grey,
-                            activeColor: Colors.grey[200],
-                            size: size.width > 450 ? 6.sp : 8.sp,
-                            activeSize: size.width > 450 ? 6.sp : 8.sp,
+        body: FadedSlideAnimation(
+          beginOffset: const Offset(0, 0.3),
+          endOffset: const Offset(0, 0),
+          slideCurve: Curves.linearToEaseOut,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height:
+                      size.width > 450 ? size.height * .64 : size.height * .59,
+                  child: Swiper(
+                    autoplay: true,
+                    itemCount: loginScreenImages.length,
+                    itemBuilder: ((context, index) {
+                      return Image.asset(
+                        loginScreenImages[index],
+                        fit: size.width > 450 ? BoxFit.fill : BoxFit.cover,
+                      );
+                    }),
+                    pagination: SwiperPagination(
+                      margin: EdgeInsets.only(bottom: 10.h),
+                      alignment: Alignment.bottomCenter,
+                      builder: DotSwiperPaginationBuilder(
+                        color: Colors.grey,
+                        activeColor: Colors.grey[200],
+                        size: size.width > 450 ? 6.sp : 8.sp,
+                        activeSize: size.width > 450 ? 6.sp : 8.sp,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: Column(
+                    children: [
+                      //! email
+                      TextFormField(
+                        style: TextStyle(
+                            fontSize: size.width > 450 ? 11.sp : 14.sp),
+                        cursorColor: kMainColor,
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value!.isEmpty || !value.contains("@gmail.com")) {
+                            return "Email is missing";
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: kMainColor,
+                            size: size.width > 450 ? 12.sp : 20.sp,
+                          ),
+                          hintStyle:
+                              size.width > 450 ? greyTab10B600 : grey13B600,
+                          hintText: "Enter your email",
+                          filled: true,
+                          fillColor: kCardColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Column(
-                        children: [
-                          VerticalSpacingWidget(
-                              height: size.width > 450
-                                  ? size.height * .357
-                                  : size.height * .455),
-                          //! email
-                          TextFormField(
-                            style: TextStyle(
-                                fontSize: size.width > 450 ? 11.sp : 14.sp),
-                            cursorColor: kMainColor,
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            validator: (value) {
-                              if (value!.isEmpty ||
-                                  !value.contains("@gmail.com")) {
-                                return "Email is missing";
-                              } else {
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                                color: kMainColor,
-                                size: size.width > 450 ? 12.sp : 20.sp,
-                              ),
-                              hintStyle:
-                                  size.width > 450 ? greyTab10B600 : grey13B600,
-                              hintText: "Enter your email",
-                              filled: true,
-                              fillColor: kCardColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
+                      const VerticalSpacingWidget(height: 10),
+                      //! password
+                      TextFormField(
+                        style: TextStyle(
+                            fontSize: size.width > 450 ? 11.sp : 14.sp),
+                        cursorColor: kMainColor,
+                        controller: passwordController,
+                        keyboardType: TextInputType.text,
+                        focusNode: passwordFocusController,
+                        textInputAction: TextInputAction.done,
+                        obscureText: hidePassword,
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 7) {
+                            return "Password is missing and must have 7 digits";
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            IconlyLight.password,
+                            color: kMainColor,
+                            size: size.width > 450 ? 12.sp : 20.sp,
                           ),
-                          const VerticalSpacingWidget(height: 10),
-                          //! password
-                          TextFormField(
-                            style: TextStyle(
-                                fontSize: size.width > 450 ? 11.sp : 14.sp),
-                            cursorColor: kMainColor,
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            focusNode: passwordFocusController,
-                            textInputAction: TextInputAction.done,
-                            obscureText: hidePassword,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 7) {
-                                return "Password is missing and must have 7 digits";
-                              } else {
-                                return null;
-                              }
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                IconlyLight.password,
-                                color: kMainColor,
-                                size: size.width > 450 ? 12.sp : 20.sp,
-                              ),
-                              suffixIcon: hidePassword
-                                  ? IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          hidePassword = !hidePassword;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        IconlyLight.hide,
-                                        color: kMainColor,
-                                        size: size.width > 450 ? 12.sp : 20.sp,
-                                      ),
-                                    )
-                                  : IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          hidePassword = !hidePassword;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        IconlyLight.show,
-                                        color: kMainColor,
-                                        size: size.width > 450 ? 12.sp : 20.sp,
-                                      ),
-                                    ),
-                              hintStyle:
-                                  size.width > 450 ? greyTab10B600 : grey13B600,
-                              hintText: "Enter your password",
-                              filled: true,
-                              fillColor: kCardColor,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                          const VerticalSpacingWidget(height: 30),
-                          //! login
-                          CommonButtonWidget(
-                              title: "Login",
-                              onTapFunction: () {
-                                FocusScope.of(context).unfocus();
-                                // if (_formKey.currentState!.validate()) {
-                                BlocProvider.of<LoginBloc>(context).add(
-                                    FetchLogin(
-                                        email: emailController.text,
-                                        password: passwordController.text));
-                                // }
-                              }),
-                          const VerticalSpacingWidget(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don't have an account? ",
-                                style: size.width > 450
-                                    ? blackTab9B400
-                                    : black13B500,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (ctx) =>
-                                              const DummyRegisterScreen()));
-                                },
-                                child: Text(
-                                  "Signup",
-                                  style: size.width > 450
-                                      ? TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: kMainColor,
-                                          fontSize: 11.sp)
-                                      : TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: kMainColor,
-                                          fontSize: 15.sp),
+                          suffixIcon: hidePassword
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePassword = !hidePassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    IconlyLight.hide,
+                                    color: kMainColor,
+                                    size: size.width > 450 ? 12.sp : 20.sp,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePassword = !hidePassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    IconlyLight.show,
+                                    color: kMainColor,
+                                    size: size.width > 450 ? 12.sp : 20.sp,
+                                  ),
                                 ),
-                              ),
-                            ],
+                          hintStyle:
+                              size.width > 450 ? greyTab10B600 : grey13B600,
+                          hintText: "Enter your password",
+                          filled: true,
+                          fillColor: kCardColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
                           ),
-                          const VerticalSpacingWidget(height: 10),
+                        ),
+                      ),
+                      const VerticalSpacingWidget(height: 30),
+                      //! login
+                      CommonButtonWidget(
+                          title: "Login",
+                          onTapFunction: () {
+                            FocusScope.of(context).unfocus();
+                            // if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<LoginBloc>(context).add(FetchLogin(
+                                email: emailController.text,
+                                password: passwordController.text));
+                            // }
+                          }),
+                      const VerticalSpacingWidget(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
+                            style:
+                                size.width > 450 ? blackTab9B400 : black13B500,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          const DummyRegisterScreen()));
+                            },
+                            child: Text(
+                              "Signup",
+                              style: size.width > 450
+                                  ? TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: kMainColor,
+                                      fontSize: 11.sp)
+                                  : TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: kMainColor,
+                                      fontSize: 15.sp),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      const VerticalSpacingWidget(height: 10),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

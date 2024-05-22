@@ -25,8 +25,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
   @override
   void initState() {
     BlocProvider.of<CompletedAppointmentsHealthRecordBloc>(context).add(
-        FetchCompletedAppointmentsByPatientId(
-            patientId: widget.patientId, userId: widget.userId));
+        FetchCompletedAppointmentsByPatientId(patientId: widget.patientId));
     super.initState();
   }
 

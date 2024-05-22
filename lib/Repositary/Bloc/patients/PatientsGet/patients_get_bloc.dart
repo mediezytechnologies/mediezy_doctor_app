@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/patient_screen_api.dart';
@@ -19,7 +21,7 @@ class PatientsGetBloc extends Bloc<PatientsGetEvent, PatientsGetState> {
             await patientScreenApi.getPatients(clinicId: event.clinicId);
         emit(PatientsGetLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(PatientsGetError());
       }
     });
@@ -36,7 +38,7 @@ class PatientsGetBloc extends Bloc<PatientsGetEvent, PatientsGetState> {
             toDate: event.toDate);
         emit(PatientsGetLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(PatientsGetError());
       }
     });

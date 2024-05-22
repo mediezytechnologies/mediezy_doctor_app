@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/Labs/labs_api.dart';
@@ -17,8 +19,7 @@ class GetAllFavouriteLabBloc
         getAllFavouriteLabModel = await labsApi.getAllFavouriteLabs();
         emit(GetAllFavouriteLabLoaded());
       } catch (error) {
-        print("<<<<<<<<<<GetAll Favourite lab Error>>>>>>>>>>" +
-            error.toString());
+        log("<<<<<<<<<<GetAll Favourite lab Error>>>>>>>>>>$error");
         emit(GetAllFavouriteLabError());
       }
     });

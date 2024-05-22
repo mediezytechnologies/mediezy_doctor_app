@@ -4,7 +4,6 @@ import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_d
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dart';
 

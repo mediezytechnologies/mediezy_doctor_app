@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/GetUploadedScanReportModel.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/health_records_api.dart';
@@ -16,12 +18,12 @@ class ScanReportBloc extends Bloc<ScanReportEvent, ScanReportState> {
     on<FetchGetUploadedScanReport>((event, emit) async {
       emit(ScanReportLoading());
       try {
-        getUploadedScanReportModel = await healthRecordsApi
-            .getAllUploadedScanReports(patientId: event.patientId, userId: event.userId);
+        getUploadedScanReportModel =
+            await healthRecordsApi.getAllUploadedScanReports(
+                patientId: event.patientId, userId: event.userId);
         emit(ScanReportLoaded());
       } catch (e) {
-        print("<<<<<<<<<<GetAllUploadedScanReportsError>>>>>>>>>>" +
-            e.toString());
+        log("<<<<<<<<<<GetAllUploadedScanReportsError>>>>>>>>>>$e");
         emit(ScanReportError());
       }
     });

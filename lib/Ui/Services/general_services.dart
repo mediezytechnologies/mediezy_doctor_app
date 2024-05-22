@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -362,6 +361,7 @@ class GeneralServices {
   }) async {
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
+    // ignore: unused_local_variable
     final DateTime? picked = await showModalBottomSheet<DateTime>(
       context: context,
       builder: (BuildContext builder) {

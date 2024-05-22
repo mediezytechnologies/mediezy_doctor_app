@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/lab_report_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/health_records_api.dart';
@@ -17,7 +19,7 @@ class LabReportBloc extends Bloc<LabReportEvent, LabReportState> {
             patientId: event.patientId, userId: event.userId);
         emit(LabReportLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(LabReportError());
       }
     });

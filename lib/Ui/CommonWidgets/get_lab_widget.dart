@@ -6,7 +6,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/Labs/AddFavouritesLab/add_favouri
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/RemoveFavLab/remove_fav_labs_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'horizontal_spacing_widget.dart';
 
 class GetLabWidget extends StatefulWidget {

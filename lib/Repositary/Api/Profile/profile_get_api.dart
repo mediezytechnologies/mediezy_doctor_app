@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/Profile/ProfileEditModel.dart';
@@ -21,7 +22,7 @@ class ProfileGetApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
 
-    print("doctor get response worked");
+    log("doctor get response worked");
     return ProfileGetModel.fromJson(json.decode(response.body));
   }
 
@@ -49,8 +50,8 @@ class ProfileGetApi {
         ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
         : await multiFileApiClient.uploadFiles(
             files: attachment, uploadPath: basePath, bodyData: body);
-    print(">>>>>>>>${body}");
-    print("doctor edit response worked");
+    log(">>>>>>>>$body");
+    log("doctor edit response worked");
     return ProfileEditModel.fromJson(json.decode(response.body));
   }
 }

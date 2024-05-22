@@ -10,6 +10,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
@@ -203,15 +204,41 @@ class _ScheduleTokenDetailsScreenState
           child: BlocListener<GenerateTokenFinalBloc, GenerateTokenFinalState>(
             listener: (context, state) {
               if (state is GenerateTokenFinalLoaded) {
-                GeneralServices.instance
-                    .showSuccessMessage(context, state.successMessage);
-                Future.delayed(const Duration(seconds: 3), () {
-                  Navigator.pop(context);
-                });
-                FocusScope.of(context).requestFocus(FocusNode());
-                setState(() {
-                  generateToken1 = true; // Change the button color to grey
-                });
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize:
+                            MainAxisSize.min, // Avoid potential overflow
+                        children: [
+                          Lottie.asset("assets/animations/confirm booking.json",
+                              height: 120.h),
+                          const SizedBox(height: 10.0),
+                          Text(
+                            state.successMessage,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15.sp),
+                          ),
+                          const SizedBox(height: 5.0),
+                          const Text(
+                            'Note: Check the booking section to understand how this shows to patients',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+                // GeneralServices.instance
+                //     .showSuccessMessage(context, state.successMessage);
+                // Future.delayed(const Duration(seconds: 3), () {
+                //   Navigator.pop(context);
+                // });
+                // FocusScope.of(context).requestFocus(FocusNode());
+                // setState(() {
+                //   generateToken1 = true; // Change the button color to grey
+                // });
               }
               if (state is GenerateTokenFinalError) {
                 GeneralServices.instance

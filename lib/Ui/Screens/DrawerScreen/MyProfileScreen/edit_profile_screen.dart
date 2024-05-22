@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
@@ -59,9 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: Padding(
@@ -75,7 +74,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 BlocProvider.of<ProfileEditBloc>(context).add(FetchProfileEdit(
                     firstname: firstNameController.text,
                     secondname: lastNameController.text,
-                    mobileNo: phoneNumberController.text, attachment: imagePath));
+                    mobileNo: phoneNumberController.text,
+                    attachment: imagePath));
               }
             }),
       ),
@@ -183,53 +183,52 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 borderRadius: BorderRadius.circular(70.r),
                 child: imagePath != null
                     ? Image.file(
-                  imagePath!,
-                  height: 80.h,
-                  width: 80.w,
-                  fit: BoxFit.cover,
-                )
+                        imagePath!,
+                        height: 80.h,
+                        width: 80.w,
+                        fit: BoxFit.cover,
+                      )
                     : (widget.patientImage == ""
-                    ? Image.asset(
-                  "assets/icons/profile pic.png",
-                  height: 80.h,
-                  width: 80.w,
-                  color: kMainColor,
-                )
-                    : Image.network(
-                  widget.patientImage,
-                  height: 80.h,
-                  width: 80.w,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Image.asset(
-                          "assets/icons/profile pic.png",
-                          height: 80.h,
-                          width: 80.w,
-                          color: kMainColor,
-                        ),
-                      ),
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.grey.shade100,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(80.r),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                )
-                ),
+                        ? Image.asset(
+                            "assets/icons/profile pic.png",
+                            height: 80.h,
+                            width: 80.w,
+                            color: kMainColor,
+                          )
+                        : Image.network(
+                            widget.patientImage,
+                            height: 80.h,
+                            width: 80.w,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Image.asset(
+                                "assets/icons/profile pic.png",
+                                height: 80.h,
+                                width: 80.w,
+                                color: kMainColor,
+                              ),
+                            ),
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(80.r),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          )),
               ),
             ),
           ),
@@ -253,7 +252,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-
   Future<void> placePicImage() async {
     var image = await imagePicker.pickImage(
       source: ImageSource.gallery,
@@ -265,7 +263,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     setState(() {
       imagePath = imageTemporary;
-      print("$imageTemporary======= image");
+      log("$imageTemporary======= image");
     });
   }
 

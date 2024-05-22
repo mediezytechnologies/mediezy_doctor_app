@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/Labs/labs_api.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
@@ -20,7 +21,7 @@ class RemoveFavLabsBloc extends Bloc<RemoveFavLabsEvent, RemoveFavLabsState> {
         Map<String, dynamic> data = jsonDecode(updatedSuccessfullyMessage);
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (error) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + error.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$error");
         emit(RemoveFavLabsError());
       }
     });

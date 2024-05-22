@@ -151,7 +151,9 @@ class CustomDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MedicineSearchWidget(
-                    onMedicineSelected: (String) {},
+                    typeId: 1,
+                    onMedicineSelected:
+                        (selectedMedicineName, selectedMedicineId) {},
                   ),
                 ),
               );
@@ -319,6 +321,7 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
+                        // builder: (context) => const LoginDemoScreen()),
                         builder: (context) => const LoginScreen()),
                     (route) => false);
               });

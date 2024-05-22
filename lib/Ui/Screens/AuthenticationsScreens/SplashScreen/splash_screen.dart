@@ -11,7 +11,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -23,14 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> checkuserlogin() async {
     final preferences = await SharedPreferences.getInstance();
     String? token = preferences.getString('token');
-    
-  final HospitalController controller = Get.put(HospitalController());
+
+    final HospitalController controller = Get.put(HospitalController());
 
     Future.delayed(
       const Duration(seconds: 3),
       () {
         if (token == null) {
           Navigator.of(context).pushAndRemoveUntil(
+              // MaterialPageRoute(builder: (context) => const LoginDemoScreen()),
               MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
         } else {
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(
                   builder: (context) => const BottomNavigationControlWidget()),
               (route) => false);
-                 BlocProvider.of<GetAllAppointmentsBloc>(context)
+          BlocProvider.of<GetAllAppointmentsBloc>(context)
               .add(FetchAllAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,

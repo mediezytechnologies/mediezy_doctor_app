@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_all_medical_shope_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/MedicalShoppe/medical_shoppe_api.dart';
@@ -17,7 +19,7 @@ class GetAllMedicalShoppeBloc
         getAllMedicalShopeModel = await medicalShoppeApi.getAllMedicalShoppes();
         emit(GetAllMedicalShoppeLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>$error");
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetAllMedicalShoppeError());
       }
     });

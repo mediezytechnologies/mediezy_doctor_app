@@ -25,16 +25,16 @@ class HospitalService {
         // "https://mediezy.com/api/get-hospital-name/$doctorId",
       );
       ClinicGetModel? model = ClinicGetModel.fromJson(response.data);
-      print(doctorId);
+      log(doctorId);
       log(model.toString());
       log("res ${response.data}");
       return model.hospitalDetails;
     } on DioError catch (e) {
-      print("6656566565656556565  dist");
-      print("${e.response!.data}===========");
-      print("${e.message}=fdsfg=fd");
+      log("6656566565656556565  dist");
+      log("${e.response!.data}===========");
+      log("${e.message}=fdsfg=fd");
     } catch (e) {
-      print("$e");
+      log("$e");
     }
     return null;
   }
@@ -63,8 +63,8 @@ class HospitalController extends GetxController {
       return hospitalDetails!;
     } catch (e) {
       Get.snackbar('warnig', 'Please check Internet Connection');
-      print(e);
-      print('catch bloc called');
+      log(e.toString());
+      log('catch bloc called');
       loding.value = false;
     }
     return null;
@@ -91,7 +91,7 @@ class HospitalController extends GetxController {
       //  update();
     } else if (checkingValue == '0') {
       scheduleIndex.value = value;
-      log("${scheduleIndex.toString()}");
+      log(scheduleIndex.toString());
       update();
     }
     update();

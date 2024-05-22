@@ -6,7 +6,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/AddMedicalShope/add
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/RemoveMedicalShope/remove_medical_shope_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'horizontal_spacing_widget.dart';
 
 class GetMedicalStoreWidget extends StatefulWidget {

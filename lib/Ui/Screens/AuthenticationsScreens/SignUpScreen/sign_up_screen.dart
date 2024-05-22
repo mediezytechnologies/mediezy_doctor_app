@@ -37,6 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (state is LoginLoaded) {
           Navigator.pushAndRemoveUntil(
               context,
+              // MaterialPageRoute(builder: (context) => const LoginDemoScreen()),
               MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
         }
@@ -64,7 +65,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             },
           );
         }
-        // TODO: implement listener
       },
       child: Scaffold(
         appBar: AppBar(
@@ -304,6 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
+                                // builder: (context) => const LoginDemoScreen(),
                                 builder: (context) => const LoginScreen(),
                               ),
                             );

@@ -30,7 +30,6 @@ class _ViewInTimeLineScreenState extends State<ViewInTimeLineScreen> {
   void initState() {
     BlocProvider.of<TimeLineBloc>(context)
         .add(FetchTimeLine(patientId: widget.patientId, userId: widget.userId));
-    // TODO: implement initState
     super.initState();
   }
 

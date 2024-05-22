@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/Labs/search_lab_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/Labs/labs_api.dart';
@@ -18,10 +20,9 @@ class SearchLabBloc extends Bloc<SearchLabEvent, SearchLabState> {
         searchLabModel = await labsApi.getSearchLabs(labName: event.labName);
         emit(SearchLabLoaded());
       } catch (e) {
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(SearchLabError());
       }
-      // TODO: implement event handler
     });
   }
 }

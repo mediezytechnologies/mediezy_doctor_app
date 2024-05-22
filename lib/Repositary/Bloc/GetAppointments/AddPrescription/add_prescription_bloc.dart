@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_appointment_api.dart';
@@ -29,10 +31,11 @@ class AddPrescriptionBloc
             evening: event.evening,
             medicalStoreId: event.medicalStoreId,
             timeSection: event.timeSection,
-            interval: event.interval);
+            interval: event.interval,
+            medicineId: event.medicineId);
         emit(AddPrescriptionLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(AddPrescriptionError(errorMessage: '$e'));
       }
     });

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/time_line_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/health_records_api.dart';
@@ -17,7 +19,7 @@ class TimeLineBloc extends Bloc<TimeLineEvent, TimeLineState> {
             patientId: event.patientId, userId: event.userId);
         emit(TimeLineLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(TimeLineError());
       }
     });

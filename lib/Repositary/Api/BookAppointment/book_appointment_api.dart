@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart';
-import 'package:mediezy_doctor/Model/BookAppointment/book_appointment_model.dart';
 import 'package:mediezy_doctor/Model/GetSymptoms/get_symptoms_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +64,7 @@ class BookAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<<<<<<Get Symtoms Successfully>>>>>>>>>>");
+    log("<<<<<<<<<<Get Symtoms Successfully>>>>>>>>>>");
     return GetSymptomsModel.fromJson(json.decode(response.body));
   }
 }

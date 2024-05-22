@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/RestoreTokens/get_delete_tokens_model.dart';
 import 'package:mediezy_doctor/Model/RestoreTokens/restore_dates_model.dart';
@@ -28,10 +29,10 @@ class RestoreTokensApi {
 
   //get deleted tokens api
 
-  Future<GetDeleteTokensModel> getDeletedTokens(
-      {required String clinicId,
-        // required String date
-      }) async {
+  Future<GetDeleteTokensModel> getDeletedTokens({
+    required String clinicId,
+    // required String date
+  }) async {
     String? doctorId;
     final preference = await SharedPreferences.getInstance();
     doctorId = preference.getString('DoctorId').toString();
@@ -45,15 +46,14 @@ class RestoreTokensApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print(response.body);
+    log(body.toString());
+    log(response.body);
     return GetDeleteTokensModel.fromJson(json.decode(response.body));
   }
 
   // add restore token
 
-  Future<String> addRestoreToken(
-      { required String tokenId}) async {
+  Future<String> addRestoreToken({required String tokenId}) async {
     String basePath = "restoreTokens";
 
     final body = {

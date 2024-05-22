@@ -1,12 +1,9 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_appointment_api.dart';
 import 'package:meta/meta.dart';
-
 part 'get_all_appointments_event.dart';
-
 part 'get_all_appointments_state.dart';
 
 class GetAllAppointmentsBloc

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -24,10 +26,12 @@ class GetAllCompletedAppointmentsBloc extends Bloc<
       try {
         getAllCompletedAppointmentsModel =
             await getAppointmentApi.getAllCompletedApointmentsAsPerDate(
-                date: event.date, clinicId: event.clinicId, scheduleType: event.scheduleType);
+                date: event.date,
+                clinicId: event.clinicId,
+                scheduleType: event.scheduleType);
         emit(GetAllCompletedAppointmentsLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetAllCompletedAppointmentsError());
       }
     });
@@ -41,7 +45,7 @@ class GetAllCompletedAppointmentsBloc extends Bloc<
             .getAllCompletedAppointmentDetails(tokenId: event.tokenId);
         emit(GetAllCompletedAppointmentDetailsLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetAllCompletedAppointmentDetailsError());
       }
     });

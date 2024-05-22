@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
@@ -15,7 +16,7 @@ class LabsApi {
     String basePath = "medicalshop/Lab/getallLabandScanningCenter";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< Get All Labs Worked >>>>>>");
+    log("<<<<<< Get All Labs Worked >>>>>>");
     return GetAllLabsModel.fromJson(json.decode(response.body));
   }
 
@@ -31,8 +32,8 @@ class LabsApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Favourites Lab Added  Successfully>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Favourites Lab Added  Successfully>>>>>>>>>>");
     return response.body;
   }
 
@@ -47,8 +48,8 @@ class LabsApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Favourites Lab Removed  Successfully>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Favourites Lab Removed  Successfully>>>>>>>>>>");
     return response.body;
   }
 
@@ -57,7 +58,7 @@ class LabsApi {
     String basePath = "medicalshop/getfavlab";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< GET ALL FAVOURITE LAB WORKED >>>>>>");
+    log("<<<<<< GET ALL FAVOURITE LAB WORKED >>>>>>");
     return GetAllFavouriteLabModel.fromJson(json.decode(response.body));
   }
 
@@ -68,7 +69,7 @@ class LabsApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< Get All Labs Worked >>>>>>");
+    log("<<<<<< Get All Labs Worked >>>>>>");
     return GetAllLabsModel.fromJson(json.decode(response.body));
   }
 
@@ -82,8 +83,8 @@ class LabsApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<Search Lab Successfully>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<Search Lab Successfully>>>>>>>>");
     return SearchLabModel.fromJson(json.decode(response.body));
   }
 
@@ -97,8 +98,8 @@ class LabsApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<Search Scanning centre Successfully>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<Search Scanning centre Successfully>>>>>>>>");
     return SearchLabModel.fromJson(json.decode(response.body));
   }
 }

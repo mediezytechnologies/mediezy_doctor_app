@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_all_medical_shope_model.dart';
@@ -14,7 +15,7 @@ class MedicalShoppeApi {
     String basePath = "medicalshop/getallmedicalshop";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< Get All Medical Shoppe Worked >>>>>>");
+    log("<<<<<< Get All Medical Shoppe Worked >>>>>>");
     return GetAllMedicalShopeModel.fromJson(json.decode(response.body));
   }
 
@@ -30,8 +31,8 @@ class MedicalShoppeApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Favourites Medical shope Added  Successfully>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Favourites Medical shope Added  Successfully>>>>>>>>>>");
     return response.body;
   }
 
@@ -41,7 +42,7 @@ class MedicalShoppeApi {
     String basePath = "medicalshop/getfavmedicalshop";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< GET ALL MEDICAL STORE WORKED >>>>>>");
+    log("<<<<<< GET ALL MEDICAL STORE WORKED >>>>>>");
     return GetAllFavouriteMedicalStoresModel.fromJson(
         json.decode(response.body));
   }
@@ -58,8 +59,8 @@ class MedicalShoppeApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Favourites Lab Added  Successfully>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Favourites Lab Added  Successfully>>>>>>>>>>");
     return response.body;
   }
 
@@ -73,8 +74,8 @@ class MedicalShoppeApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<Search Medical Store Successfully>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<Search Medical Store Successfully>>>>>>>>");
     return SearchMedicalStoreModel.fromJson(json.decode(response.body));
   }
 }

@@ -6,8 +6,6 @@ abstract class CompletedAppointmentsHealthRecordEvent {}
 class FetchCompletedAppointmentsByPatientId
     extends CompletedAppointmentsHealthRecordEvent {
   final String patientId;
-  final String userId;
 
-  FetchCompletedAppointmentsByPatientId(
-      {required this.patientId, required this.userId});
+  FetchCompletedAppointmentsByPatientId({required this.patientId});
 }

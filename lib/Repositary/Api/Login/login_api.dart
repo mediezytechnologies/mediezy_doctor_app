@@ -14,7 +14,7 @@ class LoginApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     log(body.toString());
-    print("<<<<<<<<<<Login Response Worked>>>>>>>>>>");
+    log("<<<<<<<<<<Login Response Worked>>>>>>>>>>");
     return LoginModel.fromJson(json.decode(response.body));
   }
 
@@ -45,8 +45,8 @@ class LoginApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Sign Up Response Worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Sign Up Response Worked>>>>>>>>>>");
     return SignupModel.fromJson(json.decode(response.body));
   }
 
@@ -75,7 +75,7 @@ class LoginApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 

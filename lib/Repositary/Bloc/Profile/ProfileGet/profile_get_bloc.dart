@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Model/Profile/ProfileGetModel.dart';
@@ -15,7 +17,7 @@ class ProfileGetBloc extends Bloc<ProfileGetEvent, ProfileGetState> {
         profileGetModel = await profileGetApi.getProfileGet();
         emit(ProfileGetLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(ProfileGetError());
       }
     });

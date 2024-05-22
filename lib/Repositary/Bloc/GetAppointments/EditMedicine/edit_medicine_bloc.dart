@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_appointment_api.dart';
@@ -33,10 +34,9 @@ class EditMedicineBloc extends Bloc<EditMedicineEvent, EditMedicineState> {
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
-        print(">>>>>>>>>>>>>>>>>" + e.toString());
+        log(">>>>>>>>>>>>>>>>>$e");
         emit(EditMedicineError());
       }
-      // TODO: implement event handler
     });
   }
 }

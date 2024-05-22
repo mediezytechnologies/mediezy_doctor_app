@@ -553,18 +553,15 @@ class LeaveScreenState extends State<LeaveScreen> {
     final DateTime? picked = await showModalBottomSheet<DateTime>(
       context: context,
       builder: (BuildContext builder) {
-        return Container(
-          // height: 200.0,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: date,
-            minimumDate: today,
-            maximumDate: DateTime.now().add(const Duration(days: 30)),
-            onDateTimeChanged: (DateTime newDateTime) {
-              onDateSelected(newDateTime);
-              // Do something when the date is changed (optional)
-            },
-          ),
+        return CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.date,
+          initialDateTime: date,
+          minimumDate: today,
+          maximumDate: DateTime.now().add(const Duration(days: 30)),
+          onDateTimeChanged: (DateTime newDateTime) {
+            onDateSelected(newDateTime);
+            // Do something when the date is changed (optional)
+          },
         );
       },
     );

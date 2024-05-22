@@ -36,7 +36,7 @@ class CustomScheduleApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
 
-    print("<<<<<<<<<<Late Schedule response worked>>>>>>>>>>");
+    log("<<<<<<<<<<Late Schedule response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -53,7 +53,7 @@ class CustomScheduleApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
 
-    print("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
+    log("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
     return GetAllLateModel.fromJson(json.decode(response.body));
   }
 
@@ -70,7 +70,7 @@ class CustomScheduleApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
 
-    print("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
+    log("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
     return GetAllEarlyModel.fromJson(json.decode(response.body));
   }
 
@@ -87,7 +87,7 @@ class CustomScheduleApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
 
-    print("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
+    log("<<<<<<<<<< Get All Late worked>>>>>>>>>>");
     return GetAllBreakModel.fromJson(json.decode(response.body));
   }
 
@@ -116,7 +116,7 @@ class CustomScheduleApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
 
-    print("<<<<<<<<<<Early Schedule response worked>>>>>>>>>>");
+    log("<<<<<<<<<<Early Schedule response worked>>>>>>>>>>");
     return MessageShowModel.fromJson(json.decode(response.body));
   }
 
@@ -147,7 +147,7 @@ class CustomScheduleApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
+    log(body.toString());
     log("<<<<<<<<<<Break Schedule response worked>>>>>>>>>>");
     return response.body;
   }

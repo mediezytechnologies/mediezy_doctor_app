@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/GetSymptoms/get_symptoms_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/BookAppointment/book_appointment_api.dart';
@@ -16,10 +18,9 @@ class GetSymptomsBloc extends Bloc<GetSymptomsEvent, GetSymptomsState> {
         getSymptomsModel = await bookAppointmentApi.getSymptoms();
         emit(GetSymptomsLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>><<<<<<<<<<<<<<>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>><<<<<<<<<<<<<<>>>>>>>>>>>$e");
         emit(GetSymptomsError());
       }
     });
   }
 }
-

@@ -5,7 +5,6 @@ import 'package:mediezy_doctor/Model/HealthRecords/get_prescription_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/GetPrescription/get_prescription_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/prescription_view_screen.dart';
@@ -28,14 +27,12 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
   void initState() {
     BlocProvider.of<GetPrescriptionBloc>(context).add(FetchGetPrescription(
         patientId: widget.patientId, userId: widget.userId));
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final mWidth = MediaQuery.of(context).size.width;
     return BlocBuilder<GetPrescriptionBloc, GetPrescriptionState>(
       builder: (context, state) {
         if (state is GetPrescriptionLoading) {

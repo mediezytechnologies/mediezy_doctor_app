@@ -10,7 +10,6 @@ import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../Model/GetAppointments/get_all_medicines_model.dart';
 
 class GetAppointmentApi {
@@ -27,7 +26,7 @@ class GetAppointmentApi {
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
     // print(body);
     log("respose === : ${response.body}");
-    print("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
+    log("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
     return AppointmentDetailsPageModel.fromJson(json.decode(response.body));
   }
 
@@ -35,6 +34,7 @@ class GetAppointmentApi {
 
   Future<AddPrescriptionModel> getAddPresscription({
     required String medicineName,
+    required String medicineId,
     required String dosage,
     required String noOfDays,
     required String type,
@@ -55,6 +55,7 @@ class GetAppointmentApi {
 
     final body = {
       "medicine_name": medicineName,
+      "medicine_id": medicineId,
       "token_id": tokenId,
       "dosage": dosage,
       "no_of_days": noOfDays,
@@ -71,8 +72,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }
 
@@ -112,8 +113,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -132,7 +133,7 @@ class GetAppointmentApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
     log("respose ste1 === : ${response.body}");
-    print("<<<<<< Get All Appointments Are Worked >>>>>>");
+    log("<<<<<< Get All Appointments Are Worked >>>>>>");
     return GetAllAppointmentsModel.fromJson(json.decode(response.body));
   }
 
@@ -150,7 +151,7 @@ class GetAppointmentApi {
         "doctor/getallcompletedappointments/$id/$date/$clinicId/$scheduleType";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    print("<<<<<< Get All completed Appointments Are Worked >>>>>>");
+    log("<<<<<< Get All completed Appointments Are Worked >>>>>>");
     return GetAllCompletedAppointmentsModel.fromJson(
         json.decode(response.body));
   }
@@ -163,7 +164,7 @@ class GetAppointmentApi {
     String basePath = "docter/medicine/$medicineId";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: null);
-    print("<<<<<< Delete medicine Worked >>>>>>");
+    log("<<<<<< Delete medicine Worked >>>>>>");
     return response.body;
   }
 
@@ -197,8 +198,8 @@ class GetAppointmentApi {
         ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
         : await multiFileApiClient.uploadFiles(
             files: attachment, uploadPath: basePath, bodyData: body);
-    print(body);
-    print("<<<<<<<<<<Add All Appointments response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Add All Appointments response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -220,9 +221,8 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print(
-        "<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
   }
@@ -255,7 +255,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 
@@ -287,7 +287,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 
@@ -303,7 +303,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 
@@ -316,7 +316,7 @@ class GetAppointmentApi {
     final body = {"medicine_name": searchQuery};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return GetAllMedicinesModel.fromJson(json.decode(response.body));
   }
 
@@ -332,7 +332,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 }

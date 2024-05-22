@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
@@ -18,10 +19,9 @@ class GenerateTokenApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
 
-    print("<<<<<<<<<<Generate token response worked>>>>>>>>>>");
+    log("<<<<<<<<<<Generate token response worked>>>>>>>>>>");
     return ClinicGetModel.fromJson(json.decode(response.body));
   }
-
 
   Future<String> getGenerateTokenFinal({
     required String startDate,
@@ -52,8 +52,8 @@ class GenerateTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Generate token final response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Generate token final response worked>>>>>>>>>>");
     return response.body;
   }
 }

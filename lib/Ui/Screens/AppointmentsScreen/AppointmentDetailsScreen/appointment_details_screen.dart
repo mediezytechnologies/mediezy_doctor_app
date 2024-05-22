@@ -4,10 +4,8 @@ import 'dart:io';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -1336,7 +1334,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       hintStyle: size.width > 450
                                           ? greyTab10B600
                                           : grey13B600,
-                                      hintText: "Add you notes",
+                                      hintText: "Add your notes",
                                       filled: true,
                                       fillColor: kCardColor,
                                       border: OutlineInputBorder(
@@ -1599,7 +1597,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         File compressedImage = await compressImage(pickedFile.path);
         imageFromCamera = File(pickedFile.path);
       } catch (e) {
-        print('Error compressing image: $e');
+        log('Error compressing image: $e');
         GeneralServices.instance.showToastMessage('Error compressing image');
       }
     } else {

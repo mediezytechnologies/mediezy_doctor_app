@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GetReservedTokensModel/GetReservedTokensModel.dart';
@@ -27,8 +28,8 @@ class ReserveTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Reserve Token response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Reserve Token response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -53,21 +54,19 @@ class ReserveTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Get Reserved Token response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Get Reserved Token response worked>>>>>>>>>>");
     return GetReservedTokensModel.fromJson(json.decode(response.body));
   }
 
   //un reserve token
 
-  Future<String> unReserveToken(
-  {
+  Future<String> unReserveToken({
     required String tokenNumber,
     required String fromDate,
     required String toDate,
     required String clinicId,
-  }
-  ) async {
+  }) async {
     String basePath = "doctor/getUnReservedToKenDetails";
     final body = {
       "token_number": tokenNumber,
@@ -78,8 +77,8 @@ class ReserveTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Un reserve Token response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Un reserve Token response worked>>>>>>>>>>");
     return response.body;
   }
 }

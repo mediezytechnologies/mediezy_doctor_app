@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -33,7 +34,7 @@ class AddAllAppointmentDetailsBloc
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data["message"]);
       } catch (e) {
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log(">>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(AddAllAppointmentDetailsError());
       }
     });

@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/BookAppointment/book_appointment_api.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/DeleteTokens/delete_tokens_bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 part 'book_appointment_event.dart';

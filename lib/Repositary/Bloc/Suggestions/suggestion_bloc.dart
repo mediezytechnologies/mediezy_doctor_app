@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/SuggestionApi/suggestion_api.dart';
@@ -24,7 +24,7 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
         GeneralServices.instance.showToastMessage(data['message']);
         emit(SuggestionLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(SuggestionError());
       }
     });

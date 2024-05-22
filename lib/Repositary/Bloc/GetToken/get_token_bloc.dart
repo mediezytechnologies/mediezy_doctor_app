@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Model/GetToken/get_token_model.dart';
@@ -18,7 +20,7 @@ class GetTokenBloc extends Bloc<GetTokenEvent, GetTokenState> {
         );
         emit(GetTokenLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(GetTokenError());
       }
     });

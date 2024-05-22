@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/GetUploadedScanReportModel.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/completed_appointments_ht_rcd_model.dart';
@@ -10,6 +11,7 @@ import 'package:mediezy_doctor/Model/HealthRecords/health_records_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/lab_report_model.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/time_line_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HealthRecordsApi {
   ApiClient apiClient = ApiClient();
@@ -26,7 +28,7 @@ class HealthRecordsApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return HealthRecordsModel.fromJson(json.decode(response.body));
   }
 
@@ -42,7 +44,7 @@ class HealthRecordsApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return GetPrescriptionModel.fromJson(json.decode(response.body));
   }
 
@@ -59,7 +61,7 @@ class HealthRecordsApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return GetPrescriptionViewModel.fromJson(json.decode(response.body));
   }
 
@@ -77,7 +79,7 @@ class HealthRecordsApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return LabReportModel.fromJson(json.decode(response.body));
   }
 
@@ -89,7 +91,7 @@ class HealthRecordsApi {
     final body = {"patient_id": patientId, "user_id": userId, "type": "4"};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print("<<<<<< GET ALL UPLOADED SCAN REPORTS WORKED SUCCESSFULLY >>>>>>");
+    log("<<<<<< GET ALL UPLOADED SCAN REPORTS WORKED SUCCESSFULLY >>>>>>");
     return GetUploadedScanReportModel.fromJson(json.decode(response.body));
   }
 
@@ -106,7 +108,7 @@ class HealthRecordsApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return TimeLineModel.fromJson(json.decode(response.body));
   }
 
@@ -115,9 +117,12 @@ class HealthRecordsApi {
   Future<GetCompletedAppointmentsHealthRecordModel>
       getCompletedAppointmentByPatientId({
     required String patientId,
-    required String userId,
   }) async {
-    String basePath = "patient/getSortedPatientAppointments/$patientId/$userId";
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+    String basePath =
+        "doctor/getSortedDoctorPatientAppointments/$patientId/$doctorId";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
     return GetCompletedAppointmentsHealthRecordModel.fromJson(
@@ -134,8 +139,7 @@ class HealthRecordsApi {
     final body = {"patient_id": patientId, "user_id": userId, "type": "3"};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(
-        "<<<<<< GET ALL UPLOADED DISCHARGE SUMMARY WORKED SUCCESSFULLY >>>>>>");
+    log("<<<<<< GET ALL UPLOADED DISCHARGE SUMMARY WORKED SUCCESSFULLY >>>>>>");
     return DischargeSummaryModel.fromJson(json.decode(response.body));
   }
 
@@ -149,8 +153,8 @@ class HealthRecordsApi {
     };
     var response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<GET VITALS WORKED SUCCESSFULLY>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<GET VITALS WORKED SUCCESSFULLY>>>>>>>>>>");
     return GetVitalsModel.fromJson(json.decode(response.body));
   }
 }

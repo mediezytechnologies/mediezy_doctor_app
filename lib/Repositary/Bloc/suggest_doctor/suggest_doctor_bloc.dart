@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/suggest_doctor_api/suggest_doctor_api.dart';
 import 'package:meta/meta.dart';
@@ -24,7 +25,7 @@ class SuggestDoctorBloc extends Bloc<SuggestDoctorEvent, SuggestDoctorState> {
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         emit(SuggestDoctorLoaded(successMessage: data['message'].toString()));
       } catch (e) {
-        print("<<<<< SUGGESTION ERROR : $e >>>>>");
+        log("<<<<< SUGGESTION ERROR : $e >>>>>");
         emit(SuggestDoctorError(errorMessage: e.toString()));
       }
     });

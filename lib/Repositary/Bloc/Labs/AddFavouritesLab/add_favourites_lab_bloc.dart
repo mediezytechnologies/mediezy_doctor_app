@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/Labs/labs_api.dart';
@@ -22,7 +23,7 @@ class AddFavouritesLabBloc
         Map<String, dynamic> data = jsonDecode(updatedSuccessfullyMessage);
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (error) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + error.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$error");
         emit(AddFavouritesLabError());
       }
     });

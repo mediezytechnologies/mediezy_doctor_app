@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/GetReservedTokensModel/GetReservedTokensModel.dart';
 import 'package:mediezy_doctor/Repositary/Api/ReserveTokenApi/reserve_token_api.dart';
@@ -29,7 +30,7 @@ class ReserveTokenBloc extends Bloc<ReserveTokenEvent, ReserveTokenState> {
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         final errorWithTimestamp = "$e";
-        print("Error: $errorWithTimestamp");
+        log("Error: $errorWithTimestamp");
         emit(ReserveTokenError(errorMessage: errorWithTimestamp));
       }
     });
@@ -50,7 +51,7 @@ class ReserveTokenBloc extends Bloc<ReserveTokenEvent, ReserveTokenState> {
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         final errorWithTimestamp = "$e";
-        print("Error: $errorWithTimestamp");
+        log("Error: $errorWithTimestamp");
         emit(UnReserveTokenError(errorMessage: errorWithTimestamp));
       }
     });
@@ -66,10 +67,9 @@ class ReserveTokenBloc extends Bloc<ReserveTokenEvent, ReserveTokenState> {
           clinicId: event.clinicId,
         );
         emit(ReservedTokensLoaded(
-            getReservedTokensModel: getReservedTokensModel
-        ));
+            getReservedTokensModel: getReservedTokensModel));
       } catch (e) {
-        print("Error: >>>>>>>>>>>>>>>>>>$e");
+        log("Error: >>>>>>>>>>>>>>>>>>$e");
         emit(ReservedTokensError());
       }
     });

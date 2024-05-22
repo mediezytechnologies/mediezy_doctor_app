@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/leave_check_model/leave_check_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/LeaveUpdate/leave_update_api.dart';
@@ -22,9 +24,9 @@ class LeaveCheckBloc extends Bloc<LeaveCheckEvent, LeaveCheckState> {
         );
         emit(LeaveCheckLoaded(
             // leaveCheckModel: leaveCheckModel
-        ));
+            ));
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LeaveCheckError());
       }
     });

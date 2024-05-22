@@ -20,9 +20,8 @@ class CompletedAppointmentsHealthRecordBloc extends Bloc<
     on<FetchCompletedAppointmentsByPatientId>((event, emit) async {
       emit(CompletedAppointmentsHealthRecordLoading());
       try {
-        getCompletedAppointmentsHealthRecordModel =
-            await healthRecordsApi.getCompletedAppointmentByPatientId(
-                patientId: event.patientId, userId: event.userId);
+        getCompletedAppointmentsHealthRecordModel = await healthRecordsApi
+            .getCompletedAppointmentByPatientId(patientId: event.patientId);
         emit(CompletedAppointmentsHealthRecordLoaded());
       } catch (error) {
         log("<<<<<<<<<<GET COMPLETED APPOINTMENTS BY PATIENT ID ERROR>>>>>>>>>>$error");

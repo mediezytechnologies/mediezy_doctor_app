@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,11 +24,10 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         showToastMessage(data['message']);
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LeaveUpdateError());
       }
     });
-
 
 //leave delete
 
@@ -42,7 +42,7 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         showToastMessage(data['message']);
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LeaveDeleteError());
       }
     });

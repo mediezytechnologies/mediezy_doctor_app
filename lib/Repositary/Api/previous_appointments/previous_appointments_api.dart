@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/PreviousAppointments/Previous_appointment_details_model.dart';
@@ -20,8 +21,8 @@ class PreviousAppointmentsApi {
     final body = {"doctor_id": id, "clinicId": clinicId, "date": date};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    print("<<<<<<<<<<Get all previous prescription response worked>>>>>>>>>>");
+    log(body.toString());
+    log("<<<<<<<<<<Get all previous prescription response worked>>>>>>>>>>");
     return PreviousAppointmentsModel.fromJson(json.decode(response.body));
   }
 
@@ -32,13 +33,10 @@ class PreviousAppointmentsApi {
     required String appointmentId,
   }) async {
     String basePath = "PreviousPatient-AppoitmentsDetails";
-    final body = {
-      "booked_user_id": patientId,
-      "appointment_id": appointmentId
-    };
+    final body = {"booked_user_id": patientId, "appointment_id": appointmentId};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return PreviousAppointmentDetailsModel.fromJson(json.decode(response.body));
   }
 }

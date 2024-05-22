@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/MessageShowModel/message_show_model.dart';
@@ -29,7 +30,7 @@ class LateScheduleBloc extends Bloc<LateScheduleEvent, LateScheduleState> {
         GeneralServices.instance.showToastMessage(data['message']);
         emit(LateScheduleLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LateScheduleError(errorMessage: '$e'));
       }
     });
@@ -49,8 +50,8 @@ class LateScheduleBloc extends Bloc<LateScheduleEvent, LateScheduleState> {
         // GeneralServices.instance.showSuccessMessage(context, title);
         emit(EarlyScheduleLoaded());
       } catch (e) {
-        final error= "$e";
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        final error = "$e";
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(EarlyScheduleError(errorMessage: error));
       }
     });

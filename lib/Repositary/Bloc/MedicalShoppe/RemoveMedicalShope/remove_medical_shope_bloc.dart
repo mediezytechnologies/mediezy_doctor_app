@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/MedicalShoppe/medical_shoppe_api.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
@@ -22,7 +23,7 @@ class RemoveMedicalShopeBloc
         Map<String, dynamic> data = jsonDecode(updatedSuccessfullyMessage);
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (error) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + error.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$error");
         emit(RemoveMedicalShopeError());
       }
     });

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,18 +18,20 @@ class MultiFileApiClient {
       "Content-Type": "multipart/form-data",
     };
 
-    print('token: $token');
-    print('Upload Path: $uploadPath');
+    log('token: $token');
+    log('Upload Path: $uploadPath');
 
-    final  String basePath = "https://mediezy.com/api/";
+    final String basePath = "https://mediezy.com/api/";
 
-    var request = http.MultipartRequest('POST', Uri.parse(basePath + uploadPath));
+    var request =
+        http.MultipartRequest('POST', Uri.parse(basePath + uploadPath));
     request.headers.addAll(headerParams);
 
-    print("Request URL: ${request.url}");
+    log("Request URL: ${request.url}");
 
     for (int i = 0; i < files.length; i++) {
-      var multipartFile = await http.MultipartFile.fromPath("files", files[i].path);
+      var multipartFile =
+          await http.MultipartFile.fromPath("files", files[i].path);
       request.files.add(multipartFile);
     }
 
@@ -44,25 +47,25 @@ class MultiFileApiClient {
 
     try {
       http.StreamedResponse res = await request.send();
-      print("Response: $res");
+      log("Response: $res");
 
       http.Response responsed = await http.Response.fromStream(res);
-      print("Response Status Code: ${responsed.statusCode}");
-      print("Response Body: ${responsed.body}");
+      log("Response Status Code: ${responsed.statusCode}");
+      log("Response Body: ${responsed.body}");
 
       final responseData = json.decode(responsed.body);
 
       if (responsed.statusCode == 200) {
-        print('Success');
-        print(responseData);
+        log('Success');
+        log(responseData);
       } else {
-        print('Error');
+        log('Error');
       }
 
-      print("Reason: $res");
+      log("Reason: $res");
       return responsed;
     } catch (e) {
-      print('Error during request: $e');
+      log('Error during request: $e');
       return http.Response('Error during request: $e', 500);
     }
   }

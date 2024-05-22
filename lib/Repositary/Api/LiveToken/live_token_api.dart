@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/LiveToken/get_current_token_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
@@ -21,7 +22,7 @@ class GetCurrentTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print("<<<<<< Get Current Token Worked >>>>>>");
+    log("<<<<<< Get Current Token Worked >>>>>>");
     return GetCurrentTokenModel.fromJson(json.decode(response.body));
   }
 
@@ -48,7 +49,7 @@ class GetCurrentTokenApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 }

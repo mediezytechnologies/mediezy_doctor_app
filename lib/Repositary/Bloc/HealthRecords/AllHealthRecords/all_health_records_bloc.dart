@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/HealthRecords/health_records_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/HealthRecords/health_records_api.dart';
@@ -18,7 +20,7 @@ class AllHealthRecordsBloc
             patientId: event.patientId, userId: event.userId);
         emit(AllHealthRecordsLoaded());
       } catch (error) {
-        print("<<<<<<<<<<Error>>>>>>>>>>" + error.toString());
+        log("<<<<<<<<<<Error>>>>>>>>>>$error");
         emit(AllHealthRecordsError());
       }
     });

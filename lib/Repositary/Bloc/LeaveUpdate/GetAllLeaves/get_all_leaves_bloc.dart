@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/CustomSchedule/get_all_leaves_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/LeaveUpdate/leave_update_api.dart';
@@ -18,7 +20,7 @@ class GetAllLeavesBloc extends Bloc<GetAllLeavesEvent, GetAllLeavesState> {
         );
         emit(GetAllLeavesLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetAllLeavesError());
       }
     });

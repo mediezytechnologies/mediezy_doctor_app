@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
@@ -18,7 +20,7 @@ class GetClinicBloc extends Bloc<GetClinicEvent, GetClinicState> {
         clinicGetModel = await generateTokenApi.getClinic();
         emit(GetClinicLoaded());
       } catch (e) {
-        print("Error>>>>>>>>>>>>>>>>>>>>>>>>>" + e.toString());
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetClinicError());
       }
     });

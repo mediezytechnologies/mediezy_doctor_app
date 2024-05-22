@@ -3,10 +3,10 @@ part of 'add_prescription_bloc.dart';
 @immutable
 abstract class AddPrescriptionEvent {}
 
-
-class FetchAddPrescription extends AddPrescriptionEvent{
+class FetchAddPrescription extends AddPrescriptionEvent {
   final String bookedPersonId;
   final String medicineName;
+  final String medicineId;
   final String dosage;
   final String noOfDays;
   final String type;
@@ -21,6 +21,7 @@ class FetchAddPrescription extends AddPrescriptionEvent{
 
   FetchAddPrescription({
     required this.medicineName,
+    required this.medicineId,
     required this.bookedPersonId,
     required this.dosage,
     required this.noOfDays,
@@ -33,5 +34,5 @@ class FetchAddPrescription extends AddPrescriptionEvent{
     required this.medicalStoreId,
     required this.timeSection,
     required this.interval,
-});
+  });
 }

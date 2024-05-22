@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/MedicalShoppe/medical_shoppe_api.dart';
@@ -19,8 +21,7 @@ class GetAllFavouriteMedicalStoreBloc extends Bloc<
             await medicalShoppeApi.getAllMedicalStores();
         emit(GetAllFavouriteMedicalStoreLoaded());
       } catch (error) {
-        print("<<<<<<<<<<GetAllFavouriteMedicalStore Error>>>>>>>>>>" +
-            error.toString());
+        log("<<<<<<<<<<GetAllFavouriteMedicalStore Error>>>>>>>>>>$error");
         emit(GetAllFavouriteMedicalStoreError());
       }
     });
