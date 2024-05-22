@@ -305,24 +305,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                       }
                     },
                   ),
-                  // BlocListener<AddCheckinOrCheckoutBloc,
-                  //     AddCheckinOrCheckoutState>(
-                  //   listener: (context, state) {
-                  //     if (state is AddCheckinOrCheckoutLoaded) {
-                  //       // BlocProvider.of<GetAllAppointmentsBloc>(context)
-                  //       //     .add(FetchAllAppointments(
-                  //       //   date: widget.date,
-                  //       //   clinicId: controller.initialIndex!,
-                  //       //   scheduleType: controller.scheduleIndex.value,
-                  //       // ));
-                  //       // BlocProvider.of<GetAppointmentsBloc>(context).add(
-                  //       //     FetchAppointmentDetailsPage(
-                  //       //         tokenId: getAllAppointmentsModel
-                  //       //             .appointments![currentPosition].id!
-                  //       //             .toString()));
-                  //     }
-                  //   },
-                  // )
                 ],
                 child: FadedSlideAnimation(
                   beginOffset: const Offset(0, 0.3),
@@ -380,21 +362,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               controller.scheduleIndex.value,
                                         ));
                                         setState(() {
-                                          // balanceAppoiment=widget.length!-1;
                                           listLength = getAllAppointmentsModel
                                               .appointments!.length;
                                           balanceAppoiment =
                                               listLength - 1 - currentPosition;
-                                          log("balance card : $balanceAppoiment");
                                         });
-
-                                        log("current date ==: ${widget.date}");
-                                        log("current clinicId ==: ${controller.initialIndex}");
-                                        log("current scheduleType ==: ${controller.scheduleIndex.value}");
                                       }
-
-                                      // pageController
-                                      //     .jumpToPage(currentIndex - 1);
                                     },
                                     icon: Icon(
                                       Icons.arrow_back_ios,
@@ -598,7 +571,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           // balanceAppoiment=widget.length!-1;
                                           balanceAppoiment =
                                               listLength - 1 - currentPosition;
-                                          log("balance card : $balanceAppoiment");
+                                         
                                         });
                                       }
                                     },
@@ -1349,97 +1322,48 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           formatDate()
                                       ? InkWell(
                                           onTap: () {
-                                            BlocProvider.of<
-                                                        AddAllAppointmentDetailsBloc>(
-                                                    context)
-                                                .add(
-                                              AddAllAppointmentDetails(
-                                                tokenId: widget.tokenId,
-                                                labId: dropValueLab,
-                                                labTest: labTestController.text,
-                                                // labTest: labTestValues.join(', '),
-                                                medicalshopId:
-                                                    dropValueMedicalStore,
-                                                // medicalshopId: selectedValue.toString(),
-                                                // medicalshopId: selectedValue == "null"
-                                                //     ? ""
-                                                //     : selectedValue.toString(),
-                                                imageFromCamera,
-                                                reviewAfter:
-                                                    afterDaysController.text,
-                                                notes: noteController.text,
-                                                scanId: dropValueScanning,
-                                                scanTest:
-                                                    scanTestController.text,
-                                              ),
-                                            );
                                             Future.delayed(
-                                                    const Duration(seconds: 2))
+                                                    const Duration(seconds: 1))
                                                 .then((value) {
                                               if (appointmentDetailsPageModel
                                                       .bookingData!
                                                       .isCheckedout !=
                                                   1) {
-                                                // clickedIndex = index;
-                                                BlocProvider.of<
-                                                            AddCheckinOrCheckoutBloc>(
-                                                        context)
-                                                    .add(
-                                                  AddCheckinOrCheckout(
-                                                    clinicId:
-                                                        appointmentDetailsPageModel
-                                                            .bookingData!
-                                                            .clinicId
-                                                            .toString(),
-                                                    isCompleted: 1,
-                                                    isCheckin: 0,
-                                                    tokenNumber:
-                                                        appointmentDetailsPageModel
-                                                            .bookingData!
-                                                            .tokenNumber
-                                                            .toString(),
-                                                    isReached: '',
-                                                  ),
-                                                );
-                                                // setState(() {
-                                                appointmentDetailsPageModel
-                                                    .bookingData!
-                                                    .isCheckedout = 1;
-                                                // });
-                                              }
-                                              if ((currentPosition ==
-                                                  listLength - 1)) {
-                                                log("message 1");
-                                                currentPosition--;
-                                                pageController.animateToPage(
-                                                  currentPosition,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.easeInOut,
-                                                );
-                                              } else if (currentPosition <
-                                                  listLength - 1) {
-                                                log("message 2");
-                                                currentPosition++;
-                                                pageController.animateToPage(
-                                                  currentPosition,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.easeInOut,
-                                                );
-                                                setState(() {
+                                                if ((currentPosition ==
+                                                    listLength - 1)) {
+                                                  log("last section =======");
+                                                  currentPosition--;
+                                                  log("last section ======= : $currentPosition");
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        microseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
                                                   BlocProvider.of<
-                                                              GetAppointmentsBloc>(
+                                                              AddCheckinOrCheckoutBloc>(
                                                           context)
                                                       .add(
-                                                    FetchAppointmentDetailsPage(
-                                                        tokenId:
-                                                            getAllAppointmentsModel
-                                                                .appointments![
-                                                                    currentPosition]
-                                                                .id!
-                                                                .toString()),
+                                                    AddCheckinOrCheckout(
+                                                      clinicId:
+                                                          appointmentDetailsPageModel
+                                                              .bookingData!
+                                                              .clinicId
+                                                              .toString(),
+                                                      isCompleted: 1,
+                                                      isCheckin: 0,
+                                                      tokenNumber:
+                                                          appointmentDetailsPageModel
+                                                              .bookingData!
+                                                              .tokenNumber
+                                                              .toString(),
+                                                      isReached: '',
+                                                    ),
                                                   );
+
+                                                  appointmentDetailsPageModel
+                                                      .bookingData!
+                                                      .isCheckedout = 1;
                                                   BlocProvider.of<
                                                               GetAllAppointmentsBloc>(
                                                           context)
@@ -1452,16 +1376,83 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                           .scheduleIndex.value,
                                                     ),
                                                   );
-                                                  // balanceAppoiment=widget.length!-1;
-                                                  listLength--;
-                                                  log("message $listLength");
-                                                  // currentPosition--;
-                                                  balanceAppoiment =
-                                                      listLength -
-                                                          1 -
-                                                          currentPosition;
-                                                  log("balance card : $balanceAppoiment");
-                                                });
+                                                  BlocProvider.of<
+                                                              GetAppointmentsBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchAppointmentDetailsPage(
+                                                        tokenId:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    currentPosition]
+                                                                .id!
+                                                                .toString()),
+                                                  );
+                                                } else if (currentPosition <
+                                                    listLength - 1) {
+                                                  log("middile section =======");
+
+                                                  currentPosition++;
+
+                                                  log("middile section currentPosition $currentPosition =======");
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  BlocProvider.of<
+                                                              AddCheckinOrCheckoutBloc>(
+                                                          context)
+                                                      .add(
+                                                    AddCheckinOrCheckout(
+                                                      clinicId:
+                                                          appointmentDetailsPageModel
+                                                              .bookingData!
+                                                              .clinicId
+                                                              .toString(),
+                                                      isCompleted: 1,
+                                                      isCheckin: 0,
+                                                      tokenNumber:
+                                                          appointmentDetailsPageModel
+                                                              .bookingData!
+                                                              .tokenNumber
+                                                              .toString(),
+                                                      isReached: '',
+                                                    ),
+                                                  );
+
+                                                  log("appoiment isChecked ===== ${appointmentDetailsPageModel.bookingData!.isCheckedout}");
+
+                                                  BlocProvider.of<
+                                                              GetAllAppointmentsBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchAllAppointments(
+                                                      date: widget.date,
+                                                      clinicId: controller
+                                                          .initialIndex!,
+                                                      scheduleType: controller
+                                                          .scheduleIndex.value,
+                                                    ),
+                                                  );
+                                                  BlocProvider.of<
+                                                              GetAppointmentsBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchAppointmentDetailsPage(
+                                                        tokenId:
+                                                            getAllAppointmentsModel
+                                                                .appointments![
+                                                                    currentPosition]
+                                                                .id!
+                                                                .toString()),
+                                                  );
+                                                  appointmentDetailsPageModel
+                                                      .bookingData!
+                                                      .isCheckedout = 1;
+                                                      listLength--;
+                                                }
                                               }
                                             });
 
