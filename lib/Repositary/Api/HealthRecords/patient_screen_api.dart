@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PatientScreenApi {
   ApiClient apiClient = ApiClient();
 
-  //Patients get api
+  //! Patients get api
 
   Future<PatientsGetModel> getPatients({required String clinicId}) async {
     String? doctorId;
@@ -25,7 +25,7 @@ class PatientScreenApi {
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 
-  //search Patients get api
+  //! search Patients get api
 
   Future<PatientsGetModel> getSearchPatients({
     required String searchQuery,
@@ -44,7 +44,7 @@ class PatientScreenApi {
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 
-  //Sorting Patients get api
+  //! Sorting Patients get api
 
   Future<PatientsGetModel> getSortingPatients(
       {required String sort,
@@ -68,4 +68,3 @@ class PatientScreenApi {
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
 }
-//safsfjhdsfjhjskdfhjksdhfjdhfjdfjdfjkfdshjk///

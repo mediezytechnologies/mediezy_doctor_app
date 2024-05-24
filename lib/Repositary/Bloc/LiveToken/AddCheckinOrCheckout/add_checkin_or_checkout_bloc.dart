@@ -3,10 +3,8 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/LiveToken/live_token_api.dart';
+import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
-
-import '../../LeaveUpdate/LeaveUpdate/leave_update_bloc.dart';
-
 part 'add_checkin_or_checkout_event.dart';
 
 part 'add_checkin_or_checkout_state.dart';
@@ -28,7 +26,7 @@ class AddCheckinOrCheckoutBloc
             isReached: event.isReached);
         emit(AddCheckinOrCheckoutLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
-        showToastMessage(data['message']);
+        GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(AddCheckinOrCheckoutError());

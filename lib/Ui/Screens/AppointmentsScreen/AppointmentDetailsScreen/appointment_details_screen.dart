@@ -33,9 +33,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
@@ -334,39 +331,45 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     onPressed: () {
                                       log("pressed");
                                       if (currentPosition > 0) {
-                                        log("pressed no zero");
-                                        currentPosition--;
-                                        pageController.animateToPage(
-                                          currentPosition,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          curve: Curves.easeInOut,
-                                        );
-                                        BlocProvider.of<GetAppointmentsBloc>(
-                                                context)
-                                            .add(
-                                          FetchAppointmentDetailsPage(
-                                            tokenId: widget
-                                                .appointmentsDetails[
-                                                    currentPosition]
-                                                .id
-                                                .toString(),
-                                          ),
-                                        );
-                                        BlocProvider.of<GetAllAppointmentsBloc>(
-                                                context)
-                                            .add(FetchAllAppointments(
-                                          date: widget.date,
-                                          clinicId: controller.initialIndex!,
-                                          scheduleType:
-                                              controller.scheduleIndex.value,
-                                        ));
-                                        setState(() {
-                                          listLength = getAllAppointmentsModel
-                                              .appointments!.length;
-                                          balanceAppoiment =
-                                              listLength - 1 - currentPosition;
-                                        });
+                                        // log("pressed no zero");
+                                        if (appointmentDetailsPageModel
+                                                .bookingData!.isCheckedout ==
+                                            1) {
+                                          currentPosition--;
+                                          pageController.animateToPage(
+                                            currentPosition,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.easeInOut,
+                                          );
+                                          BlocProvider.of<GetAppointmentsBloc>(
+                                                  context)
+                                              .add(
+                                            FetchAppointmentDetailsPage(
+                                              tokenId: widget
+                                                  .appointmentsDetails[
+                                                      currentPosition]
+                                                  .id
+                                                  .toString(),
+                                            ),
+                                          );
+                                          BlocProvider.of<
+                                                      GetAllAppointmentsBloc>(
+                                                  context)
+                                              .add(FetchAllAppointments(
+                                            date: widget.date,
+                                            clinicId: controller.initialIndex!,
+                                            scheduleType:
+                                                controller.scheduleIndex.value,
+                                          ));
+                                          setState(() {
+                                            listLength = getAllAppointmentsModel
+                                                .appointments!.length;
+                                            balanceAppoiment = listLength -
+                                                1 -
+                                                currentPosition;
+                                          });
+                                        }
                                       }
                                     },
                                     icon: Icon(
@@ -542,37 +545,42 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 IconButton(
                                     onPressed: () {
                                       if (currentPosition < listLength - 1) {
-                                        currentPosition++;
-                                        pageController.animateToPage(
-                                          currentPosition,
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          curve: Curves.easeInOut,
-                                        );
-                                        BlocProvider.of<GetAppointmentsBloc>(
-                                                context)
-                                            .add(
-                                          FetchAppointmentDetailsPage(
-                                              tokenId: getAllAppointmentsModel
-                                                  .appointments![
-                                                      currentPosition]
-                                                  .id!
-                                                  .toString()),
-                                        );
-                                        BlocProvider.of<GetAllAppointmentsBloc>(
-                                                context)
-                                            .add(FetchAllAppointments(
-                                          date: widget.date,
-                                          clinicId: controller.initialIndex!,
-                                          scheduleType:
-                                              controller.scheduleIndex.value,
-                                        ));
-                                        setState(() {
-                                          // balanceAppoiment=widget.length!-1;
-                                          balanceAppoiment =
-                                              listLength - 1 - currentPosition;
-                                         
-                                        });
+                                        if (appointmentDetailsPageModel
+                                                .bookingData!.isCheckedout ==
+                                            1) {
+                                          currentPosition + 1;
+                                          pageController.animateToPage(
+                                            currentPosition,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.easeInOut,
+                                          );
+                                          BlocProvider.of<GetAppointmentsBloc>(
+                                                  context)
+                                              .add(
+                                            FetchAppointmentDetailsPage(
+                                                tokenId: getAllAppointmentsModel
+                                                    .appointments![
+                                                        currentPosition]
+                                                    .id!
+                                                    .toString()),
+                                          );
+                                          BlocProvider.of<
+                                                      GetAllAppointmentsBloc>(
+                                                  context)
+                                              .add(FetchAllAppointments(
+                                            date: widget.date,
+                                            clinicId: controller.initialIndex!,
+                                            scheduleType:
+                                                controller.scheduleIndex.value,
+                                          ));
+                                          setState(() {
+                                            // balanceAppoiment=widget.length!-1;
+                                            balanceAppoiment = listLength -
+                                                1 -
+                                                currentPosition;
+                                          });
+                                        }
                                       }
                                     },
                                     icon: Icon(
@@ -661,9 +669,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   ),
-                                  PatientDetailsWidget(
-                                      appointmentDetailsPageModel:
-                                          appointmentDetailsPageModel),
+                                  // PatientDetailsWidget(
+                                  //   appointmentDetailsPageModel:
+                                  //       appointmentDetailsPageModel,
+                                  // ),
                                   appointmentDetailsPageModel
                                               .bookingData!.date ==
                                           formatDate()
@@ -799,21 +808,21 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         )
                                       : Container(),
                                   const VerticalSpacingWidget(height: 10),
-                                  VitalsWidget(
-                                      tokenId: appointmentDetailsPageModel
-                                          .bookingData!.tokenId
-                                          .toString(),
-                                      appointmentDetailsPageModel:
-                                          appointmentDetailsPageModel),
+                                  // VitalsWidget(
+                                  //     tokenId: appointmentDetailsPageModel
+                                  //         .bookingData!.tokenId
+                                  //         .toString(),
+                                  //     appointmentDetailsPageModel:
+                                  //         appointmentDetailsPageModel),
                                   // }, child: Text("data")),
-                                  MedicineWidget(
-                                    tokenId: appointmentDetailsPageModel
-                                        .bookingData!.tokenId
-                                        .toString(),
-                                    appointmentDetailsPageModel:
-                                        appointmentDetailsPageModel,
-                                    medicalStoreId: dropValueMedicalStore,
-                                  ),
+                                  // MedicineWidget(
+                                  //   tokenId: appointmentDetailsPageModel
+                                  //       .bookingData!.tokenId
+                                  //       .toString(),
+                                  //   appointmentDetailsPageModel:
+                                  //       appointmentDetailsPageModel,
+                                  //   medicalStoreId: dropValueMedicalStore,
+                                  // ),
                                   //! upload attachments
                                   Card(
                                     color: Colors.white,
@@ -1322,9 +1331,34 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           formatDate()
                                       ? InkWell(
                                           onTap: () {
+                                            log("add all appointments");
+                                            BlocProvider.of<
+                                                        AddAllAppointmentDetailsBloc>(
+                                                    context)
+                                                .add(
+                                              AddAllAppointmentDetails(
+                                                tokenId: widget.tokenId,
+                                                labId: dropValueLab,
+                                                labTest: labTestController.text,
+                                                // labTest: labTestValues.join(', '),
+                                                medicalshopId:
+                                                    dropValueMedicalStore,
+                                                // medicalshopId: selectedValue.toString(),
+                                                // medicalshopId: selectedValue == "null"
+                                                //     ? ""
+                                                //     : selectedValue.toString(),
+                                                imageFromCamera,
+                                                reviewAfter:
+                                                    afterDaysController.text,
+                                                notes: noteController.text,
+                                                scanId: dropValueScanning,
+                                                scanTest:
+                                                    scanTestController.text,
+                                              ),
+                                            );
                                             Future.delayed(
-                                                    const Duration(seconds: 1))
-                                                .then((value) {
+                                              const Duration(seconds: 2),
+                                            ).then((value) {
                                               if (appointmentDetailsPageModel
                                                       .bookingData!
                                                       .isCheckedout !=
@@ -1391,9 +1425,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 } else if (currentPosition <
                                                     listLength - 1) {
                                                   log("middile section =======");
-
                                                   currentPosition++;
-
                                                   log("middile section currentPosition $currentPosition =======");
                                                   pageController.animateToPage(
                                                     currentPosition,
@@ -1451,7 +1483,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   appointmentDetailsPageModel
                                                       .bookingData!
                                                       .isCheckedout = 1;
-                                                      listLength--;
+                                                  listLength--;
                                                 }
                                               }
                                             });

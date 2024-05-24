@@ -520,7 +520,7 @@ class _PreviousBookingDetailsScreenState
                         previousAppointmentDetailsModel
                                     .previousappointmentdetails!
                                     .first
-                                    .labName ==
+                                    .labTest ==
                                 null
                             ? Container()
                             : ShortNamesWidget(

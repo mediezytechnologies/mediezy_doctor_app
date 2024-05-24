@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -29,12 +30,12 @@ class AppoimentDropdown extends StatelessWidget {
                 log(newValue!);
                 controller.dropdownValueChanging(
                     newValue, controller.initialIndex!);
-                BlocProvider.of<GetAllAppointmentsBloc>(context)
-                    .add(FetchAllAppointments(
-                  date: controller.formatDate(),
-                  clinicId: controller.initialIndex!,
-                  scheduleType: controller.scheduleIndex.value,
-                ));
+                BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
+                  FetchAllAppointmentsDemo(
+                      date: controller.formatDate(),
+                      clinicId: controller.initialIndex!,
+                      scheduleType: controller.scheduleIndex.value),
+                );
                 BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                     .add(FetchAllCompletedAppointments(
                   date: controller.formatDate(),
@@ -69,12 +70,12 @@ class AppoimentDropdown extends StatelessWidget {
                   onChanged: (newValue) {
                     log(newValue!);
                     controller.dropdownValueChanging(newValue, '0');
-                    BlocProvider.of<GetAllAppointmentsBloc>(context)
-                        .add(FetchAllAppointments(
-                      date: controller.formatDate(),
-                      clinicId: controller.initialIndex!,
-                      scheduleType: controller.scheduleIndex.value,
-                    ));
+                    BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
+                      FetchAllAppointmentsDemo(
+                          date: controller.formatDate(),
+                          clinicId: controller.initialIndex!,
+                          scheduleType: controller.scheduleIndex.value),
+                    );
                     BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                         .add(FetchAllCompletedAppointments(
                       date: controller.formatDate(),

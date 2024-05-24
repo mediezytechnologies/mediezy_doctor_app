@@ -52,18 +52,8 @@ class _ReservationScreenState extends State<ReservationScreen>
     return formattedSelectedDate;
   }
 
-  //* for manage section
-  // late ValueNotifier<String> dropValueManageNotifier;
-  // String clinicManageId = "";
-  // late String selectedManageClinicId;
-  // List<HospitalDetails> clinicValuesManage = [];
-
-  // late ValueNotifier<String> dropValueUnreserveNotifier;
-  // String clinicUnreserveId = "";
-  // late String selectedUnReserveClinicId;
-  // List<HospitalDetails> clinicValueUnReserve = [];
-
   List<String> selectedTokenNumbers = [];
+
   int visible = 0;
 
   void resetSelectedTokens() {
@@ -135,8 +125,11 @@ class _ReservationScreenState extends State<ReservationScreen>
         children: [
           // VerticalSpacingWidget(height: 10.h),
           Container(
-            height: size.width > 450 ? 60.h : 50.h,
-            color: kCardColor,
+            height: size.width > 450 ? 60.h : 40.h,
+            margin: EdgeInsets.symmetric(horizontal: 15.w),
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(131, 187, 222, 251),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
             child: TabBar(
               onTap: (value) {
                 setState(() {
@@ -160,9 +153,9 @@ class _ReservationScreenState extends State<ReservationScreen>
               },
               controller: tabFirstController,
               physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(
-                  top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
-              dividerColor: kCardColor,
+              // padding: EdgeInsets.only(
+              //     top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
+              dividerColor: Colors.transparent,
               unselectedLabelColor: kTextColor,
               unselectedLabelStyle: TextStyle(
                 fontSize: size.width > 450 ? 10.sp : 13.sp,
@@ -174,7 +167,9 @@ class _ReservationScreenState extends State<ReservationScreen>
               ),
               indicatorSize: TabBarIndicatorSize.tab,
               indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: kMainColor),
+                borderRadius: BorderRadius.circular(10),
+                color: kMainColor,
+              ),
               tabs: [
                 //! reserve
                 Tab(
@@ -205,6 +200,7 @@ class _ReservationScreenState extends State<ReservationScreen>
               ],
             ),
           ),
+          const VerticalSpacingWidget(height: 5),
           Expanded(
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
@@ -293,8 +289,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         (DateTime picked) {
                                                       setState(() {
                                                         selectedDate = picked;
-                                                        endDate =
-                                                            picked; // Update endDate as well
+                                                        endDate = picked;
                                                       });
                                                       BlocProvider.of<
                                                                   GetTokenBloc>(
@@ -354,8 +349,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                             setState(() {
                                                               selectedDate =
                                                                   picked;
-                                                              endDate =
-                                                                  picked; // Update endDate as well
+                                                              endDate = picked;
                                                             });
                                                             BlocProvider.of<
                                                                 GetTokenBloc>(
@@ -381,8 +375,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                             setState(() {
                                                               selectedDate =
                                                                   picked;
-                                                              endDate =
-                                                                  picked; // Update endDate as well
+                                                              endDate = picked;
                                                             });
                                                             BlocProvider.of<
                                                                 GetTokenBloc>(
@@ -433,8 +426,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     onDateSelected: (DateTime
                                                         picked) async {
                                                       setState(() {
-                                                        endDate =
-                                                            picked; // Update endDate as well
+                                                        endDate = picked;
                                                       });
                                                       BlocProvider.of<
                                                                   GetTokenBloc>(
@@ -492,8 +484,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                               (DateTime
                                                                   picked) async {
                                                             setState(() {
-                                                              endDate =
-                                                                  picked; // Update endDate as well
+                                                              endDate = picked;
                                                             });
                                                             BlocProvider.of<
                                                                         GetTokenBloc>(

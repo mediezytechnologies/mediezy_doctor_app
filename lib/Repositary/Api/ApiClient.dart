@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
 class ApiClient {
-  // static const String basePath = "https://mediezy.com/api/";
-  static const String basePath = "https://test.mediezy.com/api/";
+  static const String basePath = "https://mediezy.com/api/";
+  // static const String basePath = "https://test.mediezy.com/api/";
 
   String orignalToken = '';
 
@@ -19,24 +19,24 @@ class ApiClient {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? prefs.getString('tokenD');
 
-   // print(prefs.getString('token'));
+    // print(prefs.getString('token'));
 
-   // print("Invoke Api worked");
-   // print(method);
-   // print(token);
+    // print("Invoke Api worked");
+    // print(method);
+    // print(token);
     Map<String, String> headerParams = {};
     if (method == 'POST' || method == 'GET' || method == 'PATCH') {
-     // print("Methode POST OR GET");
+      // print("Methode POST OR GET");
       headerParams = {
         "authorization": "Bearer $token",
         'Accept': 'application/json',
         "content-type": "multipart/form-data"
       };
-     // print(jsonEncode(body));
+      // print(jsonEncode(body));
     }
     Response response;
     String url = basePath + path;
-   // print('========================================$url');
+    print('========================================$url');
     final nullableHeaderParams = (headerParams.isEmpty) ? null : headerParams;
 
     switch (method) {
@@ -100,9 +100,9 @@ class ApiClient {
       default:
         response = await get(Uri.parse(url), headers: nullableHeaderParams);
     }
-   // print('status of $path =>${response.statusCode}');
-   // print(response.body);
-   // print(response.headers);
+    // print('status of $path =>${response.statusCode}');
+    // print(response.body);
+    // print(response.headers);
     if (response.statusCode >= 400) {
       log("bloc calling" '$path : ${response.statusCode} : ${response.body}');
 

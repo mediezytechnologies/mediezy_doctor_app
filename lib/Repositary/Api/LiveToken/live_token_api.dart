@@ -8,7 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GetCurrentTokenApi {
   ApiClient apiClient = ApiClient();
 
-  //* get current token number and time
+  //! get current token number and time
+
   Future<GetCurrentTokenModel> getCurrentToken({
     required String clinicId,
     required String scheduleType,
@@ -26,7 +27,7 @@ class GetCurrentTokenApi {
     return GetCurrentTokenModel.fromJson(json.decode(response.body));
   }
 
-  //* checkin or checkout
+  //! checkin or checkout
 
   Future<String> addCheckinOrCheckout({
     required String tokenNumber,
@@ -49,7 +50,8 @@ class GetCurrentTokenApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
+    print(body);
+    log(">>>>>>>><<<<<<<checkin${response.body}");
     return response.body;
   }
 }

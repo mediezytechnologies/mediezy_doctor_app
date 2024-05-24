@@ -18,6 +18,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAp
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/get_all_previous_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/previous_details/previous_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAppointmentDetailsPage/get_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/update_favourite_medicine/bloc/update_favourite_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetSymptoms/get_symptoms_bloc.dart';
@@ -125,5 +126,6 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => SearchPatientsBloc()),
         BlocProvider(create: (context) => GetAllMedicinesBloc()),
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
+        BlocProvider(create: (context) => AppointmentsDemoBlocBloc()),
       ];
 }

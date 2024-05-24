@@ -7,14 +7,35 @@ import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointme
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
+import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../Model/GetAppointments/get_all_medicines_model.dart';
 
 class GetAppointmentApi {
   ApiClient apiClient = ApiClient();
   MultiFileApiClient2 multiFileApiClient = MultiFileApiClient2();
+
+  //! get all appointments as per date
+
+  Future<GetAllAppointmentsModel> getAllApointmentsAsPerDate({
+    required String date,
+    required String clinicId,
+    required String scheduleType,
+  }) async {
+    String? id;
+    final preference = await SharedPreferences.getInstance();
+    id = preference.getString('DoctorId').toString();
+    String basePath =
+        "doctor/getallappointments/$id/$date/$clinicId/$scheduleType";
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
+    // log("respose ste1 === : ${response.body}");
+    //print("<<<<<< Get All Appointments Are Worked >>>>>>");
+    return GetAllAppointmentsModel.fromJson(json.decode(response.body));
+  }
 
   //!appointment details api
 
@@ -24,9 +45,9 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    // print(body);
-    log("respose === : ${response.body}");
-    log("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
+    // //print(body);
+    // log("respose === : ${response.body}");
+    //print("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
     return AppointmentDetailsPageModel.fromJson(json.decode(response.body));
   }
 
@@ -72,8 +93,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
-    log("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
+    //print(body);
+    //print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }
 
@@ -113,31 +134,12 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    log(body.toString());
-    log("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
+    //print(body);
+    //print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
     return response.body;
   }
 
-  //* get all appointments as per date
-
-  Future<GetAllAppointmentsModel> getAllApointmentsAsPerDate({
-    required String date,
-    required String clinicId,
-    required String scheduleType,
-  }) async {
-    String? id;
-    final preference = await SharedPreferences.getInstance();
-    id = preference.getString('DoctorId').toString();
-    String basePath =
-        "doctor/getallappointments/$id/$date/$clinicId/$scheduleType";
-    Response response =
-        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    log("respose ste1 === : ${response.body}");
-    log("<<<<<< Get All Appointments Are Worked >>>>>>");
-    return GetAllAppointmentsModel.fromJson(json.decode(response.body));
-  }
-
-  //* get all completed appointments as per date
+  //! get all completed appointments as per date
 
   Future<GetAllCompletedAppointmentsModel> getAllCompletedApointmentsAsPerDate({
     required String date,
@@ -151,12 +153,12 @@ class GetAppointmentApi {
         "doctor/getallcompletedappointments/$id/$date/$clinicId/$scheduleType";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    log("<<<<<< Get All completed Appointments Are Worked >>>>>>");
+    //print("<<<<<< Get All completed Appointments Are Worked >>>>>>");
     return GetAllCompletedAppointmentsModel.fromJson(
         json.decode(response.body));
   }
 
-  //delete medicine api
+  //! delete medicine api
 
   Future<String> deleteMedicine({
     required String medicineId,
@@ -164,7 +166,7 @@ class GetAppointmentApi {
     String basePath = "docter/medicine/$medicineId";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: null);
-    log("<<<<<< Delete medicine Worked >>>>>>");
+    //print("<<<<<< Delete medicine Worked >>>>>>");
     return response.body;
   }
 
@@ -199,11 +201,11 @@ class GetAppointmentApi {
         : await multiFileApiClient.uploadFiles(
             files: attachment, uploadPath: basePath, bodyData: body);
     log(body.toString());
-    log("<<<<<<<<<<Add All Appointments response worked>>>>>>>>>>");
+    log(">>>>>>>><<<<<<<add appointments${response.body}");
     return response.body;
   }
 
-  //* get all Completed AppointmentDetails
+  //! get all Completed AppointmentDetails
 
   Future<GetAllCompletedAppointmentDetailsModel>
       getAllCompletedAppointmentDetails({
@@ -221,13 +223,14 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
-    log("<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
+    //print(body);
+    //print(
+    //  "<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
   }
 
-  //* Add Vitals Api
+  //! Add Vitals Api
 
   Future<String> addVitals({
     required String tokenId,
@@ -255,11 +258,11 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
+    //print(body);
     return response.body;
   }
 
-  //* edit Vitals Api
+  //! edit Vitals Api
 
   Future<String> editVitals({
     required String tokenId,
@@ -287,11 +290,11 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    log(body.toString());
+    //print(body);
     return response.body;
   }
 
-  //* delete Vitals Api
+  //! delete Vitals Api
 
   Future<String> deleteVitals({
     required String tokenId,
@@ -303,7 +306,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
-    log(body.toString());
+    //print(body);
     return response.body;
   }
 
@@ -316,7 +319,7 @@ class GetAppointmentApi {
     final body = {"medicine_name": searchQuery};
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
+    //print(body);
     return GetAllMedicinesModel.fromJson(json.decode(response.body));
   }
 
@@ -332,7 +335,26 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
+    //print(body);
     return response.body;
+  }
+
+  //! get all appointments as per date
+
+  Future<AppointmentDemoModel> getAllApointmentsDemo({
+    required String date,
+    required String clinicId,
+    required String scheduleType,
+  }) async {
+    String? id;
+    final preference = await SharedPreferences.getInstance();
+    id = preference.getString('DoctorId').toString();
+    String basePath =
+        "doctor/getAllUserAppointments/$id/$date/$clinicId/$scheduleType";
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
+    // log("respose ste1 === : ${response.body}");
+    //print("<<<<<< Get All Appointments Are Worked >>>>>>");
+    return AppointmentDemoModel.fromJson(json.decode(response.body));
   }
 }

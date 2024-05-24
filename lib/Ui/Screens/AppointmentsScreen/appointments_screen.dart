@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -19,7 +19,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_tabbar_demo.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Widgets/appoiment_drawer.dart';
@@ -48,17 +48,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<ProfileGetBloc>(context).add(FetchProfileGet());
-    // BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
-    //   date: controller.formatDate(),
-    //   clinicId: controller.initialIndex!,
-    //   scheduleType: controller.scheduleIndex.value,
-    // ));
-    // BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
-    //   FetchAllCompletedAppointments(
-    //       date: controller.formatDate(),
-    //       clinicId: controller.initialIndex!,
-    //       scheduleType: controller.scheduleIndex.value),
-    // );
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -70,19 +59,16 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   }
 
   void startPolling() {
-    // Initial timer for 1 second
     initialTimer = Timer(const Duration(seconds: 1), () {
-      BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-        FetchAllAppointments(
+      BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
+        FetchAllAppointmentsDemo(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
             scheduleType: controller.scheduleIndex.value),
       );
-
-      // After initial timer, start the periodic timer
       pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-        BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-          FetchAllAppointments(
+        BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
+          FetchAllAppointmentsDemo(
               date: controller.formatDate(),
               clinicId: controller.initialIndex!,
               scheduleType: controller.scheduleIndex.value),
@@ -90,16 +76,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       });
     });
   }
-  // void startPolling() async {
-  //   pollingTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
-  //     BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-  //       FetchAllAppointments(
-  //           date: controller.formatDate(),
-  //           clinicId: controller.initialIndex!,
-  //           scheduleType: controller.scheduleIndex.value),
-  //     );
-  //   });
-  // }
 
   void stopPolling() {
     pollingTimer.cancel();
@@ -113,28 +89,16 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   }
 
   Future<void> getUserName() async {
-    BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
-      date: controller.formatDate(),
-      clinicId: controller.initialIndex!,
-      scheduleType: controller.scheduleIndex.value,
-    ));
+    BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
+      FetchAllAppointmentsDemo(
+          date: controller.formatDate(),
+          clinicId: controller.initialIndex!,
+          scheduleType: controller.scheduleIndex.value),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      BlocProvider.of<GetAllAppointmentsBloc>(context).add(FetchAllAppointments(
-        date: controller.formatDate(),
-        clinicId: controller.initialIndex!,
-        scheduleType: controller.scheduleIndex.value,
-      ));
-      BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
-        FetchAllCompletedAppointments(
-            date: controller.formatDate(),
-            clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex.value),
-      );
-    });
     final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -214,8 +178,9 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(date);
                           controller.selectedDate = date;
-                          BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-                            FetchAllAppointments(
+                          BlocProvider.of<AppointmentsDemoBlocBloc>(context)
+                              .add(
+                            FetchAllAppointmentsDemo(
                                 date: formattedDate,
                                 clinicId: controller.initialIndex!,
                                 scheduleType: controller.scheduleIndex.value),
@@ -240,7 +205,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                    const AppoimentTabbar(),
+                    const AppoimentTabbarDemo(),
                   ],
                 ),
               );

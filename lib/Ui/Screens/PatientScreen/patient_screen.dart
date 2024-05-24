@@ -182,8 +182,6 @@ class _PatientScreenState extends State<PatientScreen> {
                   ),
                 ],
               ),
-              // const VerticalSpacingWidget(height: 5),
-
               const VerticalSpacingWidget(height: 5),
               BlocBuilder<PatientsGetBloc, PatientsGetState>(
                 builder: (context, state) {

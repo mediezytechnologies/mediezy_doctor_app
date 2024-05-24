@@ -289,18 +289,31 @@ class CompletedAppointmentDetailsScreenState
                                               ? Container()
                                               : ShortNamesWidget(
                                                   firstText: "Height : ",
-                                                  secondText:
-                                                      "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.height.toString()} cm",
+                                                  secondText: getAllCompletedAppointmentDetailsModel
+                                                              .appointmentDetails!
+                                                              .first
+                                                              .vitals!
+                                                              .height ==
+                                                          null
+                                                      ? "N/A"
+                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.height.toString()} cm",
                                                 ),
                                           ShortNamesWidget(
                                             firstText: "Temperature : ",
                                             secondText:
-                                                "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperature.toString()} °${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperatureType.toString()}",
+                                                getAllCompletedAppointmentDetailsModel
+                                                            .appointmentDetails!
+                                                            .first
+                                                            .vitals!
+                                                            .temperature ==
+                                                        null
+                                                    ? "N/A"
+                                                    : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperature.toString()} °${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperatureType.toString()}",
                                           ),
                                           ShortNamesWidget(
                                             firstText: "BP : ",
                                             secondText:
-                                                "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.sys.toString()} / ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.dia.toString()}",
+                                                "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.sys == null ? "N/A" : getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.sys.toString()} / ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.dia == null ? "N/A" : getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.dia.toString()}",
                                           ),
                                         ],
                                       ),
@@ -313,16 +326,37 @@ class CompletedAppointmentDetailsScreenState
                                           ShortNamesWidget(
                                             firstText: "Weight : ",
                                             secondText:
-                                                "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.weight.toString()} Kg",
+                                                getAllCompletedAppointmentDetailsModel
+                                                            .appointmentDetails!
+                                                            .first
+                                                            .vitals!
+                                                            .weight ==
+                                                        null
+                                                    ? "N/A"
+                                                    : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.weight.toString()} Kg",
                                           ),
                                           ShortNamesWidget(
                                               firstText: "spo2 : ",
                                               secondText:
-                                                  "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.spo2.toString()} %"),
+                                                  getAllCompletedAppointmentDetailsModel
+                                                              .appointmentDetails!
+                                                              .first
+                                                              .vitals!
+                                                              .spo2 ==
+                                                          null
+                                                      ? "N/A"
+                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.spo2.toString()} %"),
                                           ShortNamesWidget(
                                               firstText: "Heart Rate : ",
                                               secondText:
-                                                  "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.heartRate.toString()} BPM"),
+                                                  getAllCompletedAppointmentDetailsModel
+                                                              .appointmentDetails!
+                                                              .first
+                                                              .vitals!
+                                                              .heartRate ==
+                                                          null
+                                                      ? "N/A"
+                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.heartRate.toString()} BPM"),
                                         ],
                                       ),
                                     ],

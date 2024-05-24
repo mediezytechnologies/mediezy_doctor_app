@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
+import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
@@ -10,13 +10,18 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class VitalsWidget extends StatefulWidget {
-  const VitalsWidget(
-      {super.key,
-      required this.tokenId,
-      required this.appointmentDetailsPageModel});
+  const VitalsWidget({
+    super.key,
+    required this.tokenId,
+    this.vitals,
+    this.bookingData,
+    // required this.appointmentDetailsPageModel
+  });
 
   final String tokenId;
-  final AppointmentDetailsPageModel appointmentDetailsPageModel;
+  final Vitals? vitals;
+  final List<BookingData>? bookingData;
+  // final AppointmentDemoModel appointmentDetailsPageModel;
 
   @override
   State<VitalsWidget> createState() => _VitalsWidgetState();
@@ -400,6 +405,14 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                                   heartRate: heartRateController.text,
                                   tokenId: widget.tokenId,
                                   temperatureType: dropdownVitalsValue));
+                      heightController.clear();
+                      weightController.clear();
+                      temperatureController.clear();
+                      spo2Controller.clear();
+                      sysController.clear();
+                      diaController.clear();
+                      heartRateController.clear();
+                      sysController.clear();
                     },
                     child: Container(
                       height: 45.h,
@@ -428,18 +441,18 @@ class _VitalsWidgetState extends State<VitalsWidget> {
             ),
           ),
         ),
-        widget.appointmentDetailsPageModel.bookingData!.vitals == null
+        widget.vitals == null
             ? Container()
             : const VerticalSpacingWidget(height: 5),
         // if (isSecondContainerVisible)
-        widget.appointmentDetailsPageModel.bookingData!.vitals == null
+        widget.vitals == null
             ? Container()
             : Text(
                 'Added Vitals',
                 style: size.width > 450 ? greyTabMain : greyMain,
               ),
         // const VerticalSpacingWidget(height: 5),
-        widget.appointmentDetailsPageModel.bookingData!.vitals == null
+        widget.vitals == null
             ? Container()
             : Container(
                 height: 100.h,
@@ -455,24 +468,20 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       children: [
                         ShortNamesWidget(
                           firstText: "Height : ",
-                          secondText: widget.appointmentDetailsPageModel
-                                      .bookingData!.vitals!.height ==
-                                  null
+                          secondText: widget.vitals!.height == null
                               ? "N/A"
-                              : "${widget.appointmentDetailsPageModel.bookingData!.vitals!.height.toString()} cm",
+                              : "${widget.vitals!.height.toString()} cm",
                         ),
                         ShortNamesWidget(
                           firstText: "Temperature : ",
-                          secondText: widget.appointmentDetailsPageModel
-                                      .bookingData!.vitals!.temperature ==
-                                  null
+                          secondText: widget.vitals!.temperature == null
                               ? "N/A"
-                              : "${widget.appointmentDetailsPageModel.bookingData!.vitals!.temperature.toString()} °${widget.appointmentDetailsPageModel.bookingData!.vitals!.temperatureType.toString()}",
+                              : "${widget.vitals!.temperature.toString()} °${widget.vitals!.temperatureType.toString()}",
                         ),
                         ShortNamesWidget(
                           firstText: "BP : ",
                           secondText:
-                              "${widget.appointmentDetailsPageModel.bookingData!.vitals!.sys == null ? "N/A" : widget.appointmentDetailsPageModel.bookingData!.vitals!.sys.toString()} / ${widget.appointmentDetailsPageModel.bookingData!.vitals!.dia == null ? "N/A" : widget.appointmentDetailsPageModel.bookingData!.vitals!.dia.toString()}",
+                              "${widget.vitals!.sys == null ? "N/A" : widget.vitals!.sys.toString()} / ${widget.vitals!.dia == null ? "N/A" : widget.vitals!.dia.toString()}",
                         ),
                       ],
                     ),
@@ -482,20 +491,18 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       children: [
                         ShortNamesWidget(
                           firstText: "Weight : ",
-                          secondText: widget.appointmentDetailsPageModel
-                                      .bookingData!.vitals!.weight ==
-                                  null
+                          secondText: widget.vitals!.weight == null
                               ? "N/A"
-                              : "${widget.appointmentDetailsPageModel.bookingData!.vitals!.weight.toString()} Kg",
+                              : "${widget.vitals!.weight.toString()} Kg",
                         ),
                         ShortNamesWidget(
                             firstText: "spo2 : ",
                             secondText:
-                                "${widget.appointmentDetailsPageModel.bookingData!.vitals!.spo2 == null ? "N/A" : widget.appointmentDetailsPageModel.bookingData!.vitals!.spo2.toString()} %"),
+                                "${widget.vitals!.spo2 == null ? "N/A" : widget.vitals!.spo2.toString()} %"),
                         ShortNamesWidget(
                             firstText: "Heart Rate : ",
                             secondText:
-                                "${widget.appointmentDetailsPageModel.bookingData!.vitals!.heartRate == null ? "N/A" : widget.appointmentDetailsPageModel.bookingData!.vitals!.heartRate.toString()} BPM"),
+                                "${widget.vitals!.heartRate == null ? "N/A" : widget.vitals!.heartRate.toString()} BPM"),
                       ],
                     ),
                     Column(
@@ -514,51 +521,21 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                                   editingVitalsIndex = 1;
                                 });
 
-                                if (widget.appointmentDetailsPageModel
-                                        .bookingData !=
-                                    null) {
-                                  heightController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .height
-                                      .toString();
-                                  weightController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .weight
-                                      .toString();
-                                  temperatureController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .temperature
-                                      .toString();
-                                  spo2Controller.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .spo2
-                                      .toString();
-                                  sysController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .sys
-                                      .toString();
-                                  diaController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .dia
-                                      .toString();
-                                  heartRateController.text = widget
-                                      .appointmentDetailsPageModel
-                                      .bookingData!
-                                      .vitals!
-                                      .heartRate
-                                      .toString();
+                                if (widget.bookingData != null) {
+                                  heightController.text =
+                                      widget.vitals!.height.toString();
+                                  weightController.text =
+                                      widget.vitals!.weight.toString();
+                                  temperatureController.text =
+                                      widget.vitals!.temperature.toString();
+                                  spo2Controller.text =
+                                      widget.vitals!.spo2.toString();
+                                  sysController.text =
+                                      widget.vitals!.sys.toString();
+                                  diaController.text =
+                                      widget.vitals!.dia.toString();
+                                  heartRateController.text =
+                                      widget.vitals!.heartRate.toString();
                                 }
                               },
                               child: Text(
@@ -573,11 +550,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                               onTap: () {
                                 BlocProvider.of<AddVitalsBloc>(context).add(
                                     DeleteVitals(
-                                        tokenId: widget
-                                            .appointmentDetailsPageModel
-                                            .bookingData!
-                                            .tokenId
-                                            .toString()));
+                                        tokenId: widget.tokenId.toString()));
                               },
                               child: Text(
                                 "Delete",

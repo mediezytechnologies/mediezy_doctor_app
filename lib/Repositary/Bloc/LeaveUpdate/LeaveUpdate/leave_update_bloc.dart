@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mediezy_doctor/Repositary/Api/LeaveUpdate/leave_update_api.dart';
+import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 part 'leave_update_event.dart';
 part 'leave_update_state.dart';
 
@@ -22,7 +21,7 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
         );
         emit(LeaveUpdateLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
-        showToastMessage(data['message']);
+        GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LeaveUpdateError());
@@ -40,22 +39,11 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
         );
         emit(LeaveDeleteLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
-        showToastMessage(data['message']);
+        GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(LeaveDeleteError());
       }
     });
   }
-}
-
-//* to show toast
-showToastMessage(String message) {
-  Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.grey.shade600,
-      textColor: Colors.white,
-      fontSize: 16.sp);
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -158,7 +156,7 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                 currentDate = widget.startDate.add(Duration(days: index));
 
                 DateTime date = DateTime(_date.year, _date.month, _date.day);
-                log(_date.toString());
+                // log(_date.toString());
                 bool isDeactivated = false;
 
                 if (widget.inactiveDates != null) {
@@ -178,7 +176,7 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                     }
                   }
                 }
-                log("current date ");
+                // log("current date ");
 
                 bool isSelected = _currentDate != null
                     ? _compareDate(date, _currentDate!)
@@ -205,7 +203,7 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
                   selectionColor:
                       isSelected ? widget.selectionColor : Colors.transparent,
                   onDateSelected: (selectedDate) {
-                    log("current date : $_currentDate");
+                    // log("current date : $_currentDate");
                     if (isDeactivated) return;
                     if (widget.onDateChange != null) {
                       widget.onDateChange!(selectedDate);
