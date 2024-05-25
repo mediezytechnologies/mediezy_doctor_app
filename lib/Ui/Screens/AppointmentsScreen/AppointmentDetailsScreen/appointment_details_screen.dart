@@ -548,7 +548,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         if (appointmentDetailsPageModel
                                                 .bookingData!.isCheckedout ==
                                             1) {
-                                          currentPosition + 1;
+                                          currentPosition ++;
                                           pageController.animateToPage(
                                             currentPosition,
                                             duration: const Duration(
@@ -576,9 +576,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ));
                                           setState(() {
                                             // balanceAppoiment=widget.length!-1;
+                                            listLength = getAllAppointmentsModel
+                                                .appointments!.length;
                                             balanceAppoiment = listLength -
                                                 1 -
                                                 currentPosition;
+                                                
                                           });
                                         }
                                       }
@@ -1365,7 +1368,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   1) {
                                                 if ((currentPosition ==
                                                     listLength - 1)) {
-                                                  log("last section =======");
+                                                  log("last section called =====================================");
                                                   currentPosition--;
                                                   log("last section ======= : $currentPosition");
                                                   pageController.animateToPage(
@@ -1422,8 +1425,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                                 .id!
                                                                 .toString()),
                                                   );
-                                                } else if (currentPosition <
-                                                    listLength - 1) {
+                                                } else if ((currentPosition <
+                                                    listLength - 1)) {
                                                   log("middile section =======");
                                                   currentPosition++;
                                                   log("middile section currentPosition $currentPosition =======");
@@ -1453,6 +1456,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       isReached: '',
                                                     ),
                                                   );
+                                                   appointmentDetailsPageModel
+                                                      .bookingData!
+                                                      .isCheckedout = 1;
 
                                                   log("appoiment isChecked ===== ${appointmentDetailsPageModel.bookingData!.isCheckedout}");
 
@@ -1480,11 +1486,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                                 .id!
                                                                 .toString()),
                                                   );
-                                                  appointmentDetailsPageModel
-                                                      .bookingData!
-                                                      .isCheckedout = 1;
-                                                  listLength--;
+                                                 
                                                 }
+
+                                                //if closed=====================
                                               }
                                             });
 
