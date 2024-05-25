@@ -36,6 +36,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_demo.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_demo_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
@@ -114,7 +115,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
   int currentPosition = 0;
   int currentPage = 0;
   late PageController pageController;
-
+  ScrollController _scrollController = ScrollController();
   int? count = 0;
 
   int? length;
@@ -195,6 +196,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
   @override
   void dispose() {
     pageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -353,7 +355,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                           int bookingPending = listLength - 1 - currentPosition;
 
                           return SingleChildScrollView(
-                            // controller: _scrollController,
+                            controller: _scrollController,
                             // reverse: true,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -815,7 +817,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                         appointmentDemoModel.bookingData!,
                                   ),
                                   // }, child: Text("data")),
-                                  MedicineWidget(
+                                  MedicineWidgetDemo(
                                     tokenId: appointmentDemoModel
                                         .bookingData![index].tokenId
                                         .toString(),
@@ -1413,6 +1415,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                         scanTestController.text,
                                                   ),
                                                 );
+                                                log("=============== position in working on 1 pos ===================");
                                                 handleCheckout(context, index);
                                                 navigateToHome(context);
                                                 log("last section currentPosition: $currentPosition");
@@ -1428,24 +1431,29 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                       milliseconds: 500),
                                                   curve: Curves.easeInOut,
                                                 );
-
+                                                log("=============== position in working on 3 pos ===================");
                                                 handleCheckout(context, index);
                                                 refreshData(context);
                                               } else if (currentPosition <
                                                   listLength - 1) {
-                                                currentPosition++;
-                                                log("Middle section currentPosition: $currentPosition");
-
+                                                currentPosition+1;
                                                 await pageController
                                                     .animateToPage(
+                                                  currentPosition,
                                                   duration: const Duration(
                                                       milliseconds: 500),
                                                   curve: Curves.easeInOut,
-                                                  currentPosition - 1,
                                                 );
-
-                                                handleCheckout(context, index);
+                                                handleCheckout(
+                                                    context, currentPosition);
                                                 refreshData(context);
+                                                // Scroll to the top
+                                                _scrollController.animateTo(
+                                                  0.0,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.easeInOut,
+                                                );
                                               }
                                               setState(() {
                                                 bookingPending = listLength -

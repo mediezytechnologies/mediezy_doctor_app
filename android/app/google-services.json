@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884822372755",
+    "project_id": "mediezy-doctor",
+    "storage_bucket": "mediezy-doctor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884822372755:android:e3ba326b65a7b538aeb866",
+        "android_client_info": {
+          "package_name": "com.mediezy.mediezytech.doctor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMa06yDBrSipi8tWw3rzE96Q_kyqsCcuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

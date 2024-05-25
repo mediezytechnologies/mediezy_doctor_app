@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyD_ZD9YNu9Fy21eidvQHi6SZg2n6duw1Fc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>884822372755</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mediezy.mediezytech.doctor</string>
+	<key>PROJECT_ID</key>
+	<string>mediezy-doctor</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mediezy-doctor.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:884822372755:ios:08b0b64ce6ba8256aeb866</string>
+</dict>
+</plist>

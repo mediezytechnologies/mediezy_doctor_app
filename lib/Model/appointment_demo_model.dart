@@ -484,3 +484,14 @@ class Patient {
   }
 
 }
+
+//food dropdown model//==============
+class FoodDropdowneModel {
+   String fodeId;
+    String foodeName;
+  FoodDropdowneModel({
+  required  this.fodeId,
+   required this.foodeName,
+  });
+
+}
