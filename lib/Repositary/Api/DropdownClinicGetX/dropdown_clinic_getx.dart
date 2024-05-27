@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/schedule_deopdown_model/schadule_dropdown_model.dart';
+import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HospitalService {
@@ -21,8 +22,8 @@ class HospitalService {
         headers: {'Authorization': 'Bearer $token'},
         contentType: 'application/x-www-form-urlencoded',
       )).get(
-        "https://test.mediezy.com/api/get-hospital-name/$doctorId",
-        //  "https://mediezy.com/api/get-hospital-name/$doctorId",
+        // "https://test.mediezy.com/api/get-hospital-name/$doctorId",
+        "${basePathUrl}get-hospital-name/$doctorId",
       );
       ClinicGetModel? model = ClinicGetModel.fromJson(response.data);
       log(doctorId);

@@ -76,6 +76,15 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
     'Schedule 3': 3,
   };
 
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    lateTimeController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -340,6 +349,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         ),
                         const VerticalSpacingWidget(height: 10),
                         TextFormField(
+                          focusNode: _focusNode,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 10.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -366,13 +376,13 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             if (state is LateScheduleLoaded) {
                               GeneralServices.instance.showSuccessMessage(
                                   context, "Late Schedule Added Successfull");
-                              Future.delayed(const Duration(seconds: 2), () {});
-                              BlocProvider.of<GetAllLateBloc>(context).add(
-                                  FetchAllLate(
-                                      clinicId: dController.initialIndex!));
+                              Future.delayed(const Duration(seconds: 1), () {
+                                BlocProvider.of<GetAllLateBloc>(context).add(
+                                    FetchAllLate(
+                                        clinicId: dController.initialIndex!));
+                              });
                             }
                             if (state is LateScheduleError) {
-                              FocusScope.of(context).unfocus();
                               GeneralServices.instance.showErrorMessage(
                                   context, state.errorMessage);
                             }
@@ -380,7 +390,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                             title: "Apply",
                             onTapFunction: () {
-                              FocusScope.of(context).unfocus();
+                              _focusNode.unfocus();
                               BlocProvider.of<LateScheduleBloc>(context)
                                   .add(AddLateSchedule(
                                 date: DateFormat('yyy-MM-dd').format(lateDate),
@@ -441,6 +451,8 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                                   .appCloseDialogue(context,
                                                       "Are you sure you want to delete ?",
                                                       () {
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 BlocProvider.of<GetAllLateBloc>(
                                                         context)
                                                     .add(DeleteLate(
@@ -617,6 +629,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         ),
                         const VerticalSpacingWidget(height: 10),
                         TextFormField(
+                          focusNode: _focusNode,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 10.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -656,7 +669,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                               title: "Apply",
                               onTapFunction: () {
-                                FocusScope.of(context).unfocus();
+                                _focusNode.unfocus();
                                 BlocProvider.of<LateScheduleBloc>(context)
                                     .add(AddEarlySchedule(
                                   date:

@@ -141,11 +141,6 @@ class _PatientDetailsCompletedWidgetState
                   ),
                 ],
               ),
-        // NamesWidget(
-        //         firstText: "Allergy : ",
-        //         secondText:
-        //             "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.allergy!.allergy.toString()} - ${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.allergy!.allergy == 'No' ? "" : widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.allergyName.toString()}",
-        //       ),
         widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first
                 .surgeryName!.isEmpty
             ? Container()
@@ -179,7 +174,6 @@ class _PatientDetailsCompletedWidgetState
                           name == "Other"
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
-                          // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
@@ -203,7 +197,7 @@ class _PatientDetailsCompletedWidgetState
                   Expanded(
                     child: Wrap(
                       direction: Axis.horizontal,
-                      spacing: 8.0, // Add spacing between surgery names
+                      spacing: 8.0,
                       children: widget.getAllCompletedAppointmentDetailsModel
                           .appointmentDetails!.first.treatmentTaken!
                           .asMap()
@@ -223,7 +217,6 @@ class _PatientDetailsCompletedWidgetState
                           name == "Other"
                               ? "${widget.getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
-                          // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,

@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/get_medicines_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/get_vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
@@ -259,110 +261,52 @@ class CompletedAppointmentDetailsScreenState
                                   style:
                                       size.width > 450 ? greyTabMain : greyMain,
                                 ),
-                          const VerticalSpacingWidget(height: 5),
                           getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!.first.vitals ==
                                   null
                               ? Container()
-                              : Container(
-                                  height: 100.h,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: kCardColor,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          getAllCompletedAppointmentDetailsModel
-                                                      .appointmentDetails!
-                                                      .first
-                                                      .vitals!
-                                                      .height ==
-                                                  null
-                                              ? Container()
-                                              : ShortNamesWidget(
-                                                  firstText: "Height : ",
-                                                  secondText: getAllCompletedAppointmentDetailsModel
-                                                              .appointmentDetails!
-                                                              .first
-                                                              .vitals!
-                                                              .height ==
-                                                          null
-                                                      ? "N/A"
-                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.height.toString()} cm",
-                                                ),
-                                          ShortNamesWidget(
-                                            firstText: "Temperature : ",
-                                            secondText:
-                                                getAllCompletedAppointmentDetailsModel
-                                                            .appointmentDetails!
-                                                            .first
-                                                            .vitals!
-                                                            .temperature ==
-                                                        null
-                                                    ? "N/A"
-                                                    : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperature.toString()} °${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.temperatureType.toString()}",
-                                          ),
-                                          ShortNamesWidget(
-                                            firstText: "BP : ",
-                                            secondText:
-                                                "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.sys == null ? "N/A" : getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.sys.toString()} / ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.dia == null ? "N/A" : getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.dia.toString()}",
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          ShortNamesWidget(
-                                            firstText: "Weight : ",
-                                            secondText:
-                                                getAllCompletedAppointmentDetailsModel
-                                                            .appointmentDetails!
-                                                            .first
-                                                            .vitals!
-                                                            .weight ==
-                                                        null
-                                                    ? "N/A"
-                                                    : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.weight.toString()} Kg",
-                                          ),
-                                          ShortNamesWidget(
-                                              firstText: "spo2 : ",
-                                              secondText:
-                                                  getAllCompletedAppointmentDetailsModel
-                                                              .appointmentDetails!
-                                                              .first
-                                                              .vitals!
-                                                              .spo2 ==
-                                                          null
-                                                      ? "N/A"
-                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.spo2.toString()} %"),
-                                          ShortNamesWidget(
-                                              firstText: "Heart Rate : ",
-                                              secondText:
-                                                  getAllCompletedAppointmentDetailsModel
-                                                              .appointmentDetails!
-                                                              .first
-                                                              .vitals!
-                                                              .heartRate ==
-                                                          null
-                                                      ? "N/A"
-                                                      : "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.vitals!.heartRate.toString()} BPM"),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                              : const VerticalSpacingWidget(height: 5),
+                          getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals ==
+                                  null
+                              ? Container()
+                              : GetVitalsWidget(
+                                  dia: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals!.dia,
+                                  heartRate:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .vitals!
+                                          .heartRate,
+                                  height: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals!.height,
+                                  spo2: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals!.spo2,
+                                  sys: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals!.sys,
+                                  temperature:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .vitals!
+                                          .temperature,
+                                  temperatureType:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .vitals!
+                                          .temperatureType,
+                                  weight: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.vitals!.weight,
                                 ),
-                          const VerticalSpacingWidget(height: 5),
+                          getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!
+                                  .first
+                                  .doctorMedicines!
+                                  .isEmpty
+                              ? Container()
+                              : const VerticalSpacingWidget(height: 5),
                           getAllCompletedAppointmentDetailsModel
                                   .appointmentDetails!
                                   .first
@@ -391,193 +335,90 @@ class CompletedAppointmentDetailsScreenState
                                           .doctorMedicines!
                                           .length,
                                   itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 5.h),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: kCardColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                getAllCompletedAppointmentDetailsModel
-                                                            .appointmentDetails!
-                                                            .first
-                                                            .doctorMedicines![
-                                                                index]
-                                                            .medicalStoreName ==
-                                                        null
-                                                    ? Container()
-                                                    : ShortNamesWidget(
-                                                        firstText:
-                                                            "Medical store : ",
-                                                        secondText:
-                                                            getAllCompletedAppointmentDetailsModel
-                                                                .appointmentDetails!
-                                                                .first
-                                                                .doctorMedicines![
-                                                                    index]
-                                                                .medicalStoreName
-                                                                .toString(),
-                                                      ),
-                                                ShortNamesWidget(
-                                                  firstText: "Medicine : ",
-                                                  secondText:
-                                                      getAllCompletedAppointmentDetailsModel
-                                                          .appointmentDetails!
-                                                          .first
-                                                          .doctorMedicines![
-                                                              index]
-                                                          .medicineName
-                                                          .toString(),
-                                                ),
-                                                ShortNamesWidget(
-                                                  firstText: "Dosage : ",
-                                                  secondText:
-                                                      getAllCompletedAppointmentDetailsModel
-                                                          .appointmentDetails!
-                                                          .first
-                                                          .doctorMedicines![
-                                                              index]
-                                                          .dosage
-                                                          .toString(),
-                                                ),
-                                                getAllCompletedAppointmentDetailsModel
-                                                            .appointmentDetails!
-                                                            .first
-                                                            .doctorMedicines![
-                                                                index]
-                                                            .interval ==
-                                                        null
-                                                    ? Container()
-                                                    : ShortNamesWidget(
-                                                        firstText:
-                                                            "Interval : ",
-                                                        secondText:
-                                                            "${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].interval.toString()} ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.doctorMedicines![index].timeSection.toString()}",
-                                                      ),
-                                                ShortNamesWidget(
-                                                  firstText: "",
-                                                  secondText: getAllCompletedAppointmentDetailsModel
-                                                              .appointmentDetails!
-                                                              .first
-                                                              .doctorMedicines![
-                                                                  index]
-                                                              .type ==
-                                                          1
-                                                      ? "After Food"
-                                                      : getAllCompletedAppointmentDetailsModel
-                                                                  .appointmentDetails!
-                                                                  .first
-                                                                  .doctorMedicines![
-                                                                      index]
-                                                                  .type ==
-                                                              2
-                                                          ? "Before Food"
-                                                          : "With Food",
-                                                ),
-                                                ShortNamesWidget(
-                                                  firstText: "Days : ",
-                                                  secondText:
-                                                      getAllCompletedAppointmentDetailsModel
-                                                          .appointmentDetails!
-                                                          .first
-                                                          .doctorMedicines![
-                                                              index]
-                                                          .noOfDays
-                                                          .toString(),
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          getAllCompletedAppointmentDetailsModel
-                                                                      .appointmentDetails!
-                                                                      .first
-                                                                      .doctorMedicines![
-                                                                          index]
-                                                                      .morning ==
-                                                                  1
-                                                              ? "Morning,"
-                                                              : "",
-                                                          style: size.width >
-                                                                  400
-                                                              ? blackTabMainText
-                                                              : blackMainText,
-                                                        ),
-                                                        Text(
-                                                          getAllCompletedAppointmentDetailsModel
-                                                                      .appointmentDetails!
-                                                                      .first
-                                                                      .doctorMedicines![
-                                                                          index]
-                                                                      .noon ==
-                                                                  1
-                                                              ? "Noon,"
-                                                              : "",
-                                                          style: size.width >
-                                                                  400
-                                                              ? blackTabMainText
-                                                              : blackMainText,
-                                                        ),
-                                                        Text(
-                                                          getAllCompletedAppointmentDetailsModel
-                                                                      .appointmentDetails!
-                                                                      .first
-                                                                      .doctorMedicines![
-                                                                          index]
-                                                                      .evening ==
-                                                                  1
-                                                              ? "Evening,"
-                                                              : "",
-                                                          style: size.width >
-                                                                  400
-                                                              ? blackTabMainText
-                                                              : blackMainText,
-                                                        ),
-                                                        Text(
-                                                          getAllCompletedAppointmentDetailsModel
-                                                                      .appointmentDetails!
-                                                                      .first
-                                                                      .doctorMedicines![
-                                                                          index]
-                                                                      .night ==
-                                                                  1
-                                                              ? "Night"
-                                                              : "",
-                                                          style: size.width >
-                                                                  400
-                                                              ? blackTabMainText
-                                                              : blackMainText,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                    return GetMedicinesWidget(
+                                      medicineName:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .medicineName
+                                              .toString(),
+                                      dosage:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .dosage,
+                                      noOfDays:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .noOfDays
+                                              .toString(),
+                                      timeSection:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .timeSection
+                                              .toString(),
+                                      evening:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .evening,
+                                      interval:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .interval,
+                                      morning:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .morning,
+                                      night:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .night,
+                                      noon:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .noon,
+                                      type:
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .doctorMedicines![index]
+                                              .type,
                                     );
                                   }),
-                          const VerticalSpacingWidget(height: 10),
+                          getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!
+                                  .first
+                                  .doctorMedicines!
+                                  .isEmpty
+                              ? Container()
+                              : const VerticalSpacingWidget(height: 10),
+                          getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.reviewAfter ==
+                                  null
+                              ? Container()
+                              : ShortNamesWidget(
+                                  firstText: "Review after : ",
+                                  secondText:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!.first.reviewAfter
+                                          .toString(),
+                                ),
                           getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!.first.labName ==
                                   null
@@ -625,7 +466,7 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.notes ==
                                   null
                               ? Container()
-                              : Column(
+                              : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -634,13 +475,15 @@ class CompletedAppointmentDetailsScreenState
                                           ? greyTabMain
                                           : greyMain,
                                     ),
-                                    Text(
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.notes
-                                          .toString(),
-                                      style: size.width > 450
-                                          ? blackTabMainText
-                                          : blackMainText,
+                                    Expanded(
+                                      child: Text(
+                                        getAllCompletedAppointmentDetailsModel
+                                            .appointmentDetails!.first.notes
+                                            .toString(),
+                                        style: size.width > 450
+                                            ? blackTabMainText
+                                            : blackMainText,
+                                      ),
                                     ),
                                   ],
                                 ),

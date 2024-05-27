@@ -37,8 +37,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_demo.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_demo_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
@@ -634,7 +633,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                       ),
                                     ),
                                   ),
-                                  PatientDetailsDemoWidget(
+                                  PatientDetailsWidget(
                                     allergiesDetails: appointmentDemoModel
                                         .bookingData![index].allergiesDetails,
                                     mainSymptoms: appointmentDemoModel
@@ -666,7 +665,6 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                         .bookingData![index].bookedPersonId
                                         .toString(),
                                   ),
-
                                   appointmentDemoModel
                                               .bookingData![index].date ==
                                           formatDate()
@@ -1338,16 +1336,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                           formatDate()
                                       ? InkWell(
                                           onTap: () async {
-                                              log("first call working ===========================>>>>>>>>>>><<<<<<<<<<<<<<<<=========================");
-                                            // setState(() {
-                                            // _scrollController.animateTo(
-                                            //   0.0,
-                                            //   duration:
-                                            //       const Duration(seconds: 1),
-                                            //   curve: Curves.easeInOut,
-                                            // );
-                                            // });
-                                            // First call to AddAllAppointmentDetailsBloc
+                                            FocusScope.of(context).unfocus();
                                             BlocProvider.of<
                                                         AddAllAppointmentDetailsBloc>(
                                                     context)
@@ -1358,13 +1347,8 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                     .toString(),
                                                 labId: dropValueLab,
                                                 labTest: labTestController.text,
-                                                // labTest: labTestValues.join(', '),
                                                 medicalshopId:
                                                     dropValueMedicalStore,
-                                                // medicalshopId: selectedValue.toString(),
-                                                // medicalshopId: selectedValue == "null"
-                                                //     ? ""
-                                                //     : selectedValue.toString(),
                                                 imageFromCamera,
                                                 reviewAfter:
                                                     afterDaysController.text,
@@ -1374,114 +1358,61 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                     scanTestController.text,
                                               ),
                                             );
-
                                             // Wait for 2 seconds
                                             await Future.delayed(
-                                                const Duration(seconds: 2)).then((value){
-                                                  log("second call working ===========================>>>>>>>>>>><<<<<<<<<<<<<<<<=========================");
-                                            if (appointmentDemoModel
-                                                    .bookingData![index]
-                                                    .isCheckedout !=
-                                                1) {
-                                              if (currentPosition ==
-                                                      listLength - 1 &&
-                                                  currentPosition == 0) {
-                                                // BlocProvider.of<
-                                                //             AddAllAppointmentDetailsBloc>(
-                                                //         context)
-                                                //     .add(
-                                                //   AddAllAppointmentDetails(
-                                                //     tokenId:
-                                                //         appointmentDemoModel
-                                                //             .bookingData![index]
-                                                //             .tokenId
-                                                //             .toString(),
-                                                //     labId: dropValueLab,
-                                                //     labTest:
-                                                //         labTestController.text,
-                                                //     // labTest: labTestValues.join(', '),
-                                                //     medicalshopId:
-                                                //         dropValueMedicalStore,
-                                                //     // medicalshopId: selectedValue.toString(),
-                                                //     // medicalshopId: selectedValue == "null"
-                                                //     //     ? ""
-                                                //     //     : selectedValue.toString(),
-                                                //     imageFromCamera,
-                                                //     reviewAfter:
-                                                //         afterDaysController
-                                                //             .text,
-                                                //     notes: noteController.text,
-                                                //     scanId: dropValueScanning,
-                                                //     scanTest:
-                                                //         scanTestController.text,
-                                                //   ),
-                                                // );
-                                                log("=============== position in working on 1 pos ===================");
-                                                handleCheckout(context, index);
-                                                navigateToHome(context);
-                                                log("last section currentPosition: $currentPosition");
-                                              } else if (currentPosition ==
-                                                  listLength - 1) {
-                                                currentPosition--;
-                                                log("Last section: $currentPosition");
+                                                    const Duration(seconds: 2))
+                                                .then((value) {
+                                              if (appointmentDemoModel
+                                                      .bookingData![index]
+                                                      .isCheckedout !=
+                                                  1) {
+                                                if (currentPosition ==
+                                                        listLength - 1 &&
+                                                    currentPosition == 0) {
+                                                  handleCheckout(
+                                                      context, index);
+                                                  navigateToHome(context);
+                                                  log("last section currentPosition: $currentPosition");
+                                                } else if (currentPosition ==
+                                                    listLength - 1) {
+                                                  currentPosition--;
+                                                  log("Last section: $currentPosition");
 
-                                                 pageController
-                                                    .animateToPage(
-                                                  currentPosition,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.easeInOut,
-                                                );
-                                                log("=============== position in working on 3 pos ===================");
-                                                handleCheckout(context, index);
-                                                refreshData(context);
-                                              } else if (currentPosition <
-                                                  listLength - 1) {
-                                                currentPosition + 1;
-                                                 pageController
-                                                    .animateToPage(
-                                                  currentPosition,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.easeInOut,
-                                                );
-                                                handleCheckout(
-                                                    context, currentPosition);
-                                                refreshData(context);
-                                                // Scroll to the top
-                                                _scrollController.animateTo(
-                                                  0.0,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.easeInOut,
-                                                );
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  handleCheckout(
+                                                      context, index);
+                                                  refreshData(context);
+                                                } else if (currentPosition <
+                                                    listLength - 1) {
+                                                  currentPosition + 1;
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  handleCheckout(
+                                                      context, currentPosition);
+                                                  refreshData(context);
+                                                  _scrollController.animateTo(
+                                                    0.0,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                }
+                                                setState(() {
+                                                  bookingPending = listLength -
+                                                      1 -
+                                                      currentPosition;
+                                                });
                                               }
-                                              setState(() {
-                                                bookingPending = listLength -
-                                                    1 -
-                                                    currentPosition;
-                                              });
-                                              //else if (appointmentDemoModel
-                                              //             .bookingData !=
-                                              //         null &&
-                                              //     appointmentDemoModel
-                                              //         .bookingData!
-                                              //         .isNotEmpty &&
-                                              //     index >= 0 &&
-                                              //     index <
-                                              //         appointmentDemoModel
-                                              //             .bookingData!
-                                              //             .length) {
-                                              //   log("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                                              // } else {
-                                              //   // Handle the case where appointmentDemoModel.bookingData is null, empty,
-                                              //   // or index is out of bounds
-                                              //   log("Invalid index or booking data is null/empty");
-                                              //   log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                              // }
-                                            }
-                                                } );
-
+                                            });
                                           },
                                           child: Container(
                                             height: 50.h,

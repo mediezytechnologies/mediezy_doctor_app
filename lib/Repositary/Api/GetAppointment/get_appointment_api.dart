@@ -205,7 +205,7 @@ class GetAppointmentApi {
     return response.body;
   }
 
-  //! get all Completed AppointmentDetails
+  //! get Completed AppointmentDetails api
 
   Future<GetAllCompletedAppointmentDetailsModel>
       getAllCompletedAppointmentDetails({
@@ -223,9 +223,9 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    //print(body);
-    //print(
-    //  "<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
+    print(body);
+    print(
+        "<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
   }

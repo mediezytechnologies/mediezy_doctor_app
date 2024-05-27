@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MultiFileApiClient3 {
@@ -22,8 +23,7 @@ class MultiFileApiClient3 {
     log('token: $token');
     log('Upload Path: $uploadPath');
 
-    // final  String basePath = "https://mediezy.com/api/";
-    const String basePath = "https://test.mediezy.com/api/";
+    const String basePath = basePathUrl;
 
     var request =
         http.MultipartRequest('POST', Uri.parse(basePath + uploadPath));

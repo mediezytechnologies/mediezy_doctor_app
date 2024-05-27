@@ -152,10 +152,13 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                           secondText:
                               widget.medicine![index].medicineName.toString(),
                         ),
-                        ShortNamesWidget(
-                          firstText: "Dosage : ",
-                          secondText: widget.medicine![index].dosage.toString(),
-                        ),
+                        widget.medicine![index].dosage == null
+                            ? Container()
+                            : ShortNamesWidget(
+                                firstText: "Dosage : ",
+                                secondText:
+                                    widget.medicine![index].dosage.toString(),
+                              ),
                         widget.medicine![index].interval == null ||
                                 widget.medicine![index].interval == "null"
                             ? Container()
@@ -173,10 +176,12 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                         ShortNamesWidget(
                           firstText: "",
                           secondText: widget.medicine![index].type == 1
-                              ? "After Food"
+                              ? "Before food"
                               : widget.medicine![index].type == 2
-                                  ? "Before Food"
-                                  : "With Food",
+                                  ? "Before food"
+                                  : widget.medicine![index].type == 3
+                                      ? "With food"
+                                      : "If required",
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,16 +282,8 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                       .toString();
                                   final medicineId =
                                       widget.medicine![index].id.toString();
-
-                                  // Update dropdown value based on type
                                   String type =
                                       widget.medicine![index].type.toString();
-                                  // dropdownvalue = type == "1"
-                                  //     ? "After Food"
-                                  //     : dropdownvalue = type == "2"
-                                  //         ? "Before Food"
-                                  //         : "With Food";
-                                  // passingFood = type;
                                   log("food type ===========$type");
 
                                   String typeInterval = widget
@@ -294,28 +291,20 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                       .toString();
 
                                   dropdownHourlyValue = typeInterval;
-
-                                  // Update morning value based on type
                                   String mrngType = widget
                                       .medicine![index].morning
                                       .toString();
                                   morningValue = mrngType == "1" ? true : false;
                                   mrngStringValue = mrngType;
-
-                                  // Update noon value based on type
                                   String noonType =
                                       widget.medicine![index].noon.toString();
                                   noonValue = noonType == "1" ? true : false;
                                   noonStringValue = noonType;
-
-                                  // Update evening value based on type
                                   String evngType = widget
                                       .medicine![index].evening
                                       .toString();
                                   eveningValue = evngType == "1" ? true : false;
                                   eveningStringValue = evngType;
-
-                                  // Update morning value based on type
                                   String nightType =
                                       widget.medicine![index].night.toString();
                                   nightValue = nightType == "1" ? true : false;
@@ -749,13 +738,9 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                     InkWell(
                       onTap: () {
                         FocusScope.of(context).unfocus();
-                        // print(dropValueMedicalStore);
                         if (medicineNameController.text.isEmpty) {
                           GeneralServices.instance.showErrorMessage(
                               context, "Please fill medicine name");
-                        } else if (dosageController.text.isEmpty) {
-                          GeneralServices.instance
-                              .showErrorMessage(context, "Please fill dosage");
                         } else if (daysController.text.isEmpty) {
                           GeneralServices.instance
                               .showErrorMessage(context, "Please fill days");
@@ -767,7 +752,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               dosage: dosageController.text,
                               noOfDays: daysController.text,
                               type: foodDropdownController.foodValue.value,
-                              // passingFood,
                               night: nightStringValue.toString(),
                               morning: mrngStringValue.toString(),
                               noon: noonStringValue.toString(),
@@ -783,7 +767,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               dosage: dosageController.text,
                               noOfDays: daysController.text,
                               type: foodDropdownController.foodValue.value,
-                              //  type: passingFood,
                               night: nightStringValue.toString(),
                               morning: mrngStringValue.toString(),
                               noon: noonStringValue.toString(),
@@ -974,23 +957,16 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
       }),
     );
   }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   medicineNameController.dispose();
-  //   daysController.dispose();
-  //   // imageFromCamera?.dispose();
-  // }
 }
 
 class FoodDropdownController extends GetxController {
   var foodValue = '1'.obs;
   var previousFoodValue = '1'.obs;
   List<FoodDropdowneModel> foodData = [
-    FoodDropdowneModel(fodeId: "1", foodeName: "After Food"),
-    FoodDropdowneModel(fodeId: '2', foodeName: 'Before Food'),
-    FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
+    FoodDropdowneModel(fodeId: "1", foodeName: "Before food"),
+    FoodDropdowneModel(fodeId: '2', foodeName: 'After food'),
+    FoodDropdowneModel(fodeId: '3', foodeName: 'With food'),
+    FoodDropdowneModel(fodeId: '4', foodeName: 'If required'),
   ];
   dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == '1') {

@@ -19,9 +19,11 @@ import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/AddCheckinOrCheckout/ad
 import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/GetCurrentToken/get_current_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/get_medicines_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -765,6 +767,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                       )
                                                     ],
                                                   ),
+                                                  const VerticalSpacingWidget(
+                                                      height: 3),
                                                   getCurrentTokenModel
                                                               .tokens![
                                                                   currentIndex]
@@ -779,142 +783,188 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   currentIndex]
                                                               .isCompleted ==
                                                           1
-                                                      ? ListView.separated(
-                                                          shrinkWrap: true,
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          itemCount:
-                                                              getCurrentTokenModel
-                                                                  .tokens![
-                                                                      currentIndex]
-                                                                  .medicine!
-                                                                  .length,
-                                                          separatorBuilder: (BuildContext
-                                                                      context,
-                                                                  int index) =>
-                                                              const VerticalSpacingWidget(
-                                                                  height: 3),
-                                                          itemBuilder: (context,
-                                                              indexx) {
-                                                            return Column(
-                                                              children: [
-                                                                const VerticalSpacingWidget(
-                                                                    height: 5),
-                                                                getCurrentTokenModel
+                                                      ? Column(
+                                                          children: [
+                                                            getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
-                                                                        .medicine!
-                                                                        .isEmpty
-                                                                    ? Container()
-                                                                    : NamesWidget(
-                                                                        firstText:
-                                                                            "Medicine name : ",
-                                                                        secondText: getCurrentTokenModel
-                                                                            .tokens![currentIndex]
-                                                                            .medicine![indexx]
-                                                                            .medicineName
-                                                                            .toString()),
-                                                                getCurrentTokenModel
+                                                                        .patientData!
+                                                                        .reviewAfter ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Review after : ",
+                                                                    secondText: getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
-                                                                        .medicine!
-                                                                        .isEmpty
-                                                                    ? Container()
-                                                                    : NamesWidget(
-                                                                        firstText:
-                                                                            "Dosage : ",
-                                                                        secondText: getCurrentTokenModel
-                                                                            .tokens![currentIndex]
-                                                                            .medicine![indexx]
-                                                                            .dosage
-                                                                            .toString()),
-                                                                getCurrentTokenModel
-                                                                            .tokens![
-                                                                                currentIndex]
-                                                                            .medicine![
-                                                                                indexx]
-                                                                            .interval ==
-                                                                        null
-                                                                    ? Container()
-                                                                    : NamesWidget(
-                                                                        firstText:
-                                                                            "Interval : ",
-                                                                        secondText:
-                                                                            "${getCurrentTokenModel.tokens![currentIndex].medicine![indexx].interval.toString()} ${getCurrentTokenModel.tokens![currentIndex].medicine![indexx].timeSection.toString()}"),
-                                                                getCurrentTokenModel
+                                                                        .patientData!
+                                                                        .reviewAfter
+                                                                        .toString()),
+                                                            getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
-                                                                        .medicine!
-                                                                        .isEmpty
-                                                                    ? Container()
-                                                                    : NamesWidget(
-                                                                        firstText:
-                                                                            "No of Days : ",
-                                                                        secondText: getCurrentTokenModel
-                                                                            .tokens![currentIndex]
-                                                                            .medicine![indexx]
-                                                                            .noOfDays
-                                                                            .toString()),
-                                                                getCurrentTokenModel
+                                                                        .patientData!
+                                                                        .labName ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Lab name : ",
+                                                                    secondText: getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
-                                                                        .medicine!
-                                                                        .isEmpty
-                                                                    ? Container()
-                                                                    : Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            "Medicine time : ",
-                                                                            style: size.width > 400
-                                                                                ? greyTabMain
-                                                                                : greyMain,
-                                                                          ),
-                                                                          Text(
-                                                                            getCurrentTokenModel.tokens![currentIndex].medicine![indexx].morning == 1
-                                                                                ? "Morning,"
-                                                                                : "",
-                                                                            style: size.width > 400
-                                                                                ? blackTabMainText
-                                                                                : blackMainText,
-                                                                          ),
-                                                                          Text(
-                                                                            getCurrentTokenModel.tokens![currentIndex].medicine![indexx].noon == 1
-                                                                                ? "Noon,"
-                                                                                : "",
-                                                                            style: size.width > 400
-                                                                                ? blackTabMainText
-                                                                                : blackMainText,
-                                                                          ),
-                                                                          Text(
-                                                                            getCurrentTokenModel.tokens![currentIndex].medicine![indexx].night == 1
-                                                                                ? "Night"
-                                                                                : "",
-                                                                            style: size.width > 400
-                                                                                ? blackTabMainText
-                                                                                : blackMainText,
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                getCurrentTokenModel
-                                                                            .tokens![
-                                                                                currentIndex]
-                                                                            .patientData!
-                                                                            .labName ==
-                                                                        null
-                                                                    ? Container()
-                                                                    : NamesWidget(
-                                                                        firstText:
-                                                                            "Lab name : ",
-                                                                        secondText: getCurrentTokenModel
-                                                                            .tokens![currentIndex]
-                                                                            .patientData!
-                                                                            .labName
-                                                                            .toString()),
-                                                              ],
-                                                            );
-                                                          },
+                                                                        .patientData!
+                                                                        .labName
+                                                                        .toString()),
+                                                            getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .labtest ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Lab test : ",
+                                                                    secondText: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .labtest
+                                                                        .toString()),
+                                                            getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .scanName ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Scanning Centre : ",
+                                                                    secondText: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .scanName
+                                                                        .toString()),
+                                                            getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .scanTest ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Scan test : ",
+                                                                    secondText: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .scanTest
+                                                                        .toString()),
+                                                            getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .medicalShopName ==
+                                                                    null
+                                                                ? Container()
+                                                                : ShortNamesWidget(
+                                                                    firstText:
+                                                                        "Medical store : ",
+                                                                    secondText: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .medicalShopName
+                                                                        .toString()),
+                                                            ListView.builder(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    const NeverScrollableScrollPhysics(),
+                                                                itemCount: getCurrentTokenModel
+                                                                    .tokens![
+                                                                        currentIndex]
+                                                                    .medicine!
+                                                                    .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        indexx) {
+                                                                  return GetMedicinesWidget(
+                                                                    medicineName: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .medicineName
+                                                                        .toString(),
+                                                                    dosage: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .dosage
+                                                                        .toString(),
+                                                                    noOfDays: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .noOfDays
+                                                                        .toString(),
+                                                                    timeSection: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .timeSection
+                                                                        .toString(),
+                                                                    evening: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .evening,
+                                                                    interval: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .interval,
+                                                                    morning: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .morning,
+                                                                    night: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .night,
+                                                                    noon: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .noon,
+                                                                    type: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .medicine![
+                                                                            indexx]
+                                                                        .type,
+                                                                  );
+                                                                }),
+                                                          ],
                                                         )
                                                       : Column(
                                                           children: [

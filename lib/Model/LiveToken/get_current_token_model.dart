@@ -232,19 +232,43 @@ class PatientData {
   PatientData({
     this.labName,
     this.medicalShopName,
+    this.notes,
+    this.prescriptionImage,
+    this.labtest,
+    this.reviewAfter,
+    this.scanTest,
+    this.scanName,
   });
 
   PatientData.fromJson(dynamic json) {
     labName = json['lab_name'];
     medicalShopName = json['medical_shop_name'];
+    notes = json['notes'];
+    prescriptionImage = json['prescription_image'];
+    labtest = json['labtest'];
+    reviewAfter = json['review_after'];
+    scanTest = json['scan_test'];
+    scanName = json['scan_name'];
   }
   String? labName;
   String? medicalShopName;
+  String? notes;
+  String? prescriptionImage;
+  String? labtest;
+  int? reviewAfter;
+  String? scanTest;
+  String? scanName;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['lab_name'] = labName;
     map['medical_shop_name'] = medicalShopName;
+    map['notes'] = notes;
+    map['prescription_image'] = prescriptionImage;
+    map['labtest'] = labtest;
+    map['review_after'] = reviewAfter;
+    map['scan_test'] = scanTest;
+    map['scan_name'] = scanName;
     return map;
   }
 }

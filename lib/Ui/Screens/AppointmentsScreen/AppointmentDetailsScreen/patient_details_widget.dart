@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
+import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -9,9 +9,32 @@ import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dar
 
 class PatientDetailsWidget extends StatefulWidget {
   const PatientDetailsWidget(
-      {super.key, required this.appointmentDetailsPageModel});
+      {super.key,
+      this.mainSymptoms,
+      this.otherSymptoms,
+      required this.whenitcomes,
+      this.allergiesDetails,
+      this.medicineDetails,
+      this.surgeryName,
+      this.treatmentTaken,
+      required this.whenitstart,
+      required this.patientId,
+      required this.treatmentTakenDetails,
+      required this.surgeryDetails,
+      required this.bookedPersonId});
 
-  final AppointmentDetailsPageModel appointmentDetailsPageModel;
+  final List<MainSymptoms>? mainSymptoms;
+  final List<OtherSymptoms>? otherSymptoms;
+  final List<AllergiesDetails>? allergiesDetails;
+  final List<MedicineDetails>? medicineDetails;
+  final List<String>? surgeryName;
+  final List<String>? treatmentTaken;
+  final String whenitcomes;
+  final String whenitstart;
+  final String bookedPersonId;
+  final int patientId;
+  final String treatmentTakenDetails;
+  final String surgeryDetails;
 
   @override
   State<PatientDetailsWidget> createState() => _PatientDetailsWidgetState();
@@ -32,22 +55,19 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
         //! appointment for
         Text('Appointment for',
             style: size.width > 450 ? greyTabMain : greyMain),
-        widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!.isEmpty
-            ? Container()
-            : Text(
-                widget.appointmentDetailsPageModel.bookingData!.mainSymptoms!
-                    .first.name
-                    .toString(),
-                style: size.width > 450 ? blackTabMainText : blackMainText,
-              ),
+        // widget.mainSymptoms!.isEmpty
+        //     ? Container()
+        //     : Text(
+        //         widget.mainSymptoms!.first.name.toString(),
+        //         style: size.width > 450 ? blackTabMainText : blackMainText,
+        //       ),
         // const VerticalSpacingWidget(height: 5),
-        widget.appointmentDetailsPageModel.bookingData!.otherSymptoms!.isEmpty
+        widget.otherSymptoms!.isEmpty
             ? Container()
             : Wrap(
                 children: [
                   Text(
-                    widget
-                        .appointmentDetailsPageModel.bookingData!.otherSymptoms!
+                    widget.otherSymptoms!
                         .map((symptom) => "${symptom.name}")
                         .join(', '),
                     style: size.width > 450 ? blackTabMainText : blackMainText,
@@ -56,24 +76,13 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
               ),
         NamesWidget(
           firstText: "When did it start : ",
-          secondText:
-              widget.appointmentDetailsPageModel.bookingData!.whenitcomes ==
-                      null
-                  ? ""
-                  : widget.appointmentDetailsPageModel.bookingData!.whenitcomes
-                      .toString(),
+          secondText: widget.whenitcomes.toString(),
         ),
         NamesWidget(
           firstText: "Intensity : ",
-          secondText:
-              widget.appointmentDetailsPageModel.bookingData!.whenitstart ==
-                      null
-                  ? ""
-                  : widget.appointmentDetailsPageModel.bookingData!.whenitstart
-                      .toString(),
+          secondText: widget.whenitstart.toString(),
         ),
-        widget.appointmentDetailsPageModel.bookingData!.allergiesDetails!
-                .isEmpty
+        widget.allergiesDetails!.isEmpty
             ? Container()
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,11 +99,9 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: List.generate(
-                            widget.appointmentDetailsPageModel.bookingData!
-                                .allergiesDetails!.length,
+                            widget.allergiesDetails!.length,
                             (index) {
-                              final item = widget.appointmentDetailsPageModel
-                                  .bookingData!.allergiesDetails![index];
+                              final item = widget.allergiesDetails![index];
                               final allergyName = item.allergyName.toString();
                               final allergyDetails = item.allergyDetails
                                       ?.toString() ??
@@ -102,13 +109,8 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                               final text = allergyDetails.isEmpty
                                   ? allergyName
                                   : '$allergyName - $allergyDetails';
-                              final isLastItem = index ==
-                                  widget
-                                          .appointmentDetailsPageModel
-                                          .bookingData!
-                                          .allergiesDetails!
-                                          .length -
-                                      1;
+                              final isLastItem =
+                                  index == widget.allergiesDetails!.length - 1;
 
                               return Padding(
                                 padding: EdgeInsets.only(
@@ -128,7 +130,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                   ),
                 ],
               ),
-        widget.appointmentDetailsPageModel.bookingData!.surgeryName!.isEmpty
+        widget.surgeryName!.isEmpty
             ? Container()
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,22 +143,16 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                     child: Wrap(
                       direction: Axis.horizontal,
                       spacing: 8.0, // Add spacing between surgery names
-                      children: widget
-                          .appointmentDetailsPageModel.bookingData!.surgeryName!
-                          .asMap()
-                          .entries
-                          .map((entry) {
+                      children:
+                          widget.surgeryName!.asMap().entries.map((entry) {
                         final index = entry.key;
                         final name = entry.value;
-                        final isLastItem = index ==
-                            widget.appointmentDetailsPageModel.bookingData!
-                                    .surgeryName!.length -
-                                1;
+                        final isLastItem =
+                            index == widget.surgeryName!.length - 1;
                         return Text(
                           name == "Other"
-                              ? "${widget.appointmentDetailsPageModel.bookingData!.surgeryDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.surgeryDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
-                          // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
@@ -167,7 +163,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                 ],
               ),
         // NamesWidget(
-        widget.appointmentDetailsPageModel.bookingData!.treatmentTaken!.isEmpty
+        widget.treatmentTaken!.isEmpty
             ? Container()
             : Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,20 +176,15 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                     child: Wrap(
                       direction: Axis.horizontal,
                       spacing: 8.0, // Add spacing between surgery names
-                      children: widget.appointmentDetailsPageModel.bookingData!
-                          .treatmentTaken!
-                          .asMap()
-                          .entries
-                          .map((entry) {
+                      children:
+                          widget.treatmentTaken!.asMap().entries.map((entry) {
                         final index = entry.key;
                         final name = entry.value;
-                        final isLastItem = index ==
-                            widget.appointmentDetailsPageModel.bookingData!
-                                    .treatmentTaken!.length -
-                                1;
+                        final isLastItem =
+                            index == widget.treatmentTaken!.length - 1;
                         return Text(
                           name == "Other"
-                              ? "${widget.appointmentDetailsPageModel.bookingData!.treatmentTakenDetails}${isLastItem ? '' : ','}"
+                              ? "${widget.treatmentTakenDetails}${isLastItem ? '' : ','}"
                               : "$name${isLastItem ? '' : ','}",
                           // Replace "Other" with "Ashwin" and add comma after each surgery name
                           style: size.width > 450
@@ -212,8 +203,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
               "Regular Medicines : ",
               style: size.width > 450 ? greyTabMain : greyMain,
             ),
-            widget.appointmentDetailsPageModel.bookingData!.medicineDetails!
-                    .isEmpty
+            widget.medicineDetails!.isEmpty
                 ? Text(
                     "No",
                     style: size.width > 450 ? blackTabMainText : blackMainText,
@@ -226,20 +216,13 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: List.generate(
-                            widget.appointmentDetailsPageModel.bookingData!
-                                .medicineDetails!.length,
+                            widget.medicineDetails!.length,
                             (index) {
-                              final item = widget.appointmentDetailsPageModel
-                                  .bookingData!.medicineDetails![index];
+                              final item = widget.medicineDetails![index];
                               final text =
                                   "${item.illness.toString()} - ${item.medicineName.toString()}";
-                              final isLastItem = index ==
-                                  widget
-                                          .appointmentDetailsPageModel
-                                          .bookingData!
-                                          .medicineDetails!
-                                          .length -
-                                      1;
+                              final isLastItem =
+                                  index == widget.medicineDetails!.length - 1;
 
                               return Padding(
                                 padding: EdgeInsets.only(
@@ -261,7 +244,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
         ),
 
         const VerticalSpacingWidget(height: 5),
-        widget.appointmentDetailsPageModel.bookingData!.patientId == 0
+        widget.patientId == 0
             ? Container()
             : InkWell(
                 onTap: () {
@@ -269,12 +252,8 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                     context,
                     MaterialPageRoute(
                       builder: (ctx) => HealthRecordScreen(
-                        patientId: widget
-                            .appointmentDetailsPageModel.bookingData!.patientId
-                            .toString(),
-                        userId: widget.appointmentDetailsPageModel.bookingData!
-                            .bookedPersonId
-                            .toString(),
+                        patientId: widget.patientId.toString(),
+                        userId: widget.bookedPersonId.toString(),
                       ),
                     ),
                   );
