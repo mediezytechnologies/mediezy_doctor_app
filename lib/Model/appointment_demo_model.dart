@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class AppointmentDemoModel {
   AppointmentDemoModel({
       this.status, 
@@ -492,6 +494,16 @@ class FoodDropdowneModel {
   FoodDropdowneModel({
   required  this.fodeId,
    required this.foodeName,
+  });
+
+}
+//checkbox =========
+class TimezoneModel {
+   String timeZoneId;
+    bool timezoneBool;
+  TimezoneModel({
+  required  this.timeZoneId,
+   required this.timezoneBool,
   });
 
 }

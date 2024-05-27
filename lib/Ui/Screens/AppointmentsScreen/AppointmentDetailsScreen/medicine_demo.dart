@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -73,18 +74,12 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
   //   'Before Food',
   //   'With Food',
   // ];
-  String passingFood = "1";
 
   int editingMedicineIndex = -1;
+  bool isEdit = false;
   var timeItems = ['1', '2', '3'];
   bool morningValue = false;
-  String mrngStringValue = '0';
-  bool noonValue = false;
-  String noonStringValue = '0';
-  bool nightValue = false;
-  bool eveningValue = false;
-  String nightStringValue = '0';
-  String eveningStringValue = '0';
+
   int medicineCount = 0;
   var selectedItem = '';
   String dropdownCheck = "1";
@@ -108,7 +103,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
   @override
   void dispose() {
     super.dispose();
-    passingFood;
   }
 
   @override
@@ -260,10 +254,13 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               onTap: () {
                                 setState(() {
                                   editingMedicineIndex = index;
+                                  isEdit = true;
+                                  log("index =========>>>>$editingMedicineIndex");
                                 });
 
                                 if (widget.bookingData != null &&
                                     index < widget.medicine!.length) {
+                                  var medicine = widget.medicine![index];
                                   medicineNameController.text = widget
                                       .medicine![index].medicineName
                                       .toString();
@@ -277,10 +274,19 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                       .toString();
                                   final medicineId =
                                       widget.medicine![index].id.toString();
+                                  foodDropdownController.toggleEdit(
+                                      "Morning", medicine.morning!);
+                                  foodDropdownController.toggleEdit(
+                                      "Noon", medicine.noon!);
+                                  foodDropdownController.toggleEdit(
+                                      "Evening", medicine.evening!);
+                                  foodDropdownController.toggleEdit(
+                                      "Night", medicine.night!);
 
                                   // Update dropdown value based on type
                                   String type =
                                       widget.medicine![index].type.toString();
+                                      foodDropdownController.dropdownEdit( widget.medicine![index].type.toString());
                                   // dropdownvalue = type == "1"
                                   //     ? "After Food"
                                   //     : dropdownvalue = type == "2"
@@ -296,30 +302,38 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                   dropdownHourlyValue = typeInterval;
 
                                   // Update morning value based on type
-                                  String mrngType = widget
-                                      .medicine![index].morning
-                                      .toString();
-                                  morningValue = mrngType == "1" ? true : false;
-                                  mrngStringValue = mrngType;
+                                  // String mrngType = widget
+                                  //     .medicine![index].morning
+                                  //     .toString();
+
+                                  // foodDropdownController.toggleEdit("morning",
+                                  //     widget.medicine![index].morning!);
+
+                                  // foodDropdownController.isCheckedmorning
+                                  //     .value = mrngType == 1 ? true : false;
+                                  // mrngStringValue = mrngType;
 
                                   // Update noon value based on type
-                                  String noonType =
-                                      widget.medicine![index].noon.toString();
-                                  noonValue = noonType == "1" ? true : false;
-                                  noonStringValue = noonType;
+                                  // String noonType =
+                                  //     widget.medicine![index].noon.toString();
+                                  // foodDropdownController.isCheckednoon.value =
+                                  //     noonType == "1" ? true : false;
+                                  //  noonStringValue = noonType;
 
                                   // Update evening value based on type
-                                  String evngType = widget
-                                      .medicine![index].evening
-                                      .toString();
-                                  eveningValue = evngType == "1" ? true : false;
-                                  eveningStringValue = evngType;
+                                  // String evngType = widget
+                                  //     .medicine![index].evening
+                                  //     .toString();
+                                  // foodDropdownController.isCheckedEvening
+                                  //     .value = evngType == "1" ? true : false;
+                                  //    eveningStringValue = evngType;
 
                                   // Update morning value based on type
-                                  String nightType =
-                                      widget.medicine![index].night.toString();
-                                  nightValue = nightType == "1" ? true : false;
-                                  nightStringValue = nightType;
+                                  // String nightType =
+                                  //     widget.medicine![index].night.toString();
+                                  // foodDropdownController.isCheckedNight.value =
+                                  //     nightType == "1" ? true : false;
+                                  //    nightStringValue = nightType;
 
                                   setState(() {
                                     _medicineId = medicineId;
@@ -456,6 +470,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                 ],
               ),
               const VerticalSpacingWidget(height: 5),
+
               Text(
                 "E.g: 1 tab,3 drops,etc..",
                 style: TextStyle(fontSize: 8.7.sp),
@@ -463,173 +478,196 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
               size.width > 450
                   ? const VerticalSpacingWidget(height: 5)
                   : const VerticalSpacingWidget(height: 1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        morningValue = !morningValue;
-
-                        if (morningValue == false) {
-                          mrngStringValue = '0';
-                        } else {
-                          mrngStringValue = '1';
-                        }
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10.w,
-                          child: Checkbox(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            activeColor: kMainColor,
-                            value: morningValue,
-                            onChanged: (newValue) {
-                              setState(() {
-                                morningValue = newValue!;
-
-                                if (morningValue == false) {
-                                  mrngStringValue = '0';
-                                } else {
-                                  mrngStringValue = '1';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        const HorizontalSpacingWidget(width: 7),
-                        Text(
-                          "Morning",
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w500),
-                        ),
-                      ],
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    checkboxCustom(
+                        'Morning',
+                        foodDropdownController.morningCheckedValue.value == 0
+                            ? Icons.square_outlined
+                            : Icons.check_box),
+                    checkboxCustom(
+                        'Noon',
+                        foodDropdownController.noonCheckedValue.value == 0
+                            ? Icons.square_outlined
+                            : Icons.check_box),
+                    checkboxCustom(
+                        'Evening',
+                        foodDropdownController.evnigCheckedValue.value == 0
+                            ? Icons.square_outlined
+                            : Icons.check_box),
+                    checkboxCustom(
+                      'Night',
+                      foodDropdownController.nightCheckedValue.value == 0
+                          ? Icons.square_outlined
+                          : Icons.check_box,
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        noonValue = !noonValue;
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       morningValue = !morningValue;
 
-                        if (noonValue == false) {
-                          noonStringValue = '0';
-                        } else {
-                          noonStringValue = '1';
-                        }
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10.w,
-                          child: Checkbox(
-                            activeColor: kMainColor,
-                            value: noonValue,
-                            onChanged: (newValue) {
-                              setState(() {
-                                noonValue = newValue!;
+                    //       if (morningValue == false) {
+                    //         mrngStringValue = '0';
+                    //       } else {
+                    //         mrngStringValue = '1';
+                    //       }
+                    //     });
+                    //   },
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: 10.w,
+                    //         child: Checkbox(
+                    //           materialTapTargetSize:
+                    //               MaterialTapTargetSize.shrinkWrap,
+                    //           activeColor: kMainColor,
+                    //           value: morningValue,
+                    //           onChanged: (newValue) {
+                    //             setState(() {
+                    //               morningValue = newValue!;
 
-                                if (noonValue == false) {
-                                  noonStringValue = '0';
-                                } else {
-                                  noonStringValue = '1';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        const HorizontalSpacingWidget(width: 10),
-                        Text(
-                          "Noon",
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        eveningValue = !eveningValue;
-                        if (eveningValue == false) {
-                          eveningStringValue = '0';
-                        } else {
-                          eveningStringValue = '1';
-                        }
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10.w,
-                          child: Checkbox(
-                            activeColor: kMainColor,
-                            value: eveningValue,
-                            onChanged: (newValue) {
-                              setState(() {
-                                eveningValue = newValue!;
-                                if (eveningValue == false) {
-                                  eveningStringValue = '0';
-                                } else {
-                                  eveningStringValue = '1';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        const HorizontalSpacingWidget(width: 10),
-                        Text(
-                          "Evening",
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        nightValue = !nightValue;
-                        if (nightValue == false) {
-                          nightStringValue = '0';
-                        } else {
-                          nightStringValue = '1';
-                        }
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10.w,
-                          child: Checkbox(
-                            activeColor: kMainColor,
-                            value: nightValue,
-                            onChanged: (newValue) {
-                              setState(() {
-                                nightValue = newValue!;
-                                if (nightValue == false) {
-                                  nightStringValue = '0';
-                                } else {
-                                  nightStringValue = '1';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        const HorizontalSpacingWidget(width: 10),
-                        Text(
-                          "Night",
-                          style: TextStyle(
-                              fontSize: 12.sp, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                    //               if (morningValue == false) {
+                    //                 mrngStringValue = '0';
+                    //               } else {
+                    //                 mrngStringValue = '1';
+                    //               }
+                    //             });
+                    //           },
+                    //         ),
+                    //       ),
+                    //       const HorizontalSpacingWidget(width: 7),
+                    //       Text(
+                    //         "Morning",
+                    //         style: TextStyle(
+                    //             fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       noonValue = !noonValue;
+
+                    //       if (noonValue == false) {
+                    //         noonStringValue = '0';
+                    //       } else {
+                    //         noonStringValue = '1';
+                    //       }
+                    //     });
+                    //   },
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: 10.w,
+                    //         child: Checkbox(
+                    //           activeColor: kMainColor,
+                    //           value: noonValue,
+                    //           onChanged: (newValue) {
+                    //             setState(() {
+                    //               noonValue = newValue!;
+
+                    //               if (noonValue == false) {
+                    //                 noonStringValue = '0';
+                    //               } else {
+                    //                 noonStringValue = '1';
+                    //               }
+                    //             });
+                    //           },
+                    //         ),
+                    //       ),
+                    //       const HorizontalSpacingWidget(width: 10),
+                    //       Text(
+                    //         "Noon",
+                    //         style: TextStyle(
+                    //             fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       eveningValue = !eveningValue;
+                    //       if (eveningValue == false) {
+                    //         eveningStringValue = '0';
+                    //       } else {
+                    //         eveningStringValue = '1';
+                    //       }
+                    //     });
+                    //   },
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: 10.w,
+                    //         child: Checkbox(
+                    //           activeColor: kMainColor,
+                    //           value: eveningValue,
+                    //           onChanged: (newValue) {
+                    //             setState(() {
+                    //               eveningValue = newValue!;
+                    //               if (eveningValue == false) {
+                    //                 eveningStringValue = '0';
+                    //               } else {
+                    //                 eveningStringValue = '1';
+                    //               }
+                    //             });
+                    //           },
+                    //         ),
+                    //       ),
+                    //       const HorizontalSpacingWidget(width: 10),
+                    //       Text(
+                    //         "Evening",
+                    //         style: TextStyle(
+                    //             fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     setState(() {
+                    //       nightValue = !nightValue;
+                    //       if (nightValue == false) {
+                    //         nightStringValue = '0';
+                    //       } else {
+                    //         nightStringValue = '1';
+                    //       }
+                    //     });
+                    //   },
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: 10.w,
+                    //         child: Checkbox(
+                    //           activeColor: kMainColor,
+                    //           value: nightValue,
+                    //           onChanged: (newValue) {
+                    //             setState(() {
+                    //               nightValue = newValue!;
+                    //               if (nightValue == false) {
+                    //                 nightStringValue = '0';
+                    //               } else {
+                    //                 nightStringValue = '1';
+                    //               }
+                    //             });
+                    //           },
+                    //         ),
+                    //       ),
+                    //       const HorizontalSpacingWidget(width: 10),
+                    //       Text(
+                    //         "Night",
+                    //         style: TextStyle(
+                    //             fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                );
+              }),
               size.width > 450
                   ? const VerticalSpacingWidget(height: 5)
                   : const VerticalSpacingWidget(height: 1),
@@ -687,7 +725,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                   newValue, '1');
 
                               log("value =======================    ==== == = = $newValue");
-                              log(">???????????$passingFood");
+
                               // });
                             },
                           ),
@@ -759,7 +797,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                         } else if (daysController.text.isEmpty) {
                           GeneralServices.instance
                               .showErrorMessage(context, "Please fill days");
-                        } else if (editingMedicineIndex != -1) {
+                        } else if (isEdit) {
                           BlocProvider.of<EditMedicineBloc>(context).add(
                             EditMedicine(
                               medicineName: medicineNameController.text,
@@ -768,10 +806,18 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               noOfDays: daysController.text,
                               type: foodDropdownController.foodValue.value,
                               // passingFood,
-                              night: nightStringValue.toString(),
-                              morning: mrngStringValue.toString(),
-                              noon: noonStringValue.toString(),
-                              evening: eveningStringValue,
+                              night: foodDropdownController
+                                  .nightCheckedValue.value
+                                  .toString(),
+                              morning: foodDropdownController
+                                  .morningCheckedValue
+                                  .toString(),
+                              noon: foodDropdownController
+                                  .noonCheckedValue.value
+                                  .toString(),
+                              evening: foodDropdownController
+                                  .evnigCheckedValue.value
+                                  .toString(),
                               timeSection: dropdownHourlyValue,
                               interval: days1Controller.text,
                             ),
@@ -784,12 +830,21 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               noOfDays: daysController.text,
                               type: foodDropdownController.foodValue.value,
                               //  type: passingFood,
-                              night: nightStringValue.toString(),
-                              morning: mrngStringValue.toString(),
-                              noon: noonStringValue.toString(),
+                              night: foodDropdownController
+                                  .nightCheckedValue.value
+                                  .toString(),
+                              morning: foodDropdownController
+                                  .morningCheckedValue
+                                  .toString(),
+                              noon: foodDropdownController
+                                  .noonCheckedValue.value
+                                  .toString(),
+                              evening: foodDropdownController
+                                  .evnigCheckedValue.value
+                                  .toString(),
                               tokenId: widget.tokenId.toString(),
                               bookedPersonId: widget.bookedPersonId.toString(),
-                              evening: eveningStringValue,
+
                               medicalStoreId: widget.medicalStoreId,
                               timeSection: dropdownHourlyValue,
                               interval: days1Controller.text,
@@ -801,7 +856,12 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                         daysController.clear();
                         days1Controller.clear();
                         dosageController.clear();
-                        foodDropdownController.resetToPreviousValue();
+                       
+                        setState(() {
+                           foodDropdownController.resetToPreviousValue();
+                          isEdit = false;
+
+                        });
                       },
                       child: Container(
                         height: 45.h,
@@ -812,7 +872,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                         ),
                         child: Center(
                           child: Text(
-                            editingMedicineIndex != -1 ? "UPDATE" : "ADD",
+                            isEdit ? "UPDATE" : "ADD",
                             style: size.width > 450
                                 ? TextStyle(
                                     color: Colors.white,
@@ -836,6 +896,57 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
 
       const VerticalSpacingWidget(height: 5),
     ]);
+  }
+
+  GestureDetector checkboxCustom(String checkingText, IconData iconData) {
+    return GestureDetector(
+        onTap: () {
+          foodDropdownController.toggleChecking(checkingText);
+          log("mornig val =======${foodDropdownController.morningCheckedValue}");
+          log("evng val =======${foodDropdownController.evnigCheckedValue}");
+          log("noon val =======${foodDropdownController.noonCheckedValue}");
+          log("night val =======${foodDropdownController.nightCheckedValue}");
+
+          log("text check value ==== $checkingText");
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              iconData,
+              color: kMainColor,
+            ),
+            const HorizontalSpacingWidget(width: 7),
+            Text(
+              checkingText,
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ));
+  }
+
+  Obx checkboxCustom1() {
+    return Obx(() => GestureDetector(
+        onTap: () {
+          foodDropdownController.toggleChecking("Noon");
+          log(foodDropdownController.noonCheckedValue.toString());
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            foodDropdownController.noonCheckedValue.value == 0
+                ? const Icon(Icons.square_outlined)
+                : Icon(
+                    Icons.check_box,
+                    color: kMainColor,
+                  ),
+            const HorizontalSpacingWidget(width: 7),
+            Text(
+              "Noon",
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+            ),
+          ],
+        )));
   }
 
   Future<dynamic> addInterval(BuildContext context) {
@@ -987,10 +1098,140 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
 class FoodDropdownController extends GetxController {
   var foodValue = '1'.obs;
   var previousFoodValue = '1'.obs;
+  var timeZoneId = "0".obs;
+
+//TimezoneModel
+
+  List timeList = [
+    "Morning",
+    "Noon",
+    "Evening",
+    "Night",
+  ];
+
+  RxBool isCheckedmorning = false.obs;
+  RxBool isCheckednoon = false.obs;
+  RxBool isCheckedEvening = false.obs;
+  RxBool isCheckedNight = false.obs;
+  RxInt morningCheckedValue = 0.obs;
+  RxInt evnigCheckedValue = 0.obs;
+  RxInt noonCheckedValue = 0.obs;
+  RxInt nightCheckedValue = 0.obs;
+
+  //privious//===
+
+  var previousisCheckedmorning = false.obs;
+  var previousisCheckednoon = false.obs;
+  var previousisCheckedNight = false.obs;
+  var previousisCheckedEvening = false.obs;
+
+  var previousmorningCheckedValue = 0.obs;
+  var previousevnigCheckedValue = 0.obs;
+  var previousnoonCheckedValue = 0.obs;
+  var previousnightCheckedValue = 0.obs;
+
+  void toggleChecking(String checkingValue) {
+    switch (checkingValue) {
+      case 'Morning':
+        isCheckedmorning.value = !isCheckedmorning.value;
+        morningCheckedValue.value = isCheckedmorning.value ? 1 : 0;
+        break;
+      case 'Noon':
+        isCheckednoon.value = !isCheckednoon.value;
+        noonCheckedValue.value = isCheckednoon.value ? 1 : 0;
+        break;
+      case 'Evening':
+        isCheckedEvening.value = !isCheckedEvening.value;
+        evnigCheckedValue.value = isCheckedEvening.value ? 1 : 0;
+        break;
+      case 'Night':
+        isCheckedNight.value = !isCheckedNight.value;
+        nightCheckedValue.value = isCheckedNight.value ? 1 : 0;
+        break;
+    }
+    update();
+  }
+  //   if (checkingValue == 'Morning') {
+  //     isCheckedmorning.value = !isCheckedmorning.value;
+  //     isCheckedmorning.value == false ? 1 : 0;
+  //     morningCheckedValue.value = isCheckedmorning.value ? 1 : 0;
+  //     log("test ====$checkingValue");
+  //     update();
+  //   } else if (checkingValue == 'Noon') {
+  //     isCheckednoon.value = !isCheckednoon.value;
+  //     isCheckednoon.value == false ? 1 : 0;
+  //     noonCheckedValue.value = isCheckednoon.value ? 1 : 0;
+  //     log("test 1====$checkingValue");
+  //     update();
+  //   }
+  //   if (checkingValue == 'Evening') {
+  //     isCheckedEvening.value = !isCheckedEvening.value;
+  //     isCheckedEvening.value == false ? 1 : 0;
+  //     evnigCheckedValue.value = isCheckedEvening.value ? 1 : 0;
+  //     log("test 2====$checkingValue");
+  //     update();
+  //   } else if (checkingValue == 'Night') {
+  //     isCheckedNight.value = !isCheckedNight.value;
+  //     isCheckedNight.value == false ? 1 : 0;
+  //     nightCheckedValue.value = isCheckedNight.value ? 1 : 0;
+  //     log("test 3====$checkingValue");
+  //     update();
+  //   }
+  //   update();
+  // }
+
+  void toggleEdit(String checkingValue, int editValue) {
+    switch (checkingValue) {
+      case 'Morning':
+        morningCheckedValue.value = editValue;
+        isCheckedmorning.value = editValue == 1;
+        break;
+      case 'Noon':
+        noonCheckedValue.value = editValue;
+        isCheckednoon.value = editValue == 1;
+        break;
+      case 'Evening':
+        evnigCheckedValue.value = editValue;
+        isCheckedEvening.value = editValue == 1;
+        break;
+      case 'Night':
+        nightCheckedValue.value = editValue;
+        isCheckedNight.value = editValue == 1;
+        break;
+    }
+    update();
+  }
+  //   if (checkingValue == 'Morning') {
+  //     morningCheckedValue.value = editValue;
+
+  //     log("test ====$editValue");
+  //     log("test val  ====${isCheckedmorning.value}");
+  //     update();
+  //   } else if (checkingValue == 'Noon') {
+  //     noonCheckedValue.value = editValue;
+  //     log("test 1====$checkingValue");
+  //     log("test val1  ====${isCheckedmorning.value}");
+  //     update();
+  //   }
+  //   if (checkingValue == 'Evening') {
+  //     evnigCheckedValue.value = editValue;
+  //     log("test 2====$checkingValue");
+  //     log("test val2  ====${isCheckedmorning.value}");
+  //     update();
+  //   } else if (checkingValue == 'Night') {
+  //     nightCheckedValue.value = editValue;
+  //     log("test 3====$checkingValue");
+  //     log("test val3  ====${isCheckedmorning.value}");
+  //     update();
+  //   }
+  //   update();
+  // }
+
   List<FoodDropdowneModel> foodData = [
-    FoodDropdowneModel(fodeId: "1", foodeName: "After Food"),
-    FoodDropdowneModel(fodeId: '2', foodeName: 'Before Food'),
+    FoodDropdowneModel(fodeId: '1', foodeName: 'Before Food'),
+    FoodDropdowneModel(fodeId: '2', foodeName: 'After Food'),
     FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
+    FoodDropdowneModel(fodeId: '4', foodeName: 'If Required'),
   ];
   dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == '1') {
@@ -1002,8 +1243,25 @@ class FoodDropdownController extends GetxController {
     update();
   }
 
+  void dropdownEdit(String  editValue) {
+    foodValue.value =editValue;
+    update();
+  }
+
   void resetToPreviousValue() {
-    foodValue.value = previousFoodValue.value; // Add this line
+    foodValue.value = previousFoodValue.value;
+    //
+    isCheckedmorning.value = previousisCheckedmorning.value;
+    isCheckednoon.value = previousisCheckednoon.value;
+    isCheckedEvening.value = previousisCheckedEvening.value;
+    isCheckedNight.value = previousisCheckedNight.value;
+    //
+    update();
+    morningCheckedValue.value = previousmorningCheckedValue.value;
+    evnigCheckedValue.value = previousevnigCheckedValue.value;
+    noonCheckedValue.value = previousnoonCheckedValue.value;
+    nightCheckedValue.value = previousnightCheckedValue.value;
+
     update();
   }
 }
