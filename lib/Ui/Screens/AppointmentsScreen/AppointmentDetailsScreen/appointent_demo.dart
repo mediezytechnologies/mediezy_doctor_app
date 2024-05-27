@@ -1338,7 +1338,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                           formatDate()
                                       ? InkWell(
                                           onTap: () async {
-                                            FocusScope.of(context).unfocus();
+                                              log("first call working ===========================>>>>>>>>>>><<<<<<<<<<<<<<<<=========================");
                                             // setState(() {
                                             // _scrollController.animateTo(
                                             //   0.0,
@@ -1377,8 +1377,8 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
 
                                             // Wait for 2 seconds
                                             await Future.delayed(
-                                                const Duration(seconds: 2));
-
+                                                const Duration(seconds: 2)).then((value){
+                                                  log("second call working ===========================>>>>>>>>>>><<<<<<<<<<<<<<<<=========================");
                                             if (appointmentDemoModel
                                                     .bookingData![index]
                                                     .isCheckedout !=
@@ -1425,7 +1425,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                 currentPosition--;
                                                 log("Last section: $currentPosition");
 
-                                                await pageController
+                                                 pageController
                                                     .animateToPage(
                                                   currentPosition,
                                                   duration: const Duration(
@@ -1438,43 +1438,13 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                               } else if (currentPosition <
                                                   listLength - 1) {
                                                 currentPosition + 1;
-                                                await pageController
+                                                 pageController
                                                     .animateToPage(
                                                   currentPosition,
                                                   duration: const Duration(
                                                       milliseconds: 500),
                                                   curve: Curves.easeInOut,
                                                 );
-                                                // BlocProvider.of<
-                                                //             AddAllAppointmentDetailsBloc>(
-                                                //         context)
-                                                //     .add(
-                                                //   AddAllAppointmentDetails(
-                                                //     tokenId:
-                                                //         appointmentDemoModel
-                                                //             .bookingData![index]
-                                                //             .tokenId
-                                                //             .toString(),
-                                                //     labId: dropValueLab,
-                                                //     labTest:
-                                                //         labTestController.text,
-                                                //     // labTest: labTestValues.join(', '),
-                                                //     medicalshopId:
-                                                //         dropValueMedicalStore,
-                                                //     // medicalshopId: selectedValue.toString(),
-                                                //     // medicalshopId: selectedValue == "null"
-                                                //     //     ? ""
-                                                //     //     : selectedValue.toString(),
-                                                //     imageFromCamera,
-                                                //     reviewAfter:
-                                                //         afterDaysController
-                                                //             .text,
-                                                //     notes: noteController.text,
-                                                //     scanId: dropValueScanning,
-                                                //     scanTest:
-                                                //         scanTestController.text,
-                                                //   ),
-                                                // );
                                                 handleCheckout(
                                                     context, currentPosition);
                                                 refreshData(context);
@@ -1510,6 +1480,8 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                               //   log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                               // }
                                             }
+                                                } );
+
                                           },
                                           child: Container(
                                             height: 50.h,
