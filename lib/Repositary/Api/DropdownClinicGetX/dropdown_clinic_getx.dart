@@ -23,8 +23,8 @@ class HospitalService {
         headers: {'Authorization': 'Bearer $token'},
         contentType: 'application/x-www-form-urlencoded',
       )).get(
-     // "https://test.mediezy.com/api/get-hospital-name/$doctorId",
-   "https://mediezy.com/api/get-hospital-name/$doctorId",
+     "https://test.mediezy.com/api/get-hospital-name/$doctorId",
+   //"https://mediezy.com/api/get-hospital-name/$doctorId",
       );
       ClinicGetModel? model = ClinicGetModel.fromJson(response.data);
       log(doctorId);
