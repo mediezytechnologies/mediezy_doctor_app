@@ -7,5 +7,6 @@ Color kCardColor = const Color(0xFFFFFFFF);
 Color kSubTextColor = const Color(0xFF7C7C7C);
 Color kstarColor = Colors.amber;
 Color kTextColor = Colors.black;
+Color kBlackShadow = const Color.fromARGB(255, 41, 41, 41);
 
 // const Color(0xFF595DE5);
