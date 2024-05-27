@@ -18,6 +18,7 @@ class EditMedicineBloc extends Bloc<EditMedicineEvent, EditMedicineState> {
     on<EditMedicine>((event, emit) async {
       emit(EditMedicineLoading());
       try {
+    log("days  ${event.noOfDays}");
         updatedSuccessfully = await getAppointmentApi.editPrescription(
             medicineId: event.medicineId,
             medicineName: event.medicineName,

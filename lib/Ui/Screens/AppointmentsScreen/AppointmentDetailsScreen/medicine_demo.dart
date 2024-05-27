@@ -886,12 +886,7 @@ class FoodDropdownController extends GetxController {
 
 //TimezoneModel
 
-  List timeList = [
-    "Morning",
-    "Noon",
-    "Evening",
-    "Night",
-  ];
+  
 
   RxBool isCheckedmorning = false.obs;
   RxBool isCheckednoon = false.obs;
