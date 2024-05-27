@@ -18,7 +18,17 @@ class EditMedicineBloc extends Bloc<EditMedicineEvent, EditMedicineState> {
     on<EditMedicine>((event, emit) async {
       emit(EditMedicineLoading());
       try {
-    log("days  ${event.noOfDays}");
+        log("daysss  ${event.noOfDays}");
+        log("daysx  ${event.medicineId}");
+        log("daysx  ${event.medicineName}");
+        log("dosage  ${event.dosage}");
+        log("type  ${event.type}");
+        log("daysx  ${event.night}");
+        log("daysx  ${event.morning}");
+        log("daysx  ${event.noon}");
+           log("daysx  ${event.evening}");
+              log("daysx  ${event.timeSection}");
+                 log("daysx  ${event.interval}");
         updatedSuccessfully = await getAppointmentApi.editPrescription(
             medicineId: event.medicineId,
             medicineName: event.medicineName,
