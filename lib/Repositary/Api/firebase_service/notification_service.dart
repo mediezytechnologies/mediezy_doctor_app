@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../main.dart';
 
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -82,7 +81,7 @@ class NotificationServices {
       AndroidNotification? android = message.notification!.android;
 
       log("Notification title: ${notification!.title}");
-      log("Notification title: ${notification!.body}");
+      log("Notification title: ${notification.body}");
       log("Data: ${message.data.toString()}");
 
       // For IoS

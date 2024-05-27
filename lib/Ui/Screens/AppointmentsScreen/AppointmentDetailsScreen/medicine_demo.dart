@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -749,6 +748,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                   children: [
                     InkWell(
                       onTap: () {
+                        FocusScope.of(context).unfocus();
                         // print(dropValueMedicalStore);
                         if (medicineNameController.text.isEmpty) {
                           GeneralServices.instance.showErrorMessage(
@@ -986,7 +986,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
 
 class FoodDropdownController extends GetxController {
   var foodValue = '1'.obs;
-   var previousFoodValue = '1'.obs; 
+  var previousFoodValue = '1'.obs;
   List<FoodDropdowneModel> foodData = [
     FoodDropdowneModel(fodeId: "1", foodeName: "After Food"),
     FoodDropdowneModel(fodeId: '2', foodeName: 'Before Food'),
@@ -995,12 +995,13 @@ class FoodDropdownController extends GetxController {
   dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == '1') {
       log("before  :: $foodValue");
-       previousFoodValue.value = foodValue.value;
+      previousFoodValue.value = foodValue.value;
       foodValue.value = value;
       update();
     }
     update();
   }
+
   void resetToPreviousValue() {
     foodValue.value = previousFoodValue.value; // Add this line
     update();

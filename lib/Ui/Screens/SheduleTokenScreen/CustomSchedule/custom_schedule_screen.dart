@@ -114,12 +114,15 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
               child: TabBar(
                 onTap: (d) {
                   if (tabFirstController.index == 0) {
+                    FocusScope.of(context).unfocus();
                     BlocProvider.of<GetAllLateBloc>(context)
                         .add(FetchAllLate(clinicId: dController.initialIndex!));
                   } else if (tabFirstController.index == 1) {
+                    FocusScope.of(context).unfocus();
                     BlocProvider.of<GetAllLateBloc>(context).add(
                         FetchAllEarly(clinicId: dController.initialIndex!));
                   } else {
+                    FocusScope.of(context).unfocus();
                     BlocProvider.of<GetAllLateBloc>(context).add(
                         FetchAllBreak(clinicId: dController.initialIndex!));
                   }
@@ -363,12 +366,13 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             if (state is LateScheduleLoaded) {
                               GeneralServices.instance.showSuccessMessage(
                                   context, "Late Schedule Added Successfull");
-                              Future.delayed(const Duration(seconds: 3), () {});
+                              Future.delayed(const Duration(seconds: 2), () {});
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllLate(
                                       clinicId: dController.initialIndex!));
                             }
                             if (state is LateScheduleError) {
+                              FocusScope.of(context).unfocus();
                               GeneralServices.instance.showErrorMessage(
                                   context, state.errorMessage);
                             }
@@ -376,6 +380,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                             title: "Apply",
                             onTapFunction: () {
+                              FocusScope.of(context).unfocus();
                               BlocProvider.of<LateScheduleBloc>(context)
                                   .add(AddLateSchedule(
                                 date: DateFormat('yyy-MM-dd').format(lateDate),
@@ -651,6 +656,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           child: CommonButtonWidget(
                               title: "Apply",
                               onTapFunction: () {
+                                FocusScope.of(context).unfocus();
                                 BlocProvider.of<LateScheduleBloc>(context)
                                     .add(AddEarlySchedule(
                                   date:
@@ -1122,6 +1128,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               child: CommonButtonWidget(
                                 title: "Apply",
                                 onTapFunction: () {
+                                  FocusScope.of(context).unfocus();
                                   BlocProvider.of<BetweenScheduleBloc>(context)
                                       .add(FetchBetweenSchedule(
                                     clinicId: dController.initialIndex!,

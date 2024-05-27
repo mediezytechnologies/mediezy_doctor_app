@@ -19,7 +19,6 @@ import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
@@ -548,7 +547,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         if (appointmentDetailsPageModel
                                                 .bookingData!.isCheckedout ==
                                             1) {
-                                          currentPosition ++;
+                                          currentPosition++;
                                           pageController.animateToPage(
                                             currentPosition,
                                             duration: const Duration(
@@ -581,7 +580,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             balanceAppoiment = listLength -
                                                 1 -
                                                 currentPosition;
-                                                
                                           });
                                         }
                                       }
@@ -1362,139 +1360,135 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             Future.delayed(
                                               const Duration(seconds: 2),
                                             ).then((value) {
-                                             
                                               // if (appointmentDetailsPageModel
                                               //         .bookingData!
                                               //         .isCheckedout !=
                                               //     1) {
-                                               
-                                               
-                                               
-                                                if ((currentPosition ==
-                                                    listLength - 1)) {
-                                                  log("last section called =====================================");
-                                                  currentPosition--;
-                                                  log("last section ======= : $currentPosition");
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        microseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  // BlocProvider.of<
-                                                  //             AddCheckinOrCheckoutBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   AddCheckinOrCheckout(
-                                                  //     clinicId:
-                                                  //         appointmentDetailsPageModel
-                                                  //             .bookingData!
-                                                  //             .clinicId
-                                                  //             .toString(),
-                                                  //     isCompleted: 1,
-                                                  //     isCheckin: 0,
-                                                  //     tokenNumber:
-                                                  //         appointmentDetailsPageModel
-                                                  //             .bookingData!
-                                                  //             .tokenNumber
-                                                  //             .toString(),
-                                                  //     isReached: '',
-                                                  //   ),
-                                                  // );
 
-                                                  // appointmentDetailsPageModel
-                                                  //     .bookingData!
-                                                  //     .isCheckedout = 1;
-                                                  // BlocProvider.of<
-                                                  //             GetAllAppointmentsBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   FetchAllAppointments(
-                                                  //     date: widget.date,
-                                                  //     clinicId: controller
-                                                  //         .initialIndex!,
-                                                  //     scheduleType: controller
-                                                  //         .scheduleIndex.value,
-                                                  //   ),
-                                                  // );
-                                                  // BlocProvider.of<
-                                                  //             GetAppointmentsBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   FetchAppointmentDetailsPage(
-                                                  //       tokenId:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments![
-                                                  //                   currentPosition]
-                                                  //               .id!
-                                                  //               .toString()),
-                                                  // );
-                                                } else if ((currentPosition >0
-                                                 )) {
-                                                  log("middile section innnnn =======");
-                                                  currentPosition--;
-                                                  log("middile section currentPosition $currentPosition =======");
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  // BlocProvider.of<
-                                                  //             AddCheckinOrCheckoutBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   AddCheckinOrCheckout(
-                                                  //     clinicId:
-                                                  //         appointmentDetailsPageModel
-                                                  //             .bookingData!
-                                                  //             .clinicId
-                                                  //             .toString(),
-                                                  //     isCompleted: 1,
-                                                  //     isCheckin: 0,
-                                                  //     tokenNumber:
-                                                  //         appointmentDetailsPageModel
-                                                  //             .bookingData!
-                                                  //             .tokenNumber
-                                                  //             .toString(),
-                                                  //     isReached: '',
-                                                  //   ),
-                                                  // );
-                                                  //  appointmentDetailsPageModel
-                                                  //     .bookingData!
-                                                  //     .isCheckedout = 1;
+                                              if ((currentPosition ==
+                                                  listLength - 1)) {
+                                                log("last section called =====================================");
+                                                currentPosition--;
+                                                log("last section ======= : $currentPosition");
+                                                pageController.animateToPage(
+                                                  currentPosition,
+                                                  duration: const Duration(
+                                                      microseconds: 500),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                                // BlocProvider.of<
+                                                //             AddCheckinOrCheckoutBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   AddCheckinOrCheckout(
+                                                //     clinicId:
+                                                //         appointmentDetailsPageModel
+                                                //             .bookingData!
+                                                //             .clinicId
+                                                //             .toString(),
+                                                //     isCompleted: 1,
+                                                //     isCheckin: 0,
+                                                //     tokenNumber:
+                                                //         appointmentDetailsPageModel
+                                                //             .bookingData!
+                                                //             .tokenNumber
+                                                //             .toString(),
+                                                //     isReached: '',
+                                                //   ),
+                                                // );
 
-                                                  log("appoiment isChecked ===== ${appointmentDetailsPageModel.bookingData!.isCheckedout}");
+                                                // appointmentDetailsPageModel
+                                                //     .bookingData!
+                                                //     .isCheckedout = 1;
+                                                // BlocProvider.of<
+                                                //             GetAllAppointmentsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   FetchAllAppointments(
+                                                //     date: widget.date,
+                                                //     clinicId: controller
+                                                //         .initialIndex!,
+                                                //     scheduleType: controller
+                                                //         .scheduleIndex.value,
+                                                //   ),
+                                                // );
+                                                // BlocProvider.of<
+                                                //             GetAppointmentsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   FetchAppointmentDetailsPage(
+                                                //       tokenId:
+                                                //           getAllAppointmentsModel
+                                                //               .appointments![
+                                                //                   currentPosition]
+                                                //               .id!
+                                                //               .toString()),
+                                                // );
+                                              } else if ((currentPosition >
+                                                  0)) {
+                                                log("middile section innnnn =======");
+                                                currentPosition--;
+                                                log("middile section currentPosition $currentPosition =======");
+                                                pageController.animateToPage(
+                                                  currentPosition,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                                // BlocProvider.of<
+                                                //             AddCheckinOrCheckoutBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   AddCheckinOrCheckout(
+                                                //     clinicId:
+                                                //         appointmentDetailsPageModel
+                                                //             .bookingData!
+                                                //             .clinicId
+                                                //             .toString(),
+                                                //     isCompleted: 1,
+                                                //     isCheckin: 0,
+                                                //     tokenNumber:
+                                                //         appointmentDetailsPageModel
+                                                //             .bookingData!
+                                                //             .tokenNumber
+                                                //             .toString(),
+                                                //     isReached: '',
+                                                //   ),
+                                                // );
+                                                //  appointmentDetailsPageModel
+                                                //     .bookingData!
+                                                //     .isCheckedout = 1;
 
-                                                  // BlocProvider.of<
-                                                  //             GetAllAppointmentsBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   FetchAllAppointments(
-                                                  //     date: widget.date,
-                                                  //     clinicId: controller
-                                                  //         .initialIndex!,
-                                                  //     scheduleType: controller
-                                                  //         .scheduleIndex.value,
-                                                  //   ),
-                                                  // );
-                                                  // BlocProvider.of<
-                                                  //             GetAppointmentsBloc>(
-                                                  //         context)
-                                                  //     .add(
-                                                  //   FetchAppointmentDetailsPage(
-                                                  //       tokenId:
-                                                  //           getAllAppointmentsModel
-                                                  //               .appointments![
-                                                  //                   currentPosition]
-                                                  //               .id!
-                                                  //               .toString()),
-                                                  // );
-                                                 
-                                                }
+                                                log("appoiment isChecked ===== ${appointmentDetailsPageModel.bookingData!.isCheckedout}");
 
-                                                //if closed=====================
-                                            //  }
+                                                // BlocProvider.of<
+                                                //             GetAllAppointmentsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   FetchAllAppointments(
+                                                //     date: widget.date,
+                                                //     clinicId: controller
+                                                //         .initialIndex!,
+                                                //     scheduleType: controller
+                                                //         .scheduleIndex.value,
+                                                //   ),
+                                                // );
+                                                // BlocProvider.of<
+                                                //             GetAppointmentsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   FetchAppointmentDetailsPage(
+                                                //       tokenId:
+                                                //           getAllAppointmentsModel
+                                                //               .appointments![
+                                                //                   currentPosition]
+                                                //               .id!
+                                                //               .toString()),
+                                                // );
+                                              }
+
+                                              //if closed=====================
+                                              //  }
                                             });
 
                                             log("$selectedValue");

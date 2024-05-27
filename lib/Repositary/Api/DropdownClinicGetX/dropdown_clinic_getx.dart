@@ -6,8 +6,6 @@ import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/schedule_deopdown_model/schadule_dropdown_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Model/appointment_demo_model.dart';
-
 class HospitalService {
   static Future<List<HospitalDetails>?> hospitalService() async {
     String? doctorId;
@@ -23,14 +21,15 @@ class HospitalService {
         headers: {'Authorization': 'Bearer $token'},
         contentType: 'application/x-www-form-urlencoded',
       )).get(
-     // "https://test.mediezy.com/api/get-hospital-name/$doctorId",
-   "https://mediezy.com/api/get-hospital-name/$doctorId",
+        "https://test.mediezy.com/api/get-hospital-name/$doctorId",
+        //  "https://mediezy.com/api/get-hospital-name/$doctorId",
       );
       ClinicGetModel? model = ClinicGetModel.fromJson(response.data);
       log(doctorId);
       log(model.toString());
       log("res ${response.data}");
       return model.hospitalDetails;
+      // ignore: deprecated_member_use
     } on DioError catch (e) {
       log("6656566565656556565  dist");
       log("${e.response!.data}===========");
@@ -48,7 +47,7 @@ class HospitalController extends GetxController {
   RxBool loding = true.obs;
   String? initialIndex;
   var scheduleIndex = '0'.obs;
- 
+
   RxList<HospitalDetails>? hospitalDetails = <HospitalDetails>[].obs;
 
   Future<List<HospitalDetails>?> gethospitalService() async {
@@ -81,9 +80,6 @@ class HospitalController extends GetxController {
     SchedulDropdowneModel(scheduleId: '2', scheduleName: "Schedule 2"),
     SchedulDropdowneModel(scheduleId: '3', scheduleName: "Schedule 3"),
   ];
-
-
-
 
   String formatDate() {
     String formattedSelectedDate =

@@ -1338,6 +1338,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                           formatDate()
                                       ? InkWell(
                                           onTap: () async {
+                                            FocusScope.of(context).unfocus();
                                             // setState(() {
                                             // _scrollController.animateTo(
                                             //   0.0,
@@ -1385,36 +1386,36 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                               if (currentPosition ==
                                                       listLength - 1 &&
                                                   currentPosition == 0) {
-                                                BlocProvider.of<
-                                                            AddAllAppointmentDetailsBloc>(
-                                                        context)
-                                                    .add(
-                                                  AddAllAppointmentDetails(
-                                                    tokenId:
-                                                        appointmentDemoModel
-                                                            .bookingData![index]
-                                                            .tokenId
-                                                            .toString(),
-                                                    labId: dropValueLab,
-                                                    labTest:
-                                                        labTestController.text,
-                                                    // labTest: labTestValues.join(', '),
-                                                    medicalshopId:
-                                                        dropValueMedicalStore,
-                                                    // medicalshopId: selectedValue.toString(),
-                                                    // medicalshopId: selectedValue == "null"
-                                                    //     ? ""
-                                                    //     : selectedValue.toString(),
-                                                    imageFromCamera,
-                                                    reviewAfter:
-                                                        afterDaysController
-                                                            .text,
-                                                    notes: noteController.text,
-                                                    scanId: dropValueScanning,
-                                                    scanTest:
-                                                        scanTestController.text,
-                                                  ),
-                                                );
+                                                // BlocProvider.of<
+                                                //             AddAllAppointmentDetailsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   AddAllAppointmentDetails(
+                                                //     tokenId:
+                                                //         appointmentDemoModel
+                                                //             .bookingData![index]
+                                                //             .tokenId
+                                                //             .toString(),
+                                                //     labId: dropValueLab,
+                                                //     labTest:
+                                                //         labTestController.text,
+                                                //     // labTest: labTestValues.join(', '),
+                                                //     medicalshopId:
+                                                //         dropValueMedicalStore,
+                                                //     // medicalshopId: selectedValue.toString(),
+                                                //     // medicalshopId: selectedValue == "null"
+                                                //     //     ? ""
+                                                //     //     : selectedValue.toString(),
+                                                //     imageFromCamera,
+                                                //     reviewAfter:
+                                                //         afterDaysController
+                                                //             .text,
+                                                //     notes: noteController.text,
+                                                //     scanId: dropValueScanning,
+                                                //     scanTest:
+                                                //         scanTestController.text,
+                                                //   ),
+                                                // );
                                                 log("=============== position in working on 1 pos ===================");
                                                 handleCheckout(context, index);
                                                 navigateToHome(context);
@@ -1436,7 +1437,7 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                 refreshData(context);
                                               } else if (currentPosition <
                                                   listLength - 1) {
-                                                currentPosition+1;
+                                                currentPosition + 1;
                                                 await pageController
                                                     .animateToPage(
                                                   currentPosition,
@@ -1444,6 +1445,36 @@ class _AppointmentDemoState extends State<AppointmentDemo> {
                                                       milliseconds: 500),
                                                   curve: Curves.easeInOut,
                                                 );
+                                                // BlocProvider.of<
+                                                //             AddAllAppointmentDetailsBloc>(
+                                                //         context)
+                                                //     .add(
+                                                //   AddAllAppointmentDetails(
+                                                //     tokenId:
+                                                //         appointmentDemoModel
+                                                //             .bookingData![index]
+                                                //             .tokenId
+                                                //             .toString(),
+                                                //     labId: dropValueLab,
+                                                //     labTest:
+                                                //         labTestController.text,
+                                                //     // labTest: labTestValues.join(', '),
+                                                //     medicalshopId:
+                                                //         dropValueMedicalStore,
+                                                //     // medicalshopId: selectedValue.toString(),
+                                                //     // medicalshopId: selectedValue == "null"
+                                                //     //     ? ""
+                                                //     //     : selectedValue.toString(),
+                                                //     imageFromCamera,
+                                                //     reviewAfter:
+                                                //         afterDaysController
+                                                //             .text,
+                                                //     notes: noteController.text,
+                                                //     scanId: dropValueScanning,
+                                                //     scanTest:
+                                                //         scanTestController.text,
+                                                //   ),
+                                                // );
                                                 handleCheckout(
                                                     context, currentPosition);
                                                 refreshData(context);
