@@ -272,6 +272,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                   days1Controller.text = widget
                                       .medicine![index].interval
                                       .toString();
+
                                   final medicineId =
                                       widget.medicine![index].id.toString();
                                   foodDropdownController.toggleEdit(
@@ -283,25 +284,29 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                                   foodDropdownController.toggleEdit(
                                       "Night", medicine.night!);
 
-                                  // Update dropdown value based on type
-                                  String type =
-                                      widget.medicine![index].type.toString();
-                                      foodDropdownController.dropdownEdit( widget.medicine![index].type.toString());
+                                  foodDropdownController
+                                      .dropdownEdit(medicine.type.toString());
+                                  dropdownHourlyValue =
+                                      medicine.timeSection.toString();
+
+                                  // String type = medicine.type.toString();
+                                  // foodDropdownController.dropdownEdit(type);
+                                  // dropdownHourlyValue =
+                                  //     medicine.timeSection.toString();
+
                                   // dropdownvalue = type == "1"
                                   //     ? "After Food"
                                   //     : dropdownvalue = type == "2"
                                   //         ? "Before Food"
                                   //         : "With Food";
                                   // passingFood = type;
-                                  log("food type ===========$type");
+                                //  log("food type ===========$type");
 
                                   String typeInterval = widget
                                       .medicine![index].timeSection
                                       .toString();
 
                                   dropdownHourlyValue = typeInterval;
-
-                              
 
                                   setState(() {
                                     _medicineId = medicineId;
@@ -471,7 +476,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                           ? Icons.square_outlined
                           : Icons.check_box,
                     ),
-                   
                   ],
                 );
               }),
@@ -629,6 +633,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               interval: days1Controller.text,
                             ),
                           );
+                          foodDropdownController.resetToPreviousValue();
                         } else {
                           BlocProvider.of<AddPrescriptionBloc>(context).add(
                             FetchAddPrescription(
@@ -649,6 +654,7 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               evening: foodDropdownController
                                   .evnigCheckedValue.value
                                   .toString(),
+
                               tokenId: widget.tokenId.toString(),
                               bookedPersonId: widget.bookedPersonId.toString(),
 
@@ -663,11 +669,10 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                         daysController.clear();
                         days1Controller.clear();
                         dosageController.clear();
-                       
-                        setState(() {
-                           foodDropdownController.resetToPreviousValue();
-                          isEdit = false;
 
+                        setState(() {
+                          foodDropdownController.resetToPreviousValue();
+                          isEdit = false;
                         });
                       },
                       child: Container(
@@ -709,10 +714,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
     return GestureDetector(
         onTap: () {
           foodDropdownController.toggleChecking(checkingText);
-          log("mornig val =======${foodDropdownController.morningCheckedValue}");
-          log("evng val =======${foodDropdownController.evnigCheckedValue}");
-          log("noon val =======${foodDropdownController.noonCheckedValue}");
-          log("night val =======${foodDropdownController.nightCheckedValue}");
 
           log("text check value ==== $checkingText");
         },
@@ -730,30 +731,6 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
             ),
           ],
         ));
-  }
-
-  Obx checkboxCustom1() {
-    return Obx(() => GestureDetector(
-        onTap: () {
-          foodDropdownController.toggleChecking("Noon");
-          log(foodDropdownController.noonCheckedValue.toString());
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            foodDropdownController.noonCheckedValue.value == 0
-                ? const Icon(Icons.square_outlined)
-                : Icon(
-                    Icons.check_box,
-                    color: kMainColor,
-                  ),
-            const HorizontalSpacingWidget(width: 7),
-            Text(
-              "Noon",
-              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
-            ),
-          ],
-        )));
   }
 
   Future<dynamic> addInterval(BuildContext context) {
@@ -920,6 +897,7 @@ class FoodDropdownController extends GetxController {
   RxBool isCheckednoon = false.obs;
   RxBool isCheckedEvening = false.obs;
   RxBool isCheckedNight = false.obs;
+  //
   RxInt morningCheckedValue = 0.obs;
   RxInt evnigCheckedValue = 0.obs;
   RxInt noonCheckedValue = 0.obs;
@@ -936,6 +914,14 @@ class FoodDropdownController extends GetxController {
   var previousevnigCheckedValue = 0.obs;
   var previousnoonCheckedValue = 0.obs;
   var previousnightCheckedValue = 0.obs;
+
+  //
+  List<FoodDropdowneModel> foodData = [
+    FoodDropdowneModel(fodeId: '1', foodeName: 'Before Food'),
+    FoodDropdowneModel(fodeId: '2', foodeName: 'After Food'),
+    FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
+    FoodDropdowneModel(fodeId: '4', foodeName: 'If Required'),
+  ];
 
   void toggleChecking(String checkingValue) {
     switch (checkingValue) {
@@ -958,34 +944,6 @@ class FoodDropdownController extends GetxController {
     }
     update();
   }
-  //   if (checkingValue == 'Morning') {
-  //     isCheckedmorning.value = !isCheckedmorning.value;
-  //     isCheckedmorning.value == false ? 1 : 0;
-  //     morningCheckedValue.value = isCheckedmorning.value ? 1 : 0;
-  //     log("test ====$checkingValue");
-  //     update();
-  //   } else if (checkingValue == 'Noon') {
-  //     isCheckednoon.value = !isCheckednoon.value;
-  //     isCheckednoon.value == false ? 1 : 0;
-  //     noonCheckedValue.value = isCheckednoon.value ? 1 : 0;
-  //     log("test 1====$checkingValue");
-  //     update();
-  //   }
-  //   if (checkingValue == 'Evening') {
-  //     isCheckedEvening.value = !isCheckedEvening.value;
-  //     isCheckedEvening.value == false ? 1 : 0;
-  //     evnigCheckedValue.value = isCheckedEvening.value ? 1 : 0;
-  //     log("test 2====$checkingValue");
-  //     update();
-  //   } else if (checkingValue == 'Night') {
-  //     isCheckedNight.value = !isCheckedNight.value;
-  //     isCheckedNight.value == false ? 1 : 0;
-  //     nightCheckedValue.value = isCheckedNight.value ? 1 : 0;
-  //     log("test 3====$checkingValue");
-  //     update();
-  //   }
-  //   update();
-  // }
 
   void toggleEdit(String checkingValue, int editValue) {
     switch (checkingValue) {
@@ -1008,38 +966,7 @@ class FoodDropdownController extends GetxController {
     }
     update();
   }
-  //   if (checkingValue == 'Morning') {
-  //     morningCheckedValue.value = editValue;
 
-  //     log("test ====$editValue");
-  //     log("test val  ====${isCheckedmorning.value}");
-  //     update();
-  //   } else if (checkingValue == 'Noon') {
-  //     noonCheckedValue.value = editValue;
-  //     log("test 1====$checkingValue");
-  //     log("test val1  ====${isCheckedmorning.value}");
-  //     update();
-  //   }
-  //   if (checkingValue == 'Evening') {
-  //     evnigCheckedValue.value = editValue;
-  //     log("test 2====$checkingValue");
-  //     log("test val2  ====${isCheckedmorning.value}");
-  //     update();
-  //   } else if (checkingValue == 'Night') {
-  //     nightCheckedValue.value = editValue;
-  //     log("test 3====$checkingValue");
-  //     log("test val3  ====${isCheckedmorning.value}");
-  //     update();
-  //   }
-  //   update();
-  // }
-
-  List<FoodDropdowneModel> foodData = [
-    FoodDropdowneModel(fodeId: '1', foodeName: 'Before Food'),
-    FoodDropdowneModel(fodeId: '2', foodeName: 'After Food'),
-    FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
-    FoodDropdowneModel(fodeId: '4', foodeName: 'If Required'),
-  ];
   dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == '1') {
       log("before  :: $foodValue");
@@ -1050,20 +977,49 @@ class FoodDropdownController extends GetxController {
     update();
   }
 
-  void dropdownEdit(String  editValue) {
-    foodValue.value =editValue;
+  void dropdownEdit(String value) {
+    previousFoodValue.value = value;
+    foodValue.value = value;
     update();
+  }
+
+  void resetToInitialValue() {
+    foodValue.value = '1';
+
+    isCheckedmorning.value = false;
+    isCheckednoon.value = false;
+    isCheckedEvening.value = false;
+    isCheckedNight.value = false;
+
+    morningCheckedValue.value = 0;
+    evnigCheckedValue.value = 0;
+    noonCheckedValue.value = 0;
+    nightCheckedValue.value = 0;
+
+    update();
+  }
+
+  void setPreviousValues() {
+    previousFoodValue.value = foodValue.value;
+    previousisCheckedmorning.value = isCheckedmorning.value;
+    previousisCheckednoon.value = isCheckednoon.value;
+    previousisCheckedEvening.value = isCheckedEvening.value;
+    previousisCheckedNight.value = isCheckedNight.value;
+
+    previousmorningCheckedValue.value = morningCheckedValue.value;
+    previousevnigCheckedValue.value = evnigCheckedValue.value;
+    previousnoonCheckedValue.value = noonCheckedValue.value;
+    previousnightCheckedValue.value = nightCheckedValue.value;
   }
 
   void resetToPreviousValue() {
     foodValue.value = previousFoodValue.value;
-    //
+
     isCheckedmorning.value = previousisCheckedmorning.value;
     isCheckednoon.value = previousisCheckednoon.value;
     isCheckedEvening.value = previousisCheckedEvening.value;
     isCheckedNight.value = previousisCheckedNight.value;
-    //
-    update();
+
     morningCheckedValue.value = previousmorningCheckedValue.value;
     evnigCheckedValue.value = previousevnigCheckedValue.value;
     noonCheckedValue.value = previousnoonCheckedValue.value;
