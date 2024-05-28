@@ -166,7 +166,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       child: DatePickerDemoClass(
                         height: size.width > 450
                             ? size.height * .1
-                            : size.height * .135,
+                            : size.height * .13,
                         width: size.width > 450
                             ? size.width * .12
                             : size.width * .17,

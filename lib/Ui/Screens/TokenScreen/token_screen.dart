@@ -228,8 +228,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                               .add(DropdownSelectEvent(
                                                   dropdownSelectnvLalu:
                                                       newValue!));
-                                          dropdownValue = newValue;
-                                          // selectedValue = items[newValue];
+                                          // dropdownValue = newValue!;
+                                          selectedValue = items[newValue];
                                           BlocProvider.of<GetCurrentTokenBloc>(
                                                   context)
                                               .add(FetchGetCurrentToken(
@@ -558,6 +558,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         ),
                                                                 ),
                                                               ),
+
+                                                              //==========================================================
                                                               Container(
                                                                 height: 25.h,
                                                                 width:
