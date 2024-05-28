@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointent_demo.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -196,7 +196,7 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
                                                       // AppointmentDemo()
-                                                      AppointmentDemo(
+                                                      AppointmentDetailsScreen(
                                                         firstIndex:
                                                             appointmentDemoModel
                                                                 .bookingData![

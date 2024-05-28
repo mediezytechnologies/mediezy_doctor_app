@@ -52,7 +52,8 @@ class GenerateTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    log(body.toString());
+    // log(body.toString());
+    print(body);
     log("<<<<<<<<<<Generate token final response worked>>>>>>>>>>");
     return response.body;
   }
