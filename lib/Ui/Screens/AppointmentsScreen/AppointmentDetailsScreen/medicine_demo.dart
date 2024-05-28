@@ -22,6 +22,8 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../../Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
+
 class MedicineWidgetDemo extends StatefulWidget {
   const MedicineWidgetDemo({
     super.key,
@@ -171,7 +173,8 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
                               ? "After Food"
                               : widget.medicine![index].type == 2
                                   ? "Before Food"
-                                  : "With Food",
+                                  :   widget.medicine![index].type == 3
+                                  ?"With Food" : 'If Required',
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -580,8 +583,13 @@ class _MedicineWidgetDemoState extends State<MedicineWidgetDemo> {
               BlocListener<EditMedicineBloc, EditMedicineState>(
                 listener: (context, state) {
                   if (state is EditMedicineLoaded) {
-                    BlocProvider.of<GetAppointmentsBloc>(context).add(
-                        FetchAppointmentDetailsPage(tokenId: widget.tokenId));
+                    BlocProvider.of<AppointmentsDemoBlocBloc>(context)
+                            .add(FetchAllAppointmentsDemo(
+                          date: controller.formatDate(),
+                          clinicId: controller.initialIndex!,
+                          scheduleType: controller.scheduleIndex.value,
+                        ));
+
                     // Navigator.pushReplacement(
                     //     context,
                     //     MaterialPageRoute(
@@ -919,8 +927,8 @@ class FoodDropdownController extends GetxController {
 
   //
   List<FoodDropdowneModel> foodData = [
-    FoodDropdowneModel(fodeId: '1', foodeName: 'Before Food'),
-    FoodDropdowneModel(fodeId: '2', foodeName: 'After Food'),
+    FoodDropdowneModel(fodeId: '1', foodeName: 'After Food'),
+    FoodDropdowneModel(fodeId: '2', foodeName: 'Before Food'),
     FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
     FoodDropdowneModel(fodeId: '4', foodeName: 'If Required'),
   ];
