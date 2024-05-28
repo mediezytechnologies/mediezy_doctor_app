@@ -371,20 +371,37 @@ class _ScheduleTokenDetailsScreenState
                                   ),
                                   child:
                                       Builder(builder: (BuildContext context) {
-                                    return InkWell(
+                                    return GestureDetector(
                                       onTap: () {
-                                        GeneralServices.instance.selectDate(
-                                          context: context,
-                                          date: startSchedule1Date,
-                                          onDateSelected: (DateTime picked) {
-                                            setState(() {
-                                              startSchedule1Date = picked;
-                                              // Update end date to be 30 days after the selected start date
-                                              endScheduleDate = picked.add(
-                                                  const Duration(days: 30));
-                                            });
-                                          },
-                                        );
+                                        Platform.isIOS
+                                            ? GeneralServices.instance
+                                                .selectIosDate(
+                                                context: context,
+                                                date: startSchedule1Date,
+                                                onDateSelected:
+                                                    (DateTime picked) async {
+                                                  setState(() {
+                                                    startSchedule1Date = picked;
+                                                    endScheduleDate = picked
+                                                        .add(const Duration(
+                                                            days: 30));
+                                                  });
+                                                },
+                                              )
+                                            : GeneralServices.instance
+                                                .selectDate(
+                                                context: context,
+                                                date: startSchedule1Date,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    startSchedule1Date = picked;
+                                                    endScheduleDate = picked
+                                                        .add(const Duration(
+                                                            days: 30));
+                                                  });
+                                                },
+                                              );
                                       },
                                       child: Column(
                                         crossAxisAlignment:
@@ -418,10 +435,6 @@ class _ScheduleTokenDetailsScreenState
                                                                           days:
                                                                               30));
                                                             });
-                                                            // FocusScope.of(
-                                                            //         context)
-                                                            //     .requestFocus(
-                                                            //         FocusNode());
                                                           },
                                                         )
                                                       : GeneralServices.instance
@@ -478,17 +491,31 @@ class _ScheduleTokenDetailsScreenState
                                   ),
                                   child:
                                       Builder(builder: (BuildContext context) {
-                                    return InkWell(
-                                      onTap: () async {
-                                        GeneralServices.instance.selectDate(
-                                          context: context,
-                                          date: endScheduleDate,
-                                          onDateSelected: (DateTime picked) {
-                                            setState(() {
-                                              endScheduleDate = picked;
-                                            });
-                                          },
-                                        );
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Platform.isIOS
+                                            ? GeneralServices.instance
+                                                .selectIosDate(
+                                                context: context,
+                                                date: endScheduleDate,
+                                                onDateSelected:
+                                                    (DateTime picked) async {
+                                                  setState(() {
+                                                    endScheduleDate = picked;
+                                                  });
+                                                },
+                                              )
+                                            : GeneralServices.instance
+                                                .selectDate(
+                                                context: context,
+                                                date: endScheduleDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    endScheduleDate = picked;
+                                                  });
+                                                },
+                                              );
                                       },
                                       child: Column(
                                         crossAxisAlignment:

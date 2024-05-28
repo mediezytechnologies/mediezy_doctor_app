@@ -274,59 +274,57 @@ class _ReservationScreenState extends State<ReservationScreen>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                    context: context,
-                                                    date: selectedDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        selectedDate = picked;
-                                                        endDate = picked;
-                                                      });
-                                                      BlocProvider.of<
-                                                                  GetTokenBloc>(
-                                                              context)
-                                                          .add(
-                                                        FetchTokens(
-                                                            date: formatDate(),
-                                                            clinicId: dController
-                                                                .initialIndex!),
-                                                      );
-                                                      resetSelectedTokens();
-                                                    },
-                                                  )
-                                                : GeneralServices.instance
-                                                    .selectDate(
-                                                    context: context,
-                                                    date: selectedDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        selectedDate = picked;
-                                                        endDate = picked;
-                                                      });
-                                                      BlocProvider.of<
-                                                                  GetTokenBloc>(
-                                                              context)
-                                                          .add(
-                                                        FetchTokens(
-                                                            date: formatDate(),
-                                                            clinicId: dController
-                                                                .initialIndex!),
-                                                      );
-                                                      resetSelectedTokens();
-                                                    },
+                                    GestureDetector(
+                                      onTap: () {
+                                        Platform.isIOS
+                                            ? GeneralServices.instance
+                                                .selectIosDate(
+                                                context: context,
+                                                date: selectedDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    selectedDate = picked;
+                                                    endDate = picked;
+                                                  });
+                                                  BlocProvider.of<GetTokenBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchTokens(
+                                                        date: formatDate(),
+                                                        clinicId: dController
+                                                            .initialIndex!),
                                                   );
-                                          },
-                                          child: Row(
+                                                  resetSelectedTokens();
+                                                },
+                                              )
+                                            : GeneralServices.instance
+                                                .selectDate(
+                                                context: context,
+                                                date: selectedDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    selectedDate = picked;
+                                                    endDate = picked;
+                                                  });
+                                                  BlocProvider.of<GetTokenBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchTokens(
+                                                        date: formatDate(),
+                                                        clinicId: dController
+                                                            .initialIndex!),
+                                                  );
+                                                  resetSelectedTokens();
+                                                },
+                                              );
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             children: [
                                               Text(
                                                 "Start Date",
@@ -402,68 +400,66 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               )
                                             ],
                                           ),
-                                        ),
-                                        Text(
-                                          DateFormat('dd-MM-yyy')
-                                              .format(selectedDate),
-                                          style: size.width > 450
-                                              ? blackTabMainText
-                                              : black14B600,
-                                        ),
-                                      ],
+                                          Text(
+                                            DateFormat('dd-MM-yyy')
+                                                .format(selectedDate),
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : black14B600,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Platform.isIOS
-                                                ? GeneralServices.instance
-                                                    .selectIosDate(
-                                                    context: context,
-                                                    date: endDate,
-                                                    onDateSelected: (DateTime
-                                                        picked) async {
-                                                      setState(() {
-                                                        endDate = picked;
-                                                      });
-                                                      BlocProvider.of<
-                                                                  GetTokenBloc>(
-                                                              context)
-                                                          .add(
-                                                        FetchTokens(
-                                                            date: formatDate(),
-                                                            clinicId: dController
-                                                                .initialIndex!),
-                                                      );
-                                                      resetSelectedTokens();
-                                                    },
-                                                  )
-                                                : GeneralServices.instance
-                                                    .selectDate(
-                                                    context: context,
-                                                    date: endDate,
-                                                    onDateSelected:
-                                                        (DateTime picked) {
-                                                      setState(() {
-                                                        endDate = picked;
-                                                        // print(endDate);
-                                                      });
-                                                      BlocProvider.of<
-                                                                  GetTokenBloc>(
-                                                              context)
-                                                          .add(
-                                                        FetchTokens(
-                                                            date: formatDate(),
-                                                            clinicId: dController
-                                                                .initialIndex!),
-                                                      );
-                                                      resetSelectedTokens();
-                                                    },
+                                    GestureDetector(
+                                      onTap: () {
+                                        Platform.isIOS
+                                            ? GeneralServices.instance
+                                                .selectIosDate(
+                                                context: context,
+                                                date: endDate,
+                                                onDateSelected:
+                                                    (DateTime picked) async {
+                                                  setState(() {
+                                                    endDate = picked;
+                                                  });
+                                                  BlocProvider.of<GetTokenBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchTokens(
+                                                        date: formatDate(),
+                                                        clinicId: dController
+                                                            .initialIndex!),
                                                   );
-                                          },
-                                          child: Row(
+                                                  resetSelectedTokens();
+                                                },
+                                              )
+                                            : GeneralServices.instance
+                                                .selectDate(
+                                                context: context,
+                                                date: endDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    endDate = picked;
+                                                    // print(endDate);
+                                                  });
+                                                  BlocProvider.of<GetTokenBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchTokens(
+                                                        date: formatDate(),
+                                                        clinicId: dController
+                                                            .initialIndex!),
+                                                  );
+                                                  resetSelectedTokens();
+                                                },
+                                              );
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             children: [
                                               Text(
                                                 "End Date",
@@ -536,15 +532,15 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               )
                                             ],
                                           ),
-                                        ),
-                                        Text(
-                                          DateFormat('dd-MM-yyy')
-                                              .format(endDate),
-                                          style: size.width > 450
-                                              ? blackTabMainText
-                                              : black14B600,
-                                        ),
-                                      ],
+                                          Text(
+                                            DateFormat('dd-MM-yyy')
+                                                .format(endDate),
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : black14B600,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

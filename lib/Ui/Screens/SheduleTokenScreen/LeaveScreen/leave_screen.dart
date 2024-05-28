@@ -144,60 +144,56 @@ class LeaveScreenState extends State<LeaveScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Platform.isIOS
-                                        ? selectIosDate(
-                                            context: context,
-                                            date: leaveStartDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveStartDate = picked;
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId: dController
-                                                          .initialIndex!,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          )
-                                        : selectDate(
-                                            context: context,
-                                            date: leaveStartDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveStartDate = picked;
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId: dController
-                                                          .initialIndex!,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          );
-                                  },
-                                  child: Row(
+                            GestureDetector(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? selectIosDate(
+                                        context: context,
+                                        date: leaveStartDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            leaveStartDate = picked;
+                                            leaveEndDate = picked;
+                                          });
+                                          BlocProvider.of<LeaveCheckBloc>(
+                                                  context)
+                                              .add(FetchLeaveCheck(
+                                                  clinicId:
+                                                      dController.initialIndex!,
+                                                  fromDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveStartDate),
+                                                  toDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveEndDate)));
+                                        },
+                                      )
+                                    : selectDate(
+                                        context: context,
+                                        date: leaveStartDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            leaveStartDate = picked;
+                                            leaveEndDate = picked;
+                                          });
+                                          BlocProvider.of<LeaveCheckBloc>(
+                                                  context)
+                                              .add(FetchLeaveCheck(
+                                                  clinicId:
+                                                      dController.initialIndex!,
+                                                  fromDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveStartDate),
+                                                  toDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveEndDate)));
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
                                         "Start Date",
@@ -268,68 +264,64 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       )
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  DateFormat("dd-MM-yyy")
-                                      .format(leaveStartDate),
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : black14B600,
-                                ),
-                              ],
+                                  Text(
+                                    DateFormat("dd-MM-yyy")
+                                        .format(leaveStartDate),
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : black14B600,
+                                  ),
+                                ],
+                              ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Platform.isIOS
-                                        ? selectIosDate(
-                                            context: context,
-                                            date: leaveEndDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId: dController
-                                                          .initialIndex!,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          )
-                                        : selectDate(
-                                            context: context,
-                                            date: leaveEndDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                leaveEndDate = picked;
-                                              });
-                                              BlocProvider.of<LeaveCheckBloc>(
-                                                      context)
-                                                  .add(FetchLeaveCheck(
-                                                      clinicId: dController
-                                                          .initialIndex!,
-                                                      fromDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveStartDate),
-                                                      toDate: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(
-                                                              leaveEndDate)));
-                                            },
-                                          );
-                                  },
-                                  child: Row(
+                            GestureDetector(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? selectIosDate(
+                                        context: context,
+                                        date: leaveEndDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            leaveEndDate = picked;
+                                          });
+                                          BlocProvider.of<LeaveCheckBloc>(
+                                                  context)
+                                              .add(FetchLeaveCheck(
+                                                  clinicId:
+                                                      dController.initialIndex!,
+                                                  fromDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveStartDate),
+                                                  toDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveEndDate)));
+                                        },
+                                      )
+                                    : selectDate(
+                                        context: context,
+                                        date: leaveEndDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            leaveEndDate = picked;
+                                          });
+                                          BlocProvider.of<LeaveCheckBloc>(
+                                                  context)
+                                              .add(FetchLeaveCheck(
+                                                  clinicId:
+                                                      dController.initialIndex!,
+                                                  fromDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveStartDate),
+                                                  toDate: DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(leaveEndDate)));
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
                                         "End Date",
@@ -398,14 +390,15 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       )
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  DateFormat("dd-MM-yyy").format(leaveEndDate),
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : black14B600,
-                                ),
-                              ],
+                                  Text(
+                                    DateFormat("dd-MM-yyy")
+                                        .format(leaveEndDate),
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : black14B600,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

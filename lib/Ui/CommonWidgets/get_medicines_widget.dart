@@ -75,9 +75,9 @@ class GetMedicinesWidget extends StatelessWidget {
                   ShortNamesWidget(
                     firstText: "",
                     secondText: type == 1
-                        ? "Before food"
+                        ? "After food"
                         : type == 2
-                            ? "After food"
+                            ? "Before food"
                             : type == 3
                                 ? "With food"
                                 : "If required",

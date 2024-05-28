@@ -108,60 +108,52 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Platform.isIOS
-                                    ? GeneralServices.instance.selectIosDate(
-                                        context: context,
-                                        date: selectedunreserveDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            selectedunreserveDate = picked;
-                                            unreserveendDate =
-                                                picked; // Update unreserveendDate as well
-                                          });
-                                          BlocProvider.of<ReserveTokenBloc>(
-                                                  context)
-                                              .add(FetchReservedTokens(
-                                                  fromDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(
-                                                          selectedunreserveDate),
-                                                  toDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(unreserveendDate),
-                                                  clinicId: dController
-                                                      .initialIndex!));
-                                        },
-                                      )
-                                    : GeneralServices.instance.selectDate(
-                                        context: context,
-                                        date: selectedunreserveDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            selectedunreserveDate = picked;
-                                            unreserveendDate =
-                                                picked; // Update unreserveendDate as well
-                                          });
-                                          BlocProvider.of<ReserveTokenBloc>(
-                                                  context)
-                                              .add(FetchReservedTokens(
-                                                  fromDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(
-                                                          selectedunreserveDate),
-                                                  toDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(unreserveendDate),
-                                                  clinicId: dController
-                                                      .initialIndex!));
-                                        },
-                                      );
-                              },
-                              child: Row(
+                        GestureDetector(
+                          onTap: () {
+                            Platform.isIOS
+                                ? GeneralServices.instance.selectIosDate(
+                                    context: context,
+                                    date: selectedunreserveDate,
+                                    onDateSelected: (DateTime picked) {
+                                      setState(() {
+                                        selectedunreserveDate = picked;
+                                        unreserveendDate = picked;
+                                      });
+                                      BlocProvider.of<ReserveTokenBloc>(context)
+                                          .add(FetchReservedTokens(
+                                              fromDate: DateFormat('yyy-MM-dd')
+                                                  .format(
+                                                      selectedunreserveDate),
+                                              toDate: DateFormat('yyy-MM-dd')
+                                                  .format(unreserveendDate),
+                                              clinicId:
+                                                  dController.initialIndex!));
+                                    },
+                                  )
+                                : GeneralServices.instance.selectDate(
+                                    context: context,
+                                    date: selectedunreserveDate,
+                                    onDateSelected: (DateTime picked) {
+                                      setState(() {
+                                        selectedunreserveDate = picked;
+                                        unreserveendDate = picked;
+                                      });
+                                      BlocProvider.of<ReserveTokenBloc>(context)
+                                          .add(FetchReservedTokens(
+                                              fromDate: DateFormat('yyy-MM-dd')
+                                                  .format(
+                                                      selectedunreserveDate),
+                                              toDate: DateFormat('yyy-MM-dd')
+                                                  .format(unreserveendDate),
+                                              clinicId:
+                                                  dController.initialIndex!));
+                                    },
+                                  );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
                                   Text(
                                     "Start Date",
@@ -182,8 +174,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                 setState(() {
                                                   selectedunreserveDate =
                                                       picked;
-                                                  unreserveendDate =
-                                                      picked; // Update unreserveendDate as well
+                                                  unreserveendDate = picked;
                                                 });
                                                 BlocProvider.of<
                                                             ReserveTokenBloc>(
@@ -209,8 +200,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                 setState(() {
                                                   selectedunreserveDate =
                                                       picked;
-                                                  unreserveendDate =
-                                                      picked; // Update unreserveendDate as well
+                                                  unreserveendDate = picked;
                                                 });
                                                 BlocProvider.of<
                                                             ReserveTokenBloc>(
@@ -237,68 +227,62 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                   )
                                 ],
                               ),
-                            ),
-                            Text(
-                              DateFormat('dd-MM-yyy')
-                                  .format(selectedunreserveDate),
-                              style: size.width > 450
-                                  ? blackTabMainText
-                                  : black14B600,
-                            ),
-                          ],
+                              Text(
+                                DateFormat('dd-MM-yyy')
+                                    .format(selectedunreserveDate),
+                                style: size.width > 450
+                                    ? blackTabMainText
+                                    : black14B600,
+                              ),
+                            ],
+                          ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Platform.isIOS
-                                    ? GeneralServices.instance.selectIosDate(
-                                        context: context,
-                                        date: unreserveendDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            unreserveendDate = picked;
-                                            // print(unreserveendDate);
-                                          });
-                                          BlocProvider.of<ReserveTokenBloc>(
-                                                  context)
-                                              .add(FetchReservedTokens(
-                                                  fromDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(
-                                                          selectedunreserveDate),
-                                                  toDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(unreserveendDate),
-                                                  clinicId: dController
-                                                      .initialIndex!));
-                                        },
-                                      )
-                                    : GeneralServices.instance.selectDate(
-                                        context: context,
-                                        date: unreserveendDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            unreserveendDate = picked;
-                                            // print(unreserveendDate);
-                                          });
-                                          BlocProvider.of<ReserveTokenBloc>(
-                                                  context)
-                                              .add(FetchReservedTokens(
-                                                  fromDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(
-                                                          selectedunreserveDate),
-                                                  toDate: DateFormat(
-                                                          'yyy-MM-dd')
-                                                      .format(unreserveendDate),
-                                                  clinicId: dController
-                                                      .initialIndex!));
-                                        },
-                                      );
-                              },
-                              child: Row(
+                        GestureDetector(
+                          onTap: () {
+                            Platform.isIOS
+                                ? GeneralServices.instance.selectIosDate(
+                                    context: context,
+                                    date: unreserveendDate,
+                                    onDateSelected: (DateTime picked) {
+                                      setState(() {
+                                        unreserveendDate = picked;
+                                        // print(unreserveendDate);
+                                      });
+                                      BlocProvider.of<ReserveTokenBloc>(context)
+                                          .add(FetchReservedTokens(
+                                              fromDate: DateFormat('yyy-MM-dd')
+                                                  .format(
+                                                      selectedunreserveDate),
+                                              toDate: DateFormat('yyy-MM-dd')
+                                                  .format(unreserveendDate),
+                                              clinicId:
+                                                  dController.initialIndex!));
+                                    },
+                                  )
+                                : GeneralServices.instance.selectDate(
+                                    context: context,
+                                    date: unreserveendDate,
+                                    onDateSelected: (DateTime picked) {
+                                      setState(() {
+                                        unreserveendDate = picked;
+                                        // print(unreserveendDate);
+                                      });
+                                      BlocProvider.of<ReserveTokenBloc>(context)
+                                          .add(FetchReservedTokens(
+                                              fromDate: DateFormat('yyy-MM-dd')
+                                                  .format(
+                                                      selectedunreserveDate),
+                                              toDate: DateFormat('yyy-MM-dd')
+                                                  .format(unreserveendDate),
+                                              clinicId:
+                                                  dController.initialIndex!));
+                                    },
+                                  );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
                                   Text(
                                     "End Date",
@@ -370,14 +354,15 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                   )
                                 ],
                               ),
-                            ),
-                            Text(
-                              DateFormat('dd-MM-yyy').format(unreserveendDate),
-                              style: size.width > 450
-                                  ? blackTabMainText
-                                  : black14B600,
-                            ),
-                          ],
+                              Text(
+                                DateFormat('dd-MM-yyy')
+                                    .format(unreserveendDate),
+                                style: size.width > 450
+                                    ? blackTabMainText
+                                    : black14B600,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

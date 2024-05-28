@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_details_screen.dart';
+import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 import '../../../CommonWidgets/text_style_widget.dart';
 
@@ -106,64 +108,90 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                 ),
                 // const VerticalSpacingWidget(height: 10),
                 GestureDetector(
-                  onTap: () async {
-                    await selectDate(
-                      context: context,
-                      date: selectedDate,
-                      onDateSelected: (DateTime picked) {
-                        setState(() {
-                          selectedDate = picked;
-                        });
-                      },
-                    );
-                    BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
-                        .add(
-                      FetchAllPreviousAppointments(
-                        date: formatDate(),
-                        clinicId: dController.initialIndex!,
-                      ),
-                    );
-                  },
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Select Date",
-                        style: size.width > 450 ? greyTab10B600 : grey13B600,
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          await selectDate(
+                  onTap: () {
+                    Platform.isIOS
+                        ? GeneralServices.instance.selectIosDate(
                             context: context,
                             date: selectedDate,
-                            onDateSelected: (DateTime picked) async {
+                            onDateSelected: (DateTime picked) {
                               setState(() {
                                 selectedDate = picked;
                               });
+                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                      context)
+                                  .add(
+                                FetchAllPreviousAppointments(
+                                  date: formatDate(),
+                                  clinicId: dController.initialIndex!,
+                                ),
+                              );
+                            },
+                          )
+                        : selectDate(
+                            context: context,
+                            date: selectedDate,
+                            onDateSelected: (DateTime picked) {
+                              setState(() {
+                                selectedDate = picked;
+                              });
+                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                      context)
+                                  .add(
+                                FetchAllPreviousAppointments(
+                                  date: formatDate(),
+                                  clinicId: dController.initialIndex!,
+                                ),
+                              );
                             },
                           );
-                          // ignore: use_build_context_synchronously
-                          BlocProvider.of<GetAllPreviousAppointmentsBloc>(
-                                  context)
-                              .add(
-                            FetchAllPreviousAppointments(
-                              date: formatDate(),
-                              clinicId: dController.initialIndex!,
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Select Date",
+                            style:
+                                size.width > 450 ? greyTab10B600 : grey13B600,
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              await selectDate(
+                                context: context,
+                                date: selectedDate,
+                                onDateSelected: (DateTime picked) async {
+                                  setState(() {
+                                    selectedDate = picked;
+                                  });
+                                },
+                              );
+                              // ignore: use_build_context_synchronously
+                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                      context)
+                                  .add(
+                                FetchAllPreviousAppointments(
+                                  date: formatDate(),
+                                  clinicId: dController.initialIndex!,
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              IconlyLight.calendar,
+                              color: kMainColor,
+                              size: size.width > 450 ? 12.sp : 20.sp,
                             ),
-                          );
-                        },
-                        icon: Icon(
-                          IconlyLight.calendar,
-                          color: kMainColor,
-                          size: size.width > 450 ? 12.sp : 20.sp,
-                        ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        DateFormat('dd-MM-yyy').format(selectedDate),
+                        style:
+                            size.width > 450 ? blackTabMainText : blackMainText,
                       ),
                     ],
                   ),
-                ),
-                Text(
-                  '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
-                  style: size.width > 450 ? blackTabMainText : blackMainText,
                 ),
                 const VerticalSpacingWidget(height: 10),
                 BlocBuilder<GetAllPreviousAppointmentsBloc,

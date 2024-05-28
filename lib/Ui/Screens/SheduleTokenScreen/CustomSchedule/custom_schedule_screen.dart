@@ -234,22 +234,33 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    GeneralServices.instance.selectDate(
-                                      context: context,
-                                      date: lateDate,
-                                      onDateSelected: (DateTime picked) {
-                                        setState(() {
-                                          lateDate = picked;
-                                        });
-                                      },
-                                    );
-                                  },
-                                  child: Row(
+                            InkWell(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? GeneralServices.instance.selectIosDate(
+                                        context: context,
+                                        date: lateDate,
+                                        onDateSelected:
+                                            (DateTime picked) async {
+                                          setState(() {
+                                            lateDate = picked;
+                                          });
+                                        },
+                                      )
+                                    : GeneralServices.instance.selectDate(
+                                        context: context,
+                                        date: lateDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            lateDate = picked;
+                                          });
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
                                         "Select Date",
@@ -293,14 +304,14 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       )
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  DateFormat('dd-MM-yyy').format(lateDate),
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                ),
-                              ],
+                                  Text(
+                                    DateFormat('dd-MM-yyy').format(lateDate),
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                  ),
+                                ],
+                              ),
                             ),
                             Container(
                               height: 40.h,
@@ -516,22 +527,33 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    GeneralServices.instance.selectDate(
-                                      context: context,
-                                      date: earlyDate,
-                                      onDateSelected: (DateTime picked) {
-                                        setState(() {
-                                          earlyDate = picked;
-                                        });
-                                      },
-                                    );
-                                  },
-                                  child: Row(
+                            InkWell(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? GeneralServices.instance.selectIosDate(
+                                        context: context,
+                                        date: earlyDate,
+                                        onDateSelected:
+                                            (DateTime picked) async {
+                                          setState(() {
+                                            earlyDate = picked;
+                                          });
+                                        },
+                                      )
+                                    : GeneralServices.instance.selectDate(
+                                        context: context,
+                                        date: earlyDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            earlyDate = picked;
+                                          });
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
                                         "Select Date",
@@ -575,14 +597,14 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       )
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  DateFormat('dd-MM-yyy').format(earlyDate),
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                ),
-                              ],
+                                  Text(
+                                    DateFormat('dd-MM-yyy').format(earlyDate),
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                  ),
+                                ],
+                              ),
                             ),
                             Container(
                               height: 40.h,
@@ -858,23 +880,35 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    GeneralServices.instance.selectDate(
-                                      context: context,
-                                      date: startBreakDate,
-                                      onDateSelected: (DateTime picked) {
-                                        setState(() {
-                                          startBreakDate = picked;
-                                          endBreakDate = picked;
-                                        });
-                                      },
-                                    );
-                                  },
-                                  child: Row(
+                            GestureDetector(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? GeneralServices.instance.selectIosDate(
+                                        context: context,
+                                        date: startBreakDate,
+                                        onDateSelected:
+                                            (DateTime picked) async {
+                                          setState(() {
+                                            startBreakDate = picked;
+                                            endBreakDate = picked;
+                                          });
+                                        },
+                                      )
+                                    : GeneralServices.instance.selectDate(
+                                        context: context,
+                                        date: startBreakDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            startBreakDate = picked;
+                                            endBreakDate = picked;
+                                          });
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
@@ -921,44 +955,43 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                  DateFormat('dd-MM-yyy')
-                                      .format(startBreakDate),
-                                ),
-                              ],
+                                  Text(
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                    DateFormat('dd-MM-yyy')
+                                        .format(startBreakDate),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Platform.isIOS
-                                        ? GeneralServices.instance
-                                            .selectIosDate(
-                                            context: context,
-                                            date: endBreakDate,
-                                            onDateSelected:
-                                                (DateTime picked) async {
-                                              setState(() {
-                                                endBreakDate = picked;
-                                              });
-                                            },
-                                          )
-                                        : GeneralServices.instance.selectDate(
-                                            context: context,
-                                            date: endBreakDate,
-                                            onDateSelected: (DateTime picked) {
-                                              setState(() {
-                                                endBreakDate = picked;
-                                              });
-                                            },
-                                          );
-                                  },
-                                  child: Row(
+                            GestureDetector(
+                              onTap: () {
+                                Platform.isIOS
+                                    ? GeneralServices.instance.selectIosDate(
+                                        context: context,
+                                        date: endBreakDate,
+                                        onDateSelected:
+                                            (DateTime picked) async {
+                                          setState(() {
+                                            endBreakDate = picked;
+                                          });
+                                        },
+                                      )
+                                    : GeneralServices.instance.selectDate(
+                                        context: context,
+                                        date: endBreakDate,
+                                        onDateSelected: (DateTime picked) {
+                                          setState(() {
+                                            endBreakDate = picked;
+                                          });
+                                        },
+                                      );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
@@ -1003,14 +1036,15 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                       ),
                                     ],
                                   ),
-                                ),
-                                Text(
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                  DateFormat('dd-MM-yyy').format(endBreakDate),
-                                ),
-                              ],
+                                  Text(
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                    DateFormat('dd-MM-yyy')
+                                        .format(endBreakDate),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
