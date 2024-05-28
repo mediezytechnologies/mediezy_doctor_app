@@ -20,3 +20,21 @@ final class UpdateFavouriteMedicineError extends UpdateFavouriteMedicineState {
 
   UpdateFavouriteMedicineError({required this.errorMessage});
 }
+
+//! delete recently search
+
+final class DeleteRecentlySearchInitial extends UpdateFavouriteMedicineState {}
+
+final class DeleteRecentlySearchLoading extends UpdateFavouriteMedicineState {}
+
+final class DeleteRecentlySearchLoaded extends UpdateFavouriteMedicineState {
+  final String successMessage;
+
+  DeleteRecentlySearchLoaded({required this.successMessage});
+}
+
+final class DeleteRecentlySearchError extends UpdateFavouriteMedicineState {
+  final String errorMessage;
+
+  DeleteRecentlySearchError({required this.errorMessage});
+}

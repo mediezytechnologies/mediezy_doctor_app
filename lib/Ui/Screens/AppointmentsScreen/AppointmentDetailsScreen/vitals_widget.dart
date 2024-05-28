@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,13 +16,11 @@ class VitalsWidget extends StatefulWidget {
     required this.tokenId,
     this.vitals,
     this.bookingData,
-    // required this.appointmentDetailsPageModel
   });
 
   final String tokenId;
   final Vitals? vitals;
   final List<BookingData>? bookingData;
-  // final AppointmentDemoModel appointmentDetailsPageModel;
 
   @override
   State<VitalsWidget> createState() => _VitalsWidgetState();
@@ -53,23 +52,26 @@ class _VitalsWidgetState extends State<VitalsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: () {
-            setState(() {
-              showSecondContainer = !showSecondContainer; // Toggle visibility
-            });
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Add Vitals',
-                style: size.width > 450 ? blackTabMainText : blackMainText,
-              ),
-              Icon(Icons.arrow_drop_down_circle,
-                  size: size.width > 450 ? 12.sp : 18.sp)
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Add Vitals',
+              style: size.width > 450 ? blackTabMainText : blackMainText,
+            ),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    showSecondContainer =
+                        !showSecondContainer; // Toggle visibility
+                  });
+                },
+                icon: Icon(
+                    showSecondContainer
+                        ? CupertinoIcons.arrowtriangle_up_circle_fill
+                        : CupertinoIcons.arrowtriangle_down_circle_fill,
+                    size: size.width > 450 ? 12.sp : 18.sp))
+          ],
         ),
         const VerticalSpacingWidget(height: 5),
         Visibility(
@@ -180,7 +182,6 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                   const VerticalSpacingWidget(height: 5),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
                         width: 90.w,

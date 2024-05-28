@@ -323,6 +323,26 @@ class GetAppointmentApi {
     return GetAllMedicinesModel.fromJson(json.decode(response.body));
   }
 
+//! delete recently search
+
+  Future<String> deleteRecentlySearch({
+    required String medicineId,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+
+    String basePath = "doctor/deleteMedicineHistory";
+    final body = {
+      "doctor_id": doctorId,
+      "medicine_id": medicineId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
+    print(body);
+    return response.body;
+  }
+
   //! update favourite medicine
 
   Future<String> updateFavouriteMedicine({

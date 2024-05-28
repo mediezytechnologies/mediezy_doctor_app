@@ -16,7 +16,6 @@ class BookAppointmentApi {
     required String whenitcomes,
     required String whenitstart,
     required String tokenTime,
-    // required String endTokenTime,
     required String tokenNumber,
     required String gender,
     required String age,

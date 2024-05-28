@@ -30,5 +30,24 @@ class UpdateFavouriteMedicineBloc
         emit(UpdateFavouriteMedicineError(errorMessage: errorWithTimestamp));
       }
     });
+
+    //! delete recently search
+
+    on<DeleteRecentlySearch>((event, emit) async {
+      emit(DeleteRecentlySearchLoading());
+      try {
+        updatedSuccessfully = await getAppointmentApi.deleteRecentlySearch(
+            medicineId: event.medicineId);
+
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        emit(DeleteRecentlySearchLoaded(
+            successMessage: data['message'].toString()));
+        GeneralServices.instance.showToastMessage(data['message']);
+      } catch (e) {
+        final errorWithTimestamp = "$e";
+        log("Error: $errorWithTimestamp");
+        emit(DeleteRecentlySearchError(errorMessage: errorWithTimestamp));
+      }
+    });
   }
 }

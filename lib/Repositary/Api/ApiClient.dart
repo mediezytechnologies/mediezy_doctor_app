@@ -6,10 +6,10 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
-// const String basePathUrl = "https://mediezy.com/api/";
 const String basePathUrl = "https://test.mediezy.com/api/";
 
 class ApiClient {
+  // static const String basePath = "https://mediezy.com/api/";
   static const String basePath = basePathUrl;
 
   String orignalToken = '';
@@ -28,7 +28,7 @@ class ApiClient {
     print(token);
     Map<String, String> headerParams = {};
     if (method == 'POST' || method == 'GET' || method == 'PATCH') {
-      print("Methode POST OR GET");
+      // print("Methode POST OR GET");
       headerParams = {
         "authorization": "Bearer $token",
         'Accept': 'application/json',
@@ -123,6 +123,3 @@ class ApiClient {
     }
   }
 }
-
-// config.dart
-

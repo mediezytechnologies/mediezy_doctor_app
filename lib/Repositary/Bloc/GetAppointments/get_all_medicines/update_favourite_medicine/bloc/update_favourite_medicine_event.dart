@@ -8,3 +8,11 @@ class UpdateFavouriteMedicine extends UpdateFavouriteMedicineEvent {
 
   UpdateFavouriteMedicine({required this.medicineId});
 }
+
+//! delete recently search
+
+class DeleteRecentlySearch extends UpdateFavouriteMedicineEvent {
+  final String medicineId;
+
+  DeleteRecentlySearch({required this.medicineId});
+}

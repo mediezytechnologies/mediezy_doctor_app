@@ -10,7 +10,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import '../../../../Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 
 class AppoimentDropdown extends StatelessWidget {
   const AppoimentDropdown({super.key});
@@ -54,7 +53,6 @@ class AppoimentDropdown extends StatelessWidget {
               "Select Schedule",
               style: size.width > 450 ? greyTab10B600 : grey13B600,
             ),
-            //dropdown==============//
             const VerticalSpacingWidget(height: 3),
             Obx(
               () {
@@ -87,7 +85,6 @@ class AppoimentDropdown extends StatelessWidget {
                 );
               },
             ),
-
             const VerticalSpacingWidget(height: 2),
           ],
         ),

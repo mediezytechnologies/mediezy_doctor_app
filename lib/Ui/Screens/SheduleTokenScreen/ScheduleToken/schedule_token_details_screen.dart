@@ -105,8 +105,6 @@ class _ScheduleTokenDetailsScreenState
 
   String? selectedDateString;
 
-  // late String selectedDateString;
-
   final items = {
     'Schedule 1': 1,
     'Schedule 2': 2,
@@ -114,11 +112,6 @@ class _ScheduleTokenDetailsScreenState
   };
 
   late ClinicGetModel clinicGetModel;
-
-  // late ValueNotifier<String> dropValueClinicNotifier;
-  // String clinicId = "";
-  // late String selectedClinicId;
-  // List<HospitalDetails> clinicValues = [];
 
   final HospitalController dController = Get.put(HospitalController());
 
@@ -139,13 +132,11 @@ class _ScheduleTokenDetailsScreenState
       // ignore: avoid_function_literals_in_foreach_calls
       _days1.forEach((day) {
         if (day != 'Sunday') {
-          checkboxData[day] =
-              true; // Set Monday to Saturday as initially selected
+          checkboxData[day] = true;
         }
       });
     });
 
-    // Fetch checkbox data from the database
     fetchCheckboxData().then((data) {
       setState(() {
         checkboxData.addAll(data);
@@ -201,650 +192,654 @@ class _ScheduleTokenDetailsScreenState
           beginOffset: const Offset(0, 0.3),
           endOffset: const Offset(0, 0),
           slideCurve: Curves.linearToEaseOut,
-          child: BlocListener<GenerateTokenFinalBloc, GenerateTokenFinalState>(
-            listener: (context, state) {
-              if (state is GenerateTokenFinalLoaded) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      content: Column(
-                        mainAxisSize:
-                            MainAxisSize.min, // Avoid potential overflow
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //! first section (Daily shedule)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: kCardColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Lottie.asset("assets/animations/confirm booking.json",
-                              height: 120.h),
-                          const SizedBox(height: 10.0),
-                          Text(
-                            state.successMessage,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15.sp),
-                          ),
-                          const SizedBox(height: 5.0),
-                          const Text(
-                            'Note: Check the booking section to understand how this shows to patients',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-                // GeneralServices.instance
-                //     .showSuccessMessage(context, state.successMessage);
-                // Future.delayed(const Duration(seconds: 3), () {
-                //   Navigator.pop(context);
-                // });
-                // FocusScope.of(context).requestFocus(FocusNode());
-                // setState(() {
-                //   generateToken1 = true; // Change the button color to grey
-                // });
-              }
-              if (state is GenerateTokenFinalError) {
-                GeneralServices.instance
-                    .showErrorMessage(context, state.errorMessage);
-                Future.delayed(const Duration(seconds: 3), () {
-                  // Navigator.pop(context);
-                });
-              }
-            },
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //! first section (Daily shedule)
-                    Container(
-                      decoration: BoxDecoration(
-                        color: kCardColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const VerticalSpacingWidget(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Select Clinic",
-                                      style: size.width > 450
-                                          ? greyTab10B600
-                                          : grey13B600,
-                                    ),
-                                    // const VerticalSpacingWidget(height: 5),
-                                    //! select clinic
-                                    GetBuilder<HospitalController>(
-                                        builder: (clx) {
-                                      return CustomDropDown(
-                                        width: 195.w,
-                                        value: dController.initialIndex,
-                                        items: dController.hospitalDetails!
-                                            .map((e) {
-                                          return DropdownMenuItem(
-                                            value: e.clinicId.toString(),
-                                            child: Text(e.clinicName!),
-                                          );
-                                        }).toList(),
-                                        onChanged: (newValue) {
-                                          log(newValue!);
-                                          dController.dropdownValueChanging(
-                                              newValue,
-                                              dController.initialIndex!);
-                                        },
-                                      );
-                                    }),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Select Schedule",
-                                      style: size.width > 450
-                                          ? greyTab10B600
-                                          : grey13B600,
-                                    ),
-                                    Container(
-                                      height: size.height * 0.055,
-                                      width: 145.w,
-                                      decoration: BoxDecoration(
-                                          color: kCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: Border.all(
-                                              color: const Color(0xFF9C9C9C))),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.w),
-                                        child: Center(
-                                          child: DropdownButtonFormField(
-                                            iconEnabledColor: kMainColor,
-                                            decoration:
-                                                const InputDecoration.collapsed(
-                                                    hintText: ''),
-                                            value: dropdownValue,
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : blackMainText,
-                                            icon: const Icon(
-                                                Icons.keyboard_arrow_down),
-                                            items: items.entries.map(
-                                                (MapEntry<String, int> entry) {
-                                              return DropdownMenuItem(
-                                                value: entry.key,
-                                                child: Text(entry.key),
-                                              );
-                                            }).toList(),
-                                            onChanged: (String? newValue) {
-                                              dropdownValue = newValue!;
-                                              selectedValue = items[newValue];
-                                              // print(selectedValue);
-                                            },
-                                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Select Clinic",
+                                    style: size.width > 450
+                                        ? greyTab10B600
+                                        : grey13B600,
+                                  ),
+                                  //! select clinic
+                                  GetBuilder<HospitalController>(
+                                      builder: (clx) {
+                                    return CustomDropDown(
+                                      width: 195.w,
+                                      value: dController.initialIndex,
+                                      items:
+                                          dController.hospitalDetails!.map((e) {
+                                        return DropdownMenuItem(
+                                          value: e.clinicId.toString(),
+                                          child: Text(e.clinicName!),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        log(newValue!);
+                                        dController.dropdownValueChanging(
+                                            newValue,
+                                            dController.initialIndex!);
+                                      },
+                                    );
+                                  }),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Select Schedule",
+                                    style: size.width > 450
+                                        ? greyTab10B600
+                                        : grey13B600,
+                                  ),
+                                  Container(
+                                    height: size.height * 0.055,
+                                    width: 145.w,
+                                    decoration: BoxDecoration(
+                                        color: kCardColor,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            color: const Color(0xFF9C9C9C))),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.w),
+                                      child: Center(
+                                        child: DropdownButtonFormField(
+                                          iconEnabledColor: kMainColor,
+                                          decoration:
+                                              const InputDecoration.collapsed(
+                                                  hintText: ''),
+                                          value: dropdownValue,
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : blackMainText,
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
+                                          items: items.entries.map(
+                                              (MapEntry<String, int> entry) {
+                                            return DropdownMenuItem(
+                                              value: entry.key,
+                                              child: Text(entry.key),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            dropdownValue = newValue!;
+                                            selectedValue = items[newValue];
+                                            // print(selectedValue);
+                                          },
                                         ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TextButtonTheme(
-                                  data: TextButtonThemeData(
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.red,
-                                      textStyle: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
                                       ),
                                     ),
                                   ),
-                                  child:
-                                      Builder(builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Platform.isIOS
-                                            ? GeneralServices.instance
-                                                .selectIosDate(
-                                                context: context,
-                                                date: startSchedule1Date,
-                                                onDateSelected:
-                                                    (DateTime picked) async {
-                                                  setState(() {
-                                                    startSchedule1Date = picked;
-                                                    endScheduleDate = picked
-                                                        .add(const Duration(
-                                                            days: 30));
-                                                  });
-                                                },
-                                              )
-                                            : GeneralServices.instance
-                                                .selectDate(
-                                                context: context,
-                                                date: startSchedule1Date,
-                                                onDateSelected:
-                                                    (DateTime picked) {
-                                                  setState(() {
-                                                    startSchedule1Date = picked;
-                                                    endScheduleDate = picked
-                                                        .add(const Duration(
-                                                            days: 30));
-                                                  });
-                                                },
-                                              );
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Start Date",
-                                                style: size.width > 450
-                                                    ? greyTab10B600
-                                                    : grey13B600,
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date:
-                                                              startSchedule1Date,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              startSchedule1Date =
-                                                                  picked;
-                                                              endScheduleDate =
-                                                                  picked.add(
-                                                                      const Duration(
-                                                                          days:
-                                                                              30));
-                                                            });
-                                                          },
-                                                        )
-                                                      : GeneralServices.instance
-                                                          .selectDate(
-                                                          context: context,
-                                                          date:
-                                                              startSchedule1Date,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) {
-                                                            setState(() {
-                                                              startSchedule1Date =
-                                                                  picked;
-                                                              endScheduleDate =
-                                                                  picked.add(
-                                                                      const Duration(
-                                                                          days:
-                                                                              30));
-                                                            });
-                                                          },
-                                                        );
-                                                },
-                                                icon: Icon(
-                                                  IconlyLight.calendar,
-                                                  color: kMainColor,
-                                                  size: size.width > 450
-                                                      ? 12.sp
-                                                      : 19.sp,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Text(
-                                            DateFormat("dd-MM-yyy")
-                                                .format(startSchedule1Date),
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : black14B600,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ),
-                                TextButtonTheme(
-                                  data: TextButtonThemeData(
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.red,
-                                      textStyle: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                      ),
+                                ],
+                              )
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButtonTheme(
+                                data: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
                                     ),
                                   ),
-                                  child:
-                                      Builder(builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Platform.isIOS
-                                            ? GeneralServices.instance
-                                                .selectIosDate(
-                                                context: context,
-                                                date: endScheduleDate,
-                                                onDateSelected:
-                                                    (DateTime picked) async {
-                                                  setState(() {
-                                                    endScheduleDate = picked;
-                                                  });
-                                                },
-                                              )
-                                            : GeneralServices.instance
-                                                .selectDate(
-                                                context: context,
-                                                date: endScheduleDate,
-                                                onDateSelected:
-                                                    (DateTime picked) {
-                                                  setState(() {
-                                                    endScheduleDate = picked;
-                                                  });
-                                                },
-                                              );
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "End Date",
-                                                style: size.width > 450
-                                                    ? greyTab10B600
-                                                    : grey13B600,
+                                ),
+                                child: Builder(builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Platform.isIOS
+                                          ? GeneralServices.instance
+                                              .selectIosDate(
+                                              context: context,
+                                              date: startSchedule1Date,
+                                              onDateSelected:
+                                                  (DateTime picked) async {
+                                                setState(() {
+                                                  startSchedule1Date = picked;
+                                                  endScheduleDate = picked.add(
+                                                      const Duration(days: 30));
+                                                });
+                                              },
+                                            )
+                                          : GeneralServices.instance.selectDate(
+                                              context: context,
+                                              date: startSchedule1Date,
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  startSchedule1Date = picked;
+                                                  endScheduleDate = picked.add(
+                                                      const Duration(days: 30));
+                                                });
+                                              },
+                                            );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Start Date",
+                                              style: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Platform.isIOS
+                                                    ? GeneralServices.instance
+                                                        .selectIosDate(
+                                                        context: context,
+                                                        date:
+                                                            startSchedule1Date,
+                                                        onDateSelected:
+                                                            (DateTime
+                                                                picked) async {
+                                                          setState(() {
+                                                            startSchedule1Date =
+                                                                picked;
+                                                            endScheduleDate =
+                                                                picked.add(
+                                                                    const Duration(
+                                                                        days:
+                                                                            30));
+                                                          });
+                                                        },
+                                                      )
+                                                    : GeneralServices.instance
+                                                        .selectDate(
+                                                        context: context,
+                                                        date:
+                                                            startSchedule1Date,
+                                                        onDateSelected:
+                                                            (DateTime picked) {
+                                                          setState(() {
+                                                            startSchedule1Date =
+                                                                picked;
+                                                            endScheduleDate =
+                                                                picked.add(
+                                                                    const Duration(
+                                                                        days:
+                                                                            30));
+                                                          });
+                                                        },
+                                                      );
+                                              },
+                                              icon: Icon(
+                                                IconlyLight.calendar,
+                                                color: kMainColor,
+                                                size: size.width > 450
+                                                    ? 12.sp
+                                                    : 19.sp,
                                               ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Platform.isIOS
-                                                      ? GeneralServices.instance
-                                                          .selectIosDate(
-                                                          context: context,
-                                                          date: endScheduleDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) async {
-                                                            setState(() {
-                                                              endScheduleDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        )
-                                                      : GeneralServices.instance
-                                                          .selectDate(
-                                                          context: context,
-                                                          date: endScheduleDate,
-                                                          onDateSelected:
-                                                              (DateTime
-                                                                  picked) {
-                                                            setState(() {
-                                                              endScheduleDate =
-                                                                  picked;
-                                                            });
-                                                          },
-                                                        );
-                                                },
-                                                icon: Icon(
-                                                  IconlyLight.calendar,
-                                                  color: kMainColor,
-                                                  size: size.width > 450
-                                                      ? 12.sp
-                                                      : 19.sp,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Text(
-                                            DateFormat('dd-MM-yyy')
-                                                .format(endScheduleDate),
-                                            // Display the selected and formatted date
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : black14B600,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            //! select starting and ending time
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //! starting time
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Starting Time",
-                                          style: size.width > 450
-                                              ? greyTab10B600
-                                              : grey13B600,
+                                            )
+                                          ],
                                         ),
-                                        const HorizontalSpacingWidget(width: 5),
-                                        Icon(
-                                          IconlyLight.timeCircle,
-                                          color: kMainColor,
-                                          size:
-                                              size.width > 450 ? 12.sp : 18.sp,
+                                        Text(
+                                          DateFormat("dd-MM-yyy")
+                                              .format(startSchedule1Date),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
                                         ),
                                       ],
                                     ),
-                                    const VerticalSpacingWidget(height: 5),
-                                    InkWell(
-                                      onTap: () async {
-                                        selectSchedule1StartingTime(context);
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.only(right: 20.w),
-                                        height: 35.h,
-                                        width: 100.w,
-                                        decoration: BoxDecoration(
-                                            color: kScaffoldColor,
-                                            border:
-                                                Border.all(color: kMainColor),
-                                            borderRadius:
-                                                BorderRadius.circular(7)),
-                                        child: Center(
-                                          child: Text(
-                                            selectedSchedule1StartingTime
-                                                .format(context),
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : black14B600,
-                                          ),
-                                        ),
-                                      ),
+                                  );
+                                }),
+                              ),
+                              TextButtonTheme(
+                                data: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                    textStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.italic,
                                     ),
-                                  ],
+                                  ),
                                 ),
-                                //! ending time
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                                child: Builder(builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Platform.isIOS
+                                          ? GeneralServices.instance
+                                              .selectIosDate(
+                                              context: context,
+                                              date: endScheduleDate,
+                                              onDateSelected:
+                                                  (DateTime picked) async {
+                                                setState(() {
+                                                  endScheduleDate = picked;
+                                                });
+                                              },
+                                            )
+                                          : GeneralServices.instance.selectDate(
+                                              context: context,
+                                              date: endScheduleDate,
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  endScheduleDate = picked;
+                                                });
+                                              },
+                                            );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "Ending Time",
-                                          style: size.width > 450
-                                              ? greyTab10B600
-                                              : grey13B600,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "End Date",
+                                              style: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Platform.isIOS
+                                                    ? GeneralServices.instance
+                                                        .selectIosDate(
+                                                        context: context,
+                                                        date: endScheduleDate,
+                                                        onDateSelected:
+                                                            (DateTime
+                                                                picked) async {
+                                                          setState(() {
+                                                            endScheduleDate =
+                                                                picked;
+                                                          });
+                                                        },
+                                                      )
+                                                    : GeneralServices.instance
+                                                        .selectDate(
+                                                        context: context,
+                                                        date: endScheduleDate,
+                                                        onDateSelected:
+                                                            (DateTime picked) {
+                                                          setState(() {
+                                                            endScheduleDate =
+                                                                picked;
+                                                          });
+                                                        },
+                                                      );
+                                              },
+                                              icon: Icon(
+                                                IconlyLight.calendar,
+                                                color: kMainColor,
+                                                size: size.width > 450
+                                                    ? 12.sp
+                                                    : 19.sp,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        const HorizontalSpacingWidget(width: 5),
-                                        Icon(
-                                          IconlyLight.timeCircle,
-                                          color: kMainColor,
-                                          size:
-                                              size.width > 450 ? 12.sp : 18.sp,
+                                        Text(
+                                          DateFormat('dd-MM-yyy')
+                                              .format(endScheduleDate),
+                                          // Display the selected and formatted date
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
                                         ),
                                       ],
                                     ),
-                                    const VerticalSpacingWidget(height: 5),
-                                    InkWell(
-                                      onTap: () {
-                                        selectSchedule1EndingTime(context);
-                                      },
-                                      child: Container(
-                                        height: 35.h,
-                                        width: 100.w,
-                                        decoration: BoxDecoration(
-                                            color: kScaffoldColor,
-                                            border:
-                                                Border.all(color: kMainColor),
-                                            borderRadius:
-                                                BorderRadius.circular(7)),
-                                        child: Center(
-                                          child: Text(
-                                            selectedSchedule1EndingTime
-                                                .format(context),
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : black14B600,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            Row(
-                              children: [
-                                //! time Duration
-                                Expanded(
-                                  flex: 3,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  );
+                                }),
+                              ),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          //! select starting and ending time
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //! starting time
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
                                       Text(
-                                        "Time Duration",
+                                        "Starting Time",
                                         style: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
                                       ),
-                                      const VerticalSpacingWidget(height: 5),
-                                      SizedBox(
-                                        height: 40.h,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                              fontSize: size.width > 450
-                                                  ? 10.sp
-                                                  : 14.sp),
-                                          // autofocus: true,
-                                          cursorColor: kMainColor,
-                                          controller: timeDuration1Controller,
-                                          keyboardType: TextInputType.number,
-                                          textInputAction: TextInputAction.done,
-                                          focusNode:
-                                              timeDurationFocusController,
-                                          decoration: InputDecoration(
-                                            hintStyle: size.width > 450
-                                                ? greyTab10B600
-                                                : grey13B600,
-                                            hintText: "10 min",
-                                            filled: true,
-                                            fillColor: kCardColor,
-                                            enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: kMainColor)),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                              borderSide:
-                                                  BorderSide(color: kMainColor),
-                                            ),
-                                          ),
-                                        ),
+                                      const HorizontalSpacingWidget(width: 5),
+                                      Icon(
+                                        IconlyLight.timeCircle,
+                                        color: kMainColor,
+                                        size: size.width > 450 ? 12.sp : 18.sp,
                                       ),
                                     ],
                                   ),
-                                ),
-                                const HorizontalSpacingWidget(width: 5),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            //! select days
-                            Text(
-                              "Select Days",
-                              style:
-                                  size.width > 450 ? greyTab10B600 : grey13B600,
-                            ),
-                            const VerticalSpacingWidget(height: 5),
-                            //! sunday monday tuesday
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 4.w),
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * .18,
-                                child: GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10.0,
-                                    crossAxisSpacing: 0.0,
-                                    childAspectRatio: 5,
-                                  ),
-                                  itemCount: _days1.length,
-                                  itemBuilder: (context, index) {
-                                    // log("$_selectedDays1");
-                                    // log("$checkboxData");
-                                    log("$selectedDays");
-                                    final day = _days1[index];
-                                    final isChecked =
-                                        checkboxData[day] ?? false;
-                                    return GestureDetector(
-                                      onTap: () => _handleCheckboxChange(
-                                          day, !isChecked),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 10.w,
-                                            child: Transform.scale(
-                                              scale: size.width > 450
-                                                  ? 1.5
-                                                  : 0.9, // Adjust the scale factor as per your requirement
-                                              child: Checkbox(
-                                                activeColor: kMainColor,
-                                                value: isChecked,
-                                                onChanged: (value) =>
-                                                    _handleCheckboxChange(
-                                                        day, value ?? false),
-                                              ),
-                                            ),
-                                          ),
-                                          const HorizontalSpacingWidget(
-                                              width: 10),
-                                          SizedBox(
-                                            width: 68.w,
-                                            child: Text(
-                                              day,
-                                              style: size.width > 450
-                                                  ? blackTabMainText
-                                                  : black12B500,
-                                            ),
-                                          ),
-                                        ],
+                                  const VerticalSpacingWidget(height: 5),
+                                  InkWell(
+                                    onTap: () async {
+                                      selectSchedule1StartingTime(context);
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(right: 20.w),
+                                      height: 35.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                          color: kScaffoldColor,
+                                          border: Border.all(color: kMainColor),
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      child: Center(
+                                        child: Text(
+                                          selectedSchedule1StartingTime
+                                              .format(context),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
+                                        ),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //! ending time
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Ending Time",
+                                        style: size.width > 450
+                                            ? greyTab10B600
+                                            : grey13B600,
+                                      ),
+                                      const HorizontalSpacingWidget(width: 5),
+                                      Icon(
+                                        IconlyLight.timeCircle,
+                                        color: kMainColor,
+                                        size: size.width > 450 ? 12.sp : 18.sp,
+                                      ),
+                                    ],
+                                  ),
+                                  const VerticalSpacingWidget(height: 5),
+                                  InkWell(
+                                    onTap: () {
+                                      selectSchedule1EndingTime(context);
+                                    },
+                                    child: Container(
+                                      height: 35.h,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                          color: kScaffoldColor,
+                                          border: Border.all(color: kMainColor),
+                                          borderRadius:
+                                              BorderRadius.circular(7)),
+                                      child: Center(
+                                        child: Text(
+                                          selectedSchedule1EndingTime
+                                              .format(context),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          Row(
+                            children: [
+                              //! time Duration
+                              Expanded(
+                                flex: 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Time Duration",
+                                      style: size.width > 450
+                                          ? greyTab10B600
+                                          : grey13B600,
+                                    ),
+                                    const VerticalSpacingWidget(height: 5),
+                                    SizedBox(
+                                      height: 40.h,
+                                      child: TextFormField(
+                                        style: TextStyle(
+                                            fontSize: size.width > 450
+                                                ? 10.sp
+                                                : 14.sp),
+                                        // autofocus: true,
+                                        cursorColor: kMainColor,
+                                        controller: timeDuration1Controller,
+                                        keyboardType: TextInputType.number,
+                                        textInputAction: TextInputAction.done,
+                                        focusNode: timeDurationFocusController,
+                                        decoration: InputDecoration(
+                                          hintStyle: size.width > 450
+                                              ? greyTab10B600
+                                              : grey13B600,
+                                          hintText: "10 min",
+                                          filled: true,
+                                          fillColor: kCardColor,
+                                          enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: kMainColor)),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                            borderSide:
+                                                BorderSide(color: kMainColor),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
+                              const HorizontalSpacingWidget(width: 5),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          //! select days
+                          Text(
+                            "Select Days",
+                            style:
+                                size.width > 450 ? greyTab10B600 : grey13B600,
+                          ),
+                          const VerticalSpacingWidget(height: 5),
+                          //! sunday monday tuesday
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.w),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * .18,
+                              child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 10.0,
+                                  crossAxisSpacing: 0.0,
+                                  childAspectRatio: 5,
+                                ),
+                                itemCount: _days1.length,
+                                itemBuilder: (context, index) {
+                                  log("$selectedDays");
+                                  final day = _days1[index];
+                                  final isChecked = checkboxData[day] ?? false;
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        _handleCheckboxChange(day, !isChecked),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10.w,
+                                          child: Transform.scale(
+                                            scale: size.width > 450 ? 1.5 : 0.9,
+                                            child: Checkbox(
+                                              activeColor: kMainColor,
+                                              value: isChecked,
+                                              onChanged: (value) =>
+                                                  _handleCheckboxChange(
+                                                      day, value ?? false),
+                                            ),
+                                          ),
+                                        ),
+                                        const HorizontalSpacingWidget(
+                                            width: 10),
+                                        SizedBox(
+                                          width: 68.w,
+                                          child: Text(
+                                            day,
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : black12B500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                            // Container(color: kScaffoldColor,height: 2,width: mWidth*.99,),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-        child: CommonButtonWidget(
-            title: "Generate token",
-            onTapFunction: () {
-              BlocProvider.of<GenerateTokenFinalBloc>(context)
-                  .add(FetchGenerateTokenFinal(
-                clinicId: dController.initialIndex!,
-                selecteddays: selectedDays,
-                startDate:
-                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                endDate:
-                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                startTime: formatTimeOfDay(selectedSchedule1StartingTime),
-                endTime: formatTimeOfDay(selectedSchedule1EndingTime),
-                timeDuration: timeDuration1Controller.text,
-                scheduleType: selectedValue.toString(),
-              ));
-            }),
+      bottomNavigationBar:
+          BlocConsumer<GenerateTokenFinalBloc, GenerateTokenFinalState>(
+        listener: (context, state) {
+          // final size = MediaQuery.of(context).size;
+          if (state is GenerateTokenFinalLoaded) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min, // Avoid potential overflow
+                    children: [
+                      Lottie.asset("assets/animations/confirm booking.json",
+                          height: 120.h),
+                      const SizedBox(height: 10.0),
+                      Text(
+                        state.successMessage,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      ),
+                      const SizedBox(height: 5.0),
+                      const Text(
+                        'Note: Check the booking section to understand how this shows to patients',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+          if (state is GenerateTokenFinalError) {
+            GeneralServices.instance
+                .showErrorMessage(context, state.errorMessage);
+            Future.delayed(const Duration(seconds: 3), () {
+              // Navigator.pop(context);
+            });
+          }
+        },
+        builder: (context, state) {
+          bool isLoading = state is GenerateTokenFinalLoading;
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+            child: InkWell(
+              onTap: isLoading
+                  ? null
+                  : () {
+                      BlocProvider.of<GenerateTokenFinalBloc>(context).add(
+                        FetchGenerateTokenFinal(
+                          clinicId: dController.initialIndex!,
+                          selecteddays: selectedDays,
+                          startDate:
+                              '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                          endDate:
+                              '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                          startTime:
+                              formatTimeOfDay(selectedSchedule1StartingTime),
+                          endTime: formatTimeOfDay(selectedSchedule1EndingTime),
+                          timeDuration: timeDuration1Controller.text,
+                          scheduleType: selectedValue.toString(),
+                        ),
+                      );
+                    },
+              child: Container(
+                width: double.infinity,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color: kMainColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: isLoading
+                    ? Center(
+                        child: SizedBox(
+                          width: 24.h,
+                          height: 24.w,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 2.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          "Generate token",
+                          style: TextStyle(
+                              fontSize: size.width > 450 ? 12.sp : 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -896,7 +891,6 @@ class _ScheduleTokenDetailsScreenState
     }
   }
 
-  // Create a database with separate tables for starting and ending times
   Future<void> createDatabase() async {
     // Open database
     // ignore: unused_local_variable

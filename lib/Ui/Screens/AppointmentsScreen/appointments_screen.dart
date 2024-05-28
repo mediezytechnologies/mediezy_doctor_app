@@ -19,7 +19,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_tabbar_demo.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Widgets/appoiment_drawer.dart';
@@ -205,7 +205,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                    const AppoimentTabbarDemo(),
+                    const AppoimentTabbar(),
                   ],
                 ),
               );
