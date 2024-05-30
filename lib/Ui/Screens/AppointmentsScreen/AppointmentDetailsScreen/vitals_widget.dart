@@ -105,6 +105,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           SizedBox(
                             width: 90.w,
                             child: TextFormField(
+                              maxLength: 3,
                               style: TextStyle(
                                   fontSize: size.width > 450 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
@@ -149,6 +150,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           SizedBox(
                             width: 90.w,
                             child: TextFormField(
+                              maxLength: 3,
                               style: TextStyle(
                                   fontSize: size.width > 450 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
@@ -191,6 +193,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 90.w,
                         child: TextFormField(
+                          maxLength: 4,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -258,6 +261,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           SizedBox(
                             width: 135.w,
                             child: TextFormField(
+                              maxLength: 3,
                               style: TextStyle(
                                   fontSize: size.width > 450 ? 9.sp : 14.sp),
                               cursorColor: kMainColor,
@@ -301,6 +305,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 70.w,
                         child: TextFormField(
+                          maxLength: 3,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -334,6 +339,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 70.w,
                         child: TextFormField(
+                          maxLength: 3,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -360,6 +366,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       SizedBox(
                         width: 110.w,
                         child: TextFormField(
+                          maxLength: 3,
                           style: TextStyle(
                               fontSize: size.width > 450 ? 9.sp : 14.sp),
                           cursorColor: kMainColor,
@@ -385,105 +392,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                     ],
                   ),
                   const VerticalSpacingWidget(height: 15),
-                  // InkWell(
-                  //   onTap: () {
-                  //     double heightValue = 0.0;
-                  //     double wightValue = 0.0;
-                  //     double tempValue = 0.0;
-                  //     double spValue = 0.0;
-                  //     double sysValue = 0.0;
-                  //     double diatValue = 0.0;
-                  //     double heartValue = 0.0;
-                  //     heightValue = double.parse(heightController.text);
-                  //     wightValue = double.parse(weightController.text);
-                  //     tempValue = double.parse(temperatureController.text);
-                  //     spValue = double.parse(spo2Controller.text);
-                  //     sysValue = double.parse(sysController.text);
-                  //     diatValue = double.parse(diaController.text);
-                  //     heartValue = double.parse(heartRateController.text);
-
-                  //     log("heightValue $heightValue");
-                  //     if (heightValue >= 190) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (wightValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (tempValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (spValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (sysValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (diatValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     } else if (heartValue >= 300) {
-                  //       GeneralServices.instance
-                  //           .showErrorMessage(context, "are you sure");
-                  //     }
-
-                  //     showSecondContainer = false;
-
-                  //     isEdit
-                  //         ? BlocProvider.of<AddVitalsBloc>(context).add(
-                  //             EditVitals(
-                  //                 height: heightController.text,
-                  //                 weight: weightController.text,
-                  //                 temperature: temperatureController.text,
-                  //                 spo2: spo2Controller.text,
-                  //                 sys: sysController.text,
-                  //                 dia: diaController.text,
-                  //                 heartRate: heartRateController.text,
-                  //                 tokenId: widget.tokenId,
-                  //                 temperatureType: dropdownVitalsValue))
-                  //         : BlocProvider.of<AddVitalsBloc>(context).add(
-                  //             AddVitals(
-                  //                 height: heightController.text,
-                  //                 weight: weightController.text,
-                  //                 temperature: temperatureController.text,
-                  //                 spo2: spo2Controller.text,
-                  //                 sys: sysController.text,
-                  //                 dia: diaController.text,
-                  //                 heartRate: heartRateController.text,
-                  //                 tokenId: widget.tokenId,
-                  //                 temperatureType: dropdownVitalsValue));
-                  //     heightController.clear();
-                  //     weightController.clear();
-                  //     temperatureController.clear();
-                  //     spo2Controller.clear();
-                  //     sysController.clear();
-                  //     diaController.clear();
-                  //     heartRateController.clear();
-                  //     sysController.clear();
-                  //   },
-                  //   child: Container(
-                  //     height: 45.h,
-                  //     width: 200.w,
-                  //     decoration: BoxDecoration(
-                  //       color: kMainColor,
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //     child: Center(
-                  //         child: Text(
-                  //       isEdit ? "Update" : "Save",
-                  //       style: size.width > 450
-                  //           ? TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 12.sp,
-                  //               fontWeight: FontWeight.bold)
-                  //           : TextStyle(
-                  //               color: Colors.white,
-                  //               fontSize: 16.sp,
-                  //               fontWeight: FontWeight.bold),
-                  //     )),
-                  //   ),
-                  // )
-                  //
-
+         
                   InkWell(
                     onTap: () {
                       double heightValue,
@@ -495,106 +404,120 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           heartValue;
 
                       bool isValid = true;
+                      List<String> errorMessages = [];
 
-                      // Parse the fields and handle empty inputs
+                      //height
                       try {
                         heightValue = double.parse(heightController.text);
-                        if (heightValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Height is greater than 200')),
-                          );
+                        if (heightValue > 250) {
+                          errorMessages.add(
+                              "Height is greater than 250cm please re-check");
+
                           isValid = false;
                         }
                       } catch (e) {
                         heightValue = 0;
                       }
 
-                      try {
-                        diatValue = double.parse(diaController.text);
-                        if (diatValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Height is greater than 200')),
-                          );
-                          isValid = false;
-                        }
-                      } catch (e) {
-                        diatValue = 0;
-                      }
+                      //weight
                       try {
                         weightValue = double.parse(weightController.text);
-                        if (weightValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Weight is greater than 200')),
-                          );
+                        if (weightValue > 250) {
+                          errorMessages.add(
+                              "Weight is greater than 250kg please re-check");
+
                           isValid = false;
                         }
                       } catch (e) {
                         weightValue = 0;
                       }
+                      //temp
 
                       try {
                         tempValue = double.parse(temperatureController.text);
-                        if (tempValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('Temperature is greater than 200')),
-                          );
-                          isValid = false;
+                        if (dropdownVitalsValue == "F") {
+                          if (tempValue > 120) {
+                            errorMessages.add(
+                                "Temperature is greater than 120°F please re-check");
+                            isValid = false;
+                          } else if (tempValue < 90) {
+                            errorMessages.add(
+                                "Temperature is less than 90°F please re-check");
+                            isValid = false;
+                          }
+                        } else if (dropdownVitalsValue == "C") {
+                          if (tempValue > 48) {
+                            errorMessages.add(
+                                "Temperature is greater than 48°C please re-check");
+                            isValid = false;
+                          } else if (tempValue < 32) {
+                            errorMessages.add(
+                                "Temperature is less than 32°C please re-check");
+                            isValid = false;
+                          }
                         }
                       } catch (e) {
                         tempValue = 0;
                       }
+                      //sp02
 
-                      try {
+                       try {
                         spValue = double.parse(spo2Controller.text);
-                        if (spValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('SPO2 is greater than 200')),
-                          );
+                        if (spValue > 100) {
+                          errorMessages
+                              .add("SPO2 is greater than 100% please re-check");
+                          isValid = false;
+                        } else if (spValue < 80) {
+                          errorMessages
+                              .add("SPO2 is less than 80% please re-check");
                           isValid = false;
                         }
                       } catch (e) {
                         spValue = 0;
                       }
 
+                      //bp sys
                       try {
                         sysValue = double.parse(sysController.text);
-                        if (sysValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text(
-                                    'Diastolic value is greater than 200')),
-                          );
+                        if (sysValue > 250) {
+                          errorMessages
+                              .add("Sys is greater than 250 please re-check");
+                          isValid = false;
+                        } else if (sysValue < 80) {
+                          errorMessages
+                              .add("Sys is less than 80 please re-check");
                           isValid = false;
                         }
                       } catch (e) {
                         sysValue = 0;
                       }
+
+                      //bp dia
                       try {
-                        heightValue = double.parse(heightController.text);
-                        if (heightValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content: Text('Height is greater than 200')),
-                          );
+                        diatValue = double.parse(diaController.text);
+                        if (diatValue > 250) {
+                          errorMessages
+                              .add("Dia is greater than 250 please re-check");
+                          isValid = false;
+                        } else if (diatValue < 80) {
+                          errorMessages
+                              .add("Dia is less than 80 please re-check");
                           isValid = false;
                         }
                       } catch (e) {
-                        heightValue = 0;
+                        diatValue = 0;
                       }
 
+                      //heart rate
                       try {
                         heartValue = double.parse(heartRateController.text);
-                        if (heartValue > 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('Heart rate is greater than 200')),
-                          );
+                        if (heartValue > 250) {
+                          errorMessages.add(
+                              "Heart rate is greater than 250 please re-check");
+                          isValid = false;
+                        } else if (heartValue < 30) {
+                          errorMessages.add(
+                              "Heart rate is less than 30 please re-check");
                           isValid = false;
                         }
                       } catch (e) {
@@ -627,7 +550,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                             isEdit = false;
                           });
                         } else {
-                            log('editValue  $isEdit');
+                          log('editValue  $isEdit');
                           BlocProvider.of<AddVitalsBloc>(context).add(AddVitals(
                               height: heightController.text,
                               weight: weightController.text,
@@ -649,6 +572,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                             isEdit = false;
                           });
                         }
+                      }else{
+                         GeneralServices.instance.showErrorMessage(
+                                context, errorMessages[0]);
                       }
                     },
                     child: Container(
@@ -660,7 +586,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       ),
                       child: Center(
                         child: Text(
-                          isEdit==true ? "Update" : "Save",
+                          isEdit == true ? "Update" : "Save",
                           style: size.width > 450
                               ? TextStyle(
                                   color: Colors.white,
@@ -767,19 +693,17 @@ class _VitalsWidgetState extends State<VitalsWidget> {
 
                                 if (widget.bookingData != null) {
                                   heightController.text =
-                                      widget.vitals!.height.toString();
+                                      widget.vitals!.height ?? "";
                                   weightController.text =
-                                      widget.vitals!.weight.toString();
+                                      widget.vitals!.weight ?? "";
                                   temperatureController.text =
-                                      widget.vitals!.temperature.toString();
+                                      widget.vitals!.temperature ?? "";
                                   spo2Controller.text =
-                                      widget.vitals!.spo2.toString();
-                                  sysController.text =
-                                      widget.vitals!.sys.toString();
-                                  diaController.text =
-                                      widget.vitals!.dia.toString();
+                                      widget.vitals!.spo2 ?? "";
+                                  sysController.text = widget.vitals!.sys ?? "";
+                                  diaController.text = widget.vitals!.dia ?? "";
                                   heartRateController.text =
-                                      widget.vitals!.heartRate.toString();
+                                      widget.vitals!.heartRate ?? "";
                                 }
                               },
                               child: Text(
