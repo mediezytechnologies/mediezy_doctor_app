@@ -434,9 +434,11 @@ class _VitalsWidgetState extends State<VitalsWidget> {
 
                       try {
                         tempValue = double.parse(temperatureController.text);
-                        if (temperatureController.text.isEmpty) {
-                          errorMessages.add("pleas enter Temperature");
-                        } else if (dropdownVitalsValue == "F") {
+                        // if (tempValue==0) {
+                        //   errorMessages.add("pleas enter Temperature");
+                        // } else 
+                        
+                        if (dropdownVitalsValue == "F") {
                           if (tempValue > 120) {
                             errorMessages.add(
                                 "Temperature is greater than 120°F please re-check");
