@@ -51,7 +51,8 @@ class GetMedicinesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ShortNamesWidget(
+                    ShortNamesWidget(
+                          typeId: 1,
                     firstText: "Medicine : ",
                     secondText: medicineName,
                   ),
@@ -67,12 +68,14 @@ class GetMedicinesWidget extends StatelessWidget {
                           firstText: "Interval : ",
                           secondText: "$interval $timeSection",
                         ),
-                  ShortNamesWidget(
+                    ShortNamesWidget(
+                          typeId: 1,
                     firstText: "Days : ",
                     secondText: noOfDays,
                   ),
                   const VerticalSpacingWidget(height: 5),
-                  ShortNamesWidget(
+                    ShortNamesWidget(
+                          typeId: 1,
                     firstText: "",
                     secondText: type == 1
                         ? "After food"

@@ -457,6 +457,7 @@ class CompletedAppointmentDetailsScreenState
                                   null
                               ? Container()
                               : ShortNamesWidget(
+                                
                                   firstText: "Scan test name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel

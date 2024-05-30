@@ -39,17 +39,20 @@ class GetVitalsWidget extends StatelessWidget {
             children: [
               height == null
                   ? Container()
-                  : ShortNamesWidget(
+                  :      ShortNamesWidget(
+                          typeId: 1,
                       firstText: "Height : ",
                       secondText: height == null ? "N/A" : "$height cm",
                     ),
-              ShortNamesWidget(
+                ShortNamesWidget(
+                          typeId: 1,
                 firstText: "Temperature : ",
                 secondText: temperature == null
                     ? "N/A"
                     : "$temperature °$temperatureType",
               ),
-              ShortNamesWidget(
+                ShortNamesWidget(
+                          typeId: 1,
                 firstText: "BP : ",
                 secondText: "${sys ?? "N/A"} / ${dia ?? "N/A"}",
               ),
@@ -59,14 +62,17 @@ class GetVitalsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ShortNamesWidget(
+                ShortNamesWidget(
+                          typeId: 1,
                 firstText: "Weight : ",
                 secondText: weight == null ? "N/A" : "$weight Kg",
               ),
-              ShortNamesWidget(
+                ShortNamesWidget(
+                          typeId: 1,
                   firstText: "SpO2 : ",
                   secondText: spo2 == null ? "N/A" : "$spo2 %"),
-              ShortNamesWidget(
+                ShortNamesWidget(
+                          typeId: 1,
                   firstText: "Heart Rate : ",
                   secondText: heartRate == null ? "N/A" : "$heartRate BPM"),
             ],

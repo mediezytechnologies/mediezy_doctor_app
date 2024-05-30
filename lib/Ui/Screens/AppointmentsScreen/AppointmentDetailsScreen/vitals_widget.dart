@@ -392,7 +392,6 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                     ],
                   ),
                   const VerticalSpacingWidget(height: 15),
-         
                   InkWell(
                     onTap: () {
                       double heightValue,
@@ -435,7 +434,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
 
                       try {
                         tempValue = double.parse(temperatureController.text);
-                        if (dropdownVitalsValue == "F") {
+                        if (temperatureController.text.isEmpty) {
+                          errorMessages.add("pleas enter Temperature");
+                        } else if (dropdownVitalsValue == "F") {
                           if (tempValue > 120) {
                             errorMessages.add(
                                 "Temperature is greater than 120°F please re-check");
@@ -461,7 +462,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       }
                       //sp02
 
-                       try {
+                      try {
                         spValue = double.parse(spo2Controller.text);
                         if (spValue > 100) {
                           errorMessages
@@ -572,9 +573,9 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                             isEdit = false;
                           });
                         }
-                      }else{
-                         GeneralServices.instance.showErrorMessage(
-                                context, errorMessages[0]);
+                      } else {
+                        GeneralServices.instance
+                            .showErrorMessage(context, errorMessages[0]);
                       }
                     },
                     child: Container(
