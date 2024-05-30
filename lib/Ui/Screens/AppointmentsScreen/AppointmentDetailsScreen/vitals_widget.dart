@@ -603,41 +603,52 @@ class _VitalsWidgetState extends State<VitalsWidget> {
 
                       if (isValid) {
                         showSecondContainer = false;
-
-
-
-                        
-                        isEdit
-                            ? BlocProvider.of<AddVitalsBloc>(context).add(
-                                EditVitals(
-                                    height: heightController.text,
-                                    weight: weightController.text,
-                                    temperature: temperatureController.text,
-                                    spo2: spo2Controller.text,
-                                    sys: sysController.text,
-                                    dia: diaController.text,
-                                    heartRate: heartRateController.text,
-                                    tokenId: widget.tokenId,
-                                    temperatureType: dropdownVitalsValue))
-                            : BlocProvider.of<AddVitalsBloc>(context).add(
-                                AddVitals(
-                                    height: heightController.text,
-                                    weight: weightController.text,
-                                    temperature: temperatureController.text,
-                                    spo2: spo2Controller.text,
-                                    sys: sysController.text,
-                                    dia: diaController.text,
-                                    heartRate: heartRateController.text,
-                                    tokenId: widget.tokenId,
-                                    temperatureType: dropdownVitalsValue));
-
-                        heightController.clear();
-                        weightController.clear();
-                        temperatureController.clear();
-                        spo2Controller.clear();
-                        sysController.clear();
-                        diaController.clear();
-                        heartRateController.clear();
+                        if (isEdit) {
+                          log('editValue  $isEdit');
+                          BlocProvider.of<AddVitalsBloc>(context).add(
+                              EditVitals(
+                                  height: heightController.text,
+                                  weight: weightController.text,
+                                  temperature: temperatureController.text,
+                                  spo2: spo2Controller.text,
+                                  sys: sysController.text,
+                                  dia: diaController.text,
+                                  heartRate: heartRateController.text,
+                                  tokenId: widget.tokenId,
+                                  temperatureType: dropdownVitalsValue));
+                          heightController.clear();
+                          weightController.clear();
+                          temperatureController.clear();
+                          spo2Controller.clear();
+                          sysController.clear();
+                          diaController.clear();
+                          heartRateController.clear();
+                          setState(() {
+                            isEdit = false;
+                          });
+                        } else {
+                            log('editValue  $isEdit');
+                          BlocProvider.of<AddVitalsBloc>(context).add(AddVitals(
+                              height: heightController.text,
+                              weight: weightController.text,
+                              temperature: temperatureController.text,
+                              spo2: spo2Controller.text,
+                              sys: sysController.text,
+                              dia: diaController.text,
+                              heartRate: heartRateController.text,
+                              tokenId: widget.tokenId,
+                              temperatureType: dropdownVitalsValue));
+                          heightController.clear();
+                          weightController.clear();
+                          temperatureController.clear();
+                          spo2Controller.clear();
+                          sysController.clear();
+                          diaController.clear();
+                          heartRateController.clear();
+                          setState(() {
+                            isEdit = false;
+                          });
+                        }
                       }
                     },
                     child: Container(
@@ -649,7 +660,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       ),
                       child: Center(
                         child: Text(
-                          isEdit ? "Update" : "Save",
+                          isEdit==true ? "Update" : "Save",
                           style: size.width > 450
                               ? TextStyle(
                                   color: Colors.white,
