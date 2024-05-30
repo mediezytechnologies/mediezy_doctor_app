@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -29,8 +29,8 @@ class AppoimentDropdown extends StatelessWidget {
                 log(newValue!);
                 controller.dropdownValueChanging(
                     newValue, controller.initialIndex!);
-                BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-                  FetchAllAppointmentsDemo(
+                BlocProvider.of<GetAppointmentsBloc>(context).add(
+                  FetchAllAppointments(
                       date: controller.formatDate(),
                       clinicId: controller.initialIndex!,
                       scheduleType: controller.scheduleIndex.value),
@@ -68,8 +68,8 @@ class AppoimentDropdown extends StatelessWidget {
                   onChanged: (newValue) {
                     log(newValue!);
                     controller.dropdownValueChanging(newValue, '0');
-                    BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-                      FetchAllAppointmentsDemo(
+                    BlocProvider.of<GetAppointmentsBloc>(context).add(
+                      FetchAllAppointments(
                           date: controller.formatDate(),
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value),

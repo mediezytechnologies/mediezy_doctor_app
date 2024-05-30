@@ -272,7 +272,7 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                                           ? Icons.favorite
                                           : Icons.favorite_border_outlined,
                                       color: medicineData.favStatus == 1
-                                          ? Colors.red
+                                          ? kMainColor
                                           : null,
                                     ),
                                   ),

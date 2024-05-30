@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -60,15 +60,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   void startPolling() {
     initialTimer = Timer(const Duration(seconds: 1), () {
-      BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-        FetchAllAppointmentsDemo(
+      BlocProvider.of<GetAppointmentsBloc>(context).add(
+        FetchAllAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,
             scheduleType: controller.scheduleIndex.value),
       );
       pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-        BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-          FetchAllAppointmentsDemo(
+        BlocProvider.of<GetAppointmentsBloc>(context).add(
+          FetchAllAppointments(
               date: controller.formatDate(),
               clinicId: controller.initialIndex!,
               scheduleType: controller.scheduleIndex.value),
@@ -89,8 +89,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   }
 
   Future<void> getUserName() async {
-    BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-      FetchAllAppointmentsDemo(
+    BlocProvider.of<GetAppointmentsBloc>(context).add(
+      FetchAllAppointments(
           date: controller.formatDate(),
           clinicId: controller.initialIndex!,
           scheduleType: controller.scheduleIndex.value),
@@ -178,9 +178,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(date);
                           controller.selectedDate = date;
-                          BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                              .add(
-                            FetchAllAppointmentsDemo(
+                          BlocProvider.of<GetAppointmentsBloc>(context).add(
+                            FetchAllAppointments(
                                 date: formattedDate,
                                 clinicId: controller.initialIndex!,
                                 scheduleType: controller.scheduleIndex.value),

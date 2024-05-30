@@ -4,6 +4,23 @@ part of 'add_checkin_or_checkout_bloc.dart';
 abstract class AddCheckinOrCheckoutState {}
 
 class AddCheckinOrCheckoutInitial extends AddCheckinOrCheckoutState {}
+
 class AddCheckinOrCheckoutLoading extends AddCheckinOrCheckoutState {}
+
 class AddCheckinOrCheckoutLoaded extends AddCheckinOrCheckoutState {}
-class AddCheckinOrCheckoutError extends AddCheckinOrCheckoutState {}
+
+class AddCheckinOrCheckoutError extends AddCheckinOrCheckoutState {
+  final String errorMessage;
+
+  AddCheckinOrCheckoutError({required this.errorMessage});
+}
+
+//! estimate time update checkin
+
+class EstimateUpdateCheckinInitial extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckinLoading extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckinLoaded extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckinError extends AddCheckinOrCheckoutState {}

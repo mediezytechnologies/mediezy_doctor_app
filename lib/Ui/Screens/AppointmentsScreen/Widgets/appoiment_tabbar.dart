@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
@@ -26,7 +26,7 @@ class AppoimentTabbar extends StatefulWidget {
 class _AppoimentTabbarState extends State<AppoimentTabbar>
     with TickerProviderStateMixin {
   // late GetAllAppointmentsModel getAllAppointmentsModel;
-  late AppointmentDemoModel appointmentDemoModel;
+  late GetAppointmentsModel getAppointmentsModel;
   late GetAllCompletedAppointmentsModel getAllCompletedAppointmentsModel;
   final HospitalController controller = Get.put(HospitalController());
   late TabController tabController;
@@ -41,21 +41,20 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return BlocBuilder<AppointmentsDemoBlocBloc, AppointmentsDemoBlocState>(
+    return BlocBuilder<GetAppointmentsBloc, GetAppointmentsState>(
         builder: (context, state) {
-      if (state is AppointmentsDemoBlocLoading) {
+      if (state is GetAppointmentsLoading) {
         // return _shimmerLoading();
       }
-      if (state is AppointmentsDemoBlocError) {
+      if (state is GetAppointmentsError) {
         return const Center(
           child: Text("Something Went Wrong"),
         );
       }
-      if (state is AppointmentsDemoBlocLoaded) {
+      if (state is GetAppointmentsLoaded) {
         if (state.isLoaded) {
-          appointmentDemoModel =
-              BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                  .appointmentDemoModel;
+          getAppointmentsModel = BlocProvider.of<GetAppointmentsBloc>(context)
+              .getAppointmentsModel;
           return Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,17 +78,9 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                       dividerColor: kCardColor,
                       unselectedLabelColor: kTextColor,
                       onTap: (d) {
-                        // log("${tabController.index}");
                         if (tabController.index == 0) {
-                          // BlocProvider.of<GetAllAppointmentsBloc>(context).add(
-                          //   FetchAllAppointments(
-                          //       date: controller.formatDate(),
-                          //       clinicId: controller.initialIndex!,
-                          //       scheduleType: controller.scheduleIndex.value),
-                          // );
-                          BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                              .add(
-                            FetchAllAppointmentsDemo(
+                          BlocProvider.of<GetAppointmentsBloc>(context).add(
+                            FetchAllAppointments(
                                 date: controller.formatDate(),
                                 clinicId: controller.initialIndex!,
                                 scheduleType: controller.scheduleIndex.value),
@@ -154,7 +145,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                     physics: const NeverScrollableScrollPhysics(),
                     controller: tabController,
                     children: [
-                      appointmentDemoModel.bookingData!.isEmpty
+                      getAppointmentsModel.bookingData!.isEmpty
                           ? const Center(
                               child: Image(
                                   image: AssetImage(
@@ -168,7 +159,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10.w),
                                     child: Text(
-                                      "Patient Count (${appointmentDemoModel.bookingData!.length.toString()})",
+                                      "Patient Count (${getAppointmentsModel.bookingData!.length.toString()})",
                                       style: size.width > 450
                                           ? blackTab9B600
                                           : black11Bbold,
@@ -180,7 +171,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     padding: EdgeInsets.zero,
-                                    itemCount: appointmentDemoModel
+                                    itemCount: getAppointmentsModel
                                         .bookingData!.length,
                                     separatorBuilder: (BuildContext context,
                                             int index) =>
@@ -198,17 +189,17 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                       // AppointmentDemo()
                                                       AppointmentDetailsScreen(
                                                         firstIndex:
-                                                            appointmentDemoModel
+                                                            getAppointmentsModel
                                                                 .bookingData![
                                                                     index]
                                                                 .firstIndexStatus!,
                                                         length:
-                                                            appointmentDemoModel
+                                                            getAppointmentsModel
                                                                 .bookingData!
                                                                 .length,
                                                         position: index,
                                                         tokenId:
-                                                            appointmentDemoModel
+                                                            getAppointmentsModel
                                                                 .bookingData![
                                                                     index]
                                                                 .tokenId
@@ -216,7 +207,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                                         date: controller
                                                             .formatDate(),
                                                         patientName:
-                                                            appointmentDemoModel
+                                                            getAppointmentsModel
                                                                 .bookingData![
                                                                     index]
                                                                 .patientName
@@ -250,50 +241,50 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                             );
                                           },
                                           child: AppointmentCardWidget(
-                                            tokenNumber: appointmentDemoModel
+                                            tokenNumber: getAppointmentsModel
                                                 .bookingData![index].tokenNumber
                                                 .toString(),
-                                            patientImage: appointmentDemoModel
+                                            patientImage: getAppointmentsModel
                                                         .bookingData![index]
                                                         .userImage ==
                                                     null
                                                 ? ""
-                                                : appointmentDemoModel
+                                                : getAppointmentsModel
                                                     .bookingData![index]
                                                     .userImage
                                                     .toString(),
-                                            patientName: appointmentDemoModel
+                                            patientName: getAppointmentsModel
                                                 .bookingData![index].patientName
                                                 .toString(),
-                                            time: appointmentDemoModel
+                                            time: getAppointmentsModel
                                                 .bookingData![index].tokenTime
                                                 .toString(),
-                                            mediezyId: appointmentDemoModel
+                                            mediezyId: getAppointmentsModel
                                                         .bookingData![index]
                                                         .mediezyPatientId ==
                                                     null
                                                 ? ""
-                                                : appointmentDemoModel
+                                                : getAppointmentsModel
                                                     .bookingData![index]
                                                     .mediezyPatientId
                                                     .toString(),
-                                            mainSymptoms: appointmentDemoModel
+                                            mainSymptoms: getAppointmentsModel
                                                     .bookingData![index]
                                                     .mainSymptoms!
                                                     .isEmpty
-                                                ? appointmentDemoModel
+                                                ? getAppointmentsModel
                                                     .bookingData![index]
                                                     .otherSymptoms!
                                                     .first
                                                     .name
                                                     .toString()
-                                                : appointmentDemoModel
+                                                : getAppointmentsModel
                                                     .bookingData![index]
                                                     .mainSymptoms!
                                                     .first
                                                     .name
                                                     .toString(),
-                                            onlineStatus: appointmentDemoModel
+                                            onlineStatus: getAppointmentsModel
                                                 .bookingData![index]
                                                 .onlineStatus
                                                 .toString(),

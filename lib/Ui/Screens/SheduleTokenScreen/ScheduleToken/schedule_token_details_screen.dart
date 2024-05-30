@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
@@ -10,13 +9,14 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GenerateTokenFinal/generate_token_final_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -767,21 +767,30 @@ class _ScheduleTokenDetailsScreenState
                             fontWeight: FontWeight.bold, fontSize: 15.sp),
                       ),
                       const SizedBox(height: 5.0),
-                      const Text(
+                      Text(
                         'Note: Check the booking section to understand how this shows to patients',
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 13.sp),
                       ),
                     ],
                   ),
                 );
               },
             );
+            // Future.delayed(const Duration(seconds: 3), () {
+            //   Navigator.pushAndRemoveUntil(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) =>
+            //             BottomNavigationControlWidget(selectedIndex: 2)),
+            //     (route) => false,
+            //   );
+            // });
           }
           if (state is GenerateTokenFinalError) {
             GeneralServices.instance
                 .showErrorMessage(context, state.errorMessage);
             Future.delayed(const Duration(seconds: 3), () {
-              // Navigator.pop(context);
+              Navigator.pop(context);
             });
           }
         },
@@ -818,15 +827,8 @@ class _ScheduleTokenDetailsScreenState
                 ),
                 child: isLoading
                     ? Center(
-                        child: SizedBox(
-                          width: 24.h,
-                          height: 24.w,
-                          child: const CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
+                        child: LoadingAnimationWidget.staggeredDotsWave(
+                            color: Colors.white, size: 30))
                     : Center(
                         child: Text(
                           "Generate token",

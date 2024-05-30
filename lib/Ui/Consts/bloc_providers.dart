@@ -13,14 +13,12 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/a
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/DeleteMedicine/delete_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/EditMedicine/edit_medicine_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/get_all_previous_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/previous_details/previous_details_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAppointmentDetailsPage/get_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/update_favourite_medicine/bloc/update_favourite_medicine_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetSymptoms/get_symptoms_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/AllHealthRecords/all_health_records_bloc.dart';
@@ -72,9 +70,7 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => GetTokenBloc()),
         BlocProvider(create: (context) => BookAppointmentBloc()),
         BlocProvider(create: (context) => GetSymptomsBloc()),
-        BlocProvider(create: (context) => GetAppointmentsBloc()),
         BlocProvider(create: (context) => AddPrescriptionBloc()),
-        BlocProvider(create: (context) => GetAllAppointmentsBloc()),
         BlocProvider(create: (context) => GetAllCompletedAppointmentsBloc()),
         BlocProvider(create: (context) => LateScheduleBloc()),
         BlocProvider(create: (context) => BetweenScheduleBloc()),
@@ -126,6 +122,6 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => SearchPatientsBloc()),
         BlocProvider(create: (context) => GetAllMedicinesBloc()),
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
-        BlocProvider(create: (context) => AppointmentsDemoBlocBloc()),
+        BlocProvider(create: (context) => GetAppointmentsBloc()),
       ];
 }

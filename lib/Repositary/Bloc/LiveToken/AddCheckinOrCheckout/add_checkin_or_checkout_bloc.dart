@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/LiveToken/live_token_api.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
-part 'add_checkin_or_checkout_event.dart';
 
+part 'add_checkin_or_checkout_event.dart';
 part 'add_checkin_or_checkout_state.dart';
 
 class AddCheckinOrCheckoutBloc
@@ -27,9 +26,27 @@ class AddCheckinOrCheckoutBloc
         emit(AddCheckinOrCheckoutLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data['message']);
+        log("checkin first call :${data['message']}");
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
-        emit(AddCheckinOrCheckoutError());
+        emit(AddCheckinOrCheckoutError(errorMessage: '$e'));
+      }
+    });
+
+//! estimate time update checkin
+
+    on<EstimateUpdateCheckin>((event, emit) async {
+      emit(EstimateUpdateCheckinLoading());
+      try {
+        updatedSuccessfully = await getCurrentTokenApi.estimateUpdateCheckin(
+          tokenId: event.tokenId,
+        );
+        emit(EstimateUpdateCheckinLoaded());
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        log("checkin second call :${data['message']}");
+      } catch (e) {
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
+        emit(EstimateUpdateCheckinError());
       }
     });
   }

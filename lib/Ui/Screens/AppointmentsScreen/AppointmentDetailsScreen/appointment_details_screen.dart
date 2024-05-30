@@ -18,14 +18,13 @@ import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
-import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAppointmentDetailsPage/get_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllFavouriteLab/get_all_favourite_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/AddCheckinOrCheckout/add_checkin_or_checkout_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllFavouriteMedicalStore/get_all_favourite_medical_store_bloc.dart';
@@ -106,7 +105,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   ];
 
   // late AppointmentDetailsPageModel appointmentDetailsPageModel;
-  late AppointmentDemoModel appointmentDemoModel;
+  late GetAppointmentsModel getAppointmentsModel;
   late GetAllFavouriteLabModel getAllFavouriteLabModel;
   late GetAllFavouriteMedicalStoresModel getAllFavouriteMedicalStoresModel;
   late ClinicGetModel clinicGetModel;
@@ -165,14 +164,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     });
     setState(() {
       currentPosition = widget.position;
-      // balanceAppoiment = widget.length! - 1 - currentPosition;
-      // log("balance card : $balanceAppoiment");
     });
 
     pageController = PageController(initialPage: currentPosition);
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
-    BlocProvider.of<GetAppointmentsBloc>(context)
-        .add(FetchAppointmentDetailsPage(tokenId: widget.tokenId));
     BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
         .add(FetchAllFavouriteMedicalStore());
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
@@ -182,14 +177,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         ValueNotifier(medicalStoreValues.first.laboratory!);
     dropValueLabNotifier = ValueNotifier(labValues.first.laboratory!);
     dropValueScanningNotifier = ValueNotifier(scanningValues.first.laboratory!);
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _scrollController.animateTo(
-    //     _scrollController.position.maxScrollExtent,
-    //     duration: const Duration(seconds: 1),
-    //     curve: Curves.easeInOut,
-    //   );
-    // });
     super.initState();
   }
 
@@ -208,8 +195,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context);
-        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-            .add(FetchAllAppointmentsDemo(
+        BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
           date: widget.date,
           clinicId: controller.initialIndex!,
           scheduleType: controller.scheduleIndex.value,
@@ -221,8 +207,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
-                BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                    .add(FetchAllAppointmentsDemo(
+                BlocProvider.of<GetAppointmentsBloc>(context)
+                    .add(FetchAllAppointments(
                   date: widget.date,
                   clinicId: controller.initialIndex!,
                   scheduleType: controller.scheduleIndex.value,
@@ -270,8 +256,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   BlocListener<AddPrescriptionBloc, AddPrescriptionState>(
                     listener: (context, state) {
                       if (state is AddPrescriptionLoaded) {
-                        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                            .add(FetchAllAppointmentsDemo(
+                        BlocProvider.of<GetAppointmentsBloc>(context)
+                            .add(FetchAllAppointments(
                           date: controller.formatDate(),
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value,
@@ -282,24 +268,24 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   BlocListener<AddVitalsBloc, AddVitalsState>(
                     listener: (context, state) {
                       if (state is AddVitalsLoaded) {
-                        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                            .add(FetchAllAppointmentsDemo(
+                        BlocProvider.of<GetAppointmentsBloc>(context)
+                            .add(FetchAllAppointments(
                           date: widget.date,
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
                       if (state is EditVitalsLoaded) {
-                        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                            .add(FetchAllAppointmentsDemo(
+                        BlocProvider.of<GetAppointmentsBloc>(context)
+                            .add(FetchAllAppointments(
                           date: widget.date,
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
                       if (state is DeleteVitalsLoaded) {
-                        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                            .add(FetchAllAppointmentsDemo(
+                        BlocProvider.of<GetAppointmentsBloc>(context)
+                            .add(FetchAllAppointments(
                           date: widget.date,
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value,
@@ -310,9 +296,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   BlocListener<AddCheckinOrCheckoutBloc,
                       AddCheckinOrCheckoutState>(
                     listener: (context, state) {
+                      if (state is AddCheckinOrCheckoutError) {
+                        GeneralServices.instance
+                            .showToastMessage(state.errorMessage);
+                      }
                       if (state is AddCheckinOrCheckoutLoaded) {
-                        BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                            .add(FetchAllAppointmentsDemo(
+                        BlocProvider.of<GetAppointmentsBloc>(context)
+                            .add(FetchAllAppointments(
                           date: widget.date,
                           clinicId: controller.initialIndex!,
                           scheduleType: controller.scheduleIndex.value,
@@ -325,17 +315,17 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                   beginOffset: const Offset(0, 0.3),
                   endOffset: const Offset(0, 0),
                   slideCurve: Curves.linearToEaseOut,
-                  child: BlocBuilder<AppointmentsDemoBlocBloc,
-                      AppointmentsDemoBlocState>(builder: (context, state) {
-                    if (state is AppointmentsDemoBlocError) {
+                  child: BlocBuilder<GetAppointmentsBloc, GetAppointmentsState>(
+                      builder: (context, state) {
+                    if (state is GetAppointmentsError) {
                       return const Center(
                         child: Text("Something Went Wrong"),
                       );
                     }
-                    if (state is AppointmentsDemoBlocLoaded) {
-                      appointmentDemoModel =
-                          BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                              .appointmentDemoModel;
+                    if (state is GetAppointmentsLoaded) {
+                      getAppointmentsModel =
+                          BlocProvider.of<GetAppointmentsBloc>(context)
+                              .getAppointmentsModel;
                       return PageView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: listLength,
@@ -350,7 +340,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         itemBuilder: (context, index) {
                           log("current pos : $currentPosition");
                           currentPosition = index;
-                          listLength = appointmentDemoModel.bookingData!.length;
+                          listLength = getAppointmentsModel.bookingData!.length;
 
                           int bookingPending = listLength - 1 - currentPosition;
 
@@ -379,15 +369,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               BlocProvider.of<
                                                           GetAppointmentsBloc>(
                                                       context)
-                                                  .add(
-                                                FetchAppointmentDetailsPage(
-                                                  tokenId: widget.tokenId,
-                                                ),
-                                              );
-                                              BlocProvider.of<
-                                                          AppointmentsDemoBlocBloc>(
-                                                      context)
-                                                  .add(FetchAllAppointmentsDemo(
+                                                  .add(FetchAllAppointments(
                                                 date: widget.date,
                                                 clinicId:
                                                     controller.initialIndex!,
@@ -396,7 +378,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               ));
                                               setState(() {
                                                 listLength =
-                                                    appointmentDemoModel
+                                                    getAppointmentsModel
                                                         .bookingData!.length;
                                                 bookingPending = listLength -
                                                     1 -
@@ -417,13 +399,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         fadeDuration:
                                             const Duration(milliseconds: 400),
                                         child: PatientImageWidget(
-                                            patientImage: appointmentDemoModel
+                                            patientImage: getAppointmentsModel
                                                         .bookingData![
                                                             currentPosition]
                                                         .userImage ==
                                                     null
                                                 ? ""
-                                                : appointmentDemoModel
+                                                : getAppointmentsModel
                                                     .bookingData![
                                                         currentPosition]
                                                     .userImage
@@ -441,7 +423,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              appointmentDemoModel
+                                              getAppointmentsModel
                                                   .bookingData![currentPosition]
                                                   .patientName
                                                   .toString(),
@@ -463,7 +445,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       TextOverflow.ellipsis,
                                                 ),
                                                 Text(
-                                                  appointmentDemoModel
+                                                  getAppointmentsModel
                                                       .bookingData![
                                                           currentPosition]
                                                       .tokenNumber
@@ -477,7 +459,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 ),
                                               ],
                                             ),
-                                            appointmentDemoModel
+                                            getAppointmentsModel
                                                         .bookingData![
                                                             currentPosition]
                                                         .mediezyPatientId ==
@@ -492,7 +474,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                             : grey10B400,
                                                       ),
                                                       Text(
-                                                        appointmentDemoModel
+                                                        getAppointmentsModel
                                                             .bookingData![
                                                                 currentPosition]
                                                             .mediezyPatientId
@@ -506,7 +488,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       ),
                                                     ],
                                                   ),
-                                            appointmentDemoModel
+                                            getAppointmentsModel
                                                         .bookingData![
                                                             currentPosition]
                                                         .age ==
@@ -521,7 +503,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                             : grey10B400,
                                                       ),
                                                       Text(
-                                                        appointmentDemoModel
+                                                        getAppointmentsModel
                                                             .bookingData![
                                                                 currentPosition]
                                                             .patient!
@@ -551,9 +533,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 curve: Curves.easeInOut,
                                               );
                                               BlocProvider.of<
-                                                          AppointmentsDemoBlocBloc>(
+                                                          GetAppointmentsBloc>(
                                                       context)
-                                                  .add(FetchAllAppointmentsDemo(
+                                                  .add(FetchAllAppointments(
                                                 date: widget.date,
                                                 clinicId:
                                                     controller.initialIndex!,
@@ -635,47 +617,47 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   PatientDetailsWidget(
-                                    allergiesDetails: appointmentDemoModel
+                                    allergiesDetails: getAppointmentsModel
                                         .bookingData![index].allergiesDetails,
-                                    mainSymptoms: appointmentDemoModel
+                                    mainSymptoms: getAppointmentsModel
                                         .bookingData![index].mainSymptoms,
-                                    medicineDetails: appointmentDemoModel
+                                    medicineDetails: getAppointmentsModel
                                         .bookingData![index].medicineDetails,
-                                    otherSymptoms: appointmentDemoModel
+                                    otherSymptoms: getAppointmentsModel
                                         .bookingData![index].otherSymptoms,
-                                    surgeryName: appointmentDemoModel
+                                    surgeryName: getAppointmentsModel
                                         .bookingData![index].surgeryName,
-                                    treatmentTaken: appointmentDemoModel
+                                    treatmentTaken: getAppointmentsModel
                                         .bookingData![index].treatmentTaken,
-                                    whenitcomes: appointmentDemoModel
+                                    whenitcomes: getAppointmentsModel
                                         .bookingData![index].whenitcomes
                                         .toString(),
-                                    whenitstart: appointmentDemoModel
+                                    whenitstart: getAppointmentsModel
                                         .bookingData![index].whenitstart
                                         .toString(),
-                                    patientId: appointmentDemoModel
+                                    patientId: getAppointmentsModel
                                         .bookingData![index].patientId!,
-                                    treatmentTakenDetails: appointmentDemoModel
+                                    treatmentTakenDetails: getAppointmentsModel
                                         .bookingData![index]
                                         .treatmentTakenDetails
                                         .toString(),
-                                    surgeryDetails: appointmentDemoModel
+                                    surgeryDetails: getAppointmentsModel
                                         .bookingData![index].surgeryDetails
                                         .toString(),
-                                    bookedPersonId: appointmentDemoModel
+                                    bookedPersonId: getAppointmentsModel
                                         .bookingData![index].bookedPersonId
                                         .toString(),
                                   ),
-                                  appointmentDemoModel
+                                  getAppointmentsModel
                                               .bookingData![index].date ==
                                           formatDate()
                                       ? InkWell(
-                                          onTap: () {
-                                            if (appointmentDemoModel
+                                          onTap: () async {
+                                            if (getAppointmentsModel
                                                     .bookingData![index]
                                                     .isCheckedin !=
                                                 1) {
-                                              if (appointmentDemoModel
+                                              if (getAppointmentsModel
                                                       .bookingData![
                                                           currentPosition]
                                                       .firstIndexStatus ==
@@ -686,7 +668,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         () {
                                                   Navigator.of(context).pop();
                                                   setState(() {
-                                                    appointmentDemoModel
+                                                    getAppointmentsModel
                                                         .bookingData![index]
                                                         .isCheckedin = 1;
                                                   });
@@ -696,7 +678,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       .add(
                                                     AddCheckinOrCheckout(
                                                       clinicId:
-                                                          appointmentDemoModel
+                                                          getAppointmentsModel
                                                               .bookingData![
                                                                   index]
                                                               .clinicId
@@ -704,7 +686,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       isCompleted: 0,
                                                       isCheckin: 1,
                                                       tokenNumber:
-                                                          appointmentDemoModel
+                                                          getAppointmentsModel
                                                               .bookingData![
                                                                   index]
                                                               .tokenNumber
@@ -712,43 +694,79 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       isReached: '',
                                                     ),
                                                   );
-                                                  isFirstCheckIn =
-                                                      false; // Update is
+                                                  Future.delayed(
+                                                      const Duration(
+                                                          seconds: 2), () {
+                                                    BlocProvider.of<
+                                                                AddCheckinOrCheckoutBloc>(
+                                                            context)
+                                                        .add(
+                                                      EstimateUpdateCheckin(
+                                                        tokenId:
+                                                            getAppointmentsModel
+                                                                .bookingData![
+                                                                    index]
+                                                                .tokenId
+                                                                .toString(),
+                                                      ),
+                                                    );
+                                                  });
+                                                  // isFirstCheckIn =
+                                                  //     false; // Update is
                                                 });
                                               } else {
                                                 // clickedIndex = index;
                                                 setState(() {
-                                                  appointmentDemoModel
+                                                  getAppointmentsModel
                                                       .bookingData![index]
                                                       .isCheckedin = 1;
                                                 });
+                                                //first calling bloc
+
                                                 BlocProvider.of<
                                                             AddCheckinOrCheckoutBloc>(
                                                         context)
                                                     .add(
                                                   AddCheckinOrCheckout(
                                                     clinicId:
-                                                        appointmentDemoModel
+                                                        getAppointmentsModel
                                                             .bookingData![index]
                                                             .clinicId
                                                             .toString(),
                                                     isCompleted: 0,
                                                     isCheckin: 1,
                                                     tokenNumber:
-                                                        appointmentDemoModel
+                                                        getAppointmentsModel
                                                             .bookingData![index]
                                                             .tokenNumber
                                                             .toString(),
                                                     isReached: '',
                                                   ),
                                                 );
+                                                Future.delayed(
+                                                    const Duration(seconds: 2),
+                                                    () {
+                                                  BlocProvider.of<
+                                                              AddCheckinOrCheckoutBloc>(
+                                                          context)
+                                                      .add(
+                                                    EstimateUpdateCheckin(
+                                                      tokenId:
+                                                          getAppointmentsModel
+                                                              .bookingData![
+                                                                  index]
+                                                              .tokenId
+                                                              .toString(),
+                                                    ),
+                                                  );
+                                                });
                                               }
                                             }
                                           },
                                           child: Container(
                                             height: 50.h,
                                             decoration: BoxDecoration(
-                                              color: appointmentDemoModel
+                                              color: getAppointmentsModel
                                                           .bookingData![index]
                                                           .isCheckedin ==
                                                       1
@@ -764,7 +782,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 Image(
                                                   image: const AssetImage(
                                                       "assets/icons/check_in.png"),
-                                                  color: appointmentDemoModel
+                                                  color: getAppointmentsModel
                                                               .bookingData![
                                                                   index]
                                                               .isCheckedin ==
@@ -779,7 +797,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                           fontSize: 12.sp,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          color: appointmentDemoModel
+                                                          color: getAppointmentsModel
                                                                       .bookingData![
                                                                           index]
                                                                       .isCheckedin ==
@@ -791,7 +809,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                           fontSize: 16.sp,
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          color: appointmentDemoModel
+                                                          color: getAppointmentsModel
                                                                       .bookingData![
                                                                           index]
                                                                       .isCheckedin ==
@@ -807,27 +825,27 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       : Container(),
                                   const VerticalSpacingWidget(height: 10),
                                   VitalsWidget(
-                                    tokenId: appointmentDemoModel
+                                    tokenId: getAppointmentsModel
                                         .bookingData![index].tokenId
                                         .toString(),
-                                    vitals: appointmentDemoModel
+                                    vitals: getAppointmentsModel
                                         .bookingData![index].vitals,
                                     bookingData:
-                                        appointmentDemoModel.bookingData!,
+                                        getAppointmentsModel.bookingData!,
                                   ),
                                   // }, child: Text("data")),
                                   MedicineWidget(
-                                    tokenId: appointmentDemoModel
+                                    tokenId: getAppointmentsModel
                                         .bookingData![index].tokenId
                                         .toString(),
-                                    medicine: appointmentDemoModel
+                                    medicine: getAppointmentsModel
                                         .bookingData![index].medicine,
                                     medicalStoreId: dropValueMedicalStore,
-                                    bookedPersonId: appointmentDemoModel
+                                    bookedPersonId: getAppointmentsModel
                                         .bookingData![index].bookedPersonId
                                         .toString(),
                                     bookingData:
-                                        appointmentDemoModel.bookingData,
+                                        getAppointmentsModel.bookingData,
                                   ),
                                   //! upload attachments
                                   Card(
@@ -1332,7 +1350,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   const VerticalSpacingWidget(height: 10),
-                                  appointmentDemoModel
+                                  getAppointmentsModel
                                               .bookingData![index].date ==
                                           formatDate()
                                       ? InkWell(
@@ -1343,7 +1361,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     context)
                                                 .add(
                                               AddAllAppointmentDetails(
-                                                tokenId: appointmentDemoModel
+                                                tokenId: getAppointmentsModel
                                                     .bookingData![index].tokenId
                                                     .toString(),
                                                 labId: dropValueLab,
@@ -1363,7 +1381,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             await Future.delayed(
                                                     const Duration(seconds: 2))
                                                 .then((value) {
-                                              if (appointmentDemoModel
+                                              if (getAppointmentsModel
                                                       .bookingData![index]
                                                       .isCheckedout !=
                                                   1) {
@@ -1419,7 +1437,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             height: 50.h,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
-                                              color: appointmentDemoModel
+                                              color: getAppointmentsModel
                                                           .bookingData![index]
                                                           .isCheckedout ==
                                                       1
@@ -1435,7 +1453,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 Image(
                                                   image: const AssetImage(
                                                       "assets/icons/check_out.png"),
-                                                  color: appointmentDemoModel
+                                                  color: getAppointmentsModel
                                                               .bookingData![
                                                                   index]
                                                               .isCheckedout ==
@@ -1450,7 +1468,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         ? 12.sp
                                                         : 16.sp,
                                                     fontWeight: FontWeight.w600,
-                                                    color: appointmentDemoModel
+                                                    color: getAppointmentsModel
                                                                 .bookingData![
                                                                     index]
                                                                 .isCheckedout ==
@@ -1486,16 +1504,16 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   void handleCheckout(BuildContext context, int index) {
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
-        clinicId: appointmentDemoModel.bookingData![index].clinicId.toString(),
+        clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
         isCompleted: 1,
         isCheckin: 0,
         tokenNumber:
-            appointmentDemoModel.bookingData![index].tokenNumber.toString(),
+            getAppointmentsModel.bookingData![index].tokenNumber.toString(),
         isReached: '',
       ),
     );
 
-    appointmentDemoModel.bookingData![index].isCheckedout = 1;
+    getAppointmentsModel.bookingData![index].isCheckedout = 1;
     scanTestController.clear();
     afterDaysController.clear();
     noteController.clear();
@@ -1508,20 +1526,70 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-          builder: (context) => const BottomNavigationControlWidget()),
+          builder: (context) => BottomNavigationControlWidget(
+                selectedIndex: 0,
+              )),
       (route) => false,
     );
   }
 
   void refreshData(BuildContext context) {
-    BlocProvider.of<AppointmentsDemoBlocBloc>(context).add(
-      FetchAllAppointmentsDemo(
+    BlocProvider.of<GetAppointmentsBloc>(context).add(
+      FetchAllAppointments(
         date: widget.date,
         clinicId: controller.initialIndex!,
         scheduleType: controller.scheduleIndex.value,
       ),
     );
   }
+
+  // Future<void> _showConsultationDialog(BuildContext context, int index) async {
+  //   await GeneralServices.instance.appCloseDialogue(
+  //     context,
+  //     "Are you sure you want to start the consultation",
+  //     () {
+  //       Navigator.of(context).pop();
+  //       _updateCheckInStatus(context, index);
+  //     },
+  //   );
+  // }
+
+  // Future<void> _checkInWithoutDialog(BuildContext context, int index) async {
+  //   _updateCheckInStatus(context, index);
+  //   await _performDelayedEstimateUpdate(context, index);
+  // }
+
+  // void _updateCheckInStatus(BuildContext context, int index) {
+  //   setState(() {
+  //     getAppointmentsModel.bookingData![index].isCheckedin = 1;
+  //   });
+
+  //   BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+  //     AddCheckinOrCheckout(
+  //       clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
+  //       isCompleted: 0,
+  //       isCheckin: 1,
+  //       tokenNumber:
+  //           getAppointmentsModel.bookingData![index].tokenNumber.toString(),
+  //       isReached: '',
+  //     ),
+  //   );
+  // }
+
+  // Future<void> _performDelayedEstimateUpdate(
+  //     BuildContext context, int index) async {
+  //   try {
+  //     await Future.delayed(const Duration(seconds: 2));
+  //     log("Future.delayed completed for tokenId: ${getAppointmentsModel.bookingData![index].tokenId}");
+  //     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+  //       EstimateUpdateCheckin(
+  //         tokenId: getAppointmentsModel.bookingData![index].tokenId.toString(),
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     log("Error in _performDelayedEstimateUpdate: $e");
+  //   }
+  // }
 
   Future<File> compressImage(String imagePath) async {
     // Get the original image file

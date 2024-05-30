@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +26,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/TokenScreen/Widgets/token_show_card_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/demo.dart/dropdown/dropdown_bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -59,13 +56,13 @@ class _TokenScreenState extends State<TokenScreen> {
 
   String dropdownValue = 'All';
 
-  late int? selectedValue;
-  var items = {
-    'All': 0,
-    'Schedule 1': 1,
-    'Schedule 2': 2,
-    'Schedule 3': 3,
-  };
+  // late int? selectedValue;
+  // var items = {
+  //   'All': 0,
+  //   'Schedule 1': 1,
+  //   'Schedule 2': 2,
+  //   'Schedule 3': 3,
+  // };
 
   void handleConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -82,13 +79,23 @@ class _TokenScreenState extends State<TokenScreen> {
         .listen((ConnectivityResult result) {
       handleConnectivityChange(result);
     });
-    selectedValue = items['All'];
+    // selectedValue = items['All'];
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetCurrentTokenBloc>(context).add(FetchGetCurrentToken(
       clinicId: dController.initialIndex!,
-      scheduleType: selectedValue.toString(),
+      scheduleType: dController.scheduleIndex.value,
     ));
     super.initState();
+  }
+
+  AddCheckinOrCheckoutBloc? _addCheckinOrCheckoutBloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Obtain the bloc reference
+    _addCheckinOrCheckoutBloc =
+        BlocProvider.of<AddCheckinOrCheckoutBloc>(context);
   }
 
   int clickedIndex = 0;
@@ -101,27 +108,26 @@ class _TokenScreenState extends State<TokenScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // int? selectedValue = items['Schedule 1'];
-    //int bookingLength = length! - currentTokenLength!;
 
     return RefreshIndicator(
       onRefresh: () async {
-        // Add your refresh logic here, such as fetching new data
-        // For example, you can add:
         BlocProvider.of<GetCurrentTokenBloc>(context).add(
           FetchGetCurrentToken(
             clinicId: dController.initialIndex!,
-            scheduleType: selectedValue.toString(),
+            scheduleType: dController.scheduleIndex.value,
           ),
         );
       },
       child: BlocListener<AddCheckinOrCheckoutBloc, AddCheckinOrCheckoutState>(
         listener: (context, state) {
+          if (state is AddCheckinOrCheckoutError) {
+            GeneralServices.instance.showToastMessage(state.errorMessage);
+          }
           if (state is AddCheckinOrCheckoutLoaded) {
             BlocProvider.of<GetCurrentTokenBloc>(context).add(
               FetchGetCurrentToken(
                 clinicId: dController.initialIndex!,
-                scheduleType: selectedValue.toString(),
+                scheduleType: dController.scheduleIndex.value,
               ),
             );
           }
@@ -131,7 +137,9 @@ class _TokenScreenState extends State<TokenScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (ctx) => const BottomNavigationControlWidget(),
+                builder: (ctx) => BottomNavigationControlWidget(
+                  selectedIndex: 0,
+                ),
               ),
             );
             return Future.value(false);
@@ -194,7 +202,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                       .add(
                                     FetchGetCurrentToken(
                                       clinicId: dController.initialIndex!,
-                                      scheduleType: selectedValue.toString(),
+                                      scheduleType:
+                                          dController.scheduleIndex.value,
                                     ),
                                   );
                                 },
@@ -209,34 +218,30 @@ class _TokenScreenState extends State<TokenScreen> {
                                         : grey13B600,
                                   ),
                                   const VerticalSpacingWidget(height: 3),
-                                  BlocBuilder<DropdownBloc, DropdownState>(
-                                    builder: (context, state) {
+                                  Obx(
+                                    () {
                                       return CustomDropDown(
-                                        width: 140.w,
-                                        value: state.changValue,
-                                        items: items.entries
-                                            .map<DropdownMenuItem<String>>(
-                                                (MapEntry<String, int?> entry) {
-                                          // Specify the return type
-                                          return DropdownMenuItem<String>(
-                                            value: entry.key,
-                                            child: Text(entry.key),
+                                        width: size.width * 0.38,
+                                        value: dController.scheduleIndex.value,
+                                        items: dController.scheduleData
+                                            .map((entry) {
+                                          return DropdownMenuItem(
+                                            value: entry.scheduleId.toString(),
+                                            child: Text(entry.scheduleName),
                                           );
                                         }).toList(),
-                                        onChanged: (String? newValue) {
-                                          BlocProvider.of<DropdownBloc>(context)
-                                              .add(DropdownSelectEvent(
-                                                  dropdownSelectnvLalu:
-                                                      newValue!));
-                                          // dropdownValue = newValue!;
-                                          selectedValue = items[newValue];
+                                        onChanged: (newValue) {
+                                          log(newValue!);
+                                          dController.dropdownValueChanging(
+                                              newValue, '0');
                                           BlocProvider.of<GetCurrentTokenBloc>(
                                                   context)
                                               .add(FetchGetCurrentToken(
                                             clinicId: dController.initialIndex!,
                                             scheduleType:
-                                                selectedValue.toString(),
+                                                dController.scheduleIndex.value,
                                           ));
+                                          log("val : ${dController.scheduleIndex}");
                                         },
                                       );
                                     },
@@ -338,8 +343,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           clinicId: dController
                                                               .initialIndex!,
                                                           scheduleType:
-                                                              selectedValue
-                                                                  .toString(),
+                                                              dController
+                                                                  .scheduleIndex
+                                                                  .value,
                                                         ),
                                                       );
                                                     }
@@ -388,16 +394,13 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           clinicId: dController
                                                               .initialIndex!,
                                                           scheduleType:
-                                                              selectedValue
-                                                                  .toString(),
+                                                              dController
+                                                                  .scheduleIndex
+                                                                  .value,
                                                         ),
                                                       );
                                                     }
                                                   },
-                                                  // onPressed: () {
-                                                  //   controller
-                                                  //       .jumpToPage(currentIndex + 1);
-                                                  // },
                                                   icon: Icon(
                                                       Icons.arrow_forward_ios,
                                                       color: kMainColor,
@@ -558,8 +561,6 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         ),
                                                                 ),
                                                               ),
-
-                                                              //==========================================================
                                                               Container(
                                                                 height: 25.h,
                                                                 width:
@@ -681,7 +682,6 @@ class _TokenScreenState extends State<TokenScreen> {
                                                               ? blackTabMainText
                                                               : blackMainText,
                                                         ),
-                                                  // const VerticalSpacingWidget(height: 5),
                                                   getCurrentTokenModel
                                                           .tokens![currentIndex]
                                                           .otherSymptoms!
@@ -1065,40 +1065,55 @@ class _TokenScreenState extends State<TokenScreen> {
                                                               children: [
                                                                 //! check in
                                                                 InkWell(
-                                                                  onTap: () {
+                                                                  onTap:
+                                                                      () async {
                                                                     if (getCurrentTokenModel
                                                                             .tokens![currentIndex]
                                                                             .isCheckIn !=
                                                                         1) {
                                                                       if (isFirstCheckIn &&
-                                                                          index ==
+                                                                          currentIndex ==
                                                                               0) {
-                                                                        // Show alert dialog only for the first token's check-in
-                                                                        GeneralServices.instance.appCloseDialogue(
-                                                                            context,
-                                                                            "Are you sure you want to start the consultation",
-                                                                            () {
-                                                                          Navigator.of(context)
-                                                                              .pop();
-                                                                          // Execute the BlocProvider logic for the first token only when the user presses OK
-                                                                          BlocProvider.of<AddCheckinOrCheckoutBloc>(context)
-                                                                              .add(
-                                                                            AddCheckinOrCheckout(
-                                                                              clinicId: dController.initialIndex!,
-                                                                              isCompleted: 0,
-                                                                              isCheckin: 1,
-                                                                              tokenNumber: getCurrentTokenModel.tokens![currentIndex].tokenNumber.toString(),
-                                                                              isReached: '',
-                                                                            ),
-                                                                          );
-                                                                          isFirstCheckIn =
-                                                                              false; // Update is
-                                                                        });
+                                                                        GeneralServices
+                                                                            .instance
+                                                                            .appCloseDialogue(
+                                                                          context,
+                                                                          "Are you sure you want to start the consultation",
+                                                                          () {
+                                                                            Navigator.of(context).pop();
+                                                                            setState(() {
+                                                                              getCurrentTokenModel.tokens![currentIndex].isCheckIn = 1;
+                                                                            });
+
+                                                                            _addCheckinOrCheckoutBloc!.add(
+                                                                              AddCheckinOrCheckout(
+                                                                                clinicId: dController.initialIndex!,
+                                                                                isCompleted: 0,
+                                                                                isCheckin: 1,
+                                                                                tokenNumber: getCurrentTokenModel.tokens![currentIndex].tokenNumber.toString(),
+                                                                                isReached: '',
+                                                                              ),
+                                                                            );
+
+                                                                            Future.delayed(const Duration(seconds: 2),
+                                                                                () {
+                                                                              if (mounted) {
+                                                                                _addCheckinOrCheckoutBloc!.add(
+                                                                                  EstimateUpdateCheckin(
+                                                                                    tokenId: getCurrentTokenModel.tokens![currentIndex].newTokenId.toString(),
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                            });
+
+                                                                            isFirstCheckIn =
+                                                                                false;
+                                                                          },
+                                                                        );
                                                                       } else {
-                                                                        // For tokens other than the first one, directly execute the BlocProvider logic
                                                                         clickedIndex =
                                                                             index;
-                                                                        BlocProvider.of<AddCheckinOrCheckoutBloc>(context)
+                                                                        _addCheckinOrCheckoutBloc!
                                                                             .add(
                                                                           AddCheckinOrCheckout(
                                                                             clinicId:
@@ -1113,6 +1128,18 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 '',
                                                                           ),
                                                                         );
+
+                                                                        Future.delayed(
+                                                                            const Duration(seconds: 2),
+                                                                            () {
+                                                                          if (mounted) {
+                                                                            _addCheckinOrCheckoutBloc!.add(
+                                                                              EstimateUpdateCheckin(
+                                                                                tokenId: getCurrentTokenModel.tokens![currentIndex].newTokenId.toString(),
+                                                                              ),
+                                                                            );
+                                                                          }
+                                                                        });
                                                                       }
                                                                     }
                                                                   },
@@ -1208,8 +1235,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         FetchGetCurrentToken(
                                                                           clinicId:
                                                                               dController.initialIndex!,
-                                                                          scheduleType:
-                                                                              selectedValue.toString(),
+                                                                          scheduleType: dController
+                                                                              .scheduleIndex
+                                                                              .value,
                                                                         ),
                                                                       );
                                                                     }
@@ -1460,5 +1488,11 @@ class _TokenScreenState extends State<TokenScreen> {
             ],
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

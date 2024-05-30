@@ -43,7 +43,9 @@ class _LabScreenState extends State<LabScreen> with TickerProviderStateMixin {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const BottomNavigationControlWidget()));
+                      builder: (ctx) => BottomNavigationControlWidget(
+                            selectedIndex: 0,
+                          )));
             },
             icon: const Icon(Icons.arrow_back)),
       ),

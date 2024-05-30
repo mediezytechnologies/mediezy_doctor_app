@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,6 +11,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_theme_style.dart';
 import 'package:mediezy_doctor/Ui/Consts/bloc_providers.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SplashScreen/splash_screen.dart';
 import 'package:mediezy_doctor/firebase_options.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'Repositary/Api/firebase_service/notification_service.dart';
 
@@ -21,8 +23,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log("its not working ");
 }
 
-Future<void> main()async {
-   WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   runApp(
@@ -41,8 +43,7 @@ class MediezyDoctor extends StatefulWidget {
 }
 
 class _MediezyDoctorState extends State<MediezyDoctor> {
-
-NotificationServices notificationServices = NotificationServices();
+  NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
@@ -56,8 +57,6 @@ NotificationServices notificationServices = NotificationServices();
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
-
-   
   }
 
   @override
@@ -67,12 +66,20 @@ NotificationServices notificationServices = NotificationServices();
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-           navigatorKey: navigatorKey,
-          debugShowCheckedModeBanner: false,
-          title: 'Mediezy Doctor',
-          theme: appThemeStyle(context),
-          home: const SplashScreen(),
+        return UpgradeAlert(
+          dialogStyle: Platform.isIOS
+              ? UpgradeDialogStyle.cupertino
+              : UpgradeDialogStyle.material,
+          showIgnore: false,
+          showLater: true,
+          showReleaseNotes: true,
+          child: MaterialApp(
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            title: 'Mediezy Doctor',
+            theme: appThemeStyle(context),
+            home: const SplashScreen(),
+          ),
         );
       },
     );

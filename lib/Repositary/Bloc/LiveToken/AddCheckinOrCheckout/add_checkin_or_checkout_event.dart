@@ -10,11 +10,21 @@ class AddCheckinOrCheckout extends AddCheckinOrCheckoutEvent {
   final String clinicId;
   final String isReached;
 
-  AddCheckinOrCheckout(
-      {required this.tokenNumber,
-        required this.isCheckin,
-        required this.isCompleted,
-        required this.clinicId,
-        required this.isReached,
-      });
+  AddCheckinOrCheckout({
+    required this.tokenNumber,
+    required this.isCheckin,
+    required this.isCompleted,
+    required this.clinicId,
+    required this.isReached,
+  });
+}
+
+//! estimate time update checkin
+
+class EstimateUpdateCheckin extends AddCheckinOrCheckoutEvent {
+  final String tokenId;
+
+  EstimateUpdateCheckin({
+    required this.tokenId,
+  });
 }

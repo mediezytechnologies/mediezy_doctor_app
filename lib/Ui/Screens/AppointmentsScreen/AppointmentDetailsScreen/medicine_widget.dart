@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/DeleteMedicine/delete_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/EditMedicine/edit_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
@@ -17,8 +18,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-
-import '../../../../Repositary/Bloc/GetAppointments/bloc/appointments_demo_bloc_bloc.dart';
 
 class MedicineWidget extends StatefulWidget {
   const MedicineWidget({
@@ -570,8 +569,8 @@ class _MedicineWidgetState extends State<MedicineWidget> {
               BlocListener<EditMedicineBloc, EditMedicineState>(
                 listener: (context, state) {
                   if (state is EditMedicineLoaded) {
-                    BlocProvider.of<AppointmentsDemoBlocBloc>(context)
-                        .add(FetchAllAppointmentsDemo(
+                    BlocProvider.of<GetAppointmentsBloc>(context)
+                        .add(FetchAllAppointments(
                       date: controller.formatDate(),
                       clinicId: controller.initialIndex!,
                       scheduleType: controller.scheduleIndex.value,
