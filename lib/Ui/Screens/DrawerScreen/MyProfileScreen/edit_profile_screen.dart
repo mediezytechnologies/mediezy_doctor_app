@@ -94,7 +94,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (ctx) => const BottomNavigationControlWidget()));
+                    builder: (ctx) => BottomNavigationControlWidget(
+                          selectedIndex: 0,
+                        )));
           }
           if (state is ProfileEditError) {
             GeneralServices.instance

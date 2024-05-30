@@ -1,12 +1,11 @@
-import 'dart:ffi';
+class GetAppointmentsModel {
+  GetAppointmentsModel({
+    this.status,
+    this.bookingData,
+    this.message,
+  });
 
-class AppointmentDemoModel {
-  AppointmentDemoModel({
-      this.status, 
-      this.bookingData, 
-      this.message,});
-
-  AppointmentDemoModel.fromJson(dynamic json) {
+  GetAppointmentsModel.fromJson(dynamic json) {
     status = json['status'];
     if (json['booking_data'] != null) {
       bookingData = [];
@@ -29,46 +28,46 @@ class AppointmentDemoModel {
     map['message'] = message;
     return map;
   }
-
 }
 
 class BookingData {
   BookingData({
-      this.isCheckedout, 
-      this.isCheckedin, 
-      this.tokenId, 
-      this.tokenBookingId, 
-      this.tokenNumber, 
-      this.doctorId, 
-      this.bookedPersonId, 
-      this.patientName, 
-      this.age, 
-      this.date, 
-      this.tokenTime, 
-      this.appoinmentforId, 
-      this.whenitstart, 
-      this.whenitcomes, 
-      this.attachment, 
-      this.notes, 
-      this.clinicId, 
-      this.newDoctorId, 
-      this.patientId, 
-      this.patient, 
-      this.mainSymptoms, 
-      this.otherSymptoms, 
-      this.medicine, 
-      this.vitals, 
-      this.onlineStatus, 
-      this.treatmentTaken, 
-      this.surgeryName, 
-      this.surgeryDetails, 
-      this.treatmentTakenDetails, 
-      this.allergiesDetails, 
-      this.doctorAppBooking, 
-      this.medicineDetails, 
-      this.mediezyPatientId, 
-      this.userImage, 
-      this.firstIndexStatus,});
+    this.isCheckedout,
+    this.isCheckedin,
+    this.tokenId,
+    this.tokenBookingId,
+    this.tokenNumber,
+    this.doctorId,
+    this.bookedPersonId,
+    this.patientName,
+    this.age,
+    this.date,
+    this.tokenTime,
+    this.appoinmentforId,
+    this.whenitstart,
+    this.whenitcomes,
+    this.attachment,
+    this.notes,
+    this.clinicId,
+    this.newDoctorId,
+    this.patientId,
+    this.patient,
+    this.mainSymptoms,
+    this.otherSymptoms,
+    this.medicine,
+    this.vitals,
+    this.onlineStatus,
+    this.treatmentTaken,
+    this.surgeryName,
+    this.surgeryDetails,
+    this.treatmentTakenDetails,
+    this.allergiesDetails,
+    this.doctorAppBooking,
+    this.medicineDetails,
+    this.mediezyPatientId,
+    this.userImage,
+    this.firstIndexStatus,
+  });
 
   BookingData.fromJson(dynamic json) {
     isCheckedout = json['is_checkedout'];
@@ -90,7 +89,8 @@ class BookingData {
     clinicId = json['clinic_id'];
     newDoctorId = json['newDoctorId'];
     patientId = json['patient_id'];
-    patient = json['patient'] != null ? Patient.fromJson(json['patient']) : null;
+    patient =
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
     if (json['Main_Symptoms'] != null) {
       mainSymptoms = [];
       json['Main_Symptoms'].forEach((v) {
@@ -111,8 +111,11 @@ class BookingData {
     }
     vitals = json['vitals'] != null ? Vitals.fromJson(json['vitals']) : null;
     onlineStatus = json['online_status'];
-    treatmentTaken = json['treatment_taken'] != null ? json['treatment_taken'].cast<String>() : [];
-    surgeryName = json['surgery_name'] != null ? json['surgery_name'].cast<String>() : [];
+    treatmentTaken = json['treatment_taken'] != null
+        ? json['treatment_taken'].cast<String>()
+        : [];
+    surgeryName =
+        json['surgery_name'] != null ? json['surgery_name'].cast<String>() : [];
     surgeryDetails = json['surgery_details'];
     treatmentTakenDetails = json['treatment_taken_details'];
     if (json['allergies_details'] != null) {
@@ -210,24 +213,26 @@ class BookingData {
     map['surgery_details'] = surgeryDetails;
     map['treatment_taken_details'] = treatmentTakenDetails;
     if (allergiesDetails != null) {
-      map['allergies_details'] = allergiesDetails?.map((v) => v.toJson()).toList();
+      map['allergies_details'] =
+          allergiesDetails?.map((v) => v.toJson()).toList();
     }
     map['doctor_app_booking'] = doctorAppBooking;
     if (medicineDetails != null) {
-      map['medicine_details'] = medicineDetails?.map((v) => v.toJson()).toList();
+      map['medicine_details'] =
+          medicineDetails?.map((v) => v.toJson()).toList();
     }
     map['mediezy_patient_id'] = mediezyPatientId;
     map['user_image'] = userImage;
     map['first_index_status'] = firstIndexStatus;
     return map;
   }
-
 }
 
 class MedicineDetails {
   MedicineDetails({
-      this.medicineName, 
-      this.illness,});
+    this.medicineName,
+    this.illness,
+  });
 
   MedicineDetails.fromJson(dynamic json) {
     medicineName = json['medicine_name'];
@@ -242,14 +247,14 @@ class MedicineDetails {
     map['illness'] = illness;
     return map;
   }
-
 }
 
 class AllergiesDetails {
   AllergiesDetails({
-      this.allergyId, 
-      this.allergyName, 
-      this.allergyDetails,});
+    this.allergyId,
+    this.allergyName,
+    this.allergyDetails,
+  });
 
   AllergiesDetails.fromJson(dynamic json) {
     allergyId = json['allergy_id'];
@@ -267,19 +272,19 @@ class AllergiesDetails {
     map['allergy_details'] = allergyDetails;
     return map;
   }
-
 }
 
 class Vitals {
   Vitals({
-      this.height, 
-      this.weight, 
-      this.temperature, 
-      this.temperatureType, 
-      this.spo2, 
-      this.sys, 
-      this.dia, 
-      this.heartRate,});
+    this.height,
+    this.weight,
+    this.temperature,
+    this.temperatureType,
+    this.spo2,
+    this.sys,
+    this.dia,
+    this.heartRate,
+  });
 
   Vitals.fromJson(dynamic json) {
     height = json['height'];
@@ -312,35 +317,35 @@ class Vitals {
     map['heart_rate'] = heartRate;
     return map;
   }
-
 }
 
 class Medicine {
   Medicine({
-      this.id, 
-      this.mediezyDoctorId, 
-      this.userId, 
-      this.docterId, 
-      this.patientId, 
-      this.medicalShopId, 
-      this.medicineId, 
-      this.medicineName, 
-      this.dosage, 
-      this.interval, 
-      this.timeSection, 
-      this.noOfDays, 
-      this.noon, 
-      this.night, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.tokenId, 
-      this.morning, 
-      this.type, 
-      this.notes, 
-      this.illness, 
-      this.evening, 
-      this.tokenNumber, 
-      this.medicineType,});
+    this.id,
+    this.mediezyDoctorId,
+    this.userId,
+    this.docterId,
+    this.patientId,
+    this.medicalShopId,
+    this.medicineId,
+    this.medicineName,
+    this.dosage,
+    this.interval,
+    this.timeSection,
+    this.noOfDays,
+    this.noon,
+    this.night,
+    this.createdAt,
+    this.updatedAt,
+    this.tokenId,
+    this.morning,
+    this.type,
+    this.notes,
+    this.illness,
+    this.evening,
+    this.tokenNumber,
+    this.medicineType,
+  });
 
   Medicine.fromJson(dynamic json) {
     id = json['id'];
@@ -421,13 +426,13 @@ class Medicine {
     map['medicine_type'] = medicineType;
     return map;
   }
-
 }
 
 class OtherSymptoms {
   OtherSymptoms({
-      this.id, 
-      this.name,});
+    this.id,
+    this.name,
+  });
 
   OtherSymptoms.fromJson(dynamic json) {
     id = json['id'];
@@ -442,13 +447,13 @@ class OtherSymptoms {
     map['name'] = name;
     return map;
   }
-
 }
 
 class MainSymptoms {
   MainSymptoms({
-      this.id, 
-      this.name,});
+    this.id,
+    this.name,
+  });
 
   MainSymptoms.fromJson(dynamic json) {
     id = json['id'];
@@ -463,13 +468,13 @@ class MainSymptoms {
     map['name'] = name;
     return map;
   }
-
 }
 
 class Patient {
   Patient({
-      this.dateofbirth, 
-      this.age,});
+    this.dateofbirth,
+    this.age,
+  });
 
   Patient.fromJson(dynamic json) {
     dateofbirth = json['dateofbirth'];
@@ -484,26 +489,24 @@ class Patient {
     map['age'] = age;
     return map;
   }
-
 }
 
 //food dropdown model//==============
 class FoodDropdowneModel {
-   String fodeId;
-    String foodeName;
+  String fodeId;
+  String foodeName;
   FoodDropdowneModel({
-  required  this.fodeId,
-   required this.foodeName,
+    required this.fodeId,
+    required this.foodeName,
   });
-
 }
+
 //checkbox =========
 class TimezoneModel {
-   String timeZoneId;
-    bool timezoneBool;
+  String timeZoneId;
+  bool timezoneBool;
   TimezoneModel({
-  required  this.timeZoneId,
-   required this.timezoneBool,
+    required this.timeZoneId,
+    required this.timezoneBool,
   });
-
 }

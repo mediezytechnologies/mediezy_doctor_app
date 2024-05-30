@@ -85,7 +85,9 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (ctx) => const BottomNavigationControlWidget()));
+                builder: (ctx) => BottomNavigationControlWidget(
+                      selectedIndex: 0,
+                    )));
         return Future.value(false);
       },
       child: Scaffold(

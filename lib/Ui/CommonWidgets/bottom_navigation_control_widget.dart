@@ -15,8 +15,8 @@ import 'package:mediezy_doctor/Ui/Screens/TokenScreen/token_screen.dart';
 
 // ignore: must_be_immutable
 class BottomNavigationControlWidget extends StatefulWidget {
-  const BottomNavigationControlWidget({super.key});
-
+  BottomNavigationControlWidget({super.key, required this.selectedIndex});
+  int selectedIndex;
   @override
   State<BottomNavigationControlWidget> createState() =>
       _BottomNavigationControlWidgetState();
@@ -46,7 +46,7 @@ class _BottomNavigationControlWidgetState
 
   void selectScreen(int index) {
     setState(() {
-      selectedIndex = index;
+      widget.selectedIndex = index;
     });
   }
 
@@ -63,7 +63,7 @@ class _BottomNavigationControlWidgetState
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         onTap: selectScreen,
-        currentIndex: selectedIndex,
+        currentIndex: widget.selectedIndex,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -75,31 +75,37 @@ class _BottomNavigationControlWidgetState
         items: [
           BottomNavigationBarItem(
               icon: Icon(
-                  selectedIndex == 0
+                  widget.selectedIndex == 0
                       ? IconlyBold.calendar
                       : IconlyLight.calendar,
                   color: kMainColor),
               label: "Appointments"),
           BottomNavigationBarItem(
               icon: Icon(
-                  selectedIndex == 1 ? IconlyBold.ticket : IconlyLight.ticket,
+                  widget.selectedIndex == 1
+                      ? IconlyBold.ticket
+                      : IconlyLight.ticket,
                   color: kMainColor),
               label: "Token"),
           BottomNavigationBarItem(
               icon: Icon(
-                  selectedIndex == 2 ? IconlyBold.paper : IconlyLight.paper,
+                  widget.selectedIndex == 2
+                      ? IconlyBold.paper
+                      : IconlyLight.paper,
                   color: kMainColor),
               label: "Booking"),
           BottomNavigationBarItem(
               icon: Icon(
-                  selectedIndex == 3
+                  widget.selectedIndex == 3
                       ? IconlyBold.timeSquare
                       : IconlyLight.timeSquare,
                   color: kMainColor),
               label: "Schedule"),
           BottomNavigationBarItem(
               icon: Icon(
-                  selectedIndex == 4 ? IconlyBold.profile : IconlyLight.profile,
+                  widget.selectedIndex == 4
+                      ? IconlyBold.profile
+                      : IconlyLight.profile,
                   color: kMainColor),
               label: "Patients"),
         ],
@@ -137,7 +143,7 @@ class _BottomNavigationControlWidgetState
               ),
             );
           } else {
-            return screens[selectedIndex];
+            return screens[widget.selectedIndex];
           }
         },
       ),

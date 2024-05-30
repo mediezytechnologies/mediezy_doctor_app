@@ -41,7 +41,9 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (ctx) => const BottomNavigationControlWidget()));
+                builder: (ctx) => BottomNavigationControlWidget(
+                      selectedIndex: 0,
+                    )));
         return Future.value(false);
       },
       child: Scaffold(

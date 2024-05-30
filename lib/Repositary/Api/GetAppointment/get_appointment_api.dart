@@ -5,9 +5,7 @@ import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointments_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/appointment_details_page_model.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/get_all_appointments_model.dart';
-import 'package:mediezy_doctor/Model/appointment_demo_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +18,7 @@ class GetAppointmentApi {
 
   //! get all appointments as per date
 
-  Future<GetAllAppointmentsModel> getAllApointmentsAsPerDate({
+  Future<GetAppointmentsModel> getAllApointments({
     required String date,
     required String clinicId,
     required String scheduleType,
@@ -29,26 +27,12 @@ class GetAppointmentApi {
     final preference = await SharedPreferences.getInstance();
     id = preference.getString('DoctorId').toString();
     String basePath =
-        "doctor/getallappointments/$id/$date/$clinicId/$scheduleType";
+        "doctor/getAllUserAppointments/$id/$date/$clinicId/$scheduleType";
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
     // log("respose ste1 === : ${response.body}");
     //print("<<<<<< Get All Appointments Are Worked >>>>>>");
-    return GetAllAppointmentsModel.fromJson(json.decode(response.body));
-  }
-
-  //!appointment details api
-
-  Future<AppointmentDetailsPageModel> getAppointmentDetailsPage(
-      {required String tokenId}) async {
-    String basePath = "doctor/getAllAppointmentDetails/$tokenId";
-
-    Response response =
-        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    // //print(body);
-    // log("respose === : ${response.body}");
-    //print("<<<<<<<<<<Book Appointment Details page response worked>>>>>>>>>>");
-    return AppointmentDetailsPageModel.fromJson(json.decode(response.body));
+    return GetAppointmentsModel.fromJson(json.decode(response.body));
   }
 
   //! Add prescription api
@@ -357,24 +341,5 @@ class GetAppointmentApi {
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     //print(body);
     return response.body;
-  }
-
-  //! get all appointments as per date
-
-  Future<AppointmentDemoModel> getAllApointmentsDemo({
-    required String date,
-    required String clinicId,
-    required String scheduleType,
-  }) async {
-    String? id;
-    final preference = await SharedPreferences.getInstance();
-    id = preference.getString('DoctorId').toString();
-    String basePath =
-        "doctor/getAllUserAppointments/$id/$date/$clinicId/$scheduleType";
-    Response response =
-        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-    // log("respose ste1 === : ${response.body}");
-    //print("<<<<<< Get All Appointments Are Worked >>>>>>");
-    return AppointmentDemoModel.fromJson(json.decode(response.body));
   }
 }

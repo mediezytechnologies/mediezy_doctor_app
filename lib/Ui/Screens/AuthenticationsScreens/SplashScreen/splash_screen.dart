@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllAppointments/get_all_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,9 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
         } else {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (context) => const BottomNavigationControlWidget()),
+                  builder: (context) => BottomNavigationControlWidget(
+                        selectedIndex: 0,
+                      )),
               (route) => false);
-          BlocProvider.of<GetAllAppointmentsBloc>(context)
+          BlocProvider.of<GetAppointmentsBloc>(context)
               .add(FetchAllAppointments(
             date: controller.formatDate(),
             clinicId: controller.initialIndex!,

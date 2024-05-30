@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
@@ -319,6 +320,7 @@ class CustomDrawer extends StatelessWidget {
                 await preferences.remove('doctorName');
                 await preferences.remove('DoctorId');
                 Navigator.pushAndRemoveUntil(
+                    // ignore: use_build_context_synchronously
                     context,
                     MaterialPageRoute(
                         // builder: (context) => const LoginDemoScreen()),
@@ -327,6 +329,8 @@ class CustomDrawer extends StatelessWidget {
               });
             },
           ),
+          const Center(child: Text("Version : 1.0")),
+          const VerticalSpacingWidget(height: 10),
         ],
       ),
     );
