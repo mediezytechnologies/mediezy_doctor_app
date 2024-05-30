@@ -99,9 +99,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // log("${widget.medicalStoreId}");
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      // const VerticalSpacingWidget(height: 5),
       widget.medicine!.isEmpty
           ? Container()
           : Text(
@@ -132,6 +130,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ShortNamesWidget(
+                          typeId: 1,
                           firstText: "Medicine : ",
                           secondText:
                               widget.medicine![index].medicineName.toString(),
@@ -139,6 +138,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                         widget.medicine![index].dosage == null
                             ? Container()
                             : ShortNamesWidget(
+                              typeId: 1,
                                 firstText: "Dosage : ",
                                 secondText:
                                     widget.medicine![index].dosage.toString(),
@@ -147,25 +147,32 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 widget.medicine![index].interval == "null"
                             ? Container()
                             : ShortNamesWidget(
+                           typeId: 1,
                                 firstText: "Interval : ",
                                 secondText:
                                     "${widget.medicine![index].interval.toString()} ${widget.medicine![index].timeSection.toString()}",
                               ),
                         ShortNamesWidget(
+                           typeId: 1,
                           firstText: "Days : ",
                           secondText:
                               widget.medicine![index].noOfDays.toString(),
                         ),
                         const VerticalSpacingWidget(height: 5),
                         ShortNamesWidget(
+
+                          typeId: 
+                        widget.medicine![index].type!,
                           firstText: "",
-                          secondText: widget.medicine![index].type == 1
-                              ? "After Food"
-                              : widget.medicine![index].type == 2
-                                  ? "Before Food"
-                                  : widget.medicine![index].type == 3
-                                      ? "With Food"
-                                      : 'If Required',
+                          secondText: widget.medicine![index].type == 0
+                              ? "Select"
+                              : widget.medicine![index].type == 1
+                                  ? "After Food"
+                                  : widget.medicine![index].type == 2
+                                      ? "Before Food"
+                                      : widget.medicine![index].type == 3
+                                          ? "With Food"
+                                          : 'If Required',
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -527,7 +534,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                               log(newValue!);
 
                               foodDropdownController.dropdownValueChanging(
-                                  newValue, '1');
+                                  newValue, '0');
 
                               log("value =======================    ==== == = = $newValue");
 
@@ -617,6 +624,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 interval: days1Controller.text,
                               ),
                             );
+                            medicineNameController.clear();
+                            daysController.clear();
+                            days1Controller.clear();
+                            dosageController.clear();
+
+                            setState(() {
+                              foodDropdownController.resetToInitialValue();
+                              foodDropdownController.isEdit.value = false;
+                            });
                             // foodDropdownController.resetToPreviousValue();
                           } else {
                             BlocProvider.of<AddPrescriptionBloc>(context).add(
@@ -649,16 +665,17 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 medicineId: _selectedMedicineId!,
                               ),
                             );
-                          }
-                          medicineNameController.clear();
-                          daysController.clear();
-                          days1Controller.clear();
-                          dosageController.clear();
 
-                          setState(() {
-                            foodDropdownController.resetToInitialValue();
-                            foodDropdownController.isEdit.value = false;
-                          });
+                            medicineNameController.clear();
+                            daysController.clear();
+                            days1Controller.clear();
+                            dosageController.clear();
+
+                            setState(() {
+                              foodDropdownController.resetToInitialValue();
+                              foodDropdownController.isEdit.value = false;
+                            });
+                          }
                         },
                         child: Container(
                           height: 45.h,
@@ -693,7 +710,6 @@ class _MedicineWidgetState extends State<MedicineWidget> {
           ),
         ),
       ),
-
       const VerticalSpacingWidget(height: 5),
     ]);
   }
@@ -861,8 +877,8 @@ class _MedicineWidgetState extends State<MedicineWidget> {
 
 class FoodDropdownController extends GetxController {
   var isEdit = false.obs;
-  var foodValue = '1'.obs;
-  var previousFoodValue = '1'.obs;
+  var foodValue = '0'.obs;
+  var previousFoodValue = '0'.obs;
   var timeZoneId = "0".obs;
 
 //TimezoneModel
@@ -891,6 +907,7 @@ class FoodDropdownController extends GetxController {
 
   //
   List<FoodDropdowneModel> foodData = [
+    FoodDropdowneModel(fodeId: '0', foodeName: 'Select'),
     FoodDropdowneModel(fodeId: '1', foodeName: 'After Food'),
     FoodDropdowneModel(fodeId: '2', foodeName: 'Before Food'),
     FoodDropdowneModel(fodeId: '3', foodeName: 'With Food'),
@@ -942,7 +959,7 @@ class FoodDropdownController extends GetxController {
   }
 
   dropdownValueChanging(String value, String checkingValue) {
-    if (checkingValue == '1') {
+    if (checkingValue == '0') {
       log("before  :: $foodValue");
       previousFoodValue.value = foodValue.value;
       foodValue.value = value;
@@ -958,7 +975,7 @@ class FoodDropdownController extends GetxController {
   }
 
   void resetToInitialValue() {
-    foodValue.value = '1';
+    foodValue.value = '0';
 
     isCheckedmorning.value = false;
     isCheckednoon.value = false;

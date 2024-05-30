@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         if (token == null) {
           Navigator.of(context).pushAndRemoveUntil(
-              // MaterialPageRoute(builder: (context) => const LoginDemoScreen()),
+           
               MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
         } else {
