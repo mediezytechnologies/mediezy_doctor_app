@@ -412,7 +412,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.reviewAfter ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
+                              :   ShortNamesWidget(
+                          typeId: 1,
                                   firstText: "Review after : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -423,7 +424,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.labName ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
+                              :   ShortNamesWidget(
+                          typeId: 1,
                                   firstText: "Lab name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -435,7 +437,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.labTest ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
+                              :   ShortNamesWidget(
+                          typeId: 1,
                                   firstText: "Lab test name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -446,7 +449,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.scanName ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
+                              :   ShortNamesWidget(
+                          typeId: 1,
                                   firstText: "Scan name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -456,7 +460,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.scanTest ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
+                              :   ShortNamesWidget(
+                          typeId: 1,
                                 
                                   firstText: "Scan test name : ",
                                   secondText:

@@ -793,6 +793,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Review after : ",
                                                                     secondText: getCurrentTokenModel
@@ -809,6 +810,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Lab name : ",
                                                                     secondText: getCurrentTokenModel
@@ -825,6 +827,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Lab test : ",
                                                                     secondText: getCurrentTokenModel
@@ -841,6 +844,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Scanning Centre : ",
                                                                     secondText: getCurrentTokenModel
@@ -857,6 +861,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Scan test : ",
                                                                     secondText: getCurrentTokenModel
@@ -873,6 +878,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     null
                                                                 ? Container()
                                                                 : ShortNamesWidget(
+                                                                    typeId: 1,
                                                                     firstText:
                                                                         "Medical store : ",
                                                                     secondText: getCurrentTokenModel

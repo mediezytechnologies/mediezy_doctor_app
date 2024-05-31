@@ -384,7 +384,8 @@ class _PreviousBookingDetailsScreenState
                                     .labName ==
                                 null
                             ? Container()
-                            : ShortNamesWidget(
+                            :   ShortNamesWidget(
+                          typeId: 1,
                                 firstText: "Lab name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.labName
@@ -397,7 +398,8 @@ class _PreviousBookingDetailsScreenState
                                     .labTest ==
                                 null
                             ? Container()
-                            : ShortNamesWidget(
+                            :   ShortNamesWidget(
+                          typeId: 1,
                                 firstText: "Lab test name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.labTest
@@ -409,7 +411,8 @@ class _PreviousBookingDetailsScreenState
                                     .scanName ==
                                 null
                             ? Container()
-                            : ShortNamesWidget(
+                            :   ShortNamesWidget(
+                          typeId: 1,
                                 firstText: "Scan name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.scanName
@@ -420,7 +423,8 @@ class _PreviousBookingDetailsScreenState
                                     .scanTest ==
                                 null
                             ? Container()
-                            : ShortNamesWidget(
+                            :   ShortNamesWidget(
+                          typeId: 1,
                                 firstText: "Scan test name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.scanTest
