@@ -8,9 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 const sWidth = ScreenUtil.defaultSize;
 
 class AppoimentAppbar extends StatefulWidget implements PreferredSizeWidget {
-  AppoimentAppbar({Key? key}) : super(key: key);
+  const AppoimentAppbar({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AppoimentAppbarState createState() => _AppoimentAppbarState();
 
   @override
@@ -61,7 +62,7 @@ class _AppoimentAppbarState extends State<AppoimentAppbar> {
             alignment: Alignment.bottomLeft,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              height: size.width > 450 ? size.height * .1 : size.height * 0.13,
+              height: size.width > 450 ? size.height * .1 : size.height * 0.12,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: kMainColor,

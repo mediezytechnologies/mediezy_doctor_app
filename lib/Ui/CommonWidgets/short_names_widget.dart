@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 
 class ShortNamesWidget extends StatelessWidget {
-  ShortNamesWidget(
+  const ShortNamesWidget(
       {super.key,
       required this.firstText,
       required this.secondText,
@@ -10,7 +10,7 @@ class ShortNamesWidget extends StatelessWidget {
 
   final String firstText;
   final String secondText;
-  int typeId;
+  final int typeId;
 
   @override
   Widget build(BuildContext context) {

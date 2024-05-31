@@ -8,14 +8,13 @@ part 'profile_get_event.dart';
 part 'profile_get_state.dart';
 
 class ProfileGetBloc extends Bloc<ProfileGetEvent, ProfileGetState> {
-  late ProfileGetModel profileGetModel;
   ProfileGetApi profileGetApi = ProfileGetApi();
   ProfileGetBloc() : super(ProfileGetInitial()) {
     on<FetchProfileGet>((event, emit) async {
       emit(ProfileGetLoading());
       try {
-        profileGetModel = await profileGetApi.getProfileGet();
-        emit(ProfileGetLoaded());
+        final profileGetModel = await profileGetApi.getProfileGet();
+        emit(ProfileGetLoaded(profileGetModel: profileGetModel));
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(ProfileGetError());
