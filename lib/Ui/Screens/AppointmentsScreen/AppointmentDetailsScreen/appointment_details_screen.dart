@@ -559,63 +559,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           )),
                                     ],
                                   ),
-                                  Container(
-                                    height: 30.h,
-                                    width: size.width > 450 ? 80.w : 110.w,
-                                    decoration: BoxDecoration(
-                                      color: kMainColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5.w),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 5.w),
-                                            child: Text(
-                                              "Pending",
-                                              style: size.width > 450
-                                                  ? TextStyle(
-                                                      fontSize: 10.sp,
-                                                      color: kCardColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )
-                                                  : TextStyle(
-                                                      fontSize: 15.sp,
-                                                      color: kCardColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 25.h,
-                                            width:
-                                                size.width > 450 ? 22.w : 28.w,
-                                            decoration: BoxDecoration(
-                                              color: kCardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                // "123",
-                                                "$bookingPending",
-                                                style: size.width > 450
-                                                    ? blackTab12B600
-                                                    : black15B600,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  pendingContainer(size, bookingPending),
                                   PatientDetailsWidget(
                                     allergiesDetails: getAppointmentsModel
                                         .bookingData![index].allergiesDetails,
@@ -651,7 +595,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   getAppointmentsModel
                                               .bookingData![index].date ==
                                           formatDate()
-                                      ? checkin_button(index, context, size)
+                                      ? checkinButton(index, context, size)
                                       : Container(),
                                   const VerticalSpacingWidget(height: 10),
                                   VitalsWidget(
@@ -1333,178 +1277,180 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  InkWell checkin_button(int index, BuildContext context, Size size) {
-    return InkWell(
-                                        onTap: () async {
-                                          if (getAppointmentsModel
-                                                  .bookingData![index]
-                                                  .isCheckedin !=
-                                              1) {
-                                            if (getAppointmentsModel
-                                                    .bookingData![
-                                                        currentPosition]
-                                                    .firstIndexStatus ==
-                                                1) {
-                                              GeneralServices.instance
-                                                  .appCloseDialogue(context,
-                                                      "Are you sure you want to start the consultation",
-                                                      () {
-                                                Navigator.of(context).pop();
-                                                setState(() {
-                                                  getAppointmentsModel
-                                                      .bookingData![index]
-                                                      .isCheckedin = 1;
-                                                });
-                                                BlocProvider.of<
-                                                            AddCheckinOrCheckoutBloc>(
-                                                        context)
-                                                    .add(
-                                                  AddCheckinOrCheckout(
-                                                    clinicId:
-                                                        getAppointmentsModel
-                                                            .bookingData![
-                                                                index]
-                                                            .clinicId
-                                                            .toString(),
-                                                    isCompleted: 0,
-                                                    isCheckin: 1,
-                                                    tokenNumber:
-                                                        getAppointmentsModel
-                                                            .bookingData![
-                                                                index]
-                                                            .tokenNumber
-                                                            .toString(),
-                                                    isReached: '',
-                                                  ),
-                                                );
-                                                Future.delayed(
-                                                    const Duration(
-                                                        seconds: 2), () {
-                                                  BlocProvider.of<
-                                                              AddCheckinOrCheckoutBloc>(
-                                                          context)
-                                                      .add(
-                                                    EstimateUpdateCheckin(
-                                                      tokenId:
-                                                          getAppointmentsModel
-                                                              .bookingData![
-                                                                  index]
-                                                              .tokenId
-                                                              .toString(),
-                                                    ),
-                                                  );
-                                                });
-                                                // isFirstCheckIn =
-                                                //     false; // Update is
-                                              });
-                                            } else {
-                                              // clickedIndex = index;
-                                              setState(() {
-                                                getAppointmentsModel
-                                                    .bookingData![index]
-                                                    .isCheckedin = 1;
-                                              });
-                                              //first calling bloc
+//!pending==
+  Container pendingContainer(Size size, int bookingPending) {
+    return Container(
+      height: 30.h,
+      width: size.width > 450 ? 80.w : 110.w,
+      decoration: BoxDecoration(
+        color: kMainColor,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: 5.w),
+              child: Text(
+                "Pending",
+                style: size.width > 450
+                    ? TextStyle(
+                        fontSize: 10.sp,
+                        color: kCardColor,
+                        fontWeight: FontWeight.bold,
+                      )
+                    : TextStyle(
+                        fontSize: 15.sp,
+                        color: kCardColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+              ),
+            ),
+            Container(
+              height: 25.h,
+              width: size.width > 450 ? 22.w : 28.w,
+              decoration: BoxDecoration(
+                color: kCardColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Center(
+                child: Text(
+                  // "123",
+                  "$bookingPending",
+                  style: size.width > 450 ? blackTab12B600 : black15B600,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-                                              BlocProvider.of<
-                                                          AddCheckinOrCheckoutBloc>(
-                                                      context)
-                                                  .add(
-                                                AddCheckinOrCheckout(
-                                                  clinicId:
-                                                      getAppointmentsModel
-                                                          .bookingData![index]
-                                                          .clinicId
-                                                          .toString(),
-                                                  isCompleted: 0,
-                                                  isCheckin: 1,
-                                                  tokenNumber:
-                                                      getAppointmentsModel
-                                                          .bookingData![index]
-                                                          .tokenNumber
-                                                          .toString(),
-                                                  isReached: '',
-                                                ),
-                                              );
-                                              Future.delayed(
-                                                  const Duration(seconds: 2),
-                                                  () {
-                                                BlocProvider.of<
-                                                            AddCheckinOrCheckoutBloc>(
-                                                        context)
-                                                    .add(
-                                                  EstimateUpdateCheckin(
-                                                    tokenId:
-                                                        getAppointmentsModel
-                                                            .bookingData![
-                                                                index]
-                                                            .tokenId
-                                                            .toString(),
-                                                  ),
-                                                );
-                                              });
-                                            }
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 50.h,
-                                          decoration: BoxDecoration(
-                                            color: getAppointmentsModel
-                                                        .bookingData![index]
-                                                        .isCheckedin ==
-                                                    1
-                                                ? kCardColor
-                                                : kMainColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Image(
-                                                image: const AssetImage(
-                                                    "assets/icons/check_in.png"),
-                                                color: getAppointmentsModel
-                                                            .bookingData![
-                                                                index]
-                                                            .isCheckedin ==
-                                                        1
-                                                    ? kMainColor
-                                                    : kCardColor,
-                                              ),
-                                              Text(
-                                                "Check In",
-                                                style: size.width > 450
-                                                    ? TextStyle(
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: getAppointmentsModel
-                                                                    .bookingData![
-                                                                        index]
-                                                                    .isCheckedin ==
-                                                                1
-                                                            ? kMainColor
-                                                            : kCardColor,
-                                                      )
-                                                    : TextStyle(
-                                                        fontSize: 16.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: getAppointmentsModel
-                                                                    .bookingData![
-                                                                        index]
-                                                                    .isCheckedin ==
-                                                                1
-                                                            ? kMainColor
-                                                            : kCardColor,
-                                                      ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+  InkWell checkinButton(int index, BuildContext context, Size size) {
+    return InkWell(
+      onTap: () async {
+        if (getAppointmentsModel.bookingData![index].isCheckedin != 1) {
+          if (getAppointmentsModel
+                  .bookingData![currentPosition].firstIndexStatus ==
+              1) {
+            GeneralServices.instance.appCloseDialogue(
+                context, "Are you sure you want to start the consultation", () {
+              Navigator.of(context).pop();
+              setState(() {
+                getAppointmentsModel.bookingData![index].isCheckedin = 1;
+              });
+              Future.delayed(const Duration(seconds: 2), () {
+                log("First call ============================..........===============...===========");
+                BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+                  AddCheckinOrCheckout(
+                    clinicId: getAppointmentsModel.bookingData![index].clinicId
+                        .toString(),
+                    isCompleted: 0,
+                    isCheckin: 1,
+                    tokenNumber: getAppointmentsModel
+                        .bookingData![index].tokenNumber
+                        .toString(),
+                    isReached: '',
+                  ),
+                );
+              }).then((_) {
+                return Future.delayed(const Duration(seconds: 8), () {
+                  log("Second call ============================..........===============...===========");
+                  BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+                    EstimateUpdateCheckin(
+                      tokenId: getAppointmentsModel.bookingData![index].tokenId
+                          .toString(),
+                    ),
+                  );
+                });
+              });
+
+              //second bloc
+
+              // isFirstCheckIn =
+              //     false; // Update is
+            });
+          } else {
+            // clickedIndex = index;
+            setState(() {
+              getAppointmentsModel.bookingData![index].isCheckedin = 1;
+            });
+            //first calling bloc
+
+              Future.delayed(const Duration(seconds: 2), () {
+                log("First call else ============================..........===============...===========");
+                BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+                  AddCheckinOrCheckout(
+                    clinicId: getAppointmentsModel.bookingData![index].clinicId
+                        .toString(),
+                    isCompleted: 0,
+                    isCheckin: 1,
+                    tokenNumber: getAppointmentsModel
+                        .bookingData![index].tokenNumber
+                        .toString(),
+                    isReached: '',
+                  ),
+                );
+              }).then((_) {
+                return Future.delayed(const Duration(seconds: 8), () {
+                  log("Second call else ============================..........===============...===========");
+                  BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+                    EstimateUpdateCheckin(
+                      tokenId: getAppointmentsModel.bookingData![index].tokenId
+                          .toString(),
+                    ),
+                  );
+                });
+              });
+          }
+        }
+      },
+      child: Container(
+        height: 50.h,
+        decoration: BoxDecoration(
+          color: getAppointmentsModel.bookingData![index].isCheckedin == 1
+              ? kCardColor
+              : kMainColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: const AssetImage("assets/icons/check_in.png"),
+              color: getAppointmentsModel.bookingData![index].isCheckedin == 1
+                  ? kMainColor
+                  : kCardColor,
+            ),
+            Text(
+              "Check In",
+              style: size.width > 450
+                  ? TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: getAppointmentsModel
+                                  .bookingData![index].isCheckedin ==
+                              1
+                          ? kMainColor
+                          : kCardColor,
+                    )
+                  : TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: getAppointmentsModel
+                                  .bookingData![index].isCheckedin ==
+                              1
+                          ? kMainColor
+                          : kCardColor,
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void handleCheckout(BuildContext context, int index) {
