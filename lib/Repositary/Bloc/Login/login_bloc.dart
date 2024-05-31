@@ -25,14 +25,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         loginModel = await loginApi.getLogin(
             email: event.email, password: event.password);
         preference.setString('token', loginModel.token.toString());
+        preference.setString('phNo', loginModel.doctor!.mobileNo.toString());
         preference.setString(
-            'doctorFirstName', loginModel.doctor!.firstname.toString());
+            'drFirstName', loginModel.doctor!.firstname.toString());
         preference.setString(
-            'doctorLastName', loginModel.doctor!.secondname.toString());
+            'drSecondName', loginModel.doctor!.secondname.toString());
+        preference.setString(
+            'drImage', loginModel.doctor!.doctorImage.toString());
+        preference.setString(
+            'mediezyDrId', loginModel.doctor!.mediezyDoctorId.toString());
         preference.setString('DoctorId', loginModel.doctor!.id.toString());
         preference.setInt('DoctorId2', loginModel.doctor!.id!);
         String? token = preference.getString('token');
+        String? phNo = preference.getString('phNo');
         log("Tokken >>>>>>>>>>>>>>>>>>$token");
+        log("Tokken >>>>>>>>>>>>>>>>>>$phNo");
         emit(LoginLoaded());
         log("loaded");
       } catch (e) {

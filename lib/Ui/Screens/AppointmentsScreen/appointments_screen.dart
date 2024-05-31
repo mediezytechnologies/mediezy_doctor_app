@@ -53,6 +53,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         .listen((ConnectivityResult result) {
       handleConnectivityChange(result);
     });
+
     getUserName();
     startPolling();
     super.initState();
