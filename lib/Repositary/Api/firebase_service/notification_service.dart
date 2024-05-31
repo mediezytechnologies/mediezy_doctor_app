@@ -78,7 +78,6 @@ class NotificationServices {
       debugPrint('Got a message whilst in the foreground!');
       debugPrint('Message data: ${message.notification!.title.toString()}');
       RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification!.android;
 
       log("Notification title: ${notification!.title}");
       log("Notification title: ${notification.body}");
@@ -111,15 +110,6 @@ class NotificationServices {
     });
   }
 
-  // void handleMesssage(BuildContext context, RemoteMessage message) {
-  //   log('In handleMesssage function');
-  //   if (message.data['type'] == 'text') {
-  //     log(message.data.toString());
-
-  //     // redirect to new screen or take different action based on payload that you receive.
-  //   }
-  // }
-
   void handleMesssage(BuildContext context, RemoteMessage message) {
     log('In handleMesssage function');
     String? messageType = message.data['type'];
@@ -127,17 +117,11 @@ class NotificationServices {
     if (messageType != null) {
       log('Message type: $messageType');
       log('Message data: ${message.data}');
-      Widget screen;
       switch (messageType) {
         case 'text':
-          // screen = SavedDoctorsScreen();
-          // navigatorKey.currentState?.push(
-          //     MaterialPageRoute(builder: (context) => SavedDoctorsScreen()));
           log("screen 0");
           break;
         case 'chat':
-          // navigatorKey.currentState?.push(
-          //     MaterialPageRoute(builder: (context) => SavedDoctorsScreen()));
           log("screen 1"); // Replace with the actual screen for chat
           break;
         default:
@@ -145,27 +129,6 @@ class NotificationServices {
           return;
       }
     }
-
-    // if (message.data['type'] == 'text') {
-
-    //   log(message.data.toString());
-    //    log("log text done ===============");
-
-    //   // Navigate to the profile screen
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => SavedDoctorsScreen()),
-    //   );
-    // }
-//  else  if (message.data['type']=='chat') {
-//     log("log chat done =====================");
-//     log(message.data.toString());
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => SavedDoctorsScreen()),
-//     );
-//   }
-    //log("un   log");
   }
 
   Future<void> showNotification(RemoteMessage message) async {
@@ -211,6 +174,7 @@ class NotificationServices {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
+      // ignore: use_build_context_synchronously
       handleMesssage(context, initialMessage);
     }
 

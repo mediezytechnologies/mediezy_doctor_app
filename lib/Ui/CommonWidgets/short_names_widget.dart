@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 
+// ignore: must_be_immutable
 class ShortNamesWidget extends StatelessWidget {
-  const ShortNamesWidget(
+  ShortNamesWidget(
       {super.key,
       required this.firstText,
       required this.secondText,
@@ -10,7 +11,7 @@ class ShortNamesWidget extends StatelessWidget {
 
   final String firstText;
   final String secondText;
-  final int typeId;
+  int typeId;
 
   @override
   Widget build(BuildContext context) {

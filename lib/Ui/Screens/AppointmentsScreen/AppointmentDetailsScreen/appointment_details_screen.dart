@@ -1380,31 +1380,31 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             });
             //first calling bloc
 
-              Future.delayed(const Duration(seconds: 2), () {
-                log("First call else ============================..........===============...===========");
+            Future.delayed(const Duration(seconds: 2), () {
+              log("First call else ============================..........===============...===========");
+              BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+                AddCheckinOrCheckout(
+                  clinicId: getAppointmentsModel.bookingData![index].clinicId
+                      .toString(),
+                  isCompleted: 0,
+                  isCheckin: 1,
+                  tokenNumber: getAppointmentsModel
+                      .bookingData![index].tokenNumber
+                      .toString(),
+                  isReached: '',
+                ),
+              );
+            }).then((_) {
+              return Future.delayed(const Duration(seconds: 8), () {
+                log("Second call else ============================..........===============...===========");
                 BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-                  AddCheckinOrCheckout(
-                    clinicId: getAppointmentsModel.bookingData![index].clinicId
+                  EstimateUpdateCheckin(
+                    tokenId: getAppointmentsModel.bookingData![index].tokenId
                         .toString(),
-                    isCompleted: 0,
-                    isCheckin: 1,
-                    tokenNumber: getAppointmentsModel
-                        .bookingData![index].tokenNumber
-                        .toString(),
-                    isReached: '',
                   ),
                 );
-              }).then((_) {
-                return Future.delayed(const Duration(seconds: 8), () {
-                  log("Second call else ============================..........===============...===========");
-                  BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-                    EstimateUpdateCheckin(
-                      tokenId: getAppointmentsModel.bookingData![index].tokenId
-                          .toString(),
-                    ),
-                  );
-                });
               });
+            });
           }
         }
       },
@@ -1586,6 +1586,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
     if (pickedFile != null) {
       try {
+        // ignore: unused_local_variable
         File compressedImage = await compressImage(pickedFile.path);
         imageFromCamera = File(pickedFile.path);
       } catch (e) {
