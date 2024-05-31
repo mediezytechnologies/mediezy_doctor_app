@@ -263,7 +263,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text('Privacy policy',
                 style: size.width > 450 ? blackTab9B400 : black14B400),
-            trailing: Icon(Icons.assignment_outlined,
+            trailing: Icon(Icons.assignment_returned_outlined,
                 size: size.width > 450 ? 13.sp : 20.sp),
             onTap: () {
               // Handle item 2 tap
@@ -329,8 +329,6 @@ class CustomDrawer extends StatelessWidget {
               });
             },
           ),
-          const Center(child: Text("Version : 1.0")),
-          const VerticalSpacingWidget(height: 10),
         ],
       ),
     );

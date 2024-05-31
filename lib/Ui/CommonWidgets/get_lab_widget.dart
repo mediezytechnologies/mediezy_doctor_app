@@ -6,6 +6,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/Labs/AddFavouritesLab/add_favouri
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/RemoveFavLab/remove_fav_labs_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'horizontal_spacing_widget.dart';
 
 class GetLabWidget extends StatefulWidget {
@@ -140,9 +141,10 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                   isAddButtonVisible
                       ? SizedBox(
                           height: size.height * .04,
+                          width: size.width * .26,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green),
+                                backgroundColor: kMainColor),
                             onPressed: () {
                               BlocProvider.of<AddFavouritesLabBloc>(context)
                                   .add(
@@ -160,9 +162,11 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         )
                       : SizedBox(
                           height: size.height * .04,
+                          width: size.width * .26,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 175, 176, 177)),
                             onPressed: () {
                               BlocProvider.of<RemoveFavLabsBloc>(context).add(
                                   RemoveFavouritesLab(labId: widget.labId));

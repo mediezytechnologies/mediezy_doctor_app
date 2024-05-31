@@ -776,15 +776,15 @@ class _ScheduleTokenDetailsScreenState
                 );
               },
             );
-            // Future.delayed(const Duration(seconds: 3), () {
-            //   Navigator.pushAndRemoveUntil(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) =>
-            //             BottomNavigationControlWidget(selectedIndex: 2)),
-            //     (route) => false,
-            //   );
-            // });
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BottomNavigationControlWidget(selectedIndex: 2)),
+                (route) => false,
+              );
+            });
           }
           if (state is GenerateTokenFinalError) {
             GeneralServices.instance

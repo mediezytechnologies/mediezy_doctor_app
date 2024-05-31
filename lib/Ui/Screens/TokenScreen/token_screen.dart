@@ -1101,7 +1101,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                               ),
                                                                             );
 
-                                                                            Future.delayed(const Duration(seconds: 2),
+                                                                            Future.delayed(const Duration(seconds: 8),
                                                                                 () {
                                                                               if (mounted) {
                                                                                 _addCheckinOrCheckoutBloc!.add(
@@ -1111,7 +1111,6 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 );
                                                                               }
                                                                             });
-
                                                                             isFirstCheckIn =
                                                                                 false;
                                                                           },
@@ -1134,9 +1133,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 '',
                                                                           ),
                                                                         );
-
                                                                         Future.delayed(
-                                                                            const Duration(seconds: 2),
+                                                                            const Duration(seconds: 8),
                                                                             () {
                                                                           if (mounted) {
                                                                             _addCheckinOrCheckoutBloc!.add(
