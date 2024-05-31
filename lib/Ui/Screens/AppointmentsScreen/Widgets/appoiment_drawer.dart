@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -60,7 +61,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       width: size.width > 450 ? 170.w : 250.w,
       child: ListView(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+       physics:  const ClampingScrollPhysics() ,
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
