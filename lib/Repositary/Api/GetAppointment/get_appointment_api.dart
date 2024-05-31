@@ -26,10 +26,16 @@ class GetAppointmentApi {
     String? id;
     final preference = await SharedPreferences.getInstance();
     id = preference.getString('DoctorId').toString();
-    String basePath =
-        "doctor/getAllUserAppointments/$id/$date/$clinicId/$scheduleType";
+    String basePath = "doctor/getAllUserAppointments";
+
+    final body = {
+      "userId": id,
+      "date": date,
+      "clinicId": clinicId,
+      "schedule_type": scheduleType,
+    };
     Response response =
-        await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     // log("respose ste1 === : ${response.body}");
     //print("<<<<<< Get All Appointments Are Worked >>>>>>");
     return GetAppointmentsModel.fromJson(json.decode(response.body));

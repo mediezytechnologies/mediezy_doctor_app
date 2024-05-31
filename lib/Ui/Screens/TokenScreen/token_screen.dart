@@ -256,7 +256,7 @@ class _TokenScreenState extends State<TokenScreen> {
                               GetCurrentTokenState>(
                             builder: (context, state) {
                               if (state is GetCurrentTokenLoading) {
-                                // return _buildLoadingWidget();
+                                return _buildLoadingWidget();
                               }
                               if (state is GetCurrentTokenError) {
                                 return const Center(
@@ -287,6 +287,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                     ],
                                   );
                                 }
+                                // return _buildLoadingWidget();
 
                                 return Expanded(
                                   child: PageView.builder(
@@ -1347,149 +1348,163 @@ class _TokenScreenState extends State<TokenScreen> {
 
   Widget _buildLoadingWidget() {
     return SizedBox(
-      height: 600.h,
+      height: 500.h,
       child: Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
-          child: Column(
-            children: [
-              SizedBox(
-                  height: 520.h,
-                  width: 700.w,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 120.h,
-                        width: 120.w,
-                        decoration: BoxDecoration(
-                          color: kMainColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 120.h,
+                      width: 120.w,
+                      decoration: BoxDecoration(
+                        color: kMainColor,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(
-                        height: 390.h,
-                        // width: 1000.w,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 45,
-                                      backgroundImage: AssetImage(
-                                          "assets/icons/profile pic.png")),
-                                ),
-                                const HorizontalSpacingWidget(width: 40),
-                                //! name
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 10.h,
-                                      width: 100.w,
-                                      color: Colors.white,
-                                    ),
-                                    const VerticalSpacingWidget(height: 10),
-                                    Container(
-                                      height: 10.h,
-                                      width: 100.w,
-                                      color: Colors.white,
-                                    ),
-                                    const VerticalSpacingWidget(height: 10),
-                                    Container(
-                                      height: 10.h,
-                                      width: 100.w,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            //! appoinment date
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 30.h,
-                                  width: 120.w,
-                                  color: Colors.white,
-                                ),
-                                Container(
-                                  height: 30.h,
-                                  width: 120.w,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            Container(
-                              height: 30.h,
-                              width: 120.w,
-                              color: Colors.white,
-                            ),
-                            //! appointment for
-                            const VerticalSpacingWidget(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 30.h,
-                                  width: 120.w,
-                                  color: Colors.white,
-                                ),
-                                Container(
-                                  height: 30.h,
-                                  width: 120.w,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            const VerticalSpacingWidget(height: 30),
-                            //! reschedule
-                            Container(
-                              height: 40.h,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: kCardColor,
-                                borderRadius: BorderRadius.circular(8),
-                                border:
-                                    Border.all(width: .5, color: kMainColor),
+                    ),
+                    SizedBox(
+                      height: 390.h,
+                      // width: 1000.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 45,
+                                    backgroundImage: AssetImage(
+                                        "assets/icons/profile pic.png")),
                               ),
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //! check in
-                                Container(
-                                  height: 40.h,
-                                  width: 165.w,
-                                  decoration: BoxDecoration(
-                                    color: kMainColor,
-                                    borderRadius: BorderRadius.circular(8),
+                              const HorizontalSpacingWidget(width: 40),
+                              //! name
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 10.h,
+                                    width: 100.w,
+                                    color: Colors.white,
                                   ),
+                                  const VerticalSpacingWidget(height: 10),
+                                  Container(
+                                    height: 10.h,
+                                    width: 100.w,
+                                    color: Colors.white,
+                                  ),
+                                  const VerticalSpacingWidget(height: 10),
+                                  Container(
+                                    height: 10.h,
+                                    width: 100.w,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          //! appoinment date
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          Container(
+                            height: 30.h,
+                            width: 120.w,
+                            color: Colors.white,
+                          ),
+                          //! appointment for
+                          const VerticalSpacingWidget(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                              Container(
+                                height: 30.h,
+                                width: 120.w,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                          const VerticalSpacingWidget(height: 30),
+                          //! reschedule
+                          Container(
+                            height: 40.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: kCardColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(width: .5, color: kMainColor),
+                            ),
+                          ),
+                          const VerticalSpacingWidget(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //! check in
+                              Container(
+                                height: 40.h,
+                                width: 165.w,
+                                decoration: BoxDecoration(
+                                  color: kMainColor,
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                //! check out
-                                Container(
-                                  height: 40.h,
-                                  width: 165.w,
-                                  decoration: BoxDecoration(
-                                    color: kCardColor,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                              //! check out
+                              Container(
+                                height: 40.h,
+                                width: 165.w,
+                                decoration: BoxDecoration(
+                                  color: kCardColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  )),
-            ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           )),
     );
   }
