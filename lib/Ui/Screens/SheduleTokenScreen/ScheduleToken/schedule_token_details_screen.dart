@@ -797,7 +797,8 @@ class _ScheduleTokenDetailsScreenState
         builder: (context, state) {
           bool isLoading = state is GenerateTokenFinalLoading;
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+            padding: EdgeInsets.symmetric(
+                horizontal: 8.w, vertical: Platform.isIOS ? 12.h : 8.h),
             child: InkWell(
               onTap: isLoading
                   ? null
