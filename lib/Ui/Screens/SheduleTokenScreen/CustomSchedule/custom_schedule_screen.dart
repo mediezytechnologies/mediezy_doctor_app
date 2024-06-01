@@ -104,12 +104,6 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: Platform.isIOS
-          ? SizedBox(
-              height: size.height * 0.038,
-              width: double.infinity,
-            )
-          : const SizedBox(),
       backgroundColor: kCardColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -1219,7 +1213,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                           listener: (context, state) {
                             if (state is DeleteBreakLoaded) {
                               GeneralServices.instance.showSuccessMessage(
-                                  context, "Delete your Break Successfully");
+                                  context, "Break deleted successfully");
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllBreak(
                                       clinicId: dController.initialIndex!));

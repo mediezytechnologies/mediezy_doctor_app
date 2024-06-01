@@ -56,14 +56,6 @@ class _TokenScreenState extends State<TokenScreen> {
 
   String dropdownValue = 'All';
 
-  // late int? selectedValue;
-  // var items = {
-  //   'All': 0,
-  //   'Schedule 1': 1,
-  //   'Schedule 2': 2,
-  //   'Schedule 3': 3,
-  // };
-
   void handleConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
     } else {}
@@ -1221,6 +1213,19 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                               '',
                                                                         ),
                                                                       );
+                                                                      Future.delayed(
+                                                                          const Duration(
+                                                                              seconds: 8),
+                                                                          () {
+                                                                        if (mounted) {
+                                                                          _addCheckinOrCheckoutBloc!
+                                                                              .add(
+                                                                            EstimateUpdateCheckout(
+                                                                              tokenId: getCurrentTokenModel.tokens![currentIndex].newTokenId.toString(),
+                                                                            ),
+                                                                          );
+                                                                        }
+                                                                      });
                                                                     }
                                                                     if (currentIndex <
                                                                         getCurrentTokenModel.tokens!.length -

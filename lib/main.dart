@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,8 @@ class MediezyDoctor extends StatefulWidget {
 }
 
 class _MediezyDoctorState extends State<MediezyDoctor> {
+  late StreamSubscription<ConnectivityResult> subscription;
+  bool hasInternet = false;
   NotificationServices notificationServices = NotificationServices();
 
   @override
@@ -56,6 +59,23 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      handleConnectivityChange(result);
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  void handleConnectivityChange(ConnectivityResult result) {
+    setState(() {
+      hasInternet = result != ConnectivityResult.none;
+    });
   }
 
   @override

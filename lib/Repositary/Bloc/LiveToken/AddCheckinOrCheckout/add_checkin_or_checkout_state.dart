@@ -24,3 +24,13 @@ class EstimateUpdateCheckinLoading extends AddCheckinOrCheckoutState {}
 class EstimateUpdateCheckinLoaded extends AddCheckinOrCheckoutState {}
 
 class EstimateUpdateCheckinError extends AddCheckinOrCheckoutState {}
+
+//! estimate time update checkout
+
+class EstimateUpdateCheckoutInitial extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckoutLoading extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckoutLoaded extends AddCheckinOrCheckoutState {}
+
+class EstimateUpdateCheckoutError extends AddCheckinOrCheckoutState {}

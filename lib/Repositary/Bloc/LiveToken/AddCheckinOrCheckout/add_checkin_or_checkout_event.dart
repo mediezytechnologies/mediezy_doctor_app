@@ -28,3 +28,13 @@ class EstimateUpdateCheckin extends AddCheckinOrCheckoutEvent {
     required this.tokenId,
   });
 }
+
+//! estimate time update checkout
+
+class EstimateUpdateCheckout extends AddCheckinOrCheckoutEvent {
+  final String tokenId;
+
+  EstimateUpdateCheckout({
+    required this.tokenId,
+  });
+}
