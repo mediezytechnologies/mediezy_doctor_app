@@ -1181,11 +1181,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   log("1111111111111111111111111111111111111");
 
                                                   handleCheckout(
-                                                      context, index);
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 8), () {
-                                                    BlocProvider.of<
+                                                      context, index).then((value) => BlocProvider.of<
                                                                 AddCheckinOrCheckoutBloc>(
                                                             context)
                                                         .add(EstimateUpdateCheckout(
@@ -1194,8 +1190,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                                     .bookingData![
                                                                         index]
                                                                     .tokenId
-                                                                    .toString()));
-                                                  });
+                                                                    .toString())));
+                                                  // Future.delayed(
+                                                  //     const Duration(
+                                                  //         seconds: 8), () {
+                                                    
+                                                  // });
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==
@@ -1517,7 +1517,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  void handleCheckout(BuildContext context, int index) {
+ Future <void> handleCheckout(BuildContext context, int index) async{
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
