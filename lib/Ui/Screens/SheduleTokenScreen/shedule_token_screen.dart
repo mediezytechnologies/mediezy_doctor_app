@@ -54,6 +54,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                 endOffset: const Offset(0, 0),
                 slideCurve: Curves.linearToEaseOut,
                 child: SingleChildScrollView(
+                  physics: ClampingScrollPhysics(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Column(
@@ -69,7 +70,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (ctx) =>
-                                        const ScheduleTokenDetailsScreen()));
+                                        const ScheduleTokenDetailsScreen(),),);
                           },
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),

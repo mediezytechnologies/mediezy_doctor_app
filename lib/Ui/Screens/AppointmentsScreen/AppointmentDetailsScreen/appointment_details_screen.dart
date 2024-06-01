@@ -9,6 +9,7 @@ import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -327,7 +328,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           BlocProvider.of<GetAppointmentsBloc>(context)
                               .getAppointmentsModel;
                       return PageView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemCount: listLength,
                         controller: pageController,
                         onPageChanged: (index) {
@@ -346,6 +347,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
                           return SingleChildScrollView(
                             controller: _scrollController,
+                            physics: const ClampingScrollPhysics(),
                             // reverse: true,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -1258,7 +1260,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ),
                                         )
                                       : Container(),
-                                  const VerticalSpacingWidget(height: 10),
+                                   VerticalSpacingWidget(height:Platform.isIOS?30: 10),
+                                //  SizedBox(height: 20,),
+
                                 ],
                               ),
                             ),
