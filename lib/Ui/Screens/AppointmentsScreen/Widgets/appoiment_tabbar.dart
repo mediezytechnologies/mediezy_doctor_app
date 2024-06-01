@@ -10,6 +10,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/reservation_screen.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import '../../../../Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
@@ -60,24 +61,10 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpacingWidget(height: 5),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: Container(
-                    height: size.width > 450
-                        ? size.height * .065
-                        : size.height * .055,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.circular(10), // Set border radius
-                    ),
-                    // color: kCardColor,
-                    child: TabBar(
-                      controller: tabController,
-                      physics: const ClampingScrollPhysics(),
-                      dividerColor: kCardColor,
-                      unselectedLabelColor: kTextColor,
-                      onTap: (d) {
+
+                CustomTabbarWidget(
+                  
+                  onTap: (p0) {
                         if (tabController.index == 0) {
                           BlocProvider.of<GetAppointmentsBloc>(context).add(
                             FetchAllAppointments(
@@ -97,49 +84,100 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                         }
                         log(controller.formatDate());
                       },
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: size.width > 450 ? 11.sp : 12.sp,
-                      ),
-                      labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: size.width > 450 ? 11.sp : 12.sp,
-                          fontWeight: FontWeight.w600),
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kMainColor),
-                      // color: Color(0xff8ebcbf)),
-                      tabs: [
-                        //! up coming
-                        Tab(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Upcoming",
-                              ),
-                            ),
-                          ),
-                        ),
-                        //! completed
-                        Tab(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: const Align(
-                              alignment: Alignment.center,
-                              child: Text("Completed"),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                  height:size.width > 450
+                        ? size.height * .065
+                        : size.height * .055,
+                 marginHorizontal: 8,
+                  controller: tabController,
+                   unselectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
+                    selectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
+                     tabText1: "Upcoming",
+                      tabText2: "Completed",
+                      )
+
+,
+
+
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 8.w),
+                //   child: Container(
+                //     height: size.width > 450
+                //         ? size.height * .065
+                //         : size.height * .055,
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius:
+                //           BorderRadius.circular(10), // Set border radius
+                //     ),
+                //     // color: kCardColor,
+                //     child: TabBar(
+                //       controller: tabController,
+                //       physics: const ClampingScrollPhysics(),
+                //       dividerColor: kCardColor,
+                //       unselectedLabelColor: kTextColor,
+                //       onTap: (d) {
+                //         if (tabController.index == 0) {
+                //           BlocProvider.of<GetAppointmentsBloc>(context).add(
+                //             FetchAllAppointments(
+                //                 date: controller.formatDate(),
+                //                 clinicId: controller.initialIndex!,
+                //                 scheduleType: controller.scheduleIndex.value),
+                //           );
+                //         } else {
+                //           BlocProvider.of<GetAllCompletedAppointmentsBloc>(
+                //                   context)
+                //               .add(
+                //             FetchAllCompletedAppointments(
+                //                 date: controller.formatDate(),
+                //                 clinicId: controller.initialIndex!,
+                //                 scheduleType: controller.scheduleIndex.value),
+                //           );
+                //         }
+                //         log(controller.formatDate());
+                //       },
+                //       unselectedLabelStyle: TextStyle(
+                //         fontSize: size.width > 450 ? 11.sp : 12.sp,
+                //       ),
+                //       labelStyle: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: size.width > 450 ? 11.sp : 12.sp,
+                //           fontWeight: FontWeight.w600),
+                //       indicatorSize: TabBarIndicatorSize.tab,
+                //       indicator: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(10),
+                //           color: kMainColor),
+                //       // color: Color(0xff8ebcbf)),
+                //       tabs: [
+                //         //! up coming
+                //         Tab(
+                //           child: Container(
+                //             decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(30),
+                //             ),
+                //             child: const Align(
+                //               alignment: Alignment.center,
+                //               child: Text(
+                //                 "Upcoming",
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         //! completed
+                //         Tab(
+                //           child: Container(
+                //             decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(30),
+                //             ),
+                //             child: const Align(
+                //               alignment: Alignment.center,
+                //               child: Text("Completed"),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   child: TabBarView(
                     physics: const NeverScrollableScrollPhysics(),

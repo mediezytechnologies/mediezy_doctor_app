@@ -1321,7 +1321,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         )
                                       : Container(),
                                   VerticalSpacingWidget(
-                                      height: Platform.isIOS ? 30 : 10),
+                                      height:Platform.isIOS?0:  10),
                                   //  SizedBox(height: 20,),
                                 ],
                               ),

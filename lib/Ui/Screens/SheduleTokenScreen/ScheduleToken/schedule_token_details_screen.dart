@@ -799,7 +799,7 @@ class _ScheduleTokenDetailsScreenState
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+              height: Platform.isIOS ? size.height * 0.107 : size.height * 0.08,
               child: Column(
                 children: [
                   InkWell(
