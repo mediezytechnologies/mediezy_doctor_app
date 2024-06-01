@@ -100,7 +100,7 @@ class _TokenScreenState extends State<TokenScreen> {
 
   int clickedIndex = 0;
 
-  bool isFirstCheckIn = true;
+//  bool isFirstCheckIn = true;
 
   int? length;
   int? currentTokenLength = 1;
@@ -1078,7 +1078,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                             .tokens![currentIndex]
                                                                             .isCheckIn !=
                                                                         1) {
-                                                                      if (isFirstCheckIn &&
+                                                                      if (getCurrentTokenModel.tokens![currentIndex].firstIndexStatus ==
+                                                                              1 &&
                                                                           currentIndex ==
                                                                               0) {
                                                                         GeneralServices
@@ -1112,8 +1113,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                                 );
                                                                               }
                                                                             });
-                                                                            isFirstCheckIn =
-                                                                                false;
+                                                                            // isFirstCheckIn =
+                                                                            //     false;
                                                                           },
                                                                         );
                                                                       } else {

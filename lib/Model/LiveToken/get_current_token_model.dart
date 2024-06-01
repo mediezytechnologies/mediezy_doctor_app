@@ -69,6 +69,7 @@ class Tokens {
     this.mediezyPatientId,
     this.userImage,
     this.displayAge,
+    this.firstIndexStatus
   });
 
   Tokens.fromJson(dynamic json) {
@@ -130,6 +131,7 @@ class Tokens {
     mediezyPatientId = json['mediezy_patient_id'];
     userImage = json['user_image'];
     displayAge = json['displayAge'];
+    firstIndexStatus = json['first_index_status'];
   }
   int? id;
   int? bookedPersonId;
@@ -172,6 +174,8 @@ class Tokens {
   String? mediezyPatientId;
   String? userImage;
   String? displayAge;
+  int? firstIndexStatus;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -224,6 +228,7 @@ class Tokens {
     map['mediezy_patient_id'] = mediezyPatientId;
     map['user_image'] = userImage;
     map['displayAge'] = displayAge;
+    map['first_index_status'] = firstIndexStatus;
     return map;
   }
 }
