@@ -58,6 +58,7 @@ class CompletedAppointmentDetailsScreenState
         return Future.value(false);
       },
       child: Scaffold(
+        bottomNavigationBar: Container(height: 20.h,width: double.infinity,color: Colors.amber,),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {

@@ -798,47 +798,54 @@ class _ScheduleTokenDetailsScreenState
           bool isLoading = state is GenerateTokenFinalLoading;
           return Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: 8.w, vertical: Platform.isIOS ? 12.h : 8.h),
-            child: InkWell(
-              onTap: isLoading
-                  ? null
-                  : () {
-                      BlocProvider.of<GenerateTokenFinalBloc>(context).add(
-                        FetchGenerateTokenFinal(
-                          clinicId: dController.initialIndex!,
-                          selecteddays: selectedDays,
-                          startDate:
-                              '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                          endDate:
-                              '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                          startTime:
-                              formatTimeOfDay(selectedSchedule1StartingTime),
-                          endTime: formatTimeOfDay(selectedSchedule1EndingTime),
-                          timeDuration: timeDuration1Controller.text,
-                          scheduleType: selectedValue.toString(),
-                        ),
-                      );
-                    },
-              child: Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: isLoading
-                    ? Center(
-                        child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: Colors.white, size: 30))
-                    : Center(
-                        child: Text(
-                          "Generate token",
-                          style: TextStyle(
-                              fontSize: size.width > 450 ? 12.sp : 18.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
+                horizontal: 8.w, vertical:  8.h),
+            child: Container(
+              height:70.h ,
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: isLoading
+                        ? null
+                        : () {
+                            BlocProvider.of<GenerateTokenFinalBloc>(context).add(
+                              FetchGenerateTokenFinal(
+                                clinicId: dController.initialIndex!,
+                                selecteddays: selectedDays,
+                                startDate:
+                                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                endDate:
+                                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                startTime:
+                                    formatTimeOfDay(selectedSchedule1StartingTime),
+                                endTime: formatTimeOfDay(selectedSchedule1EndingTime),
+                                timeDuration: timeDuration1Controller.text,
+                                scheduleType: selectedValue.toString(),
+                              ),
+                            );
+                          },
+                    child: Container(
+                      width: double.infinity,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                        color: kMainColor,
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      child: isLoading
+                          ? Center(
+                              child: LoadingAnimationWidget.staggeredDotsWave(
+                                  color: Colors.white, size: 30))
+                          : Center(
+                              child: Text(
+                                "Generate token",
+                                style: TextStyle(
+                                    fontSize: size.width > 450 ? 12.sp : 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
