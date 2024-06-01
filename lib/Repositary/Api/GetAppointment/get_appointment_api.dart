@@ -34,17 +34,17 @@ class GetAppointmentApi {
       "clinicId": clinicId,
       "schedule_type": scheduleType,
     };
-     final startTime = DateTime.now();
-  log('API call started at: $startTime');
+    final startTime = DateTime.now();
+    log('API call started at: $startTime');
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     // log("respose ste1 === : ${response.body}");
     //print("<<<<<< Get All Appointments Are Worked >>>>>>");
-                 final endTime = DateTime.now();
-  log('API call ended at: $endTime');
+    final endTime = DateTime.now();
+    log('API call ended at: $endTime');
 
-  final duration = endTime.difference(startTime);
-  log('API call duration: ${duration.inMilliseconds} ms');
+    final duration = endTime.difference(startTime);
+    log('API call duration: ${duration.inMilliseconds} ms');
     return GetAppointmentsModel.fromJson(json.decode(response.body));
   }
 
