@@ -14,7 +14,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
-import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_completed_widget.dart';
 
 class CompletedAppointmentDetailsScreen extends StatefulWidget {
@@ -412,8 +411,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.reviewAfter ==
                                   null
                               ? Container()
-                              :   ShortNamesWidget(
-                          typeId: 1,
+                              : ShortNamesWidget(
+                                  typeId: 1,
                                   firstText: "Review after : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -424,8 +423,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.labName ==
                                   null
                               ? Container()
-                              :   ShortNamesWidget(
-                          typeId: 1,
+                              : ShortNamesWidget(
+                                  typeId: 1,
                                   firstText: "Lab name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -437,8 +436,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.labTest ==
                                   null
                               ? Container()
-                              :   ShortNamesWidget(
-                          typeId: 1,
+                              : ShortNamesWidget(
+                                  typeId: 1,
                                   firstText: "Lab test name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -449,8 +448,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.scanName ==
                                   null
                               ? Container()
-                              :   ShortNamesWidget(
-                          typeId: 1,
+                              : ShortNamesWidget(
+                                  typeId: 1,
                                   firstText: "Scan name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel
@@ -460,9 +459,8 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.scanTest ==
                                   null
                               ? Container()
-                              :   ShortNamesWidget(
-                          typeId: 1,
-                                
+                              : ShortNamesWidget(
+                                  typeId: 1,
                                   firstText: "Scan test name : ",
                                   secondText:
                                       getAllCompletedAppointmentDetailsModel

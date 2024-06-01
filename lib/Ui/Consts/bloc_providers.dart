@@ -57,8 +57,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/Suggestions/suggestion_bloc.dart'
 import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/suggest_doctor/suggest_doctor_bloc.dart';
-import 'package:mediezy_doctor/Ui/Screens/demo.dart/demo/demo_bloc.dart';
-import 'package:mediezy_doctor/Ui/Screens/demo.dart/dropdown/dropdown_bloc.dart';
 
 class AppBBlocProviders {
   static get allBlocProviders => [
@@ -113,8 +111,6 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => ScanReportBloc()),
         BlocProvider(create: (context) => DischargeSummaryBloc()),
         BlocProvider(create: (context) => ContactUsBloc()),
-        BlocProvider(create: (context) => LandingPageBloc()),
-        BlocProvider(create: (context) => DropdownBloc()),
         BlocProvider(create: (context) => SelectedClinicBloc()),
         BlocProvider(create: (context) => LeaveCheckBloc()),
         BlocProvider(create: (context) => GetAllVitalsBloc()),

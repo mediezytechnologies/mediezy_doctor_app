@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 
+// ignore: must_be_immutable
 class ShortNamesWidget extends StatelessWidget {
   ShortNamesWidget(
       {super.key,

@@ -26,7 +26,6 @@ class MedicineSearchWidget extends StatefulWidget {
 
 class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
   final TextEditingController searchController = TextEditingController();
-  // bool _isFavorite = false;
   String searchText = '';
 
   @override
@@ -277,12 +276,15 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
                                     ),
                                   ),
                                   onTap: () {
-                                    setState(() {
-                                      widget.onMedicineSelected(
-                                          medicineData.medicineName.toString(),
-                                          medicineData.id.toString());
-                                      Navigator.pop(context);
-                                    });
+                                    widget.typeId == 1
+                                        ? ""
+                                        : setState(() {
+                                            widget.onMedicineSelected(
+                                                medicineData.medicineName
+                                                    .toString(),
+                                                medicineData.id.toString());
+                                            Navigator.pop(context);
+                                          });
                                   },
                                 );
                               },

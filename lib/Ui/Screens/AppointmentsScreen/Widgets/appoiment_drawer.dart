@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -13,6 +15,7 @@ import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/AboutUsScreen/about_us_sc
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/ContactUsScreen/contact_us_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/Labs/lab_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MedicalShoppe/medical_shoppe_screen.dart';
+import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MyProfileScreen/my_profile_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/PreviousBookingScreen/previous_booking_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/SuggestionScreen/suggestion_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/T&CScreen/t&c_screen.dart';
@@ -76,7 +79,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     fadeDuration: const Duration(milliseconds: 400),
                     child: PatientImageWidget(
                         patientImage: drImage == null ? "" : drImage.toString(),
-                        radius: 25.r),
+                        radius: 30.r),
                   ),
                   Text(
                     "Dr.$firstName $secondName",
@@ -108,48 +111,58 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
             ),
           ),
-          ListTile(
-            title: Text('Edit Profile',
-                style: size.width > 450 ? blackTab9B400 : black14B400),
-            trailing: Icon(
-              Icons.edit,
-              size: size.width > 450 ? 13.sp : 20.sp,
-            ),
-            // onTap: () {
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (ctx) => MyProfileScreen(
-            //                 drFirstName: profileGetModel
-            //                     .doctorDetails!.first.firstname
-            //                     .toString(),
-            //                 drSecondName: profileGetModel
-            //                     .doctorDetails!.first.secondname
-            //                     .toString(),
-            //                 email: profileGetModel.doctorDetails!.first.emailID
-            //                     .toString(),
-            //                 phNo: profileGetModel
-            //                     .doctorDetails!.first.mobileNumber
-            //                     .toString(),
-            //                 about: profileGetModel.doctorDetails!.first.about
-            //                     .toString(),
-            //                 hospitalName: profileGetModel
-            //                     .doctorDetails!.first.mainHospital
-            //                     .toString(),
-            //                 clinicName: profileGetModel
-            //                     .doctorDetails!.first.clinics!
-            //                     .toList(),
-            //                 specifications: profileGetModel
-            //                     .doctorDetails!.first.specifications!
-            //                     .toList(),
-            //                 subSpecification: profileGetModel
-            //                     .doctorDetails!.first.subspecifications!
-            //                     .toList(),
-            //                 drImage: profileGetModel
-            //                     .doctorDetails!.first.docterImage
-            //                     .toString(),
-            //               ))); // Close the drawer
-            // },
+          BlocBuilder<ProfileGetBloc, ProfileGetState>(
+            builder: (context, state) {
+              if (state is ProfileGetLoaded) {
+                final profileGetModel = state.profileGetModel;
+                return ListTile(
+                  title: Text('Edit Profile',
+                      style: size.width > 450 ? blackTab9B400 : black14B400),
+                  trailing: Icon(
+                    Icons.edit,
+                    size: size.width > 450 ? 13.sp : 20.sp,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => MyProfileScreen(
+                                  drFirstName: profileGetModel
+                                      .doctorDetails!.first.firstname
+                                      .toString(),
+                                  drSecondName: profileGetModel
+                                      .doctorDetails!.first.secondname
+                                      .toString(),
+                                  email: profileGetModel
+                                      .doctorDetails!.first.emailID
+                                      .toString(),
+                                  phNo: profileGetModel
+                                      .doctorDetails!.first.mobileNumber
+                                      .toString(),
+                                  about: profileGetModel
+                                      .doctorDetails!.first.about
+                                      .toString(),
+                                  hospitalName: profileGetModel
+                                      .doctorDetails!.first.mainHospital
+                                      .toString(),
+                                  clinicName: profileGetModel
+                                      .doctorDetails!.first.clinics!
+                                      .toList(),
+                                  specifications: profileGetModel
+                                      .doctorDetails!.first.specifications!
+                                      .toList(),
+                                  subSpecification: profileGetModel
+                                      .doctorDetails!.first.subspecifications!
+                                      .toList(),
+                                  drImage: profileGetModel
+                                      .doctorDetails!.first.docterImage
+                                      .toString(),
+                                ))); // Close the drawer
+                  },
+                );
+              }
+              return Container();
+            },
           ),
           ListTile(
             title: Text('Medicines',
