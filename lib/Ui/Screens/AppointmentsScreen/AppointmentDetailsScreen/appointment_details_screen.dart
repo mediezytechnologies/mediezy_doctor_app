@@ -204,7 +204,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          bottomNavigationBar: Container(height: size.height*0.038,width: double.infinity,color: Colors.amber,),
+          bottomNavigationBar:Platform.isIOS? Container(height: size.height*0.038,width: double.infinity,color: Colors.amber,):const SizedBox(),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
