@@ -73,6 +73,7 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
           showLater: true,
           showReleaseNotes: true,
           child: MaterialApp(
+            
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Mediezy Doctor',
