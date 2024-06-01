@@ -204,7 +204,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          bottomNavigationBar:Platform.isIOS? Container(height: size.height*0.038,width: double.infinity,color: Colors.amber,):const SizedBox(),
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
@@ -1261,9 +1266,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ),
                                         )
                                       : Container(),
-                                   VerticalSpacingWidget(height:Platform.isIOS?30: 10),
-                                //  SizedBox(height: 20,),
-
+                                  VerticalSpacingWidget(
+                                      height: Platform.isIOS ? 30 : 10),
+                                  //  SizedBox(height: 20,),
                                 ],
                               ),
                             ),

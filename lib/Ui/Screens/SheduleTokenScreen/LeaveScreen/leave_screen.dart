@@ -75,6 +75,12 @@ class LeaveScreenState extends State<LeaveScreen> {
             .add(FetchAllLeaves(hospitalId: dController.initialIndex!));
       },
       child: Scaffold(
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         appBar: AppBar(
           centerTitle: true,
           title: const Text(

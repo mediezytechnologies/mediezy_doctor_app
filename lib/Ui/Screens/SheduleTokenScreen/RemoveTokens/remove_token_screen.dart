@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,35 +103,43 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
       ),
       bottomNavigationBar: visible == 0
           ? Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-              child: InkWell(
-                onTap: () {
-                  isClickedManage = true;
-                  BlocProvider.of<DeleteTokensBloc>(context).add(
-                      FetchDeleteTokens(
-                          tokenId: selectedTokenNumbers.toString()));
-                },
-                child: Container(
-                  height: 50.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: isClickedManage ? Colors.grey : kMainColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Remove Token",
-                      style: size.width > 450
-                          ? TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white)
-                          : TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: SizedBox(
+                height:
+                    Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        isClickedManage = true;
+                        BlocProvider.of<DeleteTokensBloc>(context).add(
+                            FetchDeleteTokens(
+                                tokenId: selectedTokenNumbers.toString()));
+                      },
+                      child: Container(
+                        height: 50.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: isClickedManage ? Colors.grey : kMainColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Remove Token",
+                            style: size.width > 450
+                                ? TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white)
+                                : TextStyle(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             )
