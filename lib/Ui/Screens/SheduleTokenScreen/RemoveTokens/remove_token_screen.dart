@@ -228,7 +228,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                 DatePickerDemoClass(
                                   height: size.width > 450
                                       ? size.height * .1
-                                      : size.height * .14,
+                                      : size.height * .15,
                                   width: size.width > 450
                                       ? size.width * .12
                                       : size.width * .17,

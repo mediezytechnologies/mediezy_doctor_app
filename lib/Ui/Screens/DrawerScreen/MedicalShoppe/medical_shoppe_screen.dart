@@ -4,7 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_all_medical_shope_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllMedicalShoppe/get_all_medical_shoppe_bloc.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/get_edical_store_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/get_medical_store_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/MedicalShoppe/search_medical_store_screen.dart';

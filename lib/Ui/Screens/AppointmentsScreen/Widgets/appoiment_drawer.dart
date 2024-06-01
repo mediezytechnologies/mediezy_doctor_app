@@ -64,11 +64,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
       width: size.width > 450 ? 170.w : 250.w,
       child: ListView(
         shrinkWrap: true,
-       physics:  const ClampingScrollPhysics() ,
+        physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
-            height: size.width > 450 ? 160.h : 180.h,
+            height: size.width > 450 ? 160.h : 200.h,
             child: DrawerHeader(
               decoration: BoxDecoration(color: kMainColor),
               child: Column(
