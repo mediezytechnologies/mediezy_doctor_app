@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/internet_handle_screen.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_theme_style.dart';
 import 'package:mediezy_doctor/Ui/Consts/bloc_providers.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SplashScreen/splash_screen.dart';
@@ -93,12 +94,13 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
           showLater: true,
           showReleaseNotes: true,
           child: MaterialApp(
-            
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Mediezy Doctor',
             theme: appThemeStyle(context),
-            home: const SplashScreen(),
+            home: hasInternet
+                ? const SplashScreen()
+                : const InternetHandleScreen(),
           ),
         );
       },

@@ -43,7 +43,8 @@ class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar>
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white, // Set the background color of the tab bar
+              color: const Color.fromARGB(131, 187, 222,
+                  251), // Set the background color of the tab bar
               borderRadius: BorderRadius.circular(10), // Set border radius
             ),
             child: TabBar(

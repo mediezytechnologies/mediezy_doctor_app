@@ -16,13 +16,13 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/token_card_remove_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/reservation_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -57,17 +57,6 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
   }
 
   final HospitalController dController = Get.put(HospitalController());
-
-  //* for manage section
-  // late ValueNotifier<String> dropValueManageNotifier;
-  // String clinicManageId = "";
-  // late String selectedManageClinicId;
-  // List<HospitalDetails> clinicValuesManage = [];
-
-  // late ValueNotifier<String> dropValueRestoreNotifier;
-  // String clinicRestoreId = "";
-  // late String selectedRestoreClinicId;
-  // List<HospitalDetails> clinicValuesRestore = [];
 
   List<String> selectedTokenNumbers = [];
   int visible = 0;
@@ -148,100 +137,29 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
       body: Column(
         children: [
           VerticalSpacingWidget(height: 10.h),
-          CustomTabbarWidget(height: 32.h,
-           marginHorizontal: 10,
+          CustomTabbarWidget(
+            height: size.width > 450 ? 60.h : 40.h,
+            marginHorizontal: 10,
             controller: tabFirstController,
-             unselectedLebelSize: size.width > 450 ? 10.sp : 13.sp,
-              selectedLebelSize: size.width > 450
-                  ?12.sp:15.sp,
-               tabText1:  "Remove",
-                tabText2:"Restore",
-                onTap:(value) {
-                setState(() {
-                  visible = value;
-                });
-                if (tabFirstController.index == 0) {
-                  BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
-                      date: formatDate(), clinicId: dController.initialIndex!));
-                  resetSelectedTokens();
-                }
-                BlocProvider.of<DeletedTokensBloc>(context)
-                    .add(FetchDeletedTokens(
-                  clinicId: dController.initialIndex!,
-                ));
-              },
-                ),
-          // Container(
-          //   height: 50.h,
-          //   color: kCardColor,
-          //   child: TabBar(
-          //     onTap: (value) {
-          //       setState(() {
-          //         visible = value;
-          //       });
-          //       if (tabFirstController.index == 0) {
-          //         BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
-          //             date: formatDate(), clinicId: dController.initialIndex!));
-          //         resetSelectedTokens();
-          //       }
-          //       BlocProvider.of<DeletedTokensBloc>(context)
-          //           .add(FetchDeletedTokens(
-          //         clinicId: dController.initialIndex!,
-          //       ));
-          //     },
-          //     controller: tabFirstController,
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     padding: EdgeInsets.only(
-          //         top: 10.h, left: 10.w, right: 60.w, bottom: 10.h),
-          //     dividerColor: kCardColor,
-          //     unselectedLabelColor: kTextColor,
-          //     unselectedLabelStyle: TextStyle(
-          //       fontSize: size.width > 450 ? 10.sp : 13.sp,
-          //     ),
-          //     labelStyle: size.width > 450
-          //         ? TextStyle(
-          //             fontSize: 12.sp,
-          //             fontWeight: FontWeight.w600,
-          //             color: Colors.white,
-          //           )
-          //         : TextStyle(
-          //             fontSize: 15.sp,
-          //             fontWeight: FontWeight.w600,
-          //             color: Colors.white,
-          //           ),
-          //     indicatorSize: TabBarIndicatorSize.tab,
-          //     indicator: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(10), color: kMainColor),
-          //     tabs: [
-          //       //! late
-          //       Tab(
-          //         child: Container(
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(30),
-          //           ),
-          //           child: const Align(
-          //             alignment: Alignment.center,
-          //             child: Text(
-          //               "Remove",
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       //! Early
-          //       Tab(
-          //         child: Container(
-          //           decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(30),
-          //           ),
-          //           child: const Align(
-          //             alignment: Alignment.center,
-          //             child: Text("Restore"),
-          //           ),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
+            unselectedLebelSize: size.width > 450 ? 10.sp : 13.sp,
+            selectedLebelSize: size.width > 450 ? 12.sp : 15.sp,
+            tabText1: "Remove",
+            tabText2: "Restore",
+            onTap: (value) {
+              setState(() {
+                visible = value;
+              });
+              if (tabFirstController.index == 0) {
+                BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
+                    date: formatDate(), clinicId: dController.initialIndex!));
+                resetSelectedTokens();
+              }
+              BlocProvider.of<DeletedTokensBloc>(context)
+                  .add(FetchDeletedTokens(
+                clinicId: dController.initialIndex!,
+              ));
+            },
+          ),
           Expanded(
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
@@ -63,40 +64,35 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                 const VerticalSpacingWidget(height: 5),
 
                 CustomTabbarWidget(
-                  
                   onTap: (p0) {
-                        if (tabController.index == 0) {
-                          BlocProvider.of<GetAppointmentsBloc>(context).add(
-                            FetchAllAppointments(
-                                date: controller.formatDate(),
-                                clinicId: controller.initialIndex!,
-                                scheduleType: controller.scheduleIndex.value),
-                          );
-                        } else {
-                          BlocProvider.of<GetAllCompletedAppointmentsBloc>(
-                                  context)
-                              .add(
-                            FetchAllCompletedAppointments(
-                                date: controller.formatDate(),
-                                clinicId: controller.initialIndex!,
-                                scheduleType: controller.scheduleIndex.value),
-                          );
-                        }
-                        log(controller.formatDate());
-                      },
-                  height:size.width > 450
-                        ? size.height * .065
-                        : size.height * .055,
-                 marginHorizontal: 8,
+                    if (tabController.index == 0) {
+                      BlocProvider.of<GetAppointmentsBloc>(context).add(
+                        FetchAllAppointments(
+                            date: controller.formatDate(),
+                            clinicId: controller.initialIndex!,
+                            scheduleType: controller.scheduleIndex.value),
+                      );
+                    } else {
+                      BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
+                          .add(
+                        FetchAllCompletedAppointments(
+                            date: controller.formatDate(),
+                            clinicId: controller.initialIndex!,
+                            scheduleType: controller.scheduleIndex.value),
+                      );
+                    }
+                    log(controller.formatDate());
+                  },
+                  height: size.width > 450
+                      ? size.height * .065
+                      : size.height * .055,
+                  marginHorizontal: 8,
                   controller: tabController,
-                   unselectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
-                    selectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
-                     tabText1: "Upcoming",
-                      tabText2: "Completed",
-                      )
-
-,
-
+                  unselectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
+                  selectedLebelSize: size.width > 450 ? 11.sp : 12.sp,
+                  tabText1: "Upcoming",
+                  tabText2: "Completed",
+                ),
 
                 // Padding(
                 //   padding: EdgeInsets.symmetric(horizontal: 8.w),
