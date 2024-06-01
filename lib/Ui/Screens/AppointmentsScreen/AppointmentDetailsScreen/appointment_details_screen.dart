@@ -360,7 +360,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           return SingleChildScrollView(
                             controller: _scrollController,
                             physics: const ClampingScrollPhysics(),
-                            // reverse: true,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
                               child: Column(
@@ -1321,7 +1320,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         )
                                       : Container(),
                                   VerticalSpacingWidget(
-                                      height:Platform.isIOS?0:  10),
+                                      height: Platform.isIOS ? 30 : 10),
                                   //  SizedBox(height: 20,),
                                 ],
                               ),

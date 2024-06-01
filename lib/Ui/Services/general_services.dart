@@ -86,10 +86,15 @@ class GeneralServices {
                 ),
                 content: Text(
                   title,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: kTextColor),
+                  style: size.width > 450
+                      ? TextStyle(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor)
+                      : TextStyle(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w600,
+                          color: kTextColor),
                 ),
                 actions: [
                   TextButton(

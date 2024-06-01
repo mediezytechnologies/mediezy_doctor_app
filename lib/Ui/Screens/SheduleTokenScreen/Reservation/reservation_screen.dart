@@ -10,11 +10,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mediezy_doctor/Model/GetToken/get_token_model.dart';
-import 'package:mediezy_doctor/Model/Labs/get_all_labs_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/ReserveToken/reserve_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -1107,156 +1107,6 @@ class _ReservationScreenState extends State<ReservationScreen>
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class CustomTabbarWidget extends StatelessWidget {
-  CustomTabbarWidget(
-      {Key? key,
-      required this.height,
-      required this.marginHorizontal,
-      this.onTap,
-      required this.controller,
-      required this.unselectedLebelSize,
-      required this.selectedLebelSize,
-      required this.tabText1,
-      required this.tabText2,
-      this.tabText3,
-      this.tabText4,
-      this.tabText5,
-      this.tabText6,
-      this.tabText7,
-      this.typeId = 2})
-      : super(key: key);
-
-  final double height;
-  final double marginHorizontal;
-  final void Function(int)? onTap;
-  final TabController controller;
-  final double unselectedLebelSize;
-  final double selectedLebelSize;
-  final String tabText1;
-  final String tabText2;
-  final String? tabText3;
-  final String? tabText4;
-  final String? tabText5;
-  final String? tabText6;
-  final String? tabText7;
-  final int typeId;
-
-  @override
-  Widget build(BuildContext context) {
-    List tabList = [
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              tabText1,
-            ),
-          ),
-        ),
-      ),
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(tabText2),
-          ),
-        ),
-      ),
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              tabText3.toString(),
-            ),
-          ),
-        ),
-      ),
-      //! unreserve
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(tabText4.toString()),
-          ),
-        ),
-      ),
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              tabText5.toString(),
-            ),
-          ),
-        ),
-      ),
-      //! unreserve
-      Tab(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.r),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(tabText6.toString()),
-          ),
-        ),
-      )
-    ];
-
-    return Container(
-      height: height,
-      //size.width > 450 ? 60.h : 40.h,
-      margin: EdgeInsets.symmetric(horizontal: marginHorizontal.w),
-      decoration: const BoxDecoration(
-          color: Color.fromARGB(131, 187, 222, 251),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: TabBar(
-        onTap: onTap,
-        controller: controller,
-        physics: const ClampingScrollPhysics(),
-        // padding: EdgeInsets.only(
-        //     top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
-        dividerColor: Colors.transparent,
-        unselectedLabelColor: kTextColor,
-        unselectedLabelStyle: TextStyle(
-          fontSize: unselectedLebelSize,
-          //size.width > 450 ? 10.sp : 13.sp,
-        ),
-        labelStyle: TextStyle(
-          fontSize: selectedLebelSize,
-          //size.width > 450 ? 11.sp : 15.sp,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
-          color: kMainColor,
-        ),
-        tabs: List.generate(typeId, (index) => tabList[index]),
       ),
     );
   }

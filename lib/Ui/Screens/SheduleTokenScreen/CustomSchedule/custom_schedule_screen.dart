@@ -17,6 +17,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/GetAllLate/get_all
 import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/LateCustomSchedule/late_schedule_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
@@ -90,10 +91,6 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
     super.initState();
     BlocProvider.of<GetAllLateBloc>(context)
         .add(FetchAllLate(clinicId: dController.initialIndex!));
-    // BlocProvider.of<GetAllLateBloc>(context).add(
-    //     FetchAllEarly(clinicId: dController.initialIndex!));
-    // BlocProvider.of<GetAllLateBloc>(context)
-    //     .add(FetchAllBreak(clinicId: dController.initialIndex!));
     selectedLateValue = items['Schedule 1'];
     selectedEarlyValue = items['Schedule 1'];
     selectedBreakValue = items['Schedule 1'];
@@ -116,85 +113,33 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           children: [
-            VerticalSpacingWidget(height: 10.h),
-            Container(
-              height: 50.h,
-              color: kCardColor,
-              child: TabBar(
-                onTap: (d) {
-                  if (tabFirstController.index == 0) {
-                    FocusScope.of(context).unfocus();
-                    BlocProvider.of<GetAllLateBloc>(context)
-                        .add(FetchAllLate(clinicId: dController.initialIndex!));
-                  } else if (tabFirstController.index == 1) {
-                    FocusScope.of(context).unfocus();
-                    BlocProvider.of<GetAllLateBloc>(context).add(
-                        FetchAllEarly(clinicId: dController.initialIndex!));
-                  } else {
-                    FocusScope.of(context).unfocus();
-                    BlocProvider.of<GetAllLateBloc>(context).add(
-                        FetchAllBreak(clinicId: dController.initialIndex!));
-                  }
-                },
-                controller: tabFirstController,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.only(
-                    top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
-                dividerColor: kCardColor,
-                unselectedLabelColor: kTextColor,
-                unselectedLabelStyle: TextStyle(
-                  fontSize: size.width > 450 ? 10.sp : 13.sp,
-                ),
-                labelStyle: TextStyle(
-                  fontSize: size.width > 450 ? 11.sp : 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: kMainColor),
-                tabs: [
-                  //! late
-                  Tab(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Late",
-                        ),
-                      ),
-                    ),
-                  ),
-                  //! Early
-                  Tab(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text("Early"),
-                      ),
-                    ),
-                  ),
-                  // ! break
-                  Tab(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text("Break"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            CustomTabbarWidget(
+              height: size.width > 450 ? 60.h : 30.h,
+              marginHorizontal: 8,
+              controller: tabFirstController,
+              unselectedLebelSize: size.width > 450 ? 10.sp : 13.sp,
+              selectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
+              tabText1: "Late",
+              tabText2: "Early",
+              tabText3: "Break",
+              typeId: 3,
+              onTap: (d) {
+                if (tabFirstController.index == 0) {
+                  FocusScope.of(context).unfocus();
+                  BlocProvider.of<GetAllLateBloc>(context)
+                      .add(FetchAllLate(clinicId: dController.initialIndex!));
+                } else if (tabFirstController.index == 1) {
+                  FocusScope.of(context).unfocus();
+                  BlocProvider.of<GetAllLateBloc>(context)
+                      .add(FetchAllEarly(clinicId: dController.initialIndex!));
+                } else {
+                  FocusScope.of(context).unfocus();
+                  BlocProvider.of<GetAllLateBloc>(context)
+                      .add(FetchAllBreak(clinicId: dController.initialIndex!));
+                }
+              },
             ),
+            VerticalSpacingWidget(height: 10.h),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
