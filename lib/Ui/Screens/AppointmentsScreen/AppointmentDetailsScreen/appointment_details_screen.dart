@@ -114,7 +114,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   int currentPosition = 0;
   int currentPage = 0;
   late PageController pageController;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   int? count = 0;
 
   int? length;
@@ -1168,7 +1168,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             );
                                             // Wait for 2 seconds
                                             await Future.delayed(
-                                                    const Duration(seconds: 2))
+                                                    const Duration(seconds: 3))
                                                 .then((value) {
                                               if (getAppointmentsModel
                                                       .bookingData![index]
@@ -1179,26 +1179,26 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                  handleCheckoutLastSection(
-                                                          context, index)
-                                                      .then((value) {
-                                                    if (getAppointmentsModel
-                                                            .bookingData![index]
-                                                            .isCheckedout ==
-                                                        1) {
-                                                      log("section one 2============");
+                                                  handleCheckout(
+                                                      context, index);
+                                                  //     .then((value) {
+                                                  //   if (getAppointmentsModel
+                                                  //           .bookingData![index]
+                                                  //           .isCheckedout ==
+                                                  //       1) {
+                                                  //     log("section one 2============");
 
-                                                      BlocProvider.of<
-                                                                  AddCheckinOrCheckoutBloc>(
-                                                              context)
-                                                          .add(EstimateUpdateCheckout(
-                                                              tokenId: getAppointmentsModel
-                                                                  .bookingData![
-                                                                      index]
-                                                                  .tokenId
-                                                                  .toString()));
-                                                    }
-                                                  });
+                                                  //     BlocProvider.of<
+                                                  //                 AddCheckinOrCheckoutBloc>(
+                                                  //             context)
+                                                  //         .add(EstimateUpdateCheckout(
+                                                  //             tokenId: getAppointmentsModel
+                                                  //                 .bookingData![
+                                                  //                     index]
+                                                  //                 .tokenId
+                                                  //                 .toString()));
+                                                  //   }
+                                                  // });
                                                   // Future.delayed(
                                                   //     const Duration(
                                                   //         seconds: 8), () {

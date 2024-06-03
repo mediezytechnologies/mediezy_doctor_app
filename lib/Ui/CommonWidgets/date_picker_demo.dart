@@ -21,6 +21,7 @@ class DatePickerDemoClass extends StatefulWidget {
   final DateChangeListener? onDateChange;
   final int daysCount;
   final String locale;
+  // ignore: use_key_in_widget_constructors
   const DatePickerDemoClass(
     this.startDate, {
     Key? key,
@@ -45,23 +46,13 @@ class DatePickerDemoClass extends StatefulWidget {
             "provide both activated and deactivated dates List at the same time.");
 
   @override
-  State<StatefulWidget> createState() => new _DatePickerDemoClassState();
+  State<StatefulWidget> createState() => _DatePickerDemoClassState();
 }
 
 class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
-//   Widget _buildMonthPicker() {
-//   if (_showMonthPicker(pickerType: MonthPickerType.dropDown)) {
-//     return YourDropDownWidget(); // Replace YourDropDownWidget with your actual dropdown widget
-//   } else if (_showMonthPicker(pickerType: MonthPickerType.switcher)) {
-//     return YourMonthSwitcherWidget(); // Replace YourMonthSwitcherWidget with your actual month switcher widget
-//   } else {
-//     return Container(); // Return an empty container if none of the conditions are met
-//   }
-// }
-
   DateTime? _currentDate;
 
-  ScrollController _controller = ScrollController();
+  final ScrollController _controller = ScrollController();
 
   late final TextStyle selectedDateStyle;
   late final TextStyle selectedMonthStyle;
@@ -151,11 +142,11 @@ class _DatePickerDemoClassState extends State<DatePickerDemoClass> {
               scrollDirection: Axis.horizontal,
               controller: _controller,
               itemBuilder: (context, index) {
-                DateTime _date = widget.startDate.add(Duration(days: index));
+                DateTime date0 = widget.startDate.add(Duration(days: index));
 
                 currentDate = widget.startDate.add(Duration(days: index));
 
-                DateTime date = DateTime(_date.year, _date.month, _date.day);
+                DateTime date = DateTime(date0.year, date0.month, date0.day);
                 // log(_date.toString());
                 bool isDeactivated = false;
 

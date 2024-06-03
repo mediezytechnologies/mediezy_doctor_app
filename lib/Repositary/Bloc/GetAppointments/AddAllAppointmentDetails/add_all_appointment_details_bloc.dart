@@ -8,7 +8,6 @@ import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
 
 part 'add_all_appointment_details_event.dart';
-
 part 'add_all_appointment_details_state.dart';
 
 class AddAllAppointmentDetailsBloc

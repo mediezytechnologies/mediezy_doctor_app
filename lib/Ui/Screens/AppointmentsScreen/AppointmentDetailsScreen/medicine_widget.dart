@@ -785,7 +785,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownHourlyValue = newValue!;
-                        log(">???????????$dropdownHourlyValue");
+                        log("???????????$dropdownHourlyValue");
                       });
                     },
                     items: itemsHourly.map((String items) {
