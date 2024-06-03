@@ -19,6 +19,7 @@ class GetCurrentTokenBloc
 
       emit(GetCurrentTokenLoading());
       try {
+       // var time =Time
         getCurrentTokenModel = await getCurrentTokenApi.getCurrentToken(
             clinicId: event.clinicId, scheduleType: event.scheduleType);
 

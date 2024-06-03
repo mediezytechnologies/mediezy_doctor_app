@@ -1179,20 +1179,25 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                  handleCheckout(context, index)
+                                                  handleCheckoutLastSection(
+                                                          context, index)
                                                       .then((value) {
-                                                    log("test 1=====================================");
+                                                    if (getAppointmentsModel
+                                                            .bookingData![index]
+                                                            .isCheckedout ==
+                                                        1) {
+                                                      log("section one 2============");
 
-                                                    BlocProvider.of<
-                                                                AddCheckinOrCheckoutBloc>(
-                                                            context)
-                                                        .add(EstimateUpdateCheckout(
-                                                            tokenId:
-                                                                getAppointmentsModel
-                                                                    .bookingData![
-                                                                        index]
-                                                                    .tokenId
-                                                                    .toString()));
+                                                      BlocProvider.of<
+                                                                  AddCheckinOrCheckoutBloc>(
+                                                              context)
+                                                          .add(EstimateUpdateCheckout(
+                                                              tokenId: getAppointmentsModel
+                                                                  .bookingData![
+                                                                      index]
+                                                                  .tokenId
+                                                                  .toString()));
+                                                    }
                                                   });
                                                   // Future.delayed(
                                                   //     const Duration(
@@ -1520,8 +1525,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  Future<void> handleCheckout(BuildContext context, int index) async {
-    log("test 2==============================================");
+  void handleCheckout(BuildContext context, int index) {
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
@@ -1533,6 +1537,28 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
       ),
     );
 
+    getAppointmentsModel.bookingData![index].isCheckedout = 1;
+    scanTestController.clear();
+    afterDaysController.clear();
+    noteController.clear();
+    labTestController.clear();
+    dropValueMedicalStore = '';
+    imageFromCamera = null;
+  }
+
+  Future<void> handleCheckoutLastSection(
+      BuildContext context, int index) async {
+    log("section one 1============");
+    BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+      AddCheckinOrCheckout(
+        clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
+        isCompleted: 1,
+        isCheckin: 0,
+        tokenNumber:
+            getAppointmentsModel.bookingData![index].tokenNumber.toString(),
+        isReached: '',
+      ),
+    );
     getAppointmentsModel.bookingData![index].isCheckedout = 1;
     scanTestController.clear();
     afterDaysController.clear();
