@@ -797,17 +797,17 @@ class _ScheduleTokenDetailsScreenState
         builder: (context, state) {
           bool isLoading = state is GenerateTokenFinalLoading;
           return Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 8.w, vertical:  8.h),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height:70.h ,
+              height: Platform.isIOS ? size.height * 0.107 : size.height * 0.08,
               child: Column(
                 children: [
                   InkWell(
                     onTap: isLoading
                         ? null
                         : () {
-                            BlocProvider.of<GenerateTokenFinalBloc>(context).add(
+                            BlocProvider.of<GenerateTokenFinalBloc>(context)
+                                .add(
                               FetchGenerateTokenFinal(
                                 clinicId: dController.initialIndex!,
                                 selecteddays: selectedDays,
@@ -815,9 +815,10 @@ class _ScheduleTokenDetailsScreenState
                                     '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
                                 endDate:
                                     '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                startTime:
-                                    formatTimeOfDay(selectedSchedule1StartingTime),
-                                endTime: formatTimeOfDay(selectedSchedule1EndingTime),
+                                startTime: formatTimeOfDay(
+                                    selectedSchedule1StartingTime),
+                                endTime: formatTimeOfDay(
+                                    selectedSchedule1EndingTime),
                                 timeDuration: timeDuration1Controller.text,
                                 scheduleType: selectedValue.toString(),
                               ),

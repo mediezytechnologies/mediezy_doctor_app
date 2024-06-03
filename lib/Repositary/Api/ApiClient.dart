@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
-// const String basePathUrl = "https://mediezy.com/api/";
+//const String basePathUrl = "https://mediezy.com/api/";
 const String basePathUrl = "https://test.mediezy.com/api/";
 
 class ApiClient {

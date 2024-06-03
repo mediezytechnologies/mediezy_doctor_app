@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/internet_handle_screen.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_theme_style.dart';
 import 'package:mediezy_doctor/Ui/Consts/bloc_providers.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SplashScreen/splash_screen.dart';
@@ -42,6 +44,8 @@ class MediezyDoctor extends StatefulWidget {
 }
 
 class _MediezyDoctorState extends State<MediezyDoctor> {
+  late StreamSubscription<ConnectivityResult> subscription;
+  bool hasInternet = false;
   NotificationServices notificationServices = NotificationServices();
 
   @override
@@ -56,6 +60,23 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
     notificationServices.forgroundMessage();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      handleConnectivityChange(result);
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  void handleConnectivityChange(ConnectivityResult result) {
+    setState(() {
+      hasInternet = result != ConnectivityResult.none;
+    });
   }
 
   @override
@@ -77,7 +98,9 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
             debugShowCheckedModeBanner: false,
             title: 'Mediezy Doctor',
             theme: appThemeStyle(context),
-            home: const SplashScreen(),
+            home: hasInternet
+                ? const SplashScreen()
+                : const InternetHandleScreen(),
           ),
         );
       },

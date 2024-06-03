@@ -9,7 +9,6 @@ import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -123,8 +122,15 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   bool isFirstCheckIn = true;
 
-//mahesh//====
-  // int? balanceAppoiment;
+  AddCheckinOrCheckoutBloc? _addCheckinOrCheckoutBloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Obtain the bloc reference
+    _addCheckinOrCheckoutBloc =
+        BlocProvider.of<AddCheckinOrCheckoutBloc>(context);
+  }
 
   final HospitalController controller = Get.put(HospitalController());
 
@@ -204,7 +210,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          bottomNavigationBar:Platform.isIOS? Container(height: size.height*0.038,width: double.infinity,color: Colors.amber,):const SizedBox(),
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
@@ -349,7 +360,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           return SingleChildScrollView(
                             controller: _scrollController,
                             physics: const ClampingScrollPhysics(),
-                            // reverse: true,
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.w),
                               child: Column(
@@ -418,7 +428,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       SizedBox(
                                         width: size.width > 450
                                             ? size.width * .64
-                                            : size.width * .43,
+                                            : size.width * .42,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -1167,8 +1177,23 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 if (currentPosition ==
                                                         listLength - 1 &&
                                                     currentPosition == 0) {
-                                                  handleCheckout(
-                                                      context, index);
+                                                  log("1111111111111111111111111111111111111");
+
+                                                  handleCheckout(context, index)
+                                                      .then((value) => BlocProvider
+                                                              .of<AddCheckinOrCheckoutBloc>(
+                                                                  context)
+                                                          .add(EstimateUpdateCheckout(
+                                                              tokenId: getAppointmentsModel
+                                                                  .bookingData![
+                                                                      index]
+                                                                  .tokenId
+                                                                  .toString())));
+                                                  // Future.delayed(
+                                                  //     const Duration(
+                                                  //         seconds: 8), () {
+
+                                                  // });
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==
@@ -1182,11 +1207,28 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         milliseconds: 500),
                                                     curve: Curves.easeInOut,
                                                   );
+                                                  log("2222222222222222222222222222222222222222222");
                                                   handleCheckout(
                                                       context, index);
+                                                  Future.delayed(
+                                                      const Duration(
+                                                          seconds: 8), () {
+                                                    BlocProvider.of<
+                                                                AddCheckinOrCheckoutBloc>(
+                                                            context)
+                                                        .add(EstimateUpdateCheckout(
+                                                            tokenId:
+                                                                getAppointmentsModel
+                                                                    .bookingData![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString()));
+                                                    navigateToHome(context);
+                                                  });
                                                   refreshData(context);
                                                 } else if (currentPosition <
                                                     listLength - 1) {
+                                                  log("33333333333333333333333333333333");
                                                   currentPosition + 1;
                                                   pageController.animateToPage(
                                                     currentPosition,
@@ -1196,6 +1238,21 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   );
                                                   handleCheckout(
                                                       context, currentPosition);
+                                                  Future.delayed(
+                                                      const Duration(
+                                                          seconds: 8), () {
+                                                    BlocProvider.of<
+                                                                AddCheckinOrCheckoutBloc>(
+                                                            context)
+                                                        .add(EstimateUpdateCheckout(
+                                                            tokenId:
+                                                                getAppointmentsModel
+                                                                    .bookingData![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString()));
+                                                    // navigateToHome(context);
+                                                  });
                                                   refreshData(context);
                                                   _scrollController.animateTo(
                                                     0.0,
@@ -1261,9 +1318,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ),
                                         )
                                       : Container(),
-                                   VerticalSpacingWidget(height:Platform.isIOS?30: 10),
-                                //  SizedBox(height: 20,),
-
+                                  VerticalSpacingWidget(
+                                      height: Platform.isIOS ? 30 : 10),
+                                  //  SizedBox(height: 20,),
                                 ],
                               ),
                             ),
@@ -1458,7 +1515,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  void handleCheckout(BuildContext context, int index) {
+  Future<void> handleCheckout(BuildContext context, int index) async {
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),

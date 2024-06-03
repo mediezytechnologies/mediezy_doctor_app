@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,7 +60,12 @@ class CompletedAppointmentDetailsScreenState
         return Future.value(false);
       },
       child: Scaffold(
-        bottomNavigationBar: Container(height: 20.h,width: double.infinity,color: Colors.amber,),
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {

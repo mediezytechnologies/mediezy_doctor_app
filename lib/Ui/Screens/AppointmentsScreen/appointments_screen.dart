@@ -111,8 +111,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       },
       child: Scaffold(
         //! tab bar
-        appBar: AppoimentAppbar(),
-        drawer: CustomDrawer(),
+        appBar: const AppoimentAppbar(),
+        drawer: const CustomDrawer(),
         body: StreamBuilder<ConnectivityResult>(
           stream: Connectivity().onConnectivityChanged,
           builder: (context, snapshot) {
@@ -167,7 +167,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       child: DatePickerDemoClass(
                         height: size.width > 450
                             ? size.height * .1
-                            : size.height * .13,
+                            : size.height * .145,
                         width: size.width > 450
                             ? size.width * .12
                             : size.width * .17,

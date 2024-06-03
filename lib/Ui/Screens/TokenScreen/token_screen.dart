@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -55,14 +56,6 @@ class _TokenScreenState extends State<TokenScreen> {
   }
 
   String dropdownValue = 'All';
-
-  // late int? selectedValue;
-  // var items = {
-  //   'All': 0,
-  //   'Schedule 1': 1,
-  //   'Schedule 2': 2,
-  //   'Schedule 3': 3,
-  // };
 
   void handleConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
@@ -1222,6 +1215,19 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                               '',
                                                                         ),
                                                                       );
+                                                                      Future.delayed(
+                                                                          const Duration(
+                                                                              seconds: 8),
+                                                                          () {
+                                                                        if (mounted) {
+                                                                          _addCheckinOrCheckoutBloc!
+                                                                              .add(
+                                                                            EstimateUpdateCheckout(
+                                                                              tokenId: getCurrentTokenModel.tokens![currentIndex].newTokenId.toString(),
+                                                                            ),
+                                                                          );
+                                                                        }
+                                                                      });
                                                                     }
                                                                     if (currentIndex <
                                                                         getCurrentTokenModel.tokens!.length -
@@ -1349,7 +1355,7 @@ class _TokenScreenState extends State<TokenScreen> {
 
   Widget _buildLoadingWidget() {
     return SizedBox(
-      height: 500.h,
+      height: Platform.isAndroid ? 470.h : 450.h,
       child: Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
@@ -1449,21 +1455,24 @@ class _TokenScreenState extends State<TokenScreen> {
                             ],
                           ),
                           const VerticalSpacingWidget(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 30.h,
-                                width: 120.w,
-                                color: Colors.white,
-                              ),
-                              Container(
-                                height: 30.h,
-                                width: 120.w,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
+                          // Platform.isIOS
+                          //     ? Container()
+                          //     : Row(
+                          //         mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //         children: [
+                          //           Container(
+                          //             height: 30.h,
+                          //             width: 120.w,
+                          //             color: Colors.white,
+                          //           ),
+                          //           Container(
+                          //             height: 30.h,
+                          //             width: 120.w,
+                          //             color: Colors.white,
+                          //           ),
+                          //         ],
+                          //       ),
                           const VerticalSpacingWidget(height: 30),
                           //! reschedule
                           Container(

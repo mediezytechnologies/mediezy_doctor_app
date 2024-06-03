@@ -49,5 +49,22 @@ class AddCheckinOrCheckoutBloc
         emit(EstimateUpdateCheckinError());
       }
     });
+
+    //! estimate time update checkout
+
+    on<EstimateUpdateCheckout>((event, emit) async {
+      emit(EstimateUpdateCheckoutLoading());
+      try {
+        updatedSuccessfully = await getCurrentTokenApi.estimateUpdateCheckout(
+          tokenId: event.tokenId,
+        );
+        emit(EstimateUpdateCheckoutLoaded());
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        log("checkout second call :${data['message']}");
+      } catch (e) {
+        log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
+        emit(EstimateUpdateCheckoutError());
+      }
+    });
   }
 }

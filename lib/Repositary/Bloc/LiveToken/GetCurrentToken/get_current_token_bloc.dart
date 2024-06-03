@@ -16,11 +16,13 @@ class GetCurrentTokenBloc
 
   GetCurrentTokenBloc() : super(GetCurrentTokenInitial()) {
     on<FetchGetCurrentToken>((event, emit) async {
+
       emit(GetCurrentTokenLoading());
       try {
        // var time =Time
         getCurrentTokenModel = await getCurrentTokenApi.getCurrentToken(
             clinicId: event.clinicId, scheduleType: event.scheduleType);
+
         emit(GetCurrentTokenLoaded());
       } catch (error) {
         log("<<<<<<<<<<Error>>>>>>>>>>$error");

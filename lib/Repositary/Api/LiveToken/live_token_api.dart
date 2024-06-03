@@ -70,4 +70,20 @@ class GetCurrentTokenApi {
     log(">>>>>>>><<<<<<<checkin${response.body}");
     return response.body;
   }
+
+  //! estimate time update checkout
+
+  Future<String> estimateUpdateCheckout({
+    required String tokenId,
+  }) async {
+    String basePath = "doctor/update-user-eta/checkout";
+    final body = {
+      "token_id": tokenId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
+    log(">>>>>>>><<<<<<<checkout${response.body}");
+    return response.body;
+  }
 }

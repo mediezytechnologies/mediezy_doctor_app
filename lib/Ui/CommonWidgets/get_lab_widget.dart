@@ -141,7 +141,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                   isAddButtonVisible
                       ? SizedBox(
                           height: size.height * .04,
-                          width: size.width * .26,
+                          width: size.width * .27,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: kMainColor),
@@ -162,7 +162,7 @@ class _GetLabWidgetState extends State<GetLabWidget> {
                         )
                       : SizedBox(
                           height: size.height * .04,
-                          width: size.width * .26,
+                          width: size.width * .27,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 import 'dart:io';
 
@@ -7,11 +8,13 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 import 'package:mediezy_doctor/Model/GetToken/get_token_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/ReserveToken/reserve_token_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/empty_custome_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -20,6 +23,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/RemoveTokens/token_card_remove_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/Reservation/un_reserve_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+
 import '../../../../Model/GenerateToken/clinic_get_model.dart';
 
 class ReservationScreen extends StatefulWidget {
@@ -123,14 +127,10 @@ class _ReservationScreenState extends State<ReservationScreen>
           : const SizedBox(),
       body: Column(
         children: [
-          // VerticalSpacingWidget(height: 10.h),
-          Container(
-            height: size.width > 450 ? 60.h : 40.h,
-            margin: EdgeInsets.symmetric(horizontal: 15.w),
-            decoration: const BoxDecoration(
-                color: Color.fromARGB(131, 187, 222, 251),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TabBar(
+          CustomTabbarWidget(
+              height: size.width > 450 ? 60.h : 40.h,
+              marginHorizontal: 15,
+              controller: tabFirstController,
               onTap: (value) {
                 setState(() {
                   visible = value;
@@ -151,55 +151,87 @@ class _ReservationScreenState extends State<ReservationScreen>
                             DateFormat('yyy-MM-dd').format(unreserveendDate),
                         clinicId: dController.initialIndex!));
               },
-              controller: tabFirstController,
-              physics: const NeverScrollableScrollPhysics(),
-              // padding: EdgeInsets.only(
-              //     top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
-              dividerColor: Colors.transparent,
-              unselectedLabelColor: kTextColor,
-              unselectedLabelStyle: TextStyle(
-                fontSize: size.width > 450 ? 10.sp : 13.sp,
-              ),
-              labelStyle: TextStyle(
-                fontSize: size.width > 450 ? 11.sp : 15.sp,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: kMainColor,
-              ),
-              tabs: [
-                //! reserve
-                Tab(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Reserve",
-                      ),
-                    ),
-                  ),
-                ),
-                //! unreserve
-                Tab(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text("Un reserve"),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+              unselectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
+              selectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
+              tabText1: "Reserve",
+              tabText2: "Un reserve"),
+          // VerticalSpacingWidget(height: 10.h),
+          // Container(
+          //   height: size.width > 450 ? 60.h : 40.h,
+          //   margin: EdgeInsets.symmetric(horizontal: 15.w),
+          //   decoration: const BoxDecoration(
+          //       color: Color.fromARGB(131, 187, 222, 251),
+          //       borderRadius: BorderRadius.all(Radius.circular(10))),
+          //   child: TabBar(
+          //     onTap: (value) {
+          //       setState(() {
+          //         visible = value;
+          //       });
+          //       if (tabFirstController.index == 0) {
+          //         BlocProvider.of<GetTokenBloc>(context).add(
+          //           FetchTokens(
+          //               date: formatDate(),
+          //               clinicId: dController.initialIndex!),
+          //         );
+          //         resetSelectedTokens();
+          //       }
+          //       BlocProvider.of<ReserveTokenBloc>(context).add(
+          //           FetchReservedTokens(
+          //               fromDate: DateFormat('yyy-MM-dd')
+          //                   .format(selectedunreserveDate),
+          //               toDate:
+          //                   DateFormat('yyy-MM-dd').format(unreserveendDate),
+          //               clinicId: dController.initialIndex!));
+          //     },
+          //     controller: tabFirstController,
+          //     physics: const ClampingScrollPhysics(),
+          //     // padding: EdgeInsets.only(
+          //     //     top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
+          //     dividerColor: Colors.transparent,
+          //     unselectedLabelColor: kTextColor,
+          //     unselectedLabelStyle: TextStyle(
+          //       fontSize: size.width > 450 ? 10.sp : 13.sp,
+          //     ),
+          //     labelStyle: TextStyle(
+          //       fontSize: size.width > 450 ? 11.sp : 15.sp,
+          //       fontWeight: FontWeight.w600,
+          //       color: Colors.white,
+          //     ),
+          //     indicatorSize: TabBarIndicatorSize.tab,
+          //     indicator: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: kMainColor,
+          //     ),
+          //     tabs: [
+          //       //! reserve
+          //       Tab(
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(30),
+          //           ),
+          //           child: const Align(
+          //             alignment: Alignment.center,
+          //             child: Text(
+          //               "Reserve",
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       //! unreserve
+          //       Tab(
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(30),
+          //           ),
+          //           child: const Align(
+          //             alignment: Alignment.center,
+          //             child: Text("Un reserve"),
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           const VerticalSpacingWidget(height: 5),
           Expanded(
             child: TabBarView(
