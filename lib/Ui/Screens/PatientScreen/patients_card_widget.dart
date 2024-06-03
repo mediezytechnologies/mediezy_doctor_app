@@ -50,7 +50,7 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Container(
-              height: size.width > 450 ? 82.h : 70.h,
+              height: size.width > 450 ? 82.h : 80.h,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: kCardColor,

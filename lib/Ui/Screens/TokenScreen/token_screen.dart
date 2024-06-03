@@ -280,7 +280,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                     ],
                                   );
                                 }
-                               // return _buildLoadingWidget();
+                                // return _buildLoadingWidget();
 
                                 return Expanded(
                                   child: PageView.builder(
@@ -1354,7 +1354,7 @@ class _TokenScreenState extends State<TokenScreen> {
 
   Widget _buildLoadingWidget() {
     return SizedBox(
-      height:Platform.isAndroid?500.h: 450.h,
+      height: Platform.isAndroid ? 470.h : 450.h,
       child: Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
@@ -1454,22 +1454,24 @@ class _TokenScreenState extends State<TokenScreen> {
                             ],
                           ),
                           const VerticalSpacingWidget(height: 10),
-                          Platform.isIOS?Container():
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 30.h,
-                                width: 120.w,
-                                color: Colors.white,
-                              ),
-                              Container(
-                                height: 30.h,
-                                width: 120.w,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
+                          // Platform.isIOS
+                          //     ? Container()
+                          //     : Row(
+                          //         mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //         children: [
+                          //           Container(
+                          //             height: 30.h,
+                          //             width: 120.w,
+                          //             color: Colors.white,
+                          //           ),
+                          //           Container(
+                          //             height: 30.h,
+                          //             width: 120.w,
+                          //             color: Colors.white,
+                          //           ),
+                          //         ],
+                          //       ),
                           const VerticalSpacingWidget(height: 30),
                           //! reschedule
                           Container(
