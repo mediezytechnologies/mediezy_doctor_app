@@ -1179,16 +1179,26 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                  handleCheckout(context, index)
-                                                      .then((value) => BlocProvider
-                                                              .of<AddCheckinOrCheckoutBloc>(
-                                                                  context)
+                                                  handleCheckoutLastSection(
+                                                          context, index)
+                                                      .then((value) {
+                                                    if ( getAppointmentsModel.bookingData![index].isCheckedout ==1
+                                                     ) {
+                                                      log("section one 2============");
+                                                
+                                                      BlocProvider.of<
+                                                                  AddCheckinOrCheckoutBloc>(
+                                                              context)
                                                           .add(EstimateUpdateCheckout(
                                                               tokenId: getAppointmentsModel
                                                                   .bookingData![
                                                                       index]
                                                                   .tokenId
-                                                                  .toString())));
+                                                                  .toString()));
+
+                                                     
+                                                    }
+                                                  });
                                                   // Future.delayed(
                                                   //     const Duration(
                                                   //         seconds: 8), () {
@@ -1515,7 +1525,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  Future<void> handleCheckout(BuildContext context, int index) async {
+  void handleCheckout(BuildContext context, int index) {
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
@@ -1534,6 +1544,30 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     labTestController.clear();
     dropValueMedicalStore = '';
     imageFromCamera = null;
+  }
+
+  Future<void> handleCheckoutLastSection(
+      BuildContext context, int index) async {
+    log("section one 1============");
+    BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+      AddCheckinOrCheckout(
+        clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
+        isCompleted: 1,
+        isCheckin: 0,
+        tokenNumber:
+            getAppointmentsModel.bookingData![index].tokenNumber.toString(),
+        isReached: '',
+      ),
+    );
+         getAppointmentsModel.bookingData![index].isCheckedout = 1;
+    scanTestController.clear();
+    afterDaysController.clear();
+    noteController.clear();
+    labTestController.clear();
+    dropValueMedicalStore = '';
+    imageFromCamera = null;
+                                                   
+                                                            
   }
 
   void navigateToHome(BuildContext context) {
