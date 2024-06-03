@@ -107,22 +107,23 @@ class CompletedAppointmentDetailsScreenState
                       Row(
                         children: [
                           FadedScaleAnimation(
-                              scaleDuration: const Duration(milliseconds: 400),
-                              fadeDuration: const Duration(milliseconds: 400),
-                              child: PatientImageWidget(
-                                  patientImage:
-                                      getAllCompletedAppointmentDetailsModel
-                                                  .appointmentDetails!
-                                                  .first
-                                                  .patientUserImage ==
-                                              null
-                                          ? ""
-                                          : getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .patientUserImage
-                                              .toString(),
-                                  radius: 40.r)),
+                            scaleDuration: const Duration(milliseconds: 400),
+                            fadeDuration: const Duration(milliseconds: 400),
+                            child: PatientImageWidget(
+                                patientImage:
+                                    getAllCompletedAppointmentDetailsModel
+                                                .appointmentDetails!
+                                                .first
+                                                .patientUserImage ==
+                                            null
+                                        ? ""
+                                        : getAllCompletedAppointmentDetailsModel
+                                            .appointmentDetails!
+                                            .first
+                                            .patientUserImage
+                                            .toString(),
+                                radius: 40.r),
+                          ),
                           const HorizontalSpacingWidget(width: 40),
                           //! name
                           Column(

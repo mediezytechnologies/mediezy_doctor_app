@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
-import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class GetMedicinesWidget extends StatelessWidget {
@@ -51,8 +50,8 @@ class GetMedicinesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                    ShortNamesWidget(
-                          typeId: 1,
+                  ShortNamesWidget(
+                    typeId: 1,
                     firstText: "Medicine : ",
                     secondText: medicineName,
                   ),
@@ -68,14 +67,13 @@ class GetMedicinesWidget extends StatelessWidget {
                           firstText: "Interval : ",
                           secondText: "$interval $timeSection",
                         ),
-                    ShortNamesWidget(
-                          typeId: 1,
+                  ShortNamesWidget(
+                    typeId: 1,
                     firstText: "Days : ",
                     secondText: noOfDays,
                   ),
-                  const VerticalSpacingWidget(height: 5),
-                    ShortNamesWidget(
-                          typeId: 1,
+                  ShortNamesWidget(
+                    typeId: 1,
                     firstText: "",
                     secondText: type == 1
                         ? "After food"

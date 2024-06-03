@@ -1180,15 +1180,20 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   log("1111111111111111111111111111111111111");
 
                                                   handleCheckout(context, index)
-                                                      .then((value) => BlocProvider
-                                                              .of<AddCheckinOrCheckoutBloc>(
-                                                                  context)
-                                                          .add(EstimateUpdateCheckout(
-                                                              tokenId: getAppointmentsModel
-                                                                  .bookingData![
-                                                                      index]
-                                                                  .tokenId
-                                                                  .toString())));
+                                                      .then((value) {
+                                                    log("test 1=====================================");
+
+                                                    BlocProvider.of<
+                                                                AddCheckinOrCheckoutBloc>(
+                                                            context)
+                                                        .add(EstimateUpdateCheckout(
+                                                            tokenId:
+                                                                getAppointmentsModel
+                                                                    .bookingData![
+                                                                        index]
+                                                                    .tokenId
+                                                                    .toString()));
+                                                  });
                                                   // Future.delayed(
                                                   //     const Duration(
                                                   //         seconds: 8), () {
@@ -1516,6 +1521,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   }
 
   Future<void> handleCheckout(BuildContext context, int index) async {
+    log("test 2==============================================");
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
