@@ -20,6 +20,7 @@ import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
+import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_all_appointment_api.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -39,6 +40,9 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsS
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../Model/LiveToken/checkin_or_checkout.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
   const AppointmentDetailsScreen({
@@ -110,17 +114,21 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   late GetAllFavouriteMedicalStoresModel getAllFavouriteMedicalStoresModel;
   late ClinicGetModel clinicGetModel;
   // late GetAllAppointmentsModel getAllAppointmentsModel;
-  File? imageFromCamera;
+  //File? imageFromCamera;
+  String? imageFromCamera;
   int currentPosition = 0;
   int currentPage = 0;
   late PageController pageController;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   int? count = 0;
 
   int? length;
   String? selectedValue;
 
   bool isFirstCheckIn = true;
+
+  final ImagePicker imagePicker = ImagePicker();
+  String? imagePath;
 
   AddCheckinOrCheckoutBloc? _addCheckinOrCheckoutBloc;
 
@@ -652,7 +660,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   : blackMainText),
                                           IconButton(
                                             onPressed: () async {
-                                              await pickImageFromCamera();
+                                              await placePicImage();
                                               setState(
                                                   () {}); // Refresh the screen after picking the image
                                             },
@@ -669,46 +677,48 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  imageFromCamera == null
-                                      ? Container()
-                                      : InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        ImageViewWidget(
-                                                            image:
-                                                                imageFromCamera)));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "View your uploaded image",
-                                                style: size.width > 450
-                                                    ? TextStyle(
-                                                        fontSize: 11.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue)
-                                                    : TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue),
-                                              ),
-                                              const HorizontalSpacingWidget(
-                                                  width: 10),
-                                              Icon(
-                                                Icons.image,
-                                                color: Colors.blue,
-                                                size: size.width > 450
-                                                    ? 20.sp
-                                                    : 28.sp,
-                                              )
-                                            ],
+                                  if (imagePath != null)
+                                    // ? Container()
+                                    // :
+
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                ImageViewWidgetDemo(
+                                              image: imagePath!,
+                                            ),
                                           ),
-                                        ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "View your uploaded image",
+                                            style: size.width > 450
+                                                ? TextStyle(
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue)
+                                                : TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue),
+                                          ),
+                                          const HorizontalSpacingWidget(
+                                              width: 10),
+                                          Icon(
+                                            Icons.image,
+                                            color: Colors.blue,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 28.sp,
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   const VerticalSpacingWidget(height: 5),
                                   Text(
                                     "Review After",
@@ -1138,6 +1148,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   ),
+
+                                  ElevatedButton(
+                                      onPressed: () {}, child: Text("data")),
                                   const VerticalSpacingWidget(height: 10),
                                   getAppointmentsModel
                                               .bookingData![index].date ==
@@ -1157,7 +1170,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 labTest: labTestController.text,
                                                 medicalshopId:
                                                     dropValueMedicalStore,
-                                                imageFromCamera,
+                                                attachment: imagePath,
                                                 reviewAfter:
                                                     afterDaysController.text,
                                                 notes: noteController.text,
@@ -1167,9 +1180,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               ),
                                             );
                                             // Wait for 2 seconds
+
                                             await Future.delayed(
-                                                    const Duration(seconds: 2))
-                                                .then((value) {
+                                                    const Duration(seconds: 3))
+                                                .then((value) async{
                                               if (getAppointmentsModel
                                                       .bookingData![index]
                                                       .isCheckedout !=
@@ -1179,31 +1193,45 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                  handleCheckoutLastSection(
-                                                          context, index)
-                                                      .then((value) {
-                                                    if ( getAppointmentsModel.bookingData![index].isCheckedout ==1
-                                                     ) {
-                                                      log("section one 2============");
-                                                
-                                                      BlocProvider.of<
-                                                                  AddCheckinOrCheckoutBloc>(
-                                                              context)
-                                                          .add(EstimateUpdateCheckout(
-                                                              tokenId: getAppointmentsModel
-                                                                  .bookingData![
-                                                                      index]
-                                                                  .tokenId
-                                                                  .toString()));
+                                                 await handleCheckoutLastSection(
+                                                    context,
+                                                    index,
+                                                  );
+                                                     Timer(Duration(seconds: 3), () {
+      // Second function
+      BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+        EstimateUpdateCheckout(
+          tokenId: getAppointmentsModel.bookingData![index].tokenId.toString(),
+        ),
+      );
+    });
+                                                  log(" working    ======== with out the");
 
-                                                     
-                                                    }
-                                                  });
-                                                  // Future.delayed(
-                                                  //     const Duration(
-                                                  //         seconds: 8), () {
+                                                  // then(
+                                                  //   (value) {
+                                                  if (getAppointmentsModel
+                                                          .bookingData![index]
+                                                          .isCheckedout ==
+                                                      1) {
+                                                    log("section one 2============");
 
-                                                  // });
+                                                    BlocProvider.of<
+                                                                AddCheckinOrCheckoutBloc>(
+                                                            context)
+                                                        .add(
+                                                      EstimateUpdateCheckout(
+                                                        tokenId:
+                                                            getAppointmentsModel
+                                                                .bookingData![
+                                                                    index]
+                                                                .tokenId
+                                                                .toString(),
+                                                      ),
+                                                    );
+                                                  }
+                                                  //   },
+                                                  // );
+
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==
@@ -1543,12 +1571,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
+    imagePath = null;
   }
 
   Future<void> handleCheckoutLastSection(
       BuildContext context, int index) async {
-    log("section one 1============");
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
@@ -1559,15 +1586,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         isReached: '',
       ),
     );
-         getAppointmentsModel.bookingData![index].isCheckedout = 1;
+    getAppointmentsModel.bookingData![index].isCheckedout = 1;
     scanTestController.clear();
     afterDaysController.clear();
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
-                                                   
-                                                            
+    imagePath = "";
   }
 
   void navigateToHome(BuildContext context) {
@@ -1676,21 +1701,35 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future<void> pickImageFromCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      try {
-        // ignore: unused_local_variable
-        File compressedImage = await compressImage(pickedFile.path);
-        imageFromCamera = File(pickedFile.path);
-      } catch (e) {
-        log('Error compressing image: $e');
-        GeneralServices.instance.showToastMessage('Error compressing image');
-      }
-    } else {
-      GeneralServices.instance.showToastMessage('No image selected');
-    }
+  //string replav=ce//
+  Future placePicImage() async {
+    var image = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
+    );
+    if (image == null) return;
+    final imageTemporary = image.path;
+    setState(() {
+      imagePath = imageTemporary;
+      log("$imageTemporary======= image");
+    });
   }
+
+  // Future<void> pickImageFromCamera() async {
+  //   final picker = ImagePicker();
+  //   final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+  //   if (pickedFile != null) {
+  //     try {
+  //       // ignore: unused_local_variable
+  //       File compressedImage = await compressImage(pickedFile.path);
+  //       imageFromCamera = File(pickedFile.path);
+  //     } catch (e) {
+  //       log('Error compressing image: $e');
+  //       GeneralServices.instance.showToastMessage('Error compressing image');
+  //     }
+  //   } else {
+  //     GeneralServices.instance.showToastMessage('No image selected');
+  //   }
+  // }
 }

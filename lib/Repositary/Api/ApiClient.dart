@@ -25,7 +25,7 @@ class ApiClient {
 
     print("Invoke Api worked");
     print(method);
-    print(token);
+    log("tok $token");
     Map<String, String> headerParams = {};
     if (method == 'POST' || method == 'GET' || method == 'PATCH') {
       // print("Methode POST OR GET");

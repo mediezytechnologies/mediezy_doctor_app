@@ -12,6 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/GetAppointments/get_all_medicines_model.dart';
 
+
+
+
 class GetAppointmentApi {
   ApiClient apiClient = ApiClient();
   MultiFileApiClient2 multiFileApiClient = MultiFileApiClient2();
@@ -168,6 +171,15 @@ class GetAppointmentApi {
   }
 
   //! Save all appointment details api
+   
+
+
+
+   //on dio impliment//
+
+
+
+//http impliment//
 
   Future<String> addAllAppointmentDetails(
     File? attachment, {
@@ -355,3 +367,12 @@ class GetAppointmentApi {
     return response.body;
   }
 }
+
+
+
+
+
+
+
+ //! Save all appointment details api in dio 
+ 
