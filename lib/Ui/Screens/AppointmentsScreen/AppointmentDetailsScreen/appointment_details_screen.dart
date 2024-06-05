@@ -1208,26 +1208,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   log(" working    ======== with out the");
 
                                                 
-                                                  // if (getAppointmentsModel
-                                                  //         .bookingData![index]
-                                                  //         .isCheckedout ==
-                                                  //     1) {
-                                                  //   log("section one 2============");
-
-                                                  //   BlocProvider.of<
-                                                  //               AddCheckinOrCheckoutBloc>(
-                                                  //           context)
-                                                  //       .add(
-                                                  //     EstimateUpdateCheckout(
-                                                  //       tokenId:
-                                                  //           getAppointmentsModel
-                                                  //               .bookingData![
-                                                  //                   index]
-                                                  //               .tokenId
-                                                  //               .toString(),
-                                                  //     ),
-                                                  //   );
-                                                  // }
                                                   
 
                                                   navigateToHome(context);
