@@ -8,9 +8,11 @@ class AddCheckinOrCheckoutInitial extends AddCheckinOrCheckoutState {}
 class AddCheckinOrCheckoutLoading extends AddCheckinOrCheckoutState {}
 
 class AddCheckinOrCheckoutLoaded extends AddCheckinOrCheckoutState {
-  final String response;
+ // final String response;
 
-  AddCheckinOrCheckoutLoaded(this.response);
+  AddCheckinOrCheckoutLoaded(
+    //this.response
+    );
 }
 
 class AddCheckinOrCheckoutError extends AddCheckinOrCheckoutState {

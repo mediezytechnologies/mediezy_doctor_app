@@ -1148,9 +1148,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   ),
-
-                                  ElevatedButton(
-                                      onPressed: () {}, child: Text("data")),
                                   const VerticalSpacingWidget(height: 10),
                                   getAppointmentsModel
                                               .bookingData![index].date ==
@@ -1183,7 +1180,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
                                             await Future.delayed(
                                                     const Duration(seconds: 3))
-                                                .then((value) async{
+                                                .then((value) async {
                                               if (getAppointmentsModel
                                                       .bookingData![index]
                                                       .isCheckedout !=
@@ -1193,28 +1190,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                 await handleCheckoutLastSection(
-                                                    context,
-                                                    index,
-                                                  );
-                                                     Timer(Duration(seconds: 3), () {
-      // Second function
-      BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-        EstimateUpdateCheckout(
-          tokenId: getAppointmentsModel.bookingData![index].tokenId.toString(),
-        ),
-      );
-    });
-                                                  log(" working    ======== with out the");
-
-                                                  // then(
-                                                  //   (value) {
-                                                  if (getAppointmentsModel
-                                                          .bookingData![index]
-                                                          .isCheckedout ==
-                                                      1) {
-                                                    log("section one 2============");
-
+                                                    handleCheckout(
+                                                      context, index);
                                                     BlocProvider.of<
                                                                 AddCheckinOrCheckoutBloc>(
                                                             context)
@@ -1228,9 +1205,30 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                                 .toString(),
                                                       ),
                                                     );
-                                                  }
-                                                  //   },
-                                                  // );
+                                                  log(" working    ======== with out the");
+
+                                                
+                                                  // if (getAppointmentsModel
+                                                  //         .bookingData![index]
+                                                  //         .isCheckedout ==
+                                                  //     1) {
+                                                  //   log("section one 2============");
+
+                                                  //   BlocProvider.of<
+                                                  //               AddCheckinOrCheckoutBloc>(
+                                                  //           context)
+                                                  //       .add(
+                                                  //     EstimateUpdateCheckout(
+                                                  //       tokenId:
+                                                  //           getAppointmentsModel
+                                                  //               .bookingData![
+                                                  //                   index]
+                                                  //               .tokenId
+                                                  //               .toString(),
+                                                  //     ),
+                                                  //   );
+                                                  // }
+                                                  
 
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");

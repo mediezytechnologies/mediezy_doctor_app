@@ -16,7 +16,7 @@ class AddCheckinOrCheckoutBloc
 
   AddCheckinOrCheckoutBloc() : super(AddCheckinOrCheckoutInitial()) {
     on<AddCheckinOrCheckout>((event, emit) async {
-       final preferences = await SharedPreferences.getInstance();
+      
       emit(AddCheckinOrCheckoutLoading());
       try {
         updatedSuccessfully = await getCurrentTokenApi.addCheckinOrCheckout(
@@ -25,11 +25,11 @@ class AddCheckinOrCheckoutBloc
             isCompleted: event.isCompleted,
             clinicId: event.clinicId,
             isReached: event.isReached);
-        emit(AddCheckinOrCheckoutLoaded(updatedSuccessfully));
+        emit(AddCheckinOrCheckoutLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data['message']);
         log("checkin first call :${data['message']}");
-        preferences.setString("res", data['message']);
+        
 
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
