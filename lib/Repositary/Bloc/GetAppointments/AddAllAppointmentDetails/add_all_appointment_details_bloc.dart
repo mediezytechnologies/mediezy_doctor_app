@@ -9,7 +9,6 @@ import 'package:meta/meta.dart';
 import '../../../Api/GetAppointment/get_all_appointment_api.dart';
 
 part 'add_all_appointment_details_event.dart';
-
 part 'add_all_appointment_details_state.dart';
 
 class AddAllAppointmentDetailsBloc

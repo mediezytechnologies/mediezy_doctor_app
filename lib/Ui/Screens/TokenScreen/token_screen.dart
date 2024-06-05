@@ -840,7 +840,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                 : ShortNamesWidget(
                                                                     typeId: 1,
                                                                     firstText:
-                                                                        "Scanning Centre : ",
+                                                                        "Scanning centre : ",
                                                                     secondText: getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
@@ -1313,29 +1313,6 @@ class _TokenScreenState extends State<TokenScreen> {
                                     },
                                   ),
                                 );
-                                // ,
-                                // Positioned(
-                                // top: 40.h,
-                                // left: 50.w,
-                                // child: IconButton(
-                                // onPressed: () {
-                                // controller.jumpToPage(currentIndex - 1);
-                                // },
-                                // icon: Icon(Icons.arrow_back_ios,
-                                // color: kMainColor, size: 30.sp),
-                                // ),
-                                // ),
-                                // Positioned(
-                                // top: 40.h,
-                                // left: 270.w,
-                                // child: IconButton(
-                                // onPressed: () {
-                                // controller.jumpToPage(currentIndex + 1);
-                                // },
-                                // icon: Icon(Icons.arrow_forward_ios,
-                                // color: kMainColor, size: 30.sp),
-                                // ),
-                                // ),
                               }
                               return Container();
                             },
@@ -1454,25 +1431,7 @@ class _TokenScreenState extends State<TokenScreen> {
                               ),
                             ],
                           ),
-                          const VerticalSpacingWidget(height: 10),
-                          // Platform.isIOS
-                          //     ? Container()
-                          //     : Row(
-                          //         mainAxisAlignment:
-                          //             MainAxisAlignment.spaceBetween,
-                          //         children: [
-                          //           Container(
-                          //             height: 30.h,
-                          //             width: 120.w,
-                          //             color: Colors.white,
-                          //           ),
-                          //           Container(
-                          //             height: 30.h,
-                          //             width: 120.w,
-                          //             color: Colors.white,
-                          //           ),
-                          //         ],
-                          //       ),
+
                           const VerticalSpacingWidget(height: 30),
                           //! reschedule
                           Container(

@@ -138,7 +138,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                         widget.medicine![index].dosage == null
                             ? Container()
                             : ShortNamesWidget(
-                              typeId: 1,
+                                typeId: 1,
                                 firstText: "Dosage : ",
                                 secondText:
                                     widget.medicine![index].dosage.toString(),
@@ -147,22 +147,19 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                 widget.medicine![index].interval == "null"
                             ? Container()
                             : ShortNamesWidget(
-                           typeId: 1,
+                                typeId: 1,
                                 firstText: "Interval : ",
                                 secondText:
                                     "${widget.medicine![index].interval.toString()} ${widget.medicine![index].timeSection.toString()}",
                               ),
                         ShortNamesWidget(
-                           typeId: 1,
+                          typeId: 1,
                           firstText: "Days : ",
                           secondText:
                               widget.medicine![index].noOfDays.toString(),
                         ),
-                        const VerticalSpacingWidget(height: 5),
                         ShortNamesWidget(
-
-                          typeId: 
-                        widget.medicine![index].type!,
+                          typeId: widget.medicine![index].type!,
                           firstText: "",
                           secondText: widget.medicine![index].type == 0
                               ? "Select"
@@ -788,7 +785,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     onChanged: (String? newValue) {
                       setState(() {
                         dropdownHourlyValue = newValue!;
-                        log(">???????????$dropdownHourlyValue");
+                        log("???????????$dropdownHourlyValue");
                       });
                     },
                     items: itemsHourly.map((String items) {

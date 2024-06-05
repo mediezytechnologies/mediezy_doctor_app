@@ -1570,7 +1570,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imagePath = "";
+    imagePath = null;
   }
 
   void navigateToHome(BuildContext context) {
