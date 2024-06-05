@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -44,6 +45,12 @@ class _MedicineSearchWidgetState extends State<MedicineSearchWidget> {
         title: const Text("Medicines"),
         centerTitle: true,
       ),
+      bottomNavigationBar: Platform.isIOS
+          ? SizedBox(
+              height: size.height * 0.038,
+              width: double.infinity,
+            )
+          : const SizedBox(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),

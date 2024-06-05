@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
@@ -114,7 +115,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               if (state is ProfileGetLoaded) {
                 final profileGetModel = state.profileGetModel;
                 return ListTile(
-                  title: Text('Edit Profile',
+                  title: Text('Profile',
                       style: size.width > 450 ? blackTab9B400 : black14B400),
                   trailing: Icon(
                     Icons.edit,
@@ -351,6 +352,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               });
             },
           ),
+          const VerticalSpacingWidget(height: 8),
         ],
       ),
     );

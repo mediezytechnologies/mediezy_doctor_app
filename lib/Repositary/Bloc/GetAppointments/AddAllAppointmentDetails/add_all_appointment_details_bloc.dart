@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
