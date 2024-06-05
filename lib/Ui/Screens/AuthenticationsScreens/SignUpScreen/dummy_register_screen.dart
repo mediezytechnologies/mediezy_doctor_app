@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +68,12 @@ class _DummyRegisterScreenState extends State<DummyRegisterScreen> {
           title: const Text("Register Now"),
           centerTitle: true,
         ),
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         body: FadedSlideAnimation(
           beginOffset: const Offset(0, 0.3),
           endOffset: const Offset(0, 0),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/TabBarViews/BaseSpaceExpandedTabBar.dart';
@@ -26,7 +28,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen>
 
   @override
   Widget build(BuildContext context) {
-    // final mWidth = MediaQuery.of(context).size.width;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kCardColor,
       appBar: AppBar(
@@ -34,6 +36,12 @@ class _HealthRecordScreenState extends State<HealthRecordScreen>
         title: const Text("Health Record"),
         centerTitle: true,
       ),
+      bottomNavigationBar: Platform.isIOS
+          ? SizedBox(
+              height: size.height * 0.038,
+              width: double.infinity,
+            )
+          : const SizedBox(),
       body: BaseSpaceExpandedTabBar(
         tabs: const [
           Tab(height: 35, text: 'All'),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +69,12 @@ class _LogiScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
         body: FadedSlideAnimation(
           beginOffset: const Offset(0, 0.3),
           endOffset: const Offset(0, 0),

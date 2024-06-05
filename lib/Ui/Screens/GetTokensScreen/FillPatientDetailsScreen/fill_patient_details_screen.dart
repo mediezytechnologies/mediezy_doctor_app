@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,54 +106,62 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
           centerTitle: true,
         ),
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
-          child: CommonButtonWidget(
-              title: "Book Token",
-              onTapFunction: () {
-                if (patientNameController.text.isEmpty) {
-                  GeneralServices.instance
-                      .showErrorMessage(context, "Please fill patient name");
-                } else if (patientAgeController.text.isEmpty) {
-                  GeneralServices.instance
-                      .showErrorMessage(context, "Please fill patient age");
-                } else if (patientContactNumberController.text.isEmpty) {
-                  GeneralServices.instance.showErrorMessage(
-                      context, "Please fill patient contact number");
-                } else if (selectedSymptoms.isEmpty) {
-                  GeneralServices.instance
-                      .showErrorMessage(context, "Please select symptoms");
-                } else if (selectedStart == -1) {
-                  GeneralServices.instance.showErrorMessage(
-                      context, "Please select When it's comes");
-                } else if (selectedCome == -1) {
-                  GeneralServices.instance.showErrorMessage(
-                      context, "Please select How Frequently");
-                } else {
-                  BlocProvider.of<BookAppointmentBloc>(context).add(
-                    PassBookAppointMentEvent(
-                      clinicId: widget.clinicId,
-                      patientName: patientNameController.text,
-                      date: formatDate(),
-                      regularmedicine: regularMedicine.toString(),
-                      whenitcomes: selectedStart == 3
-                          ? "${daysController.text} days before"
-                          : deceaseStartingTime[selectedStart],
-                      whenitstart: deceaseRepeats[selectedCome],
-                      tokenTime: widget.tokenTime,
-                      tokenNumber: widget.tokenNumber,
-                      gender: dropdownValue,
-                      age: patientAgeController.text,
-                      mobileNo: patientContactNumberController.text,
-                      appoinmentfor1: appointmentForController.text.isEmpty
-                          ? []
-                          : [appointmentForController.text],
-                      appoinmentfor2: selectedSymptoms,
-                      scheduleType: widget.scheduleType,
-                      // endTokenTime: widget.endingTime,
-                    ),
-                  );
-                }
-              }),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: SizedBox(
+            height: Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+            child: Column(
+              children: [
+                CommonButtonWidget(
+                    title: "Book Token",
+                    onTapFunction: () {
+                      if (patientNameController.text.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please fill patient name");
+                      } else if (patientAgeController.text.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please fill patient age");
+                      } else if (patientContactNumberController.text.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please fill patient contact number");
+                      } else if (selectedSymptoms.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please select symptoms");
+                      } else if (selectedStart == -1) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please select When it's comes");
+                      } else if (selectedCome == -1) {
+                        GeneralServices.instance.showErrorMessage(
+                            context, "Please select How Frequently");
+                      } else {
+                        BlocProvider.of<BookAppointmentBloc>(context).add(
+                          PassBookAppointMentEvent(
+                            clinicId: widget.clinicId,
+                            patientName: patientNameController.text,
+                            date: formatDate(),
+                            regularmedicine: regularMedicine.toString(),
+                            whenitcomes: selectedStart == 3
+                                ? "${daysController.text} days before"
+                                : deceaseStartingTime[selectedStart],
+                            whenitstart: deceaseRepeats[selectedCome],
+                            tokenTime: widget.tokenTime,
+                            tokenNumber: widget.tokenNumber,
+                            gender: dropdownValue,
+                            age: patientAgeController.text,
+                            mobileNo: patientContactNumberController.text,
+                            appoinmentfor1:
+                                appointmentForController.text.isEmpty
+                                    ? []
+                                    : [appointmentForController.text],
+                            appoinmentfor2: selectedSymptoms,
+                            scheduleType: widget.scheduleType,
+                            // endTokenTime: widget.endingTime,
+                          ),
+                        );
+                      }
+                    }),
+              ],
+            ),
+          ),
         ),
         body: BlocListener<BookAppointmentBloc, BookAppointmentState>(
           listener: (context, state) {

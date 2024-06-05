@@ -54,6 +54,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/ReserveToken/reserve_token_bloc.d
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/DeletedTokens/deleted_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/RestoreTokens/restore_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Suggestions/suggestion_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/bottomsheet/bloc/bottom_sheet_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/suggest_doctor/suggest_doctor_bloc.dart';
@@ -118,6 +119,7 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => SearchPatientsBloc()),
         BlocProvider(create: (context) => GetAllMedicinesBloc()),
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
+        BlocProvider(create: (context) => BottomSheetBloc()),
         BlocProvider(create: (context) => GetAppointmentsBloc()),
       ];
 }

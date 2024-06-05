@@ -101,25 +101,33 @@ class _ReservationScreenState extends State<ReservationScreen>
                 resetSelectedTokens();
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
-                child: Container(
-                  height: 50.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: isClickedManage ? Colors.grey : kMainColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text("Reserve Token",
-                        style: size.width > 450
-                            ? TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white)
-                            : TextStyle(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white)),
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: SizedBox(
+                  height:
+                      Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50.h,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: isClickedManage ? Colors.grey : kMainColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text("Reserve Token",
+                              style: size.width > 450
+                                  ? TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white)
+                                  : TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

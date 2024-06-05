@@ -61,264 +61,288 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Previous Bookings"),
-        centerTitle: true,
-      ),
-      body: FadedSlideAnimation(
-        beginOffset: const Offset(0, 0.3),
-        endOffset: const Offset(0, 0),
-        slideCurve: Curves.linearToEaseOut,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Select Clinic",
-                  style: size.width > 450 ? greyTab10B600 : grey13B600,
-                ),
-                const VerticalSpacingWidget(height: 5),
-                GetBuilder<HospitalController>(
-                  builder: (clx) {
-                    return CustomDropDown(
-                      width: double.infinity,
-                      value: dController.initialIndex,
-                      items: dController.hospitalDetails!.map((e) {
-                        return DropdownMenuItem(
-                          value: e.clinicId.toString(),
-                          child: Text(e.clinicName!),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        log(newValue!);
-                        dController.dropdownValueChanging(
-                            newValue, dController.initialIndex!);
-                        BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
-                            .add(
-                          FetchAllPreviousAppointments(
-                              date: formatDate(),
-                              clinicId: dController.initialIndex!),
-                        );
-                      },
-                    );
-                  },
-                ),
-                // const VerticalSpacingWidget(height: 10),
-                GestureDetector(
-                  onTap: () {
-                    Platform.isIOS
-                        ? GeneralServices.instance.selectIosDate(
-                            context: context,
-                            date: selectedDate,
-                            onDateSelected: (DateTime picked) {
-                              setState(() {
-                                selectedDate = picked;
-                              });
-                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
-                                      context)
-                                  .add(
-                                FetchAllPreviousAppointments(
-                                  date: formatDate(),
-                                  clinicId: dController.initialIndex!,
-                                ),
-                              );
-                            },
-                          )
-                        : selectDate(
-                            context: context,
-                            date: selectedDate,
-                            onDateSelected: (DateTime picked) {
-                              setState(() {
-                                selectedDate = picked;
-                              });
-                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
-                                      context)
-                                  .add(
-                                FetchAllPreviousAppointments(
-                                  date: formatDate(),
-                                  clinicId: dController.initialIndex!,
-                                ),
-                              );
-                            },
-                          );
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Select Date",
-                            style:
-                                size.width > 450 ? greyTab10B600 : grey13B600,
-                          ),
-                          IconButton(
-                            onPressed: () async {
-                              await selectDate(
-                                context: context,
-                                date: selectedDate,
-                                onDateSelected: (DateTime picked) async {
-                                  setState(() {
-                                    selectedDate = picked;
-                                  });
-                                },
-                              );
-                              // ignore: use_build_context_synchronously
-                              BlocProvider.of<GetAllPreviousAppointmentsBloc>(
-                                      context)
-                                  .add(
-                                FetchAllPreviousAppointments(
-                                  date: formatDate(),
-                                  clinicId: dController.initialIndex!,
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              IconlyLight.calendar,
-                              color: kMainColor,
-                              size: size.width > 450 ? 12.sp : 20.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        DateFormat('dd-MM-yyy').format(selectedDate),
-                        style:
-                            size.width > 450 ? blackTabMainText : blackMainText,
-                      ),
-                    ],
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Previous Bookings"),
+          centerTitle: true,
+        ),
+        bottomNavigationBar: Platform.isIOS
+            ? SizedBox(
+                height: size.height * 0.038,
+                width: double.infinity,
+              )
+            : const SizedBox(),
+        body: FadedSlideAnimation(
+          beginOffset: const Offset(0, 0.3),
+          endOffset: const Offset(0, 0),
+          slideCurve: Curves.linearToEaseOut,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Select Clinic",
+                    style: size.width > 450 ? greyTab10B600 : grey13B600,
                   ),
-                ),
-                const VerticalSpacingWidget(height: 10),
-                BlocBuilder<GetAllPreviousAppointmentsBloc,
-                    GetAllPreviousAppointmentsState>(builder: (context, state) {
-                  if (state is GetAllPreviousAppointmentsLoading) {
-                    // return _shimmerLoading();
-                  }
-                  if (state is GetAllPreviousAppointmentsError) {
-                    return const Center(
-                      child: Text("Something Went Wrong"),
-                    );
-                  }
-                  if (state is GetAllPreviousAppointmentsLoaded) {
-                    previousAppointmentsModel =
-                        BlocProvider.of<GetAllPreviousAppointmentsBloc>(context)
-                            .previousAppointmentsModel;
-                    return previousAppointmentsModel
-                            .previousAppointments!.isEmpty
-                        ? Center(
-                            child: Image(
-                                height: size.height * .55,
-                                image: const AssetImage(
-                                    "assets/images/No Appointment to day-01.png")))
-                        : SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemCount: previousAppointmentsModel
-                                      .previousAppointments!.length,
-                                  separatorBuilder: (BuildContext context,
-                                          int index) =>
-                                      const VerticalSpacingWidget(height: 3),
-                                  itemBuilder: (context, index) {
-                                    return SingleChildScrollView(
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (ctx) =>
-                                                      PreviousBookingDetailsScreen(
-                                                        appointmentId:
-                                                            previousAppointmentsModel
-                                                                .previousAppointments![
-                                                                    index]
-                                                                .appointmentId
-                                                                .toString(),
-                                                        patientId:
-                                                            previousAppointmentsModel
-                                                                .previousAppointments![
-                                                                    index]
-                                                                .patientId
-                                                                .toString(),
-                                                      )));
-                                        },
-                                        child: AppointmentCardWidget(
-                                          tokenNumber: previousAppointmentsModel
-                                              .previousAppointments![index]
-                                              .tokenNumber
-                                              .toString(),
-                                          patientImage: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .userImage ==
-                                                  null
-                                              ? ""
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .userImage
-                                                  .toString(),
-                                          patientName: previousAppointmentsModel
-                                              .previousAppointments![index]
-                                              .patientName
-                                              .toString(),
-                                          time: previousAppointmentsModel
-                                              .previousAppointments![index]
-                                              .startingtime
-                                              .toString(),
-                                          mediezyId: previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .mediezyPatientId ==
-                                                  null
-                                              ? ""
-                                              : previousAppointmentsModel
-                                                  .previousAppointments![index]
-                                                  .mediezyPatientId
-                                                  .toString(),
-                                          mainSymptoms:
-                                              previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .mainSymptoms!
-                                                      .isEmpty
-                                                  ? previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .otherSymptoms!
-                                                      .first
-                                                      .symtoms
-                                                      .toString()
-                                                  : previousAppointmentsModel
-                                                      .previousAppointments![
-                                                          index]
-                                                      .mainSymptoms!
-                                                      .first
-                                                      .mainsymptoms
-                                                      .toString(),
-                                          onlineStatus: "online",
-                                          reachedStatus: "0",
-                                          noStatus: 1,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
+                  const VerticalSpacingWidget(height: 5),
+                  GetBuilder<HospitalController>(
+                    builder: (clx) {
+                      return CustomDropDown(
+                        width: double.infinity,
+                        value: dController.initialIndex,
+                        items: dController.hospitalDetails!.map((e) {
+                          return DropdownMenuItem(
+                            value: e.clinicId.toString(),
+                            child: Text(e.clinicName!),
                           );
-                  }
-                  return Container();
-                }),
-              ],
+                        }).toList(),
+                        onChanged: (newValue) {
+                          log(newValue!);
+                          dController.dropdownValueChanging(
+                              newValue, dController.initialIndex!);
+                          BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                  context)
+                              .add(
+                            FetchAllPreviousAppointments(
+                                date: formatDate(),
+                                clinicId: dController.initialIndex!),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  // const VerticalSpacingWidget(height: 10),
+                  GestureDetector(
+                    onTap: () {
+                      Platform.isIOS
+                          ? GeneralServices.instance.selectIosDate(
+                              context: context,
+                              date: selectedDate,
+                              onDateSelected: (DateTime picked) {
+                                setState(() {
+                                  selectedDate = picked;
+                                });
+                                BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                        context)
+                                    .add(
+                                  FetchAllPreviousAppointments(
+                                    date: formatDate(),
+                                    clinicId: dController.initialIndex!,
+                                  ),
+                                );
+                              },
+                            )
+                          : selectDate(
+                              context: context,
+                              date: selectedDate,
+                              onDateSelected: (DateTime picked) {
+                                setState(() {
+                                  selectedDate = picked;
+                                });
+                                BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                        context)
+                                    .add(
+                                  FetchAllPreviousAppointments(
+                                    date: formatDate(),
+                                    clinicId: dController.initialIndex!,
+                                  ),
+                                );
+                              },
+                            );
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Select Date",
+                              style:
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
+                            ),
+                            IconButton(
+                              onPressed: () async {
+                                await selectDate(
+                                  context: context,
+                                  date: selectedDate,
+                                  onDateSelected: (DateTime picked) async {
+                                    setState(() {
+                                      selectedDate = picked;
+                                    });
+                                  },
+                                );
+                                // ignore: use_build_context_synchronously
+                                BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                        context)
+                                    .add(
+                                  FetchAllPreviousAppointments(
+                                    date: formatDate(),
+                                    clinicId: dController.initialIndex!,
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                IconlyLight.calendar,
+                                color: kMainColor,
+                                size: size.width > 450 ? 12.sp : 20.sp,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          DateFormat('dd-MM-yyy').format(selectedDate),
+                          style: size.width > 450
+                              ? blackTabMainText
+                              : blackMainText,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const VerticalSpacingWidget(height: 10),
+                  BlocBuilder<GetAllPreviousAppointmentsBloc,
+                          GetAllPreviousAppointmentsState>(
+                      builder: (context, state) {
+                    if (state is GetAllPreviousAppointmentsLoading) {
+                      // return _shimmerLoading();
+                    }
+                    if (state is GetAllPreviousAppointmentsError) {
+                      return const Center(
+                        child: Text("Something Went Wrong"),
+                      );
+                    }
+                    if (state is GetAllPreviousAppointmentsLoaded) {
+                      previousAppointmentsModel =
+                          BlocProvider.of<GetAllPreviousAppointmentsBloc>(
+                                  context)
+                              .previousAppointmentsModel;
+                      return previousAppointmentsModel
+                              .previousAppointments!.isEmpty
+                          ? Center(
+                              child: Image(
+                                  height: size.height * .55,
+                                  image: const AssetImage(
+                                      "assets/images/No Appointment to day-01.png")))
+                          : SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemCount: previousAppointmentsModel
+                                        .previousAppointments!.length,
+                                    separatorBuilder: (BuildContext context,
+                                            int index) =>
+                                        const VerticalSpacingWidget(height: 3),
+                                    itemBuilder: (context, index) {
+                                      return SingleChildScrollView(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (ctx) =>
+                                                        PreviousBookingDetailsScreen(
+                                                          appointmentId:
+                                                              previousAppointmentsModel
+                                                                  .previousAppointments![
+                                                                      index]
+                                                                  .appointmentId
+                                                                  .toString(),
+                                                          patientId:
+                                                              previousAppointmentsModel
+                                                                  .previousAppointments![
+                                                                      index]
+                                                                  .patientId
+                                                                  .toString(),
+                                                        )));
+                                          },
+                                          child: AppointmentCardWidget(
+                                            tokenNumber:
+                                                previousAppointmentsModel
+                                                    .previousAppointments![
+                                                        index]
+                                                    .tokenNumber
+                                                    .toString(),
+                                            patientImage: previousAppointmentsModel
+                                                        .previousAppointments![
+                                                            index]
+                                                        .userImage ==
+                                                    null
+                                                ? ""
+                                                : previousAppointmentsModel
+                                                    .previousAppointments![
+                                                        index]
+                                                    .userImage
+                                                    .toString(),
+                                            patientName:
+                                                previousAppointmentsModel
+                                                    .previousAppointments![
+                                                        index]
+                                                    .patientName
+                                                    .toString(),
+                                            time: previousAppointmentsModel
+                                                .previousAppointments![index]
+                                                .startingtime
+                                                .toString(),
+                                            mediezyId: previousAppointmentsModel
+                                                        .previousAppointments![
+                                                            index]
+                                                        .mediezyPatientId ==
+                                                    null
+                                                ? ""
+                                                : previousAppointmentsModel
+                                                    .previousAppointments![
+                                                        index]
+                                                    .mediezyPatientId
+                                                    .toString(),
+                                            mainSymptoms:
+                                                previousAppointmentsModel
+                                                        .previousAppointments![
+                                                            index]
+                                                        .mainSymptoms!
+                                                        .isEmpty
+                                                    ? previousAppointmentsModel
+                                                        .previousAppointments![
+                                                            index]
+                                                        .otherSymptoms!
+                                                        .first
+                                                        .symtoms
+                                                        .toString()
+                                                    : previousAppointmentsModel
+                                                        .previousAppointments![
+                                                            index]
+                                                        .mainSymptoms!
+                                                        .first
+                                                        .mainsymptoms
+                                                        .toString(),
+                                            onlineStatus: "online",
+                                            reachedStatus: "0",
+                                            noStatus: 1,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                    }
+                    return Container();
+                  }),
+                ],
+              ),
             ),
           ),
         ),

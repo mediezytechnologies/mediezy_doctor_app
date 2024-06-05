@@ -14,12 +14,14 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAp
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/internet_handle_screen.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
+import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_token_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Widgets/appoiment_drawer.dart';
@@ -113,38 +115,89 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         //! tab bar
         appBar: const AppoimentAppbar(),
         drawer: const CustomDrawer(),
+        // floatingActionButton: FloatingActionButton(onPressed: () {
+        //   showModalBottomSheet(
+        //     backgroundColor: Colors.transparent,
+        //     context: context,
+        //     builder: (context) {
+        //       final size = MediaQuery.of(context).size;
+        //       return Column(
+        //         mainAxisAlignment: MainAxisAlignment.end,
+        //         children: [
+        //           Container(
+        //             height: 130.h,
+        //             width: size.width * .95,
+        //             decoration: BoxDecoration(
+        //               color: Colors.white,
+        //               borderRadius: BorderRadius.circular(30),
+        //             ),
+        //             child: Padding(
+        //               padding: EdgeInsets.symmetric(horizontal: 15.w),
+        //               child: Column(
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: [
+        //                   Row(
+        //                     mainAxisAlignment: MainAxisAlignment.end,
+        //                     children: [
+        //                       IconButton(
+        //                           padding: EdgeInsets.only(left: 30.w),
+        //                           onPressed: () {
+        //                             Navigator.pop(context);
+        //                           },
+        //                           icon: const Icon(
+        //                             Icons.cancel_outlined,
+        //                           )),
+        //                     ],
+        //                   ),
+        //                   Text(
+        //                       "Your generated tokens will expire in 10 days. Please generate new tokens :",
+        //                       style: size.width > 450
+        //                           ? blackMainText
+        //                           : blackMainText),
+        //                   const VerticalSpacingWidget(height: 10),
+        //                   InkWell(
+        //                     onTap: () {
+        //                       Navigator.push(
+        //                           context,
+        //                           MaterialPageRoute(
+        //                               builder: (context) =>
+        //                                   const ScheduleTokenDetailsScreen()));
+        //                     },
+        //                     child: Center(
+        //                       child: Container(
+        //                         height: 35.h,
+        //                         width: 120.w,
+        //                         decoration: BoxDecoration(
+        //                           borderRadius: BorderRadius.circular(10),
+        //                           color: kMainColor,
+        //                         ),
+        //                         child: Center(
+        //                           child: Text(
+        //                             "Generate token",
+        //                             style: size.width > 450
+        //                                 ? white12Bold
+        //                                 : white12Bold,
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //           const VerticalSpacingWidget(height: 10),
+        //         ],
+        //       );
+        //     },
+        //   );
+        // }),
         body: StreamBuilder<ConnectivityResult>(
           stream: Connectivity().onConnectivityChanged,
           builder: (context, snapshot) {
             final connectivityResult = snapshot.data;
             if (connectivityResult == ConnectivityResult.none) {
-              return Scaffold(
-                backgroundColor: kCardColor,
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        height: 180.h,
-                        width: 300.w,
-                        child: Image.asset(
-                          "assets/images/no connection.png",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const VerticalSpacingWidget(height: 5),
-                    Text(
-                      "Please check your internet connection",
-                      style: TextStyle(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return const InternetHandleScreen();
             } else {
               return FadedSlideAnimation(
                 beginOffset: const Offset(0, 0.3),

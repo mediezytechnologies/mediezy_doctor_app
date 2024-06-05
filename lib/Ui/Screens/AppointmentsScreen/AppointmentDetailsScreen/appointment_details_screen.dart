@@ -71,7 +71,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final TextEditingController labTestController = TextEditingController();
   final TextEditingController scanTestController = TextEditingController();
   List<TextEditingController> textFormControllers = [];
-  List<Widget> textFormFields = [];
+  // List<Widget> textFormFields = [];
 
   ////lab
 
@@ -122,14 +122,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   bool isFirstCheckIn = true;
 
-  AddCheckinOrCheckoutBloc? _addCheckinOrCheckoutBloc;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // Obtain the bloc reference
-    _addCheckinOrCheckoutBloc =
-        BlocProvider.of<AddCheckinOrCheckoutBloc>(context);
   }
 
   final HospitalController controller = Get.put(HospitalController());
@@ -1178,7 +1174,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         listLength - 1 &&
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
-
                                                   handleCheckout(
                                                       context, index);
                                                   //     .then((value) {

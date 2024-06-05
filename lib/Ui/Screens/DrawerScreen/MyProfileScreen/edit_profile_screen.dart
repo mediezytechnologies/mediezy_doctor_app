@@ -64,20 +64,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.03, vertical: size.height * 0.02),
-        child: CommonButtonWidget(
-            title: "Update",
-            onTapFunction: () {
-              final isValidate = _formKey.currentState!.validate();
-              if (isValidate) {
-                BlocProvider.of<ProfileEditBloc>(context).add(FetchProfileEdit(
-                    firstname: firstNameController.text,
-                    secondname: lastNameController.text,
-                    mobileNo: phoneNumberController.text,
-                    attachment: imagePath));
-              }
-            }),
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+        child: SizedBox(
+          height: Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+          child: Column(
+            children: [
+              CommonButtonWidget(
+                  title: "Update",
+                  onTapFunction: () {
+                    final isValidate = _formKey.currentState!.validate();
+                    if (isValidate) {
+                      BlocProvider.of<ProfileEditBloc>(context).add(
+                          FetchProfileEdit(
+                              firstname: firstNameController.text,
+                              secondname: lastNameController.text,
+                              mobileNo: phoneNumberController.text,
+                              attachment: imagePath));
+                    }
+                  }),
+            ],
+          ),
+        ),
       ),
       appBar: AppBar(
         title: const Text("Edit Profile"),
