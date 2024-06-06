@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -189,7 +190,7 @@ class _PatientScreenState extends State<PatientScreen> {
                 builder: (context, state) {
                   if (state is PatientsGetLoading) {
                     return SizedBox(
-                      height: 400.h,
+                      height:Platform.isIOS?350.h: 400.h,
                       child: Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
                         highlightColor: Colors.grey[100]!,
@@ -271,7 +272,7 @@ class _PatientScreenState extends State<PatientScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: size.width > 450 ? 470.h : 450.h,
+                         height: size.width > 450 ? 470.h :Platform.isIOS?427.h: 450.h,
                           // color: Colors.yellow,
                           child: ListView.separated(
                             padding: EdgeInsets.zero,

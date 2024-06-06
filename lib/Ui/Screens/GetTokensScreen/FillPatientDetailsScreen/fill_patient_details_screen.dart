@@ -108,7 +108,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
         bottomNavigationBar: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: SizedBox(
-            height: Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
+            height: Platform.isIOS ? size.height * 0.105 : size.height * 0.08,
             child: Column(
               children: [
                 CommonButtonWidget(
