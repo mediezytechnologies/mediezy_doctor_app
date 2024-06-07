@@ -90,7 +90,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    //print(body);
+    print(body);
     //print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }

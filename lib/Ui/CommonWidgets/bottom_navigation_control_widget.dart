@@ -45,6 +45,7 @@ class _BottomNavigationControlWidgetState
         .listen((ConnectivityResult result) {
       handleConnectivityChange(result);
     });
+    BlocProvider.of<BottomSheetBloc>(context).add(FetchBottomSheet());
     _startTimer();
   }
 
@@ -54,13 +55,13 @@ class _BottomNavigationControlWidgetState
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(hours: 1), (timer) {
+    _timer = Timer.periodic(const Duration(hours: 3), (timer) {
       BlocProvider.of<BottomSheetBloc>(context).add(FetchBottomSheet());
     });
   }
 
-  void _showModelBottomSheet(BottomSheetModel model) {
-    if (model.schedule!.status != 0) {
+  void _showModelBottomSheet(BottomsheetModel model) {
+    if (model.schedule![0].status != 0) {
       _dismissTimer?.cancel();
       _dismissTimer = Timer(const Duration(seconds: 5), () {
         Navigator.popUntil(
@@ -69,9 +70,9 @@ class _BottomNavigationControlWidgetState
         );
       });
 
-      final clinic = model.schedule!.clinicName.toString();
-      final schedule = model.schedule!.scheduleType.toString();
-      final days = model.schedule!.daysRemaining.toString();
+      final clinic = model.schedule![0].clinicName.toString();
+      final schedule = model.schedule![0].scheduleType.toString();
+      final days = model.schedule![0].daysRemaining.toString();
 
       showModalBottomSheet(
         backgroundColor: Colors.transparent,
@@ -82,7 +83,7 @@ class _BottomNavigationControlWidgetState
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 130.h,
+                height: 140.h,
                 width: size.width * .95,
                 decoration: BoxDecoration(
                   color: Colors.white,

@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class BottomSheetApi {
   ApiClient apiClient = ApiClient();
 
-  Future<BottomSheetModel> addBottomSheet() async {
+  Future<BottomsheetModel> addBottomSheet() async {
     String? doctorId;
     final preference = await SharedPreferences.getInstance();
     doctorId = preference.getString('DoctorId').toString();
@@ -19,6 +19,6 @@ class BottomSheetApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    return BottomSheetModel.fromJson(json.decode(response.body));
+    return BottomsheetModel.fromJson(json.decode(response.body));
   }
 }
