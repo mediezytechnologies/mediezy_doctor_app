@@ -192,6 +192,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     dropValueScanningNotifier = ValueNotifier(scanningValues.first.laboratory!);
     super.initState();
   }
+   DateTime? lastpressed;
 
   @override
   void dispose() {
@@ -200,20 +201,45 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     super.dispose();
   }
 
+   
+
   @override
   Widget build(BuildContext context) {
+
+
+
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
+         final now = DateTime.now();
+        final maxDuration = Duration(seconds: 1);
+        final isWarning =
+            lastpressed == null || now.difference(lastpressed!) > maxDuration;
+        if (isWarning) {
+          lastpressed = DateTime.now();
+         
+         
+          return Future.value(false);
+        } else {
+ Navigator.pop(context);
         BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
           date: widget.date,
           clinicId: controller.initialIndex!,
           scheduleType: controller.scheduleIndex.value,
         ));
-        return Future.value(false);
+          
+         return Future.value(true);
+        }
+        
+        // Navigator.pop(context);
+        // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
+        //   date: widget.date,
+        //   clinicId: controller.initialIndex!,
+        //   scheduleType: controller.scheduleIndex.value,
+        // ));
+        // return Future.value(false);
       },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
