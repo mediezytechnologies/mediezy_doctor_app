@@ -20,7 +20,6 @@ import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
-import 'package:mediezy_doctor/Repositary/Api/GetAppointment/get_all_appointment_api.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -40,9 +39,6 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsS
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../Model/LiveToken/checkin_or_checkout.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
   const AppointmentDetailsScreen({

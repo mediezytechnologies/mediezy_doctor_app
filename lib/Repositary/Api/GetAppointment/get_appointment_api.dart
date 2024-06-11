@@ -73,8 +73,7 @@ class GetAppointmentApi {
     final preference = await SharedPreferences.getInstance();
     id = preference.getString('DoctorId').toString();
     String basePath = "docter/add_prescription";
-
-    final body = {
+    final bodyData={
       "medicine_name": medicineName,
       "medicine_id": medicineId,
       "token_id": tokenId,
@@ -91,10 +90,13 @@ class GetAppointmentApi {
       "time_section": timeSection,
       "interval": interval,
     };
+    log("message $bodyData");
+
+    final body = bodyData;
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    //print(body);
-    //print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
+    print(body);
+    print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }
 
@@ -134,8 +136,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    //print(body);
-    //print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
+    print(body);
+    print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
     return response.body;
   }
 
