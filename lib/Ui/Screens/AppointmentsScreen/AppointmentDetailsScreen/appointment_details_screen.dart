@@ -28,7 +28,9 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllFavouriteLab/get_all_favourite_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/AddCheckinOrCheckout/add_checkin_or_checkout_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllFavouriteMedicalStore/get_all_favourite_medical_store_bloc.dart';
+import 'package:mediezy_doctor/Repositary/getx/apointment_detail_getx.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/image_view_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -177,8 +179,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
     pageController = PageController(initialPage: currentPosition);
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
+    //medical store
     BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
         .add(FetchAllFavouriteMedicalStore());
+        //slect lab
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
         .add(FetchAllFavouriteLab());
     //currentPosition = widget.position;
@@ -188,7 +192,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     dropValueScanningNotifier = ValueNotifier(scanningValues.first.laboratory!);
     super.initState();
   }
-   DateTime? lastpressed;
+
+  DateTime? lastpressed;
 
   @override
   void dispose() {
@@ -197,38 +202,37 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     super.dispose();
   }
 
-   
+  final FoodDropdownController foodDropdownController =
+      Get.put(FoodDropdownController());
+      final bokingAppointmentLabController =Get.put(BookingAppointmentLabController());
 
   @override
   Widget build(BuildContext context) {
-
-
-
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-         final now = DateTime.now();
+        final now = DateTime.now();
         final maxDuration = Duration(seconds: 1);
         final isWarning =
             lastpressed == null || now.difference(lastpressed!) > maxDuration;
         if (isWarning) {
           lastpressed = DateTime.now();
-         
-         
+
           return Future.value(false);
         } else {
- Navigator.pop(context);
-        BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
-          date: widget.date,
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value,
-        ));
-          
-         return Future.value(true);
+          Navigator.pop(context);
+          BlocProvider.of<GetAppointmentsBloc>(context)
+              .add(FetchAllAppointments(
+            date: widget.date,
+            clinicId: controller.initialIndex!,
+            scheduleType: controller.scheduleIndex.value,
+          ));
+
+          return Future.value(true);
         }
-        
+
         // Navigator.pop(context);
         // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
         //   date: widget.date,
@@ -247,6 +251,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
+                foodDropdownController.resetToInitialValue();
                 Navigator.pop(context);
                 BlocProvider.of<GetAppointmentsBloc>(context)
                     .add(FetchAllAppointments(
@@ -425,6 +430,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     1 -
                                                     currentPosition;
                                               });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
                                             }
                                           },
                                           icon: Icon(
@@ -589,6 +596,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     1 -
                                                     currentPosition;
                                               });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
                                             }
                                           },
                                           icon: Icon(
@@ -778,6 +787,95 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ],
                                   ),
+                                  CustomDropDown(width: double.infinity,
+                                  value: bokingAppointmentLabController.initialIndex,
+                                  items: bokingAppointmentLabController.hospitalDetails!.map((e) {
+              return DropdownMenuItem(
+                value: e.id.toString(),
+                child: Text(e.laboratory!),
+              );
+            }).toList(),
+             onChanged: (p0) {
+               
+             },
+                                  
+                                  ),
+                            
+                                  Container(
+                                          height: 40.h,
+                                          width: 340.w,
+                                          decoration: BoxDecoration(
+                                              color: kCardColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xFF9C9C9C))),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.w),
+                                            child: Center(
+                                              child: ValueListenableBuilder(
+                                                valueListenable:
+                                                    dropValueMedicalStoreNotifier,
+                                                builder: (BuildContext context,
+                                                    String dropValue1, _) {
+                                                  return DropdownButtonFormField(
+                                                    iconEnabledColor:
+                                                        kMainColor,
+                                                    decoration:
+                                                        const InputDecoration
+                                                            .collapsed(
+                                                            hintText: ''),
+                                                    value: dropValue1,
+                                                    style: size.width > 450
+                                                        ? blackTabMainText
+                                                        : blackMainText,
+                                                    icon: const Icon(Icons
+                                                        .keyboard_arrow_down),
+                                                    onChanged: (String? value) {
+                                                      dropValue1 = value!;
+                                                      dropValueMedicalStoreNotifier
+                                                          .value = value;
+                                                      medicalStoreId =
+                                                          medicalStoreValues
+                                                              .where((element) =>
+                                                                  element
+                                                                      .laboratory!
+                                                                      .contains(
+                                                                          value))
+                                                              .toList();
+                                                      // widget.onDropValueChanged(dropValueMedicalStore);
+                                                      log(dropValueMedicalStoreNotifier
+                                                          .toString());
+                                                      log(">>>>>>>>>$medicalStoreId");
+                                                    },
+                                                    items: medicalStoreValues
+                                                        .map<
+                                                                DropdownMenuItem<
+                                                                    String>>(
+                                                            (value) {
+                                                      return DropdownMenuItem<
+                                                          String>(
+                                                        onTap: () {
+                                                          dropValueMedicalStore =
+                                                              value.id
+                                                                  .toString();
+                                                          log(".........................$dropValueMedicalStore");
+                                                          log(dropValueMedicalStore);
+                                                        },
+                                                        value:
+                                                            value.laboratory!,
+                                                        child: Text(
+                                                            value.laboratory!),
+                                                      );
+                                                    }).toList(),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                   const VerticalSpacingWidget(height: 10),
                                   BlocBuilder<GetAllFavouriteMedicalStoreBloc,
                                       GetAllFavouriteMedicalStoreState>(
@@ -789,6 +887,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         GetAllFavouriteMedicalStoreBloc>(
                                                     context)
                                                 .getAllFavouriteMedicalStoresModel;
+
                                         if (medicalStoreValues.length <= 1) {
                                           medicalStoreValues.addAll(
                                               getAllFavouriteMedicalStoreModel
@@ -1210,25 +1309,22 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
 
-                                                    handleCheckout(
+                                                  handleCheckout(
                                                       context, index);
-                                                    BlocProvider.of<
-                                                                AddCheckinOrCheckoutBloc>(
-                                                            context)
-                                                        .add(
-                                                      EstimateUpdateCheckout(
-                                                        tokenId:
-                                                            getAppointmentsModel
-                                                                .bookingData![
-                                                                    index]
-                                                                .tokenId
-                                                                .toString(),
-                                                      ),
-                                                    );
+                                                  BlocProvider.of<
+                                                              AddCheckinOrCheckoutBloc>(
+                                                          context)
+                                                      .add(
+                                                    EstimateUpdateCheckout(
+                                                      tokenId:
+                                                          getAppointmentsModel
+                                                              .bookingData![
+                                                                  index]
+                                                              .tokenId
+                                                              .toString(),
+                                                    ),
+                                                  );
                                                   log(" working    ======== with out the");
-
-                                                
-                                                  
 
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
