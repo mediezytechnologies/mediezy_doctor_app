@@ -21,7 +21,6 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
-import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_token_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 import 'Widgets/appoiment_drawer.dart';
@@ -38,46 +37,59 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   void handleConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-    } else {}
+      // Handle no connectivity
+    } else {
+      // Handle connectivity restored
+    }
   }
 
   late StreamSubscription<ConnectivityResult> subscription;
-
   late Timer pollingTimer;
   late Timer initialTimer;
 
   @override
   void initState() {
+    super.initState();
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<ProfileGetBloc>(context).add(FetchProfileGet());
+
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       handleConnectivityChange(result);
     });
 
-    getUserName();
-    startPolling();
-    super.initState();
-  }
-
-  void startPolling() {
-    initialTimer = Timer(const Duration(seconds: 1), () {
+    // Ensure the controller values are initialized before making the API call
+    if (controller.initialIndex != null &&
+        controller.scheduleIndex.value != null) {
       BlocProvider.of<GetAppointmentsBloc>(context).add(
         FetchAllAppointments(
-            date: controller.formatDate(),
-            clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex.value),
+          date: controller.formatDate(),
+          clinicId: controller.initialIndex!,
+          scheduleType: controller.scheduleIndex.value,
+        ),
       );
-      pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-        BlocProvider.of<GetAppointmentsBloc>(context).add(
-          FetchAllAppointments(
-              date: controller.formatDate(),
-              clinicId: controller.initialIndex!,
-              scheduleType: controller.scheduleIndex.value),
-        );
+
+      // Delay the first API call by 1 second
+      initialTimer = Timer(const Duration(seconds: 1), () {
+        fetchAppointments();
+
+        // Start polling every 10 seconds after the initial call
+        pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+          fetchAppointments();
+        });
       });
-    });
+    }
+  }
+
+  void fetchAppointments() {
+    BlocProvider.of<GetAppointmentsBloc>(context).add(
+      FetchAllAppointments(
+        date: controller.formatDate(),
+        clinicId: controller.initialIndex!,
+        scheduleType: controller.scheduleIndex.value,
+      ),
+    );
   }
 
   void stopPolling() {
@@ -88,16 +100,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   void dispose() {
     stopPolling();
+    subscription.cancel();
     super.dispose();
-  }
-
-  Future<void> getUserName() async {
-    BlocProvider.of<GetAppointmentsBloc>(context).add(
-      FetchAllAppointments(
-          date: controller.formatDate(),
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value),
-    );
   }
 
   @override
@@ -105,93 +109,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
-        GeneralServices.instance
-            .appCloseDialogue(context, "Are you want to Exit", () async {
+        GeneralServices.instance.appCloseDialogue(
+            context, "Are you sure you want to exit?", () async {
           SystemNavigator.pop();
         });
         return Future.value(false);
       },
       child: Scaffold(
-        //! tab bar
         appBar: const AppoimentAppbar(),
         drawer: const CustomDrawer(),
-        // floatingActionButton: FloatingActionButton(onPressed: () {
-        //   showModalBottomSheet(
-        //     backgroundColor: Colors.transparent,
-        //     context: context,
-        //     builder: (context) {
-        //       final size = MediaQuery.of(context).size;
-        //       return Column(
-        //         mainAxisAlignment: MainAxisAlignment.end,
-        //         children: [
-        //           Container(
-        //             height: 130.h,
-        //             width: size.width * .95,
-        //             decoration: BoxDecoration(
-        //               color: Colors.white,
-        //               borderRadius: BorderRadius.circular(30),
-        //             ),
-        //             child: Padding(
-        //               padding: EdgeInsets.symmetric(horizontal: 15.w),
-        //               child: Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.start,
-        //                 children: [
-        //                   Row(
-        //                     mainAxisAlignment: MainAxisAlignment.end,
-        //                     children: [
-        //                       IconButton(
-        //                           padding: EdgeInsets.only(left: 30.w),
-        //                           onPressed: () {
-        //                             Navigator.pop(context);
-        //                           },
-        //                           icon: const Icon(
-        //                             Icons.cancel_outlined,
-        //                           )),
-        //                     ],
-        //                   ),
-        //                   Text(
-        //                       "Your generated tokens will expire in 10 days. Please generate new tokens :",
-        //                       style: size.width > 450
-        //                           ? blackMainText
-        //                           : blackMainText),
-        //                   const VerticalSpacingWidget(height: 10),
-        //                   InkWell(
-        //                     onTap: () {
-        //                       Navigator.push(
-        //                           context,
-        //                           MaterialPageRoute(
-        //                               builder: (context) =>
-        //                                   const ScheduleTokenDetailsScreen()));
-        //                     },
-        //                     child: Center(
-        //                       child: Container(
-        //                         height: 35.h,
-        //                         width: 120.w,
-        //                         decoration: BoxDecoration(
-        //                           borderRadius: BorderRadius.circular(10),
-        //                           color: kMainColor,
-        //                         ),
-        //                         child: Center(
-        //                           child: Text(
-        //                             "Generate token",
-        //                             style: size.width > 450
-        //                                 ? white12Bold
-        //                                 : white12Bold,
-        //                           ),
-        //                         ),
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //             ),
-        //           ),
-        //           const VerticalSpacingWidget(height: 10),
-        //         ],
-        //       );
-        //     },
-        //   );
-        // }),
         body: StreamBuilder<ConnectivityResult>(
           stream: Connectivity().onConnectivityChanged,
           builder: (context, snapshot) {
@@ -211,8 +137,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                     const VerticalSpacingWidget(height: 3),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      child: Text("Your Appointments",
-                          style: size.width > 450 ? greyTab10B600 : grey13B600),
+                      child: Text(
+                        "Your Appointments",
+                        style: size.width > 450 ? greyTab10B600 : grey13B600,
+                      ),
                     ),
                     const VerticalSpacingWidget(height: 5),
                     Padding(
@@ -234,27 +162,31 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                           controller.selectedDate = date;
                           BlocProvider.of<GetAppointmentsBloc>(context).add(
                             FetchAllAppointments(
-                                date: formattedDate,
-                                clinicId: controller.initialIndex!,
-                                scheduleType: controller.scheduleIndex.value),
+                              date: formattedDate,
+                              clinicId: controller.initialIndex!,
+                              scheduleType: controller.scheduleIndex.value,
+                            ),
                           );
                           BlocProvider.of<GetAllCompletedAppointmentsBloc>(
                                   context)
                               .add(
                             FetchAllCompletedAppointments(
-                                date: formattedDate,
-                                clinicId: controller.initialIndex!,
-                                scheduleType: controller.scheduleIndex.value),
+                              date: formattedDate,
+                              clinicId: controller.initialIndex!,
+                              scheduleType: controller.scheduleIndex.value,
+                            ),
                           );
-                          // AppoimentTabbar();
                         },
                         dateTextStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: size.width > 450 ? 10.sp : 16.sp),
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.width > 450 ? 10.sp : 16.sp,
+                        ),
                         dayTextStyle: TextStyle(
-                            fontSize: size.width > 450 ? 8.sp : 12.sp),
+                          fontSize: size.width > 450 ? 8.sp : 12.sp,
+                        ),
                         monthTextStyle: TextStyle(
-                            fontSize: size.width > 450 ? 8.sp : 12.sp),
+                          fontSize: size.width > 450 ? 8.sp : 12.sp,
+                        ),
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
@@ -271,7 +203,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   Widget _shimmerLoading() {
     return SizedBox(
-      // color: Colors.yellow,
       height: 430.h,
       child: Shimmer.fromColors(
         baseColor: Colors.grey.shade300,
@@ -282,13 +213,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const VerticalSpacingWidget(height: 10),
               Container(
                 width: 130.w,
                 height: 20.h,
                 color: Colors.white,
               ),
-              // const VerticalSpacingWidget(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -304,7 +233,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   ),
                 ],
               ),
-              // const VerticalSpacingWidget(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -350,10 +278,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   ),
                 ],
               ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // VerticalSpacingWidget(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -375,7 +299,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   ),
                 ],
               ),
-              // SizedBox(height: 8,),
               Container(
                 width: double.infinity,
                 height: 50.h,

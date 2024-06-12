@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:mediezy_doctor/Model/auth/login_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
@@ -34,6 +35,7 @@ class _LogiScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final HospitalController controller = Get.put(HospitalController());
   bool hidePassword = true;
+  late LoginModel loginModel;
 
   @override
   Widget build(BuildContext context) {
@@ -210,16 +212,31 @@ class _LogiScreenState extends State<LoginScreen> {
                         const VerticalSpacingWidget(height: 30),
                         //! login
                         CommonButtonWidget(
-                            title: "Login",
-                            onTapFunction: () {
-                              FocusScope.of(context).unfocus();
-                              if (_formKey.currentState!.validate()) {
-                                BlocProvider.of<LoginBloc>(context).add(
-                                    FetchLogin(
-                                        email: emailController.text,
-                                        password: passwordController.text));
-                              }
-                            }),
+                          title: "Login",
+                          onTapFunction: () {
+                            FocusScope.of(context).unfocus();
+                            if (_formKey.currentState!.validate()) {
+                              BlocProvider.of<LoginBloc>(context).add(
+                                  FetchLogin(
+                                      email: emailController.text,
+                                      password: passwordController.text));
+                            } else if (loginModel.token != null) {
+                              BlocProvider.of<GetAppointmentsBloc>(context)
+                                  .add(FetchAllAppointments(
+                                date: controller.formatDate(),
+                                clinicId: controller.initialIndex!,
+                                scheduleType: controller.scheduleIndex.value,
+                              ));
+                              BlocProvider.of<GetAllCompletedAppointmentsBloc>(
+                                      context)
+                                  .add(FetchAllCompletedAppointments(
+                                date: controller.formatDate(),
+                                clinicId: controller.initialIndex!,
+                                scheduleType: controller.scheduleIndex.value,
+                              ));
+                            }
+                          },
+                        ),
                         const VerticalSpacingWidget(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

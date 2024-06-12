@@ -8,7 +8,7 @@ final class BottomSheetInitial extends BottomSheetState {}
 final class BottomSheetLoading extends BottomSheetState {}
 
 final class BottomSheetLoaded extends BottomSheetState {
-  final BottomSheetModel bottomSheetModel;
+  final BottomsheetModel bottomSheetModel;
 
   BottomSheetLoaded({required this.bottomSheetModel});
 }

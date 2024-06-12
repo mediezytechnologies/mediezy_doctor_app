@@ -25,7 +25,6 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/CustomSchedule/upcoming_list_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../../../../Model/GenerateToken/clinic_get_model.dart';
 
 class CustomScheduleScreen extends StatefulWidget {
