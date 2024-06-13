@@ -13,6 +13,7 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import '../../../../Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+import '../../../../Repositary/getx/apointment_detail_getx.dart';
 import '../../../CommonWidgets/vertical_spacing_widget.dart';
 import '../../../Consts/app_colors.dart';
 
@@ -29,6 +30,8 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
   late GetAppointmentsModel getAppointmentsModel;
   late GetAllCompletedAppointmentsModel getAllCompletedAppointmentsModel;
   final HospitalController controller = Get.put(HospitalController());
+  final bokingAppointmentLabController =
+      Get.put(BookingAppointmentLabController());
   late TabController tabController;
 
   @override
@@ -132,6 +135,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                                             EdgeInsets.fromLTRB(0, 5.h, 0, 2.h),
                                         child: InkWell(
                                           onTap: () {
+                                           // bokingAppointmentLabController.addtoTembList();
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
