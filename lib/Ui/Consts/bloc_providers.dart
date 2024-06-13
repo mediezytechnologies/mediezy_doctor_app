@@ -7,6 +7,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/LateCustomSchedule
 import 'package:mediezy_doctor/Repositary/Bloc/DeleteTokens/delete_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GenerateTokenFinal/generate_token_final_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/generated_schedules/generated_schedules_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/selected_clinic/selected_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -126,5 +127,6 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => GetAppointmentsBloc()),
         BlocProvider(create: (context) => SearchLabTestBloc()),
         BlocProvider(create: (context) => FavouriteLabTestBloc()),
+        BlocProvider(create: (context) => GeneratedSchedulesBloc()),
       ];
 }

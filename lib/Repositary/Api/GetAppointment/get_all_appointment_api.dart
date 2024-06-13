@@ -15,8 +15,6 @@ class SaveaAllApontmentDetailsServicce {
     required String notes,
     required String scanId,
     required List<String?> scanTestId,
-    required List<String?> labTestName,
-    required List<String?> scanTestName,
     String? attachment,
   }) async {
     final preference = await SharedPreferences.getInstance();
@@ -34,23 +32,27 @@ class SaveaAllApontmentDetailsServicce {
         );
       }
 
+      log("message:$scanTestId");
       FormData formData = FormData.fromMap({
         "token_id": tokenId,
         "lab_id": labId,
-        "labtest_id": labTestId,
+        "labtest_id[]": labTestId,
         "medical_shop_id": medicalshopId,
         "prescription_image": addMemberImage,
         "ReviewAfter": reviewAfter,
         "notes": notes,
         "scan_id": scanId,
-        "scantest_id": scanTestId,
-        "labtest": labTestName,
-        "scan_test": scanTestName,
+        "scantest_id[]": scanTestId,
       });
       log("formData ============$addMemberImage");
+      log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${formData.toString()}");
 
       for (var field in formData.fields) {
         log("${field.key}: ${field.value}");
+      }
+
+      for (var file in formData.files) {
+        log("${file.key}: ${file.value.filename}");
       }
 
       final response = await Dio(BaseOptions(

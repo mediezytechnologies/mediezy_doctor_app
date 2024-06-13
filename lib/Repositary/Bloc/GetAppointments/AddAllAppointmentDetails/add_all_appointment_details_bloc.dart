@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
@@ -31,8 +29,6 @@ class AddAllAppointmentDetailsBloc
           attachment: event.attachment,
           labTestId: event.labTestId,
           scanTestId: event.scanTestId,
-          labTestName: event.labTestName,
-          scanTestName: event.scanTestName,
         );
         if (response != null) {
           emit(AddAllAppointmentDetailsLoaded());

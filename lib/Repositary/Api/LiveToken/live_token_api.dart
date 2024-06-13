@@ -76,6 +76,7 @@ class GetCurrentTokenApi {
   Future<String> estimateUpdateCheckout({
     required String tokenId,
   }) async {
+    await Future.delayed(const Duration(seconds: 4));
     String basePath = "doctor/update-user-eta/checkout";
     final body = {
       "token_id": tokenId,

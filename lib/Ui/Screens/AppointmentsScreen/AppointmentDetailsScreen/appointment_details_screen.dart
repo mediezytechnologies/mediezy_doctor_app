@@ -112,10 +112,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     });
   }
 
-  List<String?> getSelectedLabTestNames() {
-    return selectedLabs.map((lab) => lab['name']).toList();
-  }
-
   List<String?> getSelectedLabTestIds() {
     return selectedLabs.map((lab) => lab['id']).toList();
   }
@@ -130,10 +126,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
       selectedScanTests
           .add({'name': selectedScanTest, 'id': selectedScanTestId});
     });
-  }
-
-  List<String?> getSelectedScanTestNames() {
-    return selectedScanTests.map((scan) => scan['name']).toList();
   }
 
   List<String?> getSelectedScanTestIds() {
@@ -890,8 +882,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   const VerticalSpacingWidget(height: 5),
                                   GestureDetector(
                                     onTap: () {
-                                      log(getSelectedLabTestNames().toString());
-                                      log(getSelectedLabTestIds().toString());
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -1263,12 +1253,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 scanId: dropValueScanning,
                                                 scanTestId:
                                                     getSelectedScanTestIds(),
-                                                labTestName:
-                                                    getSelectedLabTestNames(),
-                                                scanTestName:
-                                                    getSelectedScanTestNames(),
                                               ),
                                             );
+
                                             // Wait for 2 seconds
                                             await Future.delayed(
                                                     const Duration(seconds: 3))
@@ -1283,6 +1270,16 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   log("1111111111111111111111111111111111111");
                                                   handleCheckout(
                                                       context, index);
+                                                  BlocProvider.of<
+                                                              AddCheckinOrCheckoutBloc>(
+                                                          context)
+                                                      .add(EstimateUpdateCheckout(
+                                                          tokenId:
+                                                              getAppointmentsModel
+                                                                  .bookingData![
+                                                                      index]
+                                                                  .tokenId
+                                                                  .toString()));
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==

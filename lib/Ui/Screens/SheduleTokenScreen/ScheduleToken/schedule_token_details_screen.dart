@@ -11,11 +11,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mediezy_doctor/Model/GenerateToken/GenerateTokenErrorModel.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GenerateTokenFinal/generate_token_final_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/generated_schedules/generated_schedules_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -25,6 +25,8 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_help_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../../CommonWidgets/short_names_widget.dart';
 
 class ScheduleTokenDetailsScreen extends StatefulWidget {
   const ScheduleTokenDetailsScreen({super.key});
@@ -48,8 +50,6 @@ class _ScheduleTokenDetailsScreenState
 
   TimeOfDay selectedSchedule1StartingTime = TimeOfDay.now();
   TimeOfDay selectedSchedule1EndingTime = TimeOfDay.now();
-
-  late GenerateTokenErrorModel generateTokenErrorModel;
 
   Map<String, bool> checkboxData = {};
 
@@ -119,6 +119,8 @@ class _ScheduleTokenDetailsScreenState
 
   @override
   void initState() {
+    BlocProvider.of<GeneratedSchedulesBloc>(context)
+        .add(FetchGeneratedSchedules());
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     selectedValue = items['Schedule 1'];
     DateTime currentDate = DateTime.now();
@@ -684,7 +686,7 @@ class _ScheduleTokenDetailsScreenState
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * .18,
+                              height: MediaQuery.of(context).size.height * .12,
                               child: GridView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.zero,
@@ -736,6 +738,297 @@ class _ScheduleTokenDetailsScreenState
                               ),
                             ),
                           ),
+                          BlocConsumer<GenerateTokenFinalBloc,
+                              GenerateTokenFinalState>(
+                            listener: (context, state) {
+                              // final size = MediaQuery.of(context).size;
+                              if (state is GenerateTokenFinalLoaded) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // Avoid potential overflow
+                                        children: [
+                                          Lottie.asset(
+                                              "assets/animations/confirm booking.json",
+                                              height: 120.h),
+                                          const SizedBox(height: 10.0),
+                                          Text(
+                                            state.successMessage,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15.sp),
+                                          ),
+                                          const SizedBox(height: 5.0),
+                                          Text(
+                                            'Note: Check the booking section to see how this shows to patients',
+                                            style: TextStyle(fontSize: 13.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                                Future.delayed(const Duration(seconds: 5), () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottomNavigationControlWidget(
+                                                selectedIndex: 2)),
+                                    (route) => false,
+                                  );
+                                });
+                              }
+                              if (state is GenerateTokenFinalError) {
+                                GeneralServices.instance.showErrorMessage(
+                                    context, state.errorMessage);
+                                Future.delayed(const Duration(seconds: 3), () {
+                                  Navigator.pop(context);
+                                });
+                              }
+                            },
+                            builder: (context, state) {
+                              bool isLoading =
+                                  state is GenerateTokenFinalLoading;
+                              return SizedBox(
+                                height: Platform.isIOS
+                                    ? size.height * 0.107
+                                    : size.height * 0.08,
+                                child: Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: isLoading
+                                          ? null
+                                          : () {
+                                              BlocProvider.of<
+                                                          GenerateTokenFinalBloc>(
+                                                      context)
+                                                  .add(
+                                                FetchGenerateTokenFinal(
+                                                  clinicId:
+                                                      dController.initialIndex!,
+                                                  selecteddays: selectedDays,
+                                                  startDate:
+                                                      '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                  endDate:
+                                                      '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                  startTime: formatTimeOfDay(
+                                                      selectedSchedule1StartingTime),
+                                                  endTime: formatTimeOfDay(
+                                                      selectedSchedule1EndingTime),
+                                                  timeDuration:
+                                                      timeDuration1Controller
+                                                          .text,
+                                                  scheduleType:
+                                                      selectedValue.toString(),
+                                                ),
+                                              );
+                                            },
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 50.h,
+                                        decoration: BoxDecoration(
+                                          color: kMainColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: isLoading
+                                            ? Center(
+                                                child: LoadingAnimationWidget
+                                                    .staggeredDotsWave(
+                                                        color: Colors.white,
+                                                        size: 30))
+                                            : Center(
+                                                child: Text(
+                                                  "Generate token",
+                                                  style: TextStyle(
+                                                      fontSize: size.width > 450
+                                                          ? 12.sp
+                                                          : 18.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          const VerticalSpacingWidget(height: 5),
+                          BlocBuilder<GeneratedSchedulesBloc,
+                              GeneratedSchedulesState>(
+                            builder: (context, state) {
+                              if (state is GeneratedSchedulesLoading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (state is GeneratedSchedulesError) {
+                                return const Center(
+                                  child: Text("Something went wrong"),
+                                );
+                              } else if (state is GeneratedSchedulesLoaded) {
+                                final model = state.generatedSchedulesModel;
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Generated schedules",
+                                      style: size.width > 450
+                                          ? greyTab10B600
+                                          : grey13B600,
+                                    ),
+                                    const VerticalSpacingWidget(height: 3),
+                                    ListView.separated(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: model.schedules!.length,
+                                      separatorBuilder:
+                                          (BuildContext context, int index) =>
+                                              const VerticalSpacingWidget(
+                                                  height: 3),
+                                      itemBuilder: (context, index) {
+                                        final schedule =
+                                            model.schedules![index];
+                                        return SingleChildScrollView(
+                                          child: Card(
+                                            color: const Color.fromARGB(
+                                                255, 243, 247, 250),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 6.w,
+                                                  bottom: 6.h,
+                                                  top: 6.h),
+                                              child: SizedBox(
+                                                width: double.infinity,
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        Text(
+                                                          schedule.clinicName
+                                                              .toString(),
+                                                          style: size.width >
+                                                                  450
+                                                              ? blackTabMainText
+                                                              : blackMainText,
+                                                        ),
+                                                        ShortNamesWidget(
+                                                          typeId: 1,
+                                                          firstText:
+                                                              "schedule type : ",
+                                                          secondText:
+                                                              "schedule ${schedule.scheduleType}",
+                                                        ),
+                                                        ShortNamesWidget(
+                                                          typeId: 1,
+                                                          firstText: "Date : ",
+                                                          secondText:
+                                                              "${schedule.startDate} to ${schedule.endDate}",
+                                                        ),
+                                                        ShortNamesWidget(
+                                                          typeId: 1,
+                                                          firstText: "Time : ",
+                                                          secondText:
+                                                              "${schedule.startTime} to ${schedule.endTime}",
+                                                        ),
+                                                        ShortNamesWidget(
+                                                          typeId: 1,
+                                                          firstText:
+                                                              "Time duration : ",
+                                                          secondText: schedule
+                                                              .eachTokenDuration
+                                                              .toString(),
+                                                        ),
+
+                                                        // ShortNamesWidget(
+                                                        //   typeId: 1,
+                                                        //   firstText: "Days : ",
+                                                        //   secondText: schedule
+                                                        //       .selectedDays
+                                                        //       .toString(),
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        PopupMenuButton(
+                                                          iconSize:
+                                                              size.width > 450
+                                                                  ? 14.sp
+                                                                  : 20.sp,
+                                                          icon: Icon(
+                                                            Icons.more_vert,
+                                                            color: kMainColor,
+                                                          ),
+                                                          itemBuilder:
+                                                              (context) =>
+                                                                  <PopupMenuEntry<
+                                                                      dynamic>>[
+                                                            PopupMenuItem(
+                                                              child: Text(
+                                                                "Edit",
+                                                                style: size.width >
+                                                                        450
+                                                                    ? blackTabMainText
+                                                                    : blackMainText,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                            PopupMenuItem(
+                                                              child: Text(
+                                                                "Delete",
+                                                                style: size.width >
+                                                                        450
+                                                                    ? blackTabMainText
+                                                                    : blackMainText,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return Center(
+                                  child: Text("Unexpected state"),
+                                );
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -745,112 +1038,6 @@ class _ScheduleTokenDetailsScreenState
             ),
           ),
         ),
-      ),
-      bottomNavigationBar:
-          BlocConsumer<GenerateTokenFinalBloc, GenerateTokenFinalState>(
-        listener: (context, state) {
-          // final size = MediaQuery.of(context).size;
-          if (state is GenerateTokenFinalLoaded) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min, // Avoid potential overflow
-                    children: [
-                      Lottie.asset("assets/animations/confirm booking.json",
-                          height: 120.h),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        state.successMessage,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15.sp),
-                      ),
-                      const SizedBox(height: 5.0),
-                      Text(
-                        'Note: Check the booking section to see how this shows to patients',
-                        style: TextStyle(fontSize: 13.sp),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-            Future.delayed(const Duration(seconds: 5), () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        BottomNavigationControlWidget(selectedIndex: 2)),
-                (route) => false,
-              );
-            });
-          }
-          if (state is GenerateTokenFinalError) {
-            GeneralServices.instance
-                .showErrorMessage(context, state.errorMessage);
-            Future.delayed(const Duration(seconds: 3), () {
-              Navigator.pop(context);
-            });
-          }
-        },
-        builder: (context, state) {
-          bool isLoading = state is GenerateTokenFinalLoading;
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: SizedBox(
-              height: Platform.isIOS ? size.height * 0.107 : size.height * 0.08,
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: isLoading
-                        ? null
-                        : () {
-                            BlocProvider.of<GenerateTokenFinalBloc>(context)
-                                .add(
-                              FetchGenerateTokenFinal(
-                                clinicId: dController.initialIndex!,
-                                selecteddays: selectedDays,
-                                startDate:
-                                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                endDate:
-                                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                startTime: formatTimeOfDay(
-                                    selectedSchedule1StartingTime),
-                                endTime: formatTimeOfDay(
-                                    selectedSchedule1EndingTime),
-                                timeDuration: timeDuration1Controller.text,
-                                scheduleType: selectedValue.toString(),
-                              ),
-                            );
-                          },
-                    child: Container(
-                      width: double.infinity,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                        color: kMainColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: isLoading
-                          ? Center(
-                              child: LoadingAnimationWidget.staggeredDotsWave(
-                                  color: Colors.white, size: 30))
-                          : Center(
-                              child: Text(
-                                "Generate token",
-                                style: TextStyle(
-                                    fontSize: size.width > 450 ? 12.sp : 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                            ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
       ),
     );
   }

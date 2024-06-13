@@ -94,55 +94,38 @@ class _PreviousPatientDetailsWidgetState
                     style: size.width > 450 ? greyTabMain : greyMain,
                   ),
                   Expanded(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 8.0, // Add spacing between allergy names
+                      children: widget.previousAppointmentDetailsModel
+                          .previousappointmentdetails!.first.allergies!
+                          .asMap()
+                          .entries
+                          .map((entry) {
+                        final index = entry.key;
+                        final item = entry.value;
+                        final allergyName = item.allergyName.toString();
+                        final allergyDetails =
+                            item.allergyDetails?.toString() ?? '';
+                        final text = allergyDetails.isEmpty
+                            ? allergyName
+                            : '$allergyName - $allergyDetails';
+                        final isLastItem = index ==
                             widget
-                                .previousAppointmentDetailsModel
-                                .previousappointmentdetails!
-                                .first
-                                .allergies!
-                                .length,
-                            (index) {
-                              final item = widget
-                                  .previousAppointmentDetailsModel
-                                  .previousappointmentdetails!
-                                  .first
-                                  .allergies![index];
-                              final allergyName = item.allergyName.toString();
-                              final allergyDetails = item.allergyDetails
-                                      ?.toString() ??
-                                  ''; // If allergyDetails is null, set it to an empty string
-                              final text = allergyDetails.isEmpty
-                                  ? allergyName
-                                  : '$allergyName - $allergyDetails';
-                              final isLastItem = index ==
-                                  widget
-                                          .previousAppointmentDetailsModel
-                                          .previousappointmentdetails!
-                                          .first
-                                          .allergies!
-                                          .length -
-                                      1;
+                                    .previousAppointmentDetailsModel
+                                    .previousappointmentdetails!
+                                    .first
+                                    .allergies!
+                                    .length -
+                                1;
 
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    right: isLastItem ? 0 : 8.0),
-                                child: Text(
-                                  isLastItem ? text : '$text,',
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                        return Text(
+                          isLastItem ? text : '$text,',
+                          style: size.width > 450
+                              ? blackTabMainText
+                              : blackMainText,
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],
