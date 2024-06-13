@@ -50,7 +50,7 @@ class GetCurrentTokenApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log("res=============$body");
     log(">>>>>>>><<<<<<<checkin${response.body}");
     return response.body;
   }
@@ -75,15 +75,21 @@ class GetCurrentTokenApi {
 
   Future<String> estimateUpdateCheckout({
     required String tokenId,
-  }) async {
-    String basePath = "doctor/update-user-eta/checkout";
-    final body = {
-      "token_id": tokenId,
-    };
-    Response response =
-        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
-    log(">>>>>>>><<<<<<<checkout${response.body}");
-    return response.body;
-  }
+  }) async   {
+  // Delay for 2 seconds
+  await Future.delayed(const Duration(seconds: 4));
+
+  String basePath = "doctor/update-user-eta/checkout";
+  final body = {
+    "token_id": tokenId,
+  };
+
+  Response response =
+      await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+
+  print(body);
+  log(">>>>>>>><<<<<<<checkout${response.body}");
+  
+  return response.body;
+}
 }

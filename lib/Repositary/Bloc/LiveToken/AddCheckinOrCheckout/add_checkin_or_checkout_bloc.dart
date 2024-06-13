@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Repositary/Api/LiveToken/live_token_api.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'add_checkin_or_checkout_event.dart';
 part 'add_checkin_or_checkout_state.dart';
@@ -15,6 +16,7 @@ class AddCheckinOrCheckoutBloc
 
   AddCheckinOrCheckoutBloc() : super(AddCheckinOrCheckoutInitial()) {
     on<AddCheckinOrCheckout>((event, emit) async {
+      
       emit(AddCheckinOrCheckoutLoading());
       try {
         updatedSuccessfully = await getCurrentTokenApi.addCheckinOrCheckout(
@@ -27,6 +29,8 @@ class AddCheckinOrCheckoutBloc
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data['message']);
         log("checkin first call :${data['message']}");
+        
+
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(AddCheckinOrCheckoutError(errorMessage: '$e'));

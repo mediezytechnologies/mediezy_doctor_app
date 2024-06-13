@@ -28,7 +28,9 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllFavouriteLab/get_all_favourite_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/AddCheckinOrCheckout/add_checkin_or_checkout_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllFavouriteMedicalStore/get_all_favourite_medical_store_bloc.dart';
+import 'package:mediezy_doctor/Repositary/getx/apointment_detail_getx.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
+import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/image_view_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
@@ -146,7 +148,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   late GetAllFavouriteMedicalStoresModel getAllFavouriteMedicalStoresModel;
   late ClinicGetModel clinicGetModel;
   // late GetAllAppointmentsModel getAllAppointmentsModel;
-  File? imageFromCamera;
+  //File? imageFromCamera;
+  String? imageFromCamera;
   int currentPosition = 0;
   int currentPage = 0;
   late PageController pageController;
@@ -157,6 +160,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   String? selectedValue;
 
   bool isFirstCheckIn = true;
+
+  final ImagePicker imagePicker = ImagePicker();
+  String? imagePath;
+
+  AddCheckinOrCheckoutBloc? _addCheckinOrCheckoutBloc;
 
   @override
   void didChangeDependencies() {
@@ -207,8 +215,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
     pageController = PageController(initialPage: currentPosition);
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
+    //medical store
     BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
         .add(FetchAllFavouriteMedicalStore());
+    //slect lab
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
         .add(FetchAllFavouriteLab());
     //currentPosition = widget.position;
@@ -219,12 +229,19 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     super.initState();
   }
 
+  DateTime? lastpressed;
+
   @override
   void dispose() {
     pageController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
+
+  final FoodDropdownController foodDropdownController =
+      Get.put(FoodDropdownController());
+  final bokingAppointmentLabController =
+      Get.put(BookingAppointmentLabController());
 
   @override
   Widget build(BuildContext context) {
@@ -233,13 +250,33 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context);
-        BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
-          date: widget.date,
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value,
-        ));
-        return Future.value(false);
+        final now = DateTime.now();
+        final maxDuration = Duration(seconds: 1);
+        final isWarning =
+            lastpressed == null || now.difference(lastpressed!) > maxDuration;
+        if (isWarning) {
+          lastpressed = DateTime.now();
+
+          return Future.value(false);
+        } else {
+          Navigator.pop(context);
+          BlocProvider.of<GetAppointmentsBloc>(context)
+              .add(FetchAllAppointments(
+            date: widget.date,
+            clinicId: controller.initialIndex!,
+            scheduleType: controller.scheduleIndex.value,
+          ));
+
+          return Future.value(true);
+        }
+
+        // Navigator.pop(context);
+        // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
+        //   date: widget.date,
+        //   clinicId: controller.initialIndex!,
+        //   scheduleType: controller.scheduleIndex.value,
+        // ));
+        // return Future.value(false);
       },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
@@ -251,6 +288,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
+                foodDropdownController.resetToInitialValue();
                 Navigator.pop(context);
                 BlocProvider.of<GetAppointmentsBloc>(context)
                     .add(FetchAllAppointments(
@@ -429,6 +467,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     1 -
                                                     currentPosition;
                                               });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
                                             }
                                           },
                                           icon: Icon(
@@ -593,6 +633,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     1 -
                                                     currentPosition;
                                               });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
                                             }
                                           },
                                           icon: Icon(
@@ -684,7 +726,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   : blackMainText),
                                           IconButton(
                                             onPressed: () async {
-                                              await pickImageFromCamera();
+                                              await placePicImage();
                                               setState(
                                                   () {}); // Refresh the screen after picking the image
                                             },
@@ -701,46 +743,48 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  imageFromCamera == null
-                                      ? Container()
-                                      : InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        ImageViewWidget(
-                                                            image:
-                                                                imageFromCamera)));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "View your uploaded image",
-                                                style: size.width > 450
-                                                    ? TextStyle(
-                                                        fontSize: 11.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue)
-                                                    : TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue),
-                                              ),
-                                              const HorizontalSpacingWidget(
-                                                  width: 10),
-                                              Icon(
-                                                Icons.image,
-                                                color: Colors.blue,
-                                                size: size.width > 450
-                                                    ? 20.sp
-                                                    : 28.sp,
-                                              )
-                                            ],
+                                  if (imagePath != null)
+                                    // ? Container()
+                                    // :
+
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                ImageViewWidgetDemo(
+                                              image: imagePath!,
+                                            ),
                                           ),
-                                        ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "View your uploaded image",
+                                            style: size.width > 450
+                                                ? TextStyle(
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue)
+                                                : TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue),
+                                          ),
+                                          const HorizontalSpacingWidget(
+                                              width: 10),
+                                          Icon(
+                                            Icons.image,
+                                            color: Colors.blue,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 28.sp,
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   const VerticalSpacingWidget(height: 5),
                                   Text(
                                     "Review After",
@@ -780,6 +824,93 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ],
                                   ),
+                                  Obx(
+                                   () {
+                                      return CustomDropDown(
+                                        width: double.infinity,
+                                        value: bokingAppointmentLabController
+                                            .initialIndex,
+                                        items: bokingAppointmentLabController
+                                            .favoritemedicalshop!
+                                            .map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.id.toString(),
+                                            child: Text(e.laboratory!),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                       log(newValue!);
+                                                      bokingAppointmentLabController.dropdownValueChanging(
+                                                          newValue,"Select scanning centre");
+                                        },
+                                      );
+                                    }
+                                  ),
+
+                                  // Container(
+                                  //   height: 40.h,
+                                  //   width: 340.w,
+                                  //   decoration: BoxDecoration(
+                                  //       color: kCardColor,
+                                  //       borderRadius: BorderRadius.circular(5),
+                                  //       border: Border.all(
+                                  //           color: const Color(0xFF9C9C9C))),
+                                  //   child: Padding(
+                                  //     padding:
+                                  //         EdgeInsets.symmetric(horizontal: 8.w),
+                                  //     child: Center(
+                                  //       child: ValueListenableBuilder(
+                                  //         valueListenable:
+                                  //             dropValueMedicalStoreNotifier,
+                                  //         builder: (BuildContext context,
+                                  //             String dropValue1, _) {
+                                  //           return DropdownButtonFormField(
+                                  //             iconEnabledColor: kMainColor,
+                                  //             decoration: const InputDecoration
+                                  //                 .collapsed(hintText: ''),
+                                  //             value: dropValue1,
+                                  //             style: size.width > 450
+                                  //                 ? blackTabMainText
+                                  //                 : blackMainText,
+                                  //             icon: const Icon(
+                                  //                 Icons.keyboard_arrow_down),
+                                  //             onChanged: (String? value) {
+                                  //               dropValue1 = value!;
+                                  //               dropValueMedicalStoreNotifier
+                                  //                   .value = value;
+                                  //               medicalStoreId =
+                                  //                   medicalStoreValues
+                                  //                       .where((element) =>
+                                  //                           element.laboratory!
+                                  //                               .contains(
+                                  //                                   value))
+                                  //                       .toList();
+                                  //               // widget.onDropValueChanged(dropValueMedicalStore);
+                                  //               log(dropValueMedicalStoreNotifier
+                                  //                   .toString());
+                                  //               log(">>>>>>>>>$medicalStoreId");
+                                  //             },
+                                  //             items: medicalStoreValues.map<
+                                  //                     DropdownMenuItem<String>>(
+                                  //                 (value) {
+                                  //               return DropdownMenuItem<String>(
+                                  //                 onTap: () {
+                                  //                   dropValueMedicalStore =
+                                  //                       value.id.toString();
+                                  //                   log(".........................$dropValueMedicalStore");
+                                  //                   log(dropValueMedicalStore);
+                                  //                 },
+                                  //                 value: value.laboratory!,
+                                  //                 child:
+                                  //                     Text(value.laboratory!),
+                                  //               );
+                                  //             }).toList(),
+                                  //           );
+                                  //         },
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   const VerticalSpacingWidget(height: 10),
                                   BlocBuilder<GetAllFavouriteMedicalStoreBloc,
                                       GetAllFavouriteMedicalStoreState>(
@@ -791,6 +922,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         GetAllFavouriteMedicalStoreBloc>(
                                                     context)
                                                 .getAllFavouriteMedicalStoresModel;
+
                                         if (medicalStoreValues.length <= 1) {
                                           medicalStoreValues.addAll(
                                               getAllFavouriteMedicalStoreModel
@@ -1252,7 +1384,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     getSelectedLabTestIds(),
                                                 medicalshopId:
                                                     dropValueMedicalStore,
-                                                imageFromCamera,
+                                                attachment: imagePath,
                                                 reviewAfter:
                                                     afterDaysController.text,
                                                 notes: noteController.text,
@@ -1266,9 +1398,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               ),
                                             );
                                             // Wait for 2 seconds
+
                                             await Future.delayed(
                                                     const Duration(seconds: 3))
-                                                .then((value) {
+                                                .then((value) async {
                                               if (getAppointmentsModel
                                                       .bookingData![index]
                                                       .isCheckedout !=
@@ -1277,8 +1410,27 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                         listLength - 1 &&
                                                     currentPosition == 0) {
                                                   log("1111111111111111111111111111111111111");
+
                                                   handleCheckout(
                                                       context, index);
+<<<<<<< HEAD
+=======
+                                                  BlocProvider.of<
+                                                              AddCheckinOrCheckoutBloc>(
+                                                          context)
+                                                      .add(
+                                                    EstimateUpdateCheckout(
+                                                      tokenId:
+                                                          getAppointmentsModel
+                                                              .bookingData![
+                                                                  index]
+                                                              .tokenId
+                                                              .toString(),
+                                                    ),
+                                                  );
+                                                  log(" working    ======== with out the");
+
+>>>>>>> doctor_new
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==
@@ -1618,12 +1770,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
+    imagePath = null;
   }
 
   Future<void> handleCheckoutLastSection(
       BuildContext context, int index) async {
-    log("section one 1============");
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
@@ -1640,7 +1791,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
+    imagePath = null;
   }
 
   void navigateToHome(BuildContext context) {
@@ -1692,21 +1843,35 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future<void> pickImageFromCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      try {
-        // ignore: unused_local_variable
-        File compressedImage = await compressImage(pickedFile.path);
-        imageFromCamera = File(pickedFile.path);
-      } catch (e) {
-        log('Error compressing image: $e');
-        GeneralServices.instance.showToastMessage('Error compressing image');
-      }
-    } else {
-      GeneralServices.instance.showToastMessage('No image selected');
-    }
+  //string replav=ce//
+  Future placePicImage() async {
+    var image = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
+    );
+    if (image == null) return;
+    final imageTemporary = image.path;
+    setState(() {
+      imagePath = imageTemporary;
+      log("$imageTemporary======= image");
+    });
   }
+
+  // Future<void> pickImageFromCamera() async {
+  //   final picker = ImagePicker();
+  //   final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+  //   if (pickedFile != null) {
+  //     try {
+  //       // ignore: unused_local_variable
+  //       File compressedImage = await compressImage(pickedFile.path);
+  //       imageFromCamera = File(pickedFile.path);
+  //     } catch (e) {
+  //       log('Error compressing image: $e');
+  //       GeneralServices.instance.showToastMessage('Error compressing image');
+  //     }
+  //   } else {
+  //     GeneralServices.instance.showToastMessage('No image selected');
+  //   }
+  // }
 }

@@ -6,8 +6,8 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
-//const String basePathUrl = "https://mediezy.com/api/";
-const String basePathUrl = "https://test.mediezy.com/api/";
+const String basePathUrl = "https://mediezy.com/api/";
+//const String basePathUrl = "https://test.mediezy.com/api/";
 
 class ApiClient {
   static const String basePath = basePathUrl;
@@ -25,7 +25,7 @@ class ApiClient {
 
     print("Invoke Api worked");
     print(method);
-    print(token);
+    log("tok $token");
     Map<String, String> headerParams = {};
     if (method == 'POST' || method == 'GET' || method == 'PATCH') {
       // print("Methode POST OR GET");
