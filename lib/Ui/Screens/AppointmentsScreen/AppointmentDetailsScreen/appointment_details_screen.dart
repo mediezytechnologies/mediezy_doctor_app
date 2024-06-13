@@ -243,6 +243,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         // return Future.value(false);
       },
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            bokingAppointmentLabController.addtoTembList();
+          },
+        ),
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
                 height: size.height * 0.038,
@@ -667,7 +672,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         .toString(),
                                     medicine: getAppointmentsModel
                                         .bookingData![index].medicine,
-                                    medicalStoreId: dropValueMedicalStore,
+                                    medicalStoreId: bokingAppointmentLabController
+                                          .initialMedicalStoreIndex.toString(),
+                                    
+                                    //dropValueMedicalStore,
                                     bookedPersonId: getAppointmentsModel
                                         .bookingData![index].bookedPersonId
                                         .toString(),
@@ -788,28 +796,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  Obx(
-                                   () {
-                                      return CustomDropDown(
-                                        width: double.infinity,
-                                        value: bokingAppointmentLabController
-                                            .initialIndex,
-                                        items: bokingAppointmentLabController
-                                            .favoritemedicalshop!
-                                            .map((e) {
-                                          return DropdownMenuItem(
-                                            value: e.id.toString(),
-                                            child: Text(e.laboratory!),
-                                          );
-                                        }).toList(),
-                                        onChanged: (newValue) {
-                                       log(newValue!);
-                                                      bokingAppointmentLabController.dropdownValueChanging(
-                                                          newValue,"Select scanning centre");
-                                        },
-                                      );
-                                    }
-                                  ),
+                                  
 
                                   // Container(
                                   //   height: 40.h,
@@ -876,109 +863,132 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   //   ),
                                   // ),
                                   const VerticalSpacingWidget(height: 10),
-                                  BlocBuilder<GetAllFavouriteMedicalStoreBloc,
-                                      GetAllFavouriteMedicalStoreState>(
-                                    builder: (context, state) {
-                                      if (state
-                                          is GetAllFavouriteMedicalStoreLoaded) {
-                                        final getAllFavouriteMedicalStoreModel =
-                                            BlocProvider.of<
-                                                        GetAllFavouriteMedicalStoreBloc>(
-                                                    context)
-                                                .getAllFavouriteMedicalStoresModel;
-
-                                        if (medicalStoreValues.length <= 1) {
-                                          medicalStoreValues.addAll(
-                                              getAllFavouriteMedicalStoreModel
-                                                  .favoritemedicalshop!);
-                                        }
-                                        if (getAllFavouriteMedicalStoreModel
-                                            .favoritemedicalshop!.isEmpty) {
-                                          return const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(
-                                                "No Favourite Medical Stores.\n Please add Medical Stores"),
-                                          );
-                                        }
-                                        return Container(
-                                          height: 40.h,
-                                          width: 340.w,
-                                          decoration: BoxDecoration(
-                                              color: kCardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFF9C9C9C))),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w),
-                                            child: Center(
-                                              child: ValueListenableBuilder(
-                                                valueListenable:
-                                                    dropValueMedicalStoreNotifier,
-                                                builder: (BuildContext context,
-                                                    String dropValue1, _) {
-                                                  return DropdownButtonFormField(
-                                                    iconEnabledColor:
-                                                        kMainColor,
-                                                    decoration:
-                                                        const InputDecoration
-                                                            .collapsed(
-                                                            hintText: ''),
-                                                    value: dropValue1,
-                                                    style: size.width > 450
-                                                        ? blackTabMainText
-                                                        : blackMainText,
-                                                    icon: const Icon(Icons
-                                                        .keyboard_arrow_down),
-                                                    onChanged: (String? value) {
-                                                      dropValue1 = value!;
-                                                      dropValueMedicalStoreNotifier
-                                                          .value = value;
-                                                      medicalStoreId =
-                                                          medicalStoreValues
-                                                              .where((element) =>
-                                                                  element
-                                                                      .laboratory!
-                                                                      .contains(
-                                                                          value))
-                                                              .toList();
-                                                      // widget.onDropValueChanged(dropValueMedicalStore);
-                                                      log(dropValueMedicalStoreNotifier
-                                                          .toString());
-                                                      log(">>>>>>>>>$medicalStoreId");
-                                                    },
-                                                    items: medicalStoreValues
-                                                        .map<
-                                                                DropdownMenuItem<
-                                                                    String>>(
-                                                            (value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
-                                                        onTap: () {
-                                                          dropValueMedicalStore =
-                                                              value.id
-                                                                  .toString();
-                                                          log(".........................$dropValueMedicalStore");
-                                                          log(dropValueMedicalStore);
-                                                        },
-                                                        value:
-                                                            value.laboratory!,
-                                                        child: Text(
-                                                            value.laboratory!),
-                                                      );
-                                                    }).toList(),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
+                                  Obx(() {
+                                    return CustomDropDown(
+                                      width: double.infinity,
+                                      value: bokingAppointmentLabController
+                                          .initialMedicalStoreIndex,
+                                      items: bokingAppointmentLabController
+                                          .tempScanList
+                                          .map((e) {
+                                        return DropdownMenuItem(
+                                          value: e.id.toString(),
+                                          child: Text(e.laboratory!),
                                         );
-                                      }
-                                      return Container();
-                                    },
-                                  ),
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        log(newValue!);
+                                        bokingAppointmentLabController
+                                            .dropdownValueChanging(
+                                                newValue,
+                                                bokingAppointmentLabController
+                                                    .initialMedicalStoreIndex!);
+                                      },
+                                    );
+                                  }),
+                                  // BlocBuilder<GetAllFavouriteMedicalStoreBloc,
+                                  //     GetAllFavouriteMedicalStoreState>(
+                                  //   builder: (context, state) {
+                                  //     if (state
+                                  //         is GetAllFavouriteMedicalStoreLoaded) {
+                                  //       final getAllFavouriteMedicalStoreModel =
+                                  //           BlocProvider.of<
+                                  //                       GetAllFavouriteMedicalStoreBloc>(
+                                  //                   context)
+                                  //               .getAllFavouriteMedicalStoresModel;
+
+                                  //       if (medicalStoreValues.length <= 1) {
+                                  //         medicalStoreValues.addAll(
+                                  //             getAllFavouriteMedicalStoreModel
+                                  //                 .favoritemedicalshop!);
+                                  //       }
+                                  //       if (getAllFavouriteMedicalStoreModel
+                                  //           .favoritemedicalshop!.isEmpty) {
+                                  //         return const Padding(
+                                  //           padding: EdgeInsets.all(8.0),
+                                  //           child: Text(
+                                  //               "No Favourite Medical Stores.\n Please add Medical Stores"),
+                                  //         );
+                                  //       }
+                                  //       return Container(
+                                  //         height: 40.h,
+                                  //         width: 340.w,
+                                  //         decoration: BoxDecoration(
+                                  //             color: kCardColor,
+                                  //             borderRadius:
+                                  //                 BorderRadius.circular(5),
+                                  //             border: Border.all(
+                                  //                 color:
+                                  //                     const Color(0xFF9C9C9C))),
+                                  //         child: Padding(
+                                  //           padding: EdgeInsets.symmetric(
+                                  //               horizontal: 8.w),
+                                  //           child: Center(
+                                  //             child: ValueListenableBuilder(
+                                  //               valueListenable:
+                                  //                   dropValueMedicalStoreNotifier,
+                                  //               builder: (BuildContext context,
+                                  //                   String dropValue1, _) {
+                                  //                 return DropdownButtonFormField(
+                                  //                   iconEnabledColor:
+                                  //                       kMainColor,
+                                  //                   decoration:
+                                  //                       const InputDecoration
+                                  //                           .collapsed(
+                                  //                           hintText: ''),
+                                  //                   value: dropValue1,
+                                  //                   style: size.width > 450
+                                  //                       ? blackTabMainText
+                                  //                       : blackMainText,
+                                  //                   icon: const Icon(Icons
+                                  //                       .keyboard_arrow_down),
+                                  //                   onChanged: (String? value) {
+                                  //                     dropValue1 = value!;
+                                  //                     dropValueMedicalStoreNotifier
+                                  //                         .value = value;
+                                  //                     medicalStoreId =
+                                  //                         medicalStoreValues
+                                  //                             .where((element) =>
+                                  //                                 element
+                                  //                                     .laboratory!
+                                  //                                     .contains(
+                                  //                                         value))
+                                  //                             .toList();
+                                  //                     // widget.onDropValueChanged(dropValueMedicalStore);
+                                  //                     log(dropValueMedicalStoreNotifier
+                                  //                         .toString());
+                                  //                     log(">>>>>>>>>$medicalStoreId");
+                                  //                   },
+                                  //                   items: medicalStoreValues
+                                  //                       .map<
+                                  //                               DropdownMenuItem<
+                                  //                                   String>>(
+                                  //                           (value) {
+                                  //                     return DropdownMenuItem<
+                                  //                         String>(
+                                  //                       onTap: () {
+                                  //                         dropValueMedicalStore =
+                                  //                             value.id
+                                  //                                 .toString();
+                                  //                         log(".........................$dropValueMedicalStore");
+                                  //                         log(dropValueMedicalStore);
+                                  //                       },
+                                  //                       value:
+                                  //                           value.laboratory!,
+                                  //                       child: Text(
+                                  //                           value.laboratory!),
+                                  //                     );
+                                  //                   }).toList(),
+                                  //                 );
+                                  //               },
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       );
+                                  //     }
+                                  //     return Container();
+                                  //   },
+                                  // ),
                                   const VerticalSpacingWidget(height: 5),
                                   SizedBox(
                                     width: double.infinity,
@@ -1012,100 +1022,123 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         ? greyTabMain
                                         : greyMain,
                                   ),
-                                  BlocBuilder<GetAllFavouriteLabBloc,
-                                      GetAllFavouriteLabState>(
-                                    builder: (context, state) {
-                                      if (state is GetAllFavouriteLabLoaded) {
-                                        final getAllFavouriteLabModel =
-                                            BlocProvider.of<
-                                                        GetAllFavouriteLabBloc>(
-                                                    context)
-                                                .getAllFavouriteLabModel;
-                                        if (labValues.length <= 1) {
-                                          labValues.addAll(
-                                              getAllFavouriteLabModel
-                                                  .favoriteLabs!);
-                                        }
-                                        if (getAllFavouriteLabModel
-                                            .favoriteLabs!.isEmpty) {
-                                          return const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(
-                                                "No Favourite Labs.Please add Labs"),
-                                          );
-                                        }
-                                        return Container(
-                                          height: 40.h,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              color: kCardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFF9C9C9C))),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w),
-                                            child: Center(
-                                              child: ValueListenableBuilder(
-                                                valueListenable:
-                                                    dropValueLabNotifier,
-                                                builder: (BuildContext context,
-                                                    String dropValue, _) {
-                                                  return DropdownButtonFormField(
-                                                    iconEnabledColor:
-                                                        kMainColor,
-                                                    decoration:
-                                                        const InputDecoration
-                                                            .collapsed(
-                                                            hintText: ''),
-                                                    value: dropValue,
-                                                    style: size.width > 450
-                                                        ? blackTabMainText
-                                                        : blackMainText,
-                                                    icon: const Icon(Icons
-                                                        .keyboard_arrow_down),
-                                                    onChanged: (String? value) {
-                                                      dropValue = value!;
-                                                      dropValueLabNotifier
-                                                          .value = value;
-                                                      labId = labValues
-                                                          .where((element) =>
-                                                              element
-                                                                  .laboratory!
-                                                                  .contains(
-                                                                      value))
-                                                          .toList();
-                                                      log("$labId");
-                                                    },
-                                                    items: labValues.map<
-                                                        DropdownMenuItem<
-                                                            String>>((value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
-                                                        onTap: () {
-                                                          dropValueLab = value
-                                                              .id
-                                                              .toString();
-                                                          log(dropValueLab);
-                                                        },
-                                                        value:
-                                                            value.laboratory!,
-                                                        child: Text(
-                                                            value.laboratory!),
-                                                      );
-                                                    }).toList(),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
+                                   Obx(() {
+                                    return CustomDropDown(
+                                      width: double.infinity,
+                                      value: bokingAppointmentLabController
+                                          .initialSelectLabIndex,
+                                      items: bokingAppointmentLabController
+                                          .tempLabList
+                                          .map((e) {
+                                        return DropdownMenuItem(
+                                          value: e.id.toString(),
+                                          child: Text(e.laboratory!),
                                         );
-                                      }
-                                      return Container();
-                                    },
-                                  ),
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        log(newValue!);
+                                        bokingAppointmentLabController
+                                            .dropdownValueChanging(
+                                                newValue,
+                                                bokingAppointmentLabController
+                                                    .initialSelectLabIndex!);
+                                      },
+                                    );
+                                  }),
+                                  // BlocBuilder<GetAllFavouriteLabBloc,
+                                  //     GetAllFavouriteLabState>(
+                                  //   builder: (context, state) {
+                                  //     if (state is GetAllFavouriteLabLoaded) {
+                                  //       final getAllFavouriteLabModel =
+                                  //           BlocProvider.of<
+                                  //                       GetAllFavouriteLabBloc>(
+                                  //                   context)
+                                  //               .getAllFavouriteLabModel;
+                                  //       if (labValues.length <= 1) {
+                                  //         labValues.addAll(
+                                  //             getAllFavouriteLabModel
+                                  //                 .favoriteLabs!);
+                                  //       }
+                                  //       if (getAllFavouriteLabModel
+                                  //           .favoriteLabs!.isEmpty) {
+                                  //         return const Padding(
+                                  //           padding: EdgeInsets.all(8.0),
+                                  //           child: Text(
+                                  //               "No Favourite Labs.Please add Labs"),
+                                  //         );
+                                  //       }
+                                  //       return Container(
+                                  //         height: 40.h,
+                                  //         width: double.infinity,
+                                  //         decoration: BoxDecoration(
+                                  //             color: kCardColor,
+                                  //             borderRadius:
+                                  //                 BorderRadius.circular(5),
+                                  //             border: Border.all(
+                                  //                 color:
+                                  //                     const Color(0xFF9C9C9C))),
+                                  //         child: Padding(
+                                  //           padding: EdgeInsets.symmetric(
+                                  //               horizontal: 8.w),
+                                  //           child: Center(
+                                  //             child: ValueListenableBuilder(
+                                  //               valueListenable:
+                                  //                   dropValueLabNotifier,
+                                  //               builder: (BuildContext context,
+                                  //                   String dropValue, _) {
+                                  //                 return DropdownButtonFormField(
+                                  //                   iconEnabledColor:
+                                  //                       kMainColor,
+                                  //                   decoration:
+                                  //                       const InputDecoration
+                                  //                           .collapsed(
+                                  //                           hintText: ''),
+                                  //                   value: dropValue,
+                                  //                   style: size.width > 450
+                                  //                       ? blackTabMainText
+                                  //                       : blackMainText,
+                                  //                   icon: const Icon(Icons
+                                  //                       .keyboard_arrow_down),
+                                  //                   onChanged: (String? value) {
+                                  //                     dropValue = value!;
+                                  //                     dropValueLabNotifier
+                                  //                         .value = value;
+                                  //                     labId = labValues
+                                  //                         .where((element) =>
+                                  //                             element
+                                  //                                 .laboratory!
+                                  //                                 .contains(
+                                  //                                     value))
+                                  //                         .toList();
+                                  //                     log("$labId");
+                                  //                   },
+                                  //                   items: labValues.map<
+                                  //                       DropdownMenuItem<
+                                  //                           String>>((value) {
+                                  //                     return DropdownMenuItem<
+                                  //                         String>(
+                                  //                       onTap: () {
+                                  //                         dropValueLab = value
+                                  //                             .id
+                                  //                             .toString();
+                                  //                         log(dropValueLab);
+                                  //                       },
+                                  //                       value:
+                                  //                           value.laboratory!,
+                                  //                       child: Text(
+                                  //                           value.laboratory!),
+                                  //                     );
+                                  //                   }).toList(),
+                                  //                 );
+                                  //               },
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       );
+                                  //     }
+                                  //     return Container();
+                                  //   },
+                                  // ),
                                   // const VerticalSpacingWidget(height: 10),
                                   const VerticalSpacingWidget(height: 5),
                                   SizedBox(
@@ -1140,6 +1173,34 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         ? greyTabMain
                                         : greyMain,
                                   ),
+
+                                  //  Obx(() {
+                                  //   return CustomDropDown(
+                                  //     width: double.infinity,
+                                  //     value: bokingAppointmentLabController
+                                  //         .initialScaningCenerIndex,
+                                  //     items: bokingAppointmentLabController
+                                  //         .tempScanCenterList
+                                  //         .map((e) {
+                                  //       return DropdownMenuItem(
+                                  //         value: e.id.toString(),
+                                  //         child: Text(e.laboratory!),
+                                  //       );
+                                  //     }).toList(),
+                                  //     onChanged: (newValue) {
+                                  //       log(newValue!);
+                                  //       bokingAppointmentLabController
+                                  //           .dropdownValueChanging(
+                                  //               newValue,
+                                  //               bokingAppointmentLabController
+                                  //                   .initialScaningCenerIndex!);
+                                  //     },
+                                  //   );
+                                  // }),
+
+
+
+
                                   BlocBuilder<GetAllFavouriteLabBloc,
                                       GetAllFavouriteLabState>(
                                     builder: (context, state) {

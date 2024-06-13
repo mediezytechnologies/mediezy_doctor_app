@@ -4,10 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/Labs/get_all_favourite_lab_model.dart';
 import '../../../Model/MedicalShoppe/get_fav_medical_shope_model.dart';
 
 class BookAppointLabDropdown {
-  static Future<List<Favoritemedicalshop>?> getScanListService() async {
+  static Future<List<Favoritemedicalshop>?> getMedicalStoreService() async {
     final preference = await SharedPreferences.getInstance();
 
     final token =
@@ -38,7 +39,7 @@ class BookAppointLabDropdown {
   }
 
   //lab
-  static Future<List<Favoritemedicalshop>?> getMdedicatService() async {
+  static Future<List<FavoriteLabs>?> getScanLabService() async {
     final preference = await SharedPreferences.getInstance();
 
     final token =
@@ -49,14 +50,14 @@ class BookAppointLabDropdown {
         headers: {'Authorization': 'Bearer $token'},
         contentType: 'application/x-www-form-urlencoded',
       )).get(
-        "${basePathUrl}medicalshop/getfavmedicalshop",
+        "${basePathUrl}medicalshop/getfavlab",
       );
-      GetAllFavouriteMedicalStoresModel? model =
-          GetAllFavouriteMedicalStoresModel.fromJson(response.data);
+      GetAllFavouriteLabModel? model =
+          GetAllFavouriteLabModel.fromJson(response.data);
 
       log(model.toString());
       log("res ${response.data}");
-      return model.favoritemedicalshop;
+      return model.favoriteLabs;
       // ignore: deprecated_member_use
     } on DioError catch (e) {
       log("6656566565656556565  dist");
