@@ -10,19 +10,21 @@ class BookingAppointmentLabController extends GetxController {
   RxBool loding = true.obs;
   String? initialIndex;
   var scheduleIndex = '0'.obs;
+  var tempList=["Select scanning centre"];
 
-  RxList<Favoritemedicalshop>? hospitalDetails = <Favoritemedicalshop>[].obs;
+  RxList<Favoritemedicalshop>? favoritemedicalshop = <Favoritemedicalshop>[].obs;
 
   Future<List<Favoritemedicalshop>?> gethospitalService() async {
     try {
       var data = await BookAppointLabDropdown.getScanListService();
       update();
       loding.value = false;
-      hospitalDetails!.value = data!;
+      favoritemedicalshop!.value = data!;
       update();
-      initialIndex = hospitalDetails!.first.id.toString();
+      tempList= favoritemedicalshop!.value;
+     // initialIndex = favoritemedicalshop!.first.id.toString();
       update();
-      return hospitalDetails!;
+      return favoritemedicalshop!;
     } catch (e) {
       Get.snackbar('warnig', 'Please check Internet Connection');
       log(e.toString());
@@ -39,7 +41,7 @@ class BookingAppointmentLabController extends GetxController {
   
 
   dropdownValueChanging(String value, String checkingValue) {
-    if (checkingValue == initialIndex) {
+    if (checkingValue == "Select scanning centre") {
       log("before  :: ${initialIndex!}");
       initialIndex = value;
       //  update();

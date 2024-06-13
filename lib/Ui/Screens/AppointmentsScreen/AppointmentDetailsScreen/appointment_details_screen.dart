@@ -182,7 +182,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     //medical store
     BlocProvider.of<GetAllFavouriteMedicalStoreBloc>(context)
         .add(FetchAllFavouriteMedicalStore());
-        //slect lab
+    //slect lab
     BlocProvider.of<GetAllFavouriteLabBloc>(context)
         .add(FetchAllFavouriteLab());
     //currentPosition = widget.position;
@@ -204,7 +204,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   final FoodDropdownController foodDropdownController =
       Get.put(FoodDropdownController());
-      final bokingAppointmentLabController =Get.put(BookingAppointmentLabController());
+  final bokingAppointmentLabController =
+      Get.put(BookingAppointmentLabController());
 
   @override
   Widget build(BuildContext context) {
@@ -787,95 +788,93 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  CustomDropDown(width: double.infinity,
-                                  value: bokingAppointmentLabController.initialIndex,
-                                  items: bokingAppointmentLabController.hospitalDetails!.map((e) {
-              return DropdownMenuItem(
-                value: e.id.toString(),
-                child: Text(e.laboratory!),
-              );
-            }).toList(),
-             onChanged: (p0) {
-               
-             },
-                                  
+                                  Obx(
+                                   () {
+                                      return CustomDropDown(
+                                        width: double.infinity,
+                                        value: bokingAppointmentLabController
+                                            .initialIndex,
+                                        items: bokingAppointmentLabController
+                                            .favoritemedicalshop!
+                                            .map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.id.toString(),
+                                            child: Text(e.laboratory!),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                       log(newValue!);
+                                                      bokingAppointmentLabController.dropdownValueChanging(
+                                                          newValue,"Select scanning centre");
+                                        },
+                                      );
+                                    }
                                   ),
-                            
-                                  Container(
-                                          height: 40.h,
-                                          width: 340.w,
-                                          decoration: BoxDecoration(
-                                              color: kCardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFF9C9C9C))),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w),
-                                            child: Center(
-                                              child: ValueListenableBuilder(
-                                                valueListenable:
-                                                    dropValueMedicalStoreNotifier,
-                                                builder: (BuildContext context,
-                                                    String dropValue1, _) {
-                                                  return DropdownButtonFormField(
-                                                    iconEnabledColor:
-                                                        kMainColor,
-                                                    decoration:
-                                                        const InputDecoration
-                                                            .collapsed(
-                                                            hintText: ''),
-                                                    value: dropValue1,
-                                                    style: size.width > 450
-                                                        ? blackTabMainText
-                                                        : blackMainText,
-                                                    icon: const Icon(Icons
-                                                        .keyboard_arrow_down),
-                                                    onChanged: (String? value) {
-                                                      dropValue1 = value!;
-                                                      dropValueMedicalStoreNotifier
-                                                          .value = value;
-                                                      medicalStoreId =
-                                                          medicalStoreValues
-                                                              .where((element) =>
-                                                                  element
-                                                                      .laboratory!
-                                                                      .contains(
-                                                                          value))
-                                                              .toList();
-                                                      // widget.onDropValueChanged(dropValueMedicalStore);
-                                                      log(dropValueMedicalStoreNotifier
-                                                          .toString());
-                                                      log(">>>>>>>>>$medicalStoreId");
-                                                    },
-                                                    items: medicalStoreValues
-                                                        .map<
-                                                                DropdownMenuItem<
-                                                                    String>>(
-                                                            (value) {
-                                                      return DropdownMenuItem<
-                                                          String>(
-                                                        onTap: () {
-                                                          dropValueMedicalStore =
-                                                              value.id
-                                                                  .toString();
-                                                          log(".........................$dropValueMedicalStore");
-                                                          log(dropValueMedicalStore);
-                                                        },
-                                                        value:
-                                                            value.laboratory!,
-                                                        child: Text(
-                                                            value.laboratory!),
-                                                      );
-                                                    }).toList(),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+
+                                  // Container(
+                                  //   height: 40.h,
+                                  //   width: 340.w,
+                                  //   decoration: BoxDecoration(
+                                  //       color: kCardColor,
+                                  //       borderRadius: BorderRadius.circular(5),
+                                  //       border: Border.all(
+                                  //           color: const Color(0xFF9C9C9C))),
+                                  //   child: Padding(
+                                  //     padding:
+                                  //         EdgeInsets.symmetric(horizontal: 8.w),
+                                  //     child: Center(
+                                  //       child: ValueListenableBuilder(
+                                  //         valueListenable:
+                                  //             dropValueMedicalStoreNotifier,
+                                  //         builder: (BuildContext context,
+                                  //             String dropValue1, _) {
+                                  //           return DropdownButtonFormField(
+                                  //             iconEnabledColor: kMainColor,
+                                  //             decoration: const InputDecoration
+                                  //                 .collapsed(hintText: ''),
+                                  //             value: dropValue1,
+                                  //             style: size.width > 450
+                                  //                 ? blackTabMainText
+                                  //                 : blackMainText,
+                                  //             icon: const Icon(
+                                  //                 Icons.keyboard_arrow_down),
+                                  //             onChanged: (String? value) {
+                                  //               dropValue1 = value!;
+                                  //               dropValueMedicalStoreNotifier
+                                  //                   .value = value;
+                                  //               medicalStoreId =
+                                  //                   medicalStoreValues
+                                  //                       .where((element) =>
+                                  //                           element.laboratory!
+                                  //                               .contains(
+                                  //                                   value))
+                                  //                       .toList();
+                                  //               // widget.onDropValueChanged(dropValueMedicalStore);
+                                  //               log(dropValueMedicalStoreNotifier
+                                  //                   .toString());
+                                  //               log(">>>>>>>>>$medicalStoreId");
+                                  //             },
+                                  //             items: medicalStoreValues.map<
+                                  //                     DropdownMenuItem<String>>(
+                                  //                 (value) {
+                                  //               return DropdownMenuItem<String>(
+                                  //                 onTap: () {
+                                  //                   dropValueMedicalStore =
+                                  //                       value.id.toString();
+                                  //                   log(".........................$dropValueMedicalStore");
+                                  //                   log(dropValueMedicalStore);
+                                  //                 },
+                                  //                 value: value.laboratory!,
+                                  //                 child:
+                                  //                     Text(value.laboratory!),
+                                  //               );
+                                  //             }).toList(),
+                                  //           );
+                                  //         },
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   const VerticalSpacingWidget(height: 10),
                                   BlocBuilder<GetAllFavouriteMedicalStoreBloc,
                                       GetAllFavouriteMedicalStoreState>(
