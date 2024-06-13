@@ -146,7 +146,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   late GetAllFavouriteMedicalStoresModel getAllFavouriteMedicalStoresModel;
   late ClinicGetModel clinicGetModel;
   // late GetAllAppointmentsModel getAllAppointmentsModel;
-  File? imageFromCamera;
   int currentPosition = 0;
   int currentPage = 0;
   late PageController pageController;
@@ -155,6 +154,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   int? length;
   String? selectedValue;
+
+  final ImagePicker imagePicker = ImagePicker();
+  String? imagePath;
 
   bool isFirstCheckIn = true;
 
@@ -684,7 +686,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   : blackMainText),
                                           IconButton(
                                             onPressed: () async {
-                                              await pickImageFromCamera();
+                                              await placePicImage();
                                               setState(
                                                   () {}); // Refresh the screen after picking the image
                                             },
@@ -701,46 +703,48 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  imageFromCamera == null
-                                      ? Container()
-                                      : InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        ImageViewWidget(
-                                                            image:
-                                                                imageFromCamera)));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "View your uploaded image",
-                                                style: size.width > 450
-                                                    ? TextStyle(
-                                                        fontSize: 11.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue)
-                                                    : TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue),
-                                              ),
-                                              const HorizontalSpacingWidget(
-                                                  width: 10),
-                                              Icon(
-                                                Icons.image,
-                                                color: Colors.blue,
-                                                size: size.width > 450
-                                                    ? 20.sp
-                                                    : 28.sp,
-                                              )
-                                            ],
+                                  if (imagePath != null)
+                                    // ? Container()
+                                    // :
+
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                ImageViewWidgetDemo(
+                                              image: imagePath!,
+                                            ),
                                           ),
-                                        ),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "View your uploaded image",
+                                            style: size.width > 450
+                                                ? TextStyle(
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue)
+                                                : TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.blue),
+                                          ),
+                                          const HorizontalSpacingWidget(
+                                              width: 10),
+                                          Icon(
+                                            Icons.image,
+                                            color: Colors.blue,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 28.sp,
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   const VerticalSpacingWidget(height: 5),
                                   Text(
                                     "Review After",
@@ -1252,7 +1256,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     getSelectedLabTestIds(),
                                                 medicalshopId:
                                                     dropValueMedicalStore,
-                                                imageFromCamera,
+                                                attachment: imagePath,
                                                 reviewAfter:
                                                     afterDaysController.text,
                                                 notes: noteController.text,
@@ -1618,7 +1622,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
+    imagePath = null;
   }
 
   Future<void> handleCheckoutLastSection(
@@ -1640,7 +1644,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     dropValueMedicalStore = '';
-    imageFromCamera = null;
+    imagePath = null;
   }
 
   void navigateToHome(BuildContext context) {
@@ -1692,21 +1696,16 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future<void> pickImageFromCamera() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      try {
-        // ignore: unused_local_variable
-        File compressedImage = await compressImage(pickedFile.path);
-        imageFromCamera = File(pickedFile.path);
-      } catch (e) {
-        log('Error compressing image: $e');
-        GeneralServices.instance.showToastMessage('Error compressing image');
-      }
-    } else {
-      GeneralServices.instance.showToastMessage('No image selected');
-    }
+  Future placePicImage() async {
+    var image = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
+    );
+    if (image == null) return;
+    final imageTemporary = image.path;
+    setState(() {
+      imagePath = imageTemporary;
+      log("$imageTemporary======= image");
+    });
   }
 }

@@ -168,44 +168,44 @@ class GetAppointmentApi {
     return response.body;
   }
 
-  //! Save all appointment details api
+  // //! Save all appointment details api
 
-  Future<String> addAllAppointmentDetails(
-    File? attachment, {
-    required String tokenId,
-    required String labId,
-    required List<String?> labTestId,
-    required String medicalshopId,
-    required String reviewAfter,
-    required String notes,
-    required String scanId,
-    required List<String?> scanTestId,
-    required List<String?> labTestName,
-    required List<String?> scanTestName,
-  }) async {
-    String basePath = "docter/AddTestDetails";
+  // Future<String> addAllAppointmentDetails(
+  //   File? attachment, {
+  //   required String tokenId,
+  //   required String labId,
+  //   required List<String?> labTestId,
+  //   required String medicalshopId,
+  //   required String reviewAfter,
+  //   required String notes,
+  //   required String scanId,
+  //   required List<String?> scanTestId,
+  //   required List<String?> labTestName,
+  //   required List<String?> scanTestName,
+  // }) async {
+  //   String basePath = "docter/AddTestDetails";
 
-    final body = {
-      "token_id": tokenId,
-      "lab_id": labId,
-      "labtest_id": labTestId,
-      "medical_shop_id": medicalshopId,
-      "prescription_image": attachment,
-      "ReviewAfter": reviewAfter,
-      "notes": notes,
-      "scan_id": scanId,
-      "scantest_id": scanTestId,
-      "labtest": labTestName,
-      "scan_test": scanTestName,
-    };
-    Response response = attachment == null
-        ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
-        : await multiFileApiClient.uploadFiles(
-            files: attachment, uploadPath: basePath, bodyData: body);
-    log(body.toString());
-    log(">>>>>>>><<<<<<<add appointments${response.body}");
-    return response.body;
-  }
+  //   final body = {
+  //     "token_id": tokenId,
+  //     "lab_id": labId,
+  //     "labtest_id": labTestId,
+  //     "medical_shop_id": medicalshopId,
+  //     "prescription_image": attachment,
+  //     "ReviewAfter": reviewAfter,
+  //     "notes": notes,
+  //     "scan_id": scanId,
+  //     "scantest_id": scanTestId,
+  //     "labtest": labTestName,
+  //     "scan_test": scanTestName,
+  //   };
+  //   Response response = attachment == null
+  //       ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
+  //       : await multiFileApiClient.uploadFiles(
+  //           files: attachment, uploadPath: basePath, bodyData: body);
+  //   log(body.toString());
+  //   log(">>>>>>>><<<<<<<add appointments${response.body}");
+  //   return response.body;
+  // }
 
   //! get Completed AppointmentDetails api
 
