@@ -513,8 +513,7 @@ class CompletedAppointmentDetailsScreenState
                                     Expanded(
                                       child: Wrap(
                                         direction: Axis.horizontal,
-                                        spacing:
-                                            8.0, // Add spacing between surgery names
+                                        spacing: 8.0,
                                         children:
                                             getAllCompletedAppointmentDetailsModel
                                                 .appointmentDetails!
