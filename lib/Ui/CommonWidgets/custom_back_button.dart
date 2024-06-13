@@ -7,9 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class DoubleTapBackPress extends StatelessWidget {
   DoubleTapBackPress(
-      {super.key, required this.lastpressed, required this.widget});
+      {super.key, required this.lastpressed, required this.widget,required this.onTap});
   final Widget widget;
   DateTime? lastpressed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class DoubleTapBackPress extends StatelessWidget {
       onWillPop: () async {
         // DateTime? lastpressed;
         final now = DateTime.now();
-        final maxDuration = Duration(seconds: 1);
+        const maxDuration =  Duration(seconds: 1);
         final isWarning =
             lastpressed == null || now.difference(lastpressed!) > maxDuration;
         if (isWarning) {
@@ -30,7 +31,7 @@ class DoubleTapBackPress extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
             backgroundColor: Colors.grey,
             behavior: SnackBarBehavior.floating,
-            content: Text(
+            content: const Text(
               'Duble Tap to close app',
             ),
             duration: maxDuration,
@@ -40,6 +41,8 @@ class DoubleTapBackPress extends StatelessWidget {
             ..showSnackBar(snackBar);
           return false;
         } else {
+          onTap;
+
           return true;
         }
       },

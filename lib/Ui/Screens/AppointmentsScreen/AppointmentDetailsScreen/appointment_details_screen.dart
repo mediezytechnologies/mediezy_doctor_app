@@ -42,6 +42,8 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsS
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
+import '../../../CommonWidgets/custom_back_button.dart';
+
 class AppointmentDetailsScreen extends StatefulWidget {
   const AppointmentDetailsScreen({
     Key? key,
@@ -214,37 +216,50 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: () async {
-        final now = DateTime.now();
-        final maxDuration = const Duration(seconds: 1);
-        final isWarning =
-            lastpressed == null || now.difference(lastpressed!) > maxDuration;
-        if (isWarning) {
-          lastpressed = DateTime.now();
-
-          return Future.value(false);
-        } else {
-          Navigator.pop(context);
-          BlocProvider.of<GetAppointmentsBloc>(context)
-              .add(FetchAllAppointments(
-            date: widget.date,
-            clinicId: controller.initialIndex!,
-            scheduleType: controller.scheduleIndex.value,
-          ));
-
-          return Future.value(true);
-        }
-
-        // Navigator.pop(context);
-        // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
-        //   date: widget.date,
-        //   clinicId: controller.initialIndex!,
-        //   scheduleType: controller.scheduleIndex.value,
-        // ));
-        // return Future.value(false);
+    return DoubleTapBackPress(
+      onTap: () {
+         foodDropdownController.resetToInitialValue();
+                bokingAppointmentLabController.resetToPreviousValue();
+                //Navigator.pop(context);
+                BlocProvider.of<GetAppointmentsBloc>(context)
+                    .add(FetchAllAppointments(
+                  date: widget.date,
+                  clinicId: controller.initialIndex!,
+                  scheduleType: controller.scheduleIndex.value,
+                ));
+        log("kljsdfkljaskdlfjadklsf=======================");
       },
-      child: Scaffold(
+        lastpressed: lastpressed,
+      // onWillPop: () async {
+      //   final now = DateTime.now();
+      //   const maxDuration = const Duration(seconds: 1);
+      //   final isWarning =
+      //       lastpressed == null || now.difference(lastpressed!) > maxDuration;
+      //   if (isWarning) {
+      //     lastpressed = DateTime.now();
+
+      //     return Future.value(false);
+      //   } else {
+      //     Navigator.pop(context);
+      //     BlocProvider.of<GetAppointmentsBloc>(context)
+      //         .add(FetchAllAppointments(
+      //       date: widget.date,
+      //       clinicId: controller.initialIndex!,
+      //       scheduleType: controller.scheduleIndex.value,
+      //     ));
+
+      //     return Future.value(true);
+      //   }
+
+      //   // Navigator.pop(context);
+      //   // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
+      //   //   date: widget.date,
+      //   //   clinicId: controller.initialIndex!,
+      //   //   scheduleType: controller.scheduleIndex.value,
+      //   // ));
+      //   // return Future.value(false);
+      // },
+        widget: Scaffold(
         // floatingActionButton: FloatingActionButton(
         //   onPressed: () {
         //     bokingAppointmentLabController.resetToPreviousValue();
@@ -261,7 +276,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
               onPressed: () {
                 foodDropdownController.resetToInitialValue();
                 bokingAppointmentLabController.resetToPreviousValue();
-                Navigator.pop(context);
+                //Navigator.pop(context);
                 BlocProvider.of<GetAppointmentsBloc>(context)
                     .add(FetchAllAppointments(
                   date: widget.date,
@@ -880,7 +895,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             width: double.infinity,
                                             value:
                                                 bokingAppointmentLabController
-                                                    .initialMedicalStoreIndex.value,
+                                                    .initialMedicalStoreIndex
+                                                    .value,
                                             items:
                                                 bokingAppointmentLabController
                                                     .tempScanList
@@ -896,7 +912,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   .dropdownValueChanging(
                                                       newValue,
                                                       bokingAppointmentLabController
-                                                          .initialMedicalStoreIndex.value);
+                                                          .initialMedicalStoreIndex
+                                                          .value);
                                             },
                                           );
                                   }),
@@ -1045,7 +1062,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             width: double.infinity,
                                             value:
                                                 bokingAppointmentLabController
-                                                    .initialSelectLabIndex.value,
+                                                    .initialSelectLabIndex
+                                                    .value,
                                             items:
                                                 bokingAppointmentLabController
                                                     .tempLabList
@@ -1061,7 +1079,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   .dropdownValueChanging(
                                                       newValue,
                                                       bokingAppointmentLabController
-                                                          .initialSelectLabIndex.value);
+                                                          .initialSelectLabIndex
+                                                          .value);
                                             },
                                           );
                                   }),
@@ -1203,7 +1222,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             width: double.infinity,
                                             value:
                                                 bokingAppointmentLabController
-                                                    .initialScaningCenerIndex.value,
+                                                    .initialScaningCenerIndex
+                                                    .value,
                                             items:
                                                 bokingAppointmentLabController
                                                     .tempScanCenterList
@@ -1219,7 +1239,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   .dropdownValueChanging(
                                                       newValue,
                                                       bokingAppointmentLabController
-                                                          .initialScaningCenerIndex.value);
+                                                          .initialScaningCenerIndex
+                                                          .value);
                                             },
                                           );
                                   }),
@@ -1397,10 +1418,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       .bookingData![index]
                                                       .isCheckedout !=
                                                   1) {
-
-
-
-                                                  
                                                 if (currentPosition ==
                                                         listLength - 1 &&
                                                     currentPosition == 0) {
