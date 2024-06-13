@@ -8,23 +8,16 @@ class AddAllAppointmentDetails extends AddAllAppointmentDetailsEvent {
   final String labId;
   final List<String?> labTestId;
   final String medicalshopId;
-
+  final File? attachment;
   final String reviewAfter;
   final String notes;
   final String scanId;
-<<<<<<< HEAD
   final List<String?> scanTestId;
   final List<String?> labTestName;
   final List<String?> scanTestName;
 
   AddAllAppointmentDetails(
     this.attachment, {
-=======
-  final String scanTest;
-  final String? attachment;
-
-  AddAllAppointmentDetails({
->>>>>>> doctor_new
     required this.tokenId,
     required this.labId,
     required this.labTestId,
@@ -32,13 +25,8 @@ class AddAllAppointmentDetails extends AddAllAppointmentDetailsEvent {
     required this.reviewAfter,
     required this.notes,
     required this.scanId,
-<<<<<<< HEAD
     required this.scanTestId,
     required this.labTestName,
     required this.scanTestName,
-=======
-    required this.scanTest,
-    this.attachment,
->>>>>>> doctor_new
   });
 }

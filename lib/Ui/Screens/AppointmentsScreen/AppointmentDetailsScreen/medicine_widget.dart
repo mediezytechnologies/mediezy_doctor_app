@@ -596,7 +596,6 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             GeneralServices.instance
                                 .showErrorMessage(context, "Please fill days");
                           } else if (foodDropdownController.isEdit.value) {
-                          
                             BlocProvider.of<EditMedicineBloc>(context).add(
                               EditMedicine(
                                 medicineName: medicineNameController.text,
@@ -632,9 +631,6 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             });
                             // foodDropdownController.resetToPreviousValue();
                           } else {
-
-                          
-                            log("data on dropdown val ===: ${widget.medicalStoreId}");
                             BlocProvider.of<AddPrescriptionBloc>(context).add(
                               FetchAddPrescription(
                                 medicineName: medicineNameController.text,

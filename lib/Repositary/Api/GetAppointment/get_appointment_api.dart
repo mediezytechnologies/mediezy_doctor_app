@@ -13,9 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/GetAppointments/get_all_medicines_model.dart';
 
-
-
-
 class GetAppointmentApi {
   ApiClient apiClient = ApiClient();
   MultiFileApiClient2 multiFileApiClient = MultiFileApiClient2();
@@ -74,7 +71,8 @@ class GetAppointmentApi {
     final preference = await SharedPreferences.getInstance();
     id = preference.getString('DoctorId').toString();
     String basePath = "docter/add_prescription";
-    final bodyData={
+
+    final body = {
       "medicine_name": medicineName,
       "medicine_id": medicineId,
       "token_id": tokenId,
@@ -91,9 +89,6 @@ class GetAppointmentApi {
       "time_section": timeSection,
       "interval": interval,
     };
-    log("message $bodyData");
-
-    final body = bodyData;
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     print(body);
@@ -137,8 +132,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
+    //print(body);
+    //print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -174,15 +169,6 @@ class GetAppointmentApi {
   }
 
   //! Save all appointment details api
-   
-
-
-
-   //on dio impliment//
-
-
-
-//http impliment//
 
   Future<String> addAllAppointmentDetails(
     File? attachment, {
@@ -406,12 +392,3 @@ class GetAppointmentApi {
     return response.body;
   }
 }
-
-
-
-
-
-
-
- //! Save all appointment details api in dio 
- 
