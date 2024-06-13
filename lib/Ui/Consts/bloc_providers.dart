@@ -59,6 +59,9 @@ import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get
 import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/suggest_doctor/suggest_doctor_bloc.dart';
 
+import '../../Repositary/Bloc/GetAppointments/search_lab_test/favourite_lab_test/favourite_lab_test_bloc.dart';
+import '../../Repositary/Bloc/GetAppointments/search_lab_test/search_lab/search_lab_test_bloc.dart';
+
 class AppBBlocProviders {
   static get allBlocProviders => [
         BlocProvider(create: (context) => LoginBloc()),
@@ -121,5 +124,7 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
         BlocProvider(create: (context) => BottomSheetBloc()),
         BlocProvider(create: (context) => GetAppointmentsBloc()),
+        BlocProvider(create: (context) => SearchLabTestBloc()),
+        BlocProvider(create: (context) => FavouriteLabTestBloc()),
       ];
 }

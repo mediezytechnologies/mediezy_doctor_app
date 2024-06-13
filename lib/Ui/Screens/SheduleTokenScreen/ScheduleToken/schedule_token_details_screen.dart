@@ -768,7 +768,7 @@ class _ScheduleTokenDetailsScreenState
                       ),
                       const SizedBox(height: 5.0),
                       Text(
-                        'Note: Check the booking section to understand how this shows to patients',
+                        'Note: Check the booking section to see how this shows to patients',
                         style: TextStyle(fontSize: 13.sp),
                       ),
                     ],
@@ -776,7 +776,7 @@ class _ScheduleTokenDetailsScreenState
                 );
               },
             );
-            Future.delayed(const Duration(seconds: 3), () {
+            Future.delayed(const Duration(seconds: 5), () {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
@@ -798,7 +798,7 @@ class _ScheduleTokenDetailsScreenState
           bool isLoading = state is GenerateTokenFinalLoading;
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Container(
+            child: SizedBox(
               height: Platform.isIOS ? size.height * 0.107 : size.height * 0.08,
               child: Column(
                 children: [

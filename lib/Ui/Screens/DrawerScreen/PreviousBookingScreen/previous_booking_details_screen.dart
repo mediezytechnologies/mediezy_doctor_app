@@ -384,8 +384,8 @@ class _PreviousBookingDetailsScreenState
                                     .labName ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
+                            : ShortNamesWidget(
+                                typeId: 1,
                                 firstText: "Lab name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.labName
@@ -398,8 +398,8 @@ class _PreviousBookingDetailsScreenState
                                     .labTest ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
+                            : ShortNamesWidget(
+                                typeId: 1,
                                 firstText: "Lab test name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.labTest
@@ -411,20 +411,67 @@ class _PreviousBookingDetailsScreenState
                                     .scanName ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
+                            : ShortNamesWidget(
+                                typeId: 1,
                                 firstText: "Scan name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.scanName
                                     .toString()),
+                        // previousAppointmentDetailsModel
+                        //             .previousappointmentdetails!
+                        //             .first
+                        //             .labTest ==
+                        //         null
+                        //     ? Container()
+                        //     : Row(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: [
+                        //           Text(
+                        //             "Lab test name : ",
+                        //             style: size.width > 450
+                        //                 ? greyTabMain
+                        //                 : greyMain,
+                        //           ),
+                        //           Expanded(
+                        //             child: Wrap(
+                        //               direction: Axis.horizontal,
+                        //               spacing:
+                        //                   8.0, // Add spacing between surgery names
+                        //               children: previousAppointmentDetailsModel
+                        //                   .previousappointmentdetails!
+                        //                   .first
+                        //                   .labTest!
+                        //                   .asMap()
+                        //                   .entries
+                        //                   .map((entry) {
+                        //                 final index = entry.key;
+                        //                 final name = entry.value;
+                        //                 final isLastItem = index ==
+                        //                     getAllCompletedAppointmentDetailsModel
+                        //                             .appointmentDetails!
+                        //                             .first
+                        //                             .labTest!
+                        //                             .length -
+                        //                         1;
+                        //                 return Text(
+                        //                   "$name${isLastItem ? '' : ','}",
+                        //                   style: size.width > 450
+                        //                       ? blackTabMainText
+                        //                       : blackMainText,
+                        //                 );
+                        //               }).toList(),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
                         previousAppointmentDetailsModel
                                     .previousappointmentdetails!
                                     .first
                                     .scanTest ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
+                            : ShortNamesWidget(
+                                typeId: 1,
                                 firstText: "Scan test name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.scanTest

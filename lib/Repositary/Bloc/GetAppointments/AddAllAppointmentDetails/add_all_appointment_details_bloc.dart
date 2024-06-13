@@ -20,13 +20,15 @@ class AddAllAppointmentDetailsBloc
         updatedSuccessfully = await getAppointmentApi.addAllAppointmentDetails(
             tokenId: event.tokenId,
             labId: event.labId,
-            labTest: event.labTest,
+            labTestId: event.labTestId,
             medicalshopId: event.medicalshopId,
             event.attachment,
             reviewAfter: event.reviewAfter,
             notes: event.notes,
             scanId: event.scanId,
-            scanTest: event.scanTest);
+            scanTestId: event.scanTestId,
+            labTestName: event.labTestName,
+            scanTestName: event.scanTestName);
         emit(AddAllAppointmentDetailsLoaded());
         Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
         GeneralServices.instance.showToastMessage(data["message"]);

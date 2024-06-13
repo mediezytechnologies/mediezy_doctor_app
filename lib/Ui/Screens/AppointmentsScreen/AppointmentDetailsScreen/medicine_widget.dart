@@ -381,11 +381,10 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       );
                     },
                     child: SizedBox(
-                      // height: 40.h,
                       width: size.width > 450 ? 245.w : 235.w,
                       child: TextFormField(
                         style: TextStyle(
-                          color: Colors.black, // Set the text color to black
+                          color: Colors.black,
                           fontSize: size.width > 450 ? 9.sp : 14.sp,
                         ),
                         cursorColor: kMainColor,

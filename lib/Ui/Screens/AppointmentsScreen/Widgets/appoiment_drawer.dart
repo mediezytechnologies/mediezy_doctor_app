@@ -3,11 +3,13 @@ import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/lab_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/DrawerScreen/AboutUsScreen/about_us_screen.dart';
@@ -197,6 +199,29 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LabScreen(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              "Lab test's",
+              style: size.width > 450 ? blackTab9B400 : black14B400,
+            ),
+            trailing: FaIcon(
+              FontAwesomeIcons.vials,
+              size: size.width > 450 ? 13.sp : 20.sp,
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LabSearchWidget(
+                    onLabSelected:
+                        (String selectedLabName, String selectedLabId) {},
+                    typeId: 1,
+                    labTypeId: 0,
+                  ),
                 ),
               );
             },

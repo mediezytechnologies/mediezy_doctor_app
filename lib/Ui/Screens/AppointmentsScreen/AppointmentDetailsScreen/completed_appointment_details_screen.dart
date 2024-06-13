@@ -440,18 +440,51 @@ class CompletedAppointmentDetailsScreenState
                                           .appointmentDetails!.first.labName
                                           .toString(),
                                 ),
-                          // const VerticalSpacingWidget(height: 10),
                           getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!.first.labTest ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
-                                  typeId: 1,
-                                  firstText: "Lab test name : ",
-                                  secondText:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.labTest
-                                          .toString(),
+                              : Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Lab test name : ",
+                                      style: size.width > 450
+                                          ? greyTabMain
+                                          : greyMain,
+                                    ),
+                                    Expanded(
+                                      child: Wrap(
+                                        direction: Axis.horizontal,
+                                        spacing:
+                                            8.0, // Add spacing between surgery names
+                                        children:
+                                            getAllCompletedAppointmentDetailsModel
+                                                .appointmentDetails!
+                                                .first
+                                                .labTest!
+                                                .asMap()
+                                                .entries
+                                                .map((entry) {
+                                          final index = entry.key;
+                                          final name = entry.value;
+                                          final isLastItem = index ==
+                                              getAllCompletedAppointmentDetailsModel
+                                                      .appointmentDetails!
+                                                      .first
+                                                      .labTest!
+                                                      .length -
+                                                  1;
+                                          return Text(
+                                            "$name${isLastItem ? '' : ','}",
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : blackMainText,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                           getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!.first.scanName ==
@@ -468,13 +501,48 @@ class CompletedAppointmentDetailsScreenState
                                       .appointmentDetails!.first.scanTest ==
                                   null
                               ? Container()
-                              : ShortNamesWidget(
-                                  typeId: 1,
-                                  firstText: "Scan test name : ",
-                                  secondText:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.scanTest
-                                          .toString()),
+                              : Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Scan test name : ",
+                                      style: size.width > 450
+                                          ? greyTabMain
+                                          : greyMain,
+                                    ),
+                                    Expanded(
+                                      child: Wrap(
+                                        direction: Axis.horizontal,
+                                        spacing:
+                                            8.0, // Add spacing between surgery names
+                                        children:
+                                            getAllCompletedAppointmentDetailsModel
+                                                .appointmentDetails!
+                                                .first
+                                                .scanTest!
+                                                .asMap()
+                                                .entries
+                                                .map((entry) {
+                                          final index = entry.key;
+                                          final name = entry.value;
+                                          final isLastItem = index ==
+                                              getAllCompletedAppointmentDetailsModel
+                                                      .appointmentDetails!
+                                                      .first
+                                                      .scanTest!
+                                                      .length -
+                                                  1;
+                                          return Text(
+                                            "$name${isLastItem ? '' : ','}",
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : blackMainText,
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                           getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!.first.notes ==
                                   null
@@ -553,7 +621,6 @@ class CompletedAppointmentDetailsScreenState
                                 ),
                         ],
                       ),
-                      // const VerticalSpacingWidget(height: 10),
                     ],
                   ),
                 ),

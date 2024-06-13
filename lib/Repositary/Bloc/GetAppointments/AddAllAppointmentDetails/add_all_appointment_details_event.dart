@@ -3,25 +3,30 @@ part of 'add_all_appointment_details_bloc.dart';
 @immutable
 abstract class AddAllAppointmentDetailsEvent {}
 
-class AddAllAppointmentDetails extends AddAllAppointmentDetailsEvent{
+class AddAllAppointmentDetails extends AddAllAppointmentDetailsEvent {
   final String tokenId;
   final String labId;
-  final String labTest;
+  final List<String?> labTestId;
   final String medicalshopId;
   final File? attachment;
   final String reviewAfter;
   final String notes;
   final String scanId;
-  final String scanTest;
+  final List<String?> scanTestId;
+  final List<String?> labTestName;
+  final List<String?> scanTestName;
 
-  AddAllAppointmentDetails(this.attachment, {
+  AddAllAppointmentDetails(
+    this.attachment, {
     required this.tokenId,
     required this.labId,
-    required this.labTest,
+    required this.labTestId,
     required this.medicalshopId,
     required this.reviewAfter,
     required this.notes,
     required this.scanId,
-    required this.scanTest,
-});
+    required this.scanTestId,
+    required this.labTestName,
+    required this.scanTestName,
+  });
 }

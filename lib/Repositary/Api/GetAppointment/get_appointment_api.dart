@@ -6,6 +6,7 @@ import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointme
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointments_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/search_lab_test_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -173,25 +174,29 @@ class GetAppointmentApi {
     File? attachment, {
     required String tokenId,
     required String labId,
-    required String labTest,
+    required List<String?> labTestId,
     required String medicalshopId,
     required String reviewAfter,
     required String notes,
     required String scanId,
-    required String scanTest,
+    required List<String?> scanTestId,
+    required List<String?> labTestName,
+    required List<String?> scanTestName,
   }) async {
     String basePath = "docter/AddTestDetails";
 
     final body = {
       "token_id": tokenId,
       "lab_id": labId,
-      "labtest": labTest,
+      "labtest_id": labTestId,
       "medical_shop_id": medicalshopId,
       "prescription_image": attachment,
       "ReviewAfter": reviewAfter,
       "notes": notes,
       "scan_id": scanId,
-      "scan_test": scanTest,
+      "scantest_id": scanTestId,
+      "labtest": labTestName,
+      "scan_test": scanTestName,
     };
     Response response = attachment == null
         ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
@@ -352,6 +357,38 @@ class GetAppointmentApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     //print(body);
+    return response.body;
+  }
+
+  //! search lab test
+
+  Future<SearchLabTestModel> getAllLabTest({
+    required String searchQuery,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+    String basePath = "lab-tests";
+    final body = {"user_id": doctorId, "search": searchQuery};
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    //print(body);
+    return SearchLabTestModel.fromJson(json.decode(response.body));
+  }
+
+  //! update favourite lab test
+
+  Future<String> updateFavouriteLabTest({
+    required String labTestId,
+  }) async {
+    String basePath = "updateFavoriteLabs";
+
+    final body = {
+      "labtest_id": labTestId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
     return response.body;
   }
 }

@@ -35,6 +35,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/patient_image_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/lab_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
@@ -71,9 +72,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final TextEditingController labTestController = TextEditingController();
   final TextEditingController scanTestController = TextEditingController();
   List<TextEditingController> textFormControllers = [];
-  // List<Widget> textFormFields = [];
-
-  ////lab
 
   late ValueNotifier<String> dropValueLabNotifier;
   String dropValueLab = "";
@@ -103,6 +101,44 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   List<Favoritemedicalshop> medicalStoreValues = [
     Favoritemedicalshop(laboratory: "Select medical store")
   ];
+
+//! lab test select items
+
+  List<Map<String, String>> selectedLabs = [];
+
+  void handleLabSelection(String selectedLab, String selectedLabId) {
+    setState(() {
+      selectedLabs.add({'name': selectedLab, 'id': selectedLabId});
+    });
+  }
+
+  List<String?> getSelectedLabTestNames() {
+    return selectedLabs.map((lab) => lab['name']).toList();
+  }
+
+  List<String?> getSelectedLabTestIds() {
+    return selectedLabs.map((lab) => lab['id']).toList();
+  }
+
+//! scan test select items
+
+  List<Map<String, String>> selectedScanTests = [];
+
+  void handleScanTestSelection(
+      String selectedScanTest, String selectedScanTestId) {
+    setState(() {
+      selectedScanTests
+          .add({'name': selectedScanTest, 'id': selectedScanTestId});
+    });
+  }
+
+  List<String?> getSelectedScanTestNames() {
+    return selectedScanTests.map((scan) => scan['name']).toList();
+  }
+
+  List<String?> getSelectedScanTestIds() {
+    return selectedScanTests.map((scan) => scan['id']).toList();
+  }
 
   // late AppointmentDetailsPageModel appointmentDetailsPageModel;
   late GetAppointmentsModel getAppointmentsModel;
@@ -336,7 +372,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                           BlocProvider.of<GetAppointmentsBloc>(context)
                               .getAppointmentsModel;
                       return PageView.builder(
-                        physics: const ClampingScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: listLength,
                         controller: pageController,
                         onPageChanged: (index) {
@@ -848,22 +884,39 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     },
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  SizedBox(
-                                    width: double.infinity,
+                                  GestureDetector(
+                                    onTap: () {
+                                      log(getSelectedLabTestNames().toString());
+                                      log(getSelectedLabTestIds().toString());
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LabSearchWidget(
+                                            onLabSelected: handleLabSelection,
+                                            typeId: 0,
+                                            labTypeId: 0,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: TextFormField(
                                       style: TextStyle(
+                                          color: Colors.black,
                                           fontSize:
                                               size.width > 450 ? 9.sp : 14.sp),
-                                      cursorColor: kMainColor,
+                                      cursorColor: Colors.blue,
                                       controller: labTestController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintStyle: size.width > 450
-                                            ? greyTab10B600
-                                            : grey13B600,
-                                        hintText: "Lab test",
+                                        hintStyle: TextStyle(
+                                            color: Colors.black,
+                                            fontSize:
+                                                size.width > 450 ? 10 : 13,
+                                            fontWeight: FontWeight.w600),
+                                        hintText: "Tap to select lab tests",
                                         filled: true,
+                                        enabled: false,
                                         fillColor: kCardColor,
                                         border: OutlineInputBorder(
                                           borderRadius:
@@ -873,6 +926,22 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   ),
+                                  const SizedBox(height: 10),
+                                  Wrap(
+                                    spacing: 8.0,
+                                    children: selectedLabs.map((lab) {
+                                      return Chip(
+                                        backgroundColor: kCardColor,
+                                        label: Text(lab['name']!),
+                                        onDeleted: () {
+                                          setState(() {
+                                            selectedLabs.remove(lab);
+                                          });
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+
                                   const VerticalSpacingWidget(height: 5),
                                   Text(
                                     "Select Lab",
@@ -974,24 +1043,39 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       return Container();
                                     },
                                   ),
-                                  // const VerticalSpacingWidget(height: 10),
                                   const VerticalSpacingWidget(height: 5),
-                                  SizedBox(
-                                    width: double.infinity,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LabSearchWidget(
+                                            onLabSelected:
+                                                handleScanTestSelection,
+                                            typeId: 0,
+                                            labTypeId: 1,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: TextFormField(
                                       style: TextStyle(
+                                          color: Colors.black,
                                           fontSize:
                                               size.width > 450 ? 9.sp : 14.sp),
-                                      cursorColor: kMainColor,
-                                      controller: scanTestController,
+                                      cursorColor: Colors.blue,
+                                      controller: labTestController,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
-                                        hintStyle: size.width > 450
-                                            ? greyTab10B600
-                                            : grey13B600,
-                                        hintText: "Scan test",
+                                        hintStyle: TextStyle(
+                                            color: Colors.black,
+                                            fontSize:
+                                                size.width > 450 ? 10 : 13,
+                                            fontWeight: FontWeight.w600),
+                                        hintText: "Tap to select scan tests",
                                         filled: true,
+                                        enabled: false,
                                         fillColor: kCardColor,
                                         border: OutlineInputBorder(
                                           borderRadius:
@@ -1002,6 +1086,20 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                   ),
                                   const VerticalSpacingWidget(height: 5),
+                                  Wrap(
+                                    spacing: 8.0,
+                                    children: selectedScanTests.map((scan) {
+                                      return Chip(
+                                        backgroundColor: kCardColor,
+                                        label: Text(scan['name']!),
+                                        onDeleted: () {
+                                          setState(() {
+                                            selectedScanTests.remove(scan);
+                                          });
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
                                   Text(
                                     "Select scanning centre",
                                     style: size.width > 450
@@ -1150,7 +1248,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     .bookingData![index].tokenId
                                                     .toString(),
                                                 labId: dropValueLab,
-                                                labTest: labTestController.text,
+                                                labTestId:
+                                                    getSelectedLabTestIds(),
                                                 medicalshopId:
                                                     dropValueMedicalStore,
                                                 imageFromCamera,
@@ -1158,8 +1257,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     afterDaysController.text,
                                                 notes: noteController.text,
                                                 scanId: dropValueScanning,
-                                                scanTest:
-                                                    scanTestController.text,
+                                                scanTestId:
+                                                    getSelectedScanTestIds(),
+                                                labTestName:
+                                                    getSelectedLabTestNames(),
+                                                scanTestName:
+                                                    getSelectedScanTestNames(),
                                               ),
                                             );
                                             // Wait for 2 seconds
@@ -1176,29 +1279,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   log("1111111111111111111111111111111111111");
                                                   handleCheckout(
                                                       context, index);
-                                                  //     .then((value) {
-                                                  //   if (getAppointmentsModel
-                                                  //           .bookingData![index]
-                                                  //           .isCheckedout ==
-                                                  //       1) {
-                                                  //     log("section one 2============");
-
-                                                  //     BlocProvider.of<
-                                                  //                 AddCheckinOrCheckoutBloc>(
-                                                  //             context)
-                                                  //         .add(EstimateUpdateCheckout(
-                                                  //             tokenId: getAppointmentsModel
-                                                  //                 .bookingData![
-                                                  //                     index]
-                                                  //                 .tokenId
-                                                  //                 .toString()));
-                                                  //   }
-                                                  // });
-                                                  // Future.delayed(
-                                                  //     const Duration(
-                                                  //         seconds: 8), () {
-
-                                                  // });
                                                   navigateToHome(context);
                                                   log("last section currentPosition: $currentPosition");
                                                 } else if (currentPosition ==
@@ -1584,87 +1664,30 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  // Future<void> _showConsultationDialog(BuildContext context, int index) async {
-  //   await GeneralServices.instance.appCloseDialogue(
-  //     context,
-  //     "Are you sure you want to start the consultation",
-  //     () {
-  //       Navigator.of(context).pop();
-  //       _updateCheckInStatus(context, index);
-  //     },
-  //   );
-  // }
-
-  // Future<void> _checkInWithoutDialog(BuildContext context, int index) async {
-  //   _updateCheckInStatus(context, index);
-  //   await _performDelayedEstimateUpdate(context, index);
-  // }
-
-  // void _updateCheckInStatus(BuildContext context, int index) {
-  //   setState(() {
-  //     getAppointmentsModel.bookingData![index].isCheckedin = 1;
-  //   });
-
-  //   BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-  //     AddCheckinOrCheckout(
-  //       clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
-  //       isCompleted: 0,
-  //       isCheckin: 1,
-  //       tokenNumber:
-  //           getAppointmentsModel.bookingData![index].tokenNumber.toString(),
-  //       isReached: '',
-  //     ),
-  //   );
-  // }
-
-  // Future<void> _performDelayedEstimateUpdate(
-  //     BuildContext context, int index) async {
-  //   try {
-  //     await Future.delayed(const Duration(seconds: 2));
-  //     log("Future.delayed completed for tokenId: ${getAppointmentsModel.bookingData![index].tokenId}");
-  //     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-  //       EstimateUpdateCheckin(
-  //         tokenId: getAppointmentsModel.bookingData![index].tokenId.toString(),
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     log("Error in _performDelayedEstimateUpdate: $e");
-  //   }
-  // }
-
   Future<File> compressImage(String imagePath) async {
-    // Get the original image file
     File imageFile = File(imagePath);
 
-    // Get the image file size
     int fileSize = await imageFile.length();
 
-    // Set the maximum file size (2048 KB)
     int maxFileSize = 2048 * 1024;
 
-    // Check if the image is already within the size limit
     if (fileSize <= maxFileSize) {
       return imageFile;
     }
 
-    // Compress the image to reduce its size
     Uint8List? compressedBytes = await FlutterImageCompress.compressWithFile(
       imagePath,
-      quality: 85, // Adjust the quality as needed (0 to 100)
+      quality: 85,
     );
 
-    // Handle nullable Uint8List
     if (compressedBytes != null) {
-      // Create a new file for the compressed image
       File compressedImage =
           File(imagePath.replaceAll('.jpg', '_compressed.jpg'));
 
-      // Write the compressed bytes to the new file
       await compressedImage.writeAsBytes(compressedBytes);
 
       return compressedImage;
     } else {
-      // Handle the case when compression fails
       throw Exception('Image compression failed');
     }
   }
