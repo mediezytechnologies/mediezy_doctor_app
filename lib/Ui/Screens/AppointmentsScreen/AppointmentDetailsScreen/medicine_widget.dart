@@ -129,6 +129,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        
                         ShortNamesWidget(
                           typeId: 1,
                           firstText: "Medicine : ",
@@ -413,6 +414,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ),
                   // );
+                
                   SizedBox(
                     // height: 40.h,
                     width: 90.w,
