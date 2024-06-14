@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+//sfjklsdfkjsdkfkdlsafj
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
 import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
 import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
