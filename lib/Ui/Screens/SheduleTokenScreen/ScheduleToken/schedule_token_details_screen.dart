@@ -861,207 +861,227 @@ class _ScheduleTokenDetailsScreenState
                             },
                           ),
                           const VerticalSpacingWidget(height: 5),
-                          BlocBuilder<GeneratedSchedulesBloc,
+                          BlocListener<GeneratedSchedulesBloc,
                               GeneratedSchedulesState>(
-                            builder: (context, state) {
-                              if (state is GeneratedSchedulesLoading) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              } else if (state is GeneratedSchedulesError) {
-                                return const Center(
-                                  child: Text("Something went wrong"),
-                                );
-                              } else if (state is GeneratedSchedulesLoaded) {
-                                final model = state.generatedSchedulesModel;
+                            listener: (context, state) {
+                              if (state is DeleteSchedulesLoaded) {
+                                BlocProvider.of<GeneratedSchedulesBloc>(context)
+                                    .add(FetchGeneratedSchedules());
+                              }
+                              if (state is DeleteSchedulesError) {
+                                GeneralServices.instance
+                                    .showToastMessage(state.errorMessage);
+                              }
+                            },
+                            child: BlocBuilder<GeneratedSchedulesBloc,
+                                GeneratedSchedulesState>(
+                              builder: (context, state) {
+                                if (state is GeneratedSchedulesLoading) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (state is GeneratedSchedulesError) {
+                                  return const Center(
+                                    child: Text("Something went wrong"),
+                                  );
+                                } else if (state is GeneratedSchedulesLoaded) {
+                                  final model = state.generatedSchedulesModel;
 
-                                if (model.schedules == null) {
-                                  return Container();
-                                }
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Generated schedules",
-                                      style: size.width > 450
-                                          ? greyTab10B600
-                                          : grey13B600,
-                                    ),
-                                    const VerticalSpacingWidget(height: 3),
-                                    ListView.separated(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.zero,
-                                      itemCount: model.schedules!.length,
-                                      separatorBuilder:
-                                          (BuildContext context, int index) =>
-                                              const VerticalSpacingWidget(
-                                                  height: 3),
-                                      itemBuilder: (context, index) {
-                                        final schedule =
-                                            model.schedules![index];
+                                  if (model.schedules == null) {
+                                    return Container();
+                                  }
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Generated schedules",
+                                        style: size.width > 450
+                                            ? greyTab10B600
+                                            : grey13B600,
+                                      ),
+                                      const VerticalSpacingWidget(height: 3),
+                                      ListView.separated(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        itemCount: model.schedules!.length,
+                                        separatorBuilder:
+                                            (BuildContext context, int index) =>
+                                                const VerticalSpacingWidget(
+                                                    height: 3),
+                                        itemBuilder: (context, index) {
+                                          final schedule =
+                                              model.schedules![index];
 
-                                        String formattedStartDate =
-                                            DateFormat('dd-MM-yyyy').format(
-                                                DateFormat('yyyy-MM-dd').parse(
-                                                    schedule.startDate
-                                                        .toString()));
+                                          String formattedStartDate =
+                                              DateFormat('dd-MM-yyyy').format(
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .parse(schedule.startDate
+                                                          .toString()));
 
-                                        String formattedEndDate =
-                                            DateFormat('dd-MM-yyyy').format(
-                                                DateFormat('yyyy-MM-dd').parse(
-                                                    schedule.endDate
-                                                        .toString()));
-                                        return SingleChildScrollView(
-                                          child: Card(
-                                            color: const Color.fromARGB(
-                                                255, 243, 247, 250),
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 6.w,
-                                                  bottom: 6.h,
-                                                  top: 6.h),
-                                              child: SizedBox(
-                                                width: double.infinity,
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Text(
-                                                          schedule.clinicName
-                                                              .toString(),
-                                                          style: size.width >
-                                                                  450
-                                                              ? blackTabMainText
-                                                              : blackMainText,
-                                                        ),
-                                                        ShortNamesWidget(
-                                                          typeId: 1,
-                                                          firstText:
-                                                              "schedule type : ",
-                                                          secondText:
-                                                              "schedule ${schedule.scheduleType}",
-                                                        ),
-                                                        ShortNamesWidget(
-                                                          typeId: 1,
-                                                          firstText: "Date : ",
-                                                          secondText:
-                                                              "$formattedStartDate  to  $formattedEndDate",
-                                                        ),
-                                                        ShortNamesWidget(
-                                                          typeId: 1,
-                                                          firstText: "Time : ",
-                                                          secondText:
-                                                              "${schedule.startTime} to ${schedule.endTime}",
-                                                        ),
-                                                        ShortNamesWidget(
-                                                          typeId: 1,
-                                                          firstText:
-                                                              "Time duration : ",
-                                                          secondText: schedule
-                                                              .eachTokenDuration
-                                                              .toString(),
-                                                        ),
-                                                        Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "Days : ",
-                                                              style: size.width >
-                                                                      450
-                                                                  ? greyTabMain
-                                                                  : greyMain,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 240.w,
-                                                              child: Text(
-                                                                schedule
-                                                                    .selectedDays
-                                                                    .toString(),
-                                                                maxLines: 3,
-                                                                style: size.width >
-                                                                        450
-                                                                    ? blackTabMainText
-                                                                    : blackMainText,
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        PopupMenuButton(
-                                                          iconSize:
-                                                              size.width > 450
-                                                                  ? 14.sp
-                                                                  : 20.sp,
-                                                          icon: Icon(
-                                                            Icons.more_vert,
-                                                            color: kMainColor,
+                                          String formattedEndDate =
+                                              DateFormat('dd-MM-yyyy').format(
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .parse(schedule.endDate
+                                                          .toString()));
+                                          return SingleChildScrollView(
+                                            child: Card(
+                                              color: const Color.fromARGB(
+                                                  255, 243, 247, 250),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 6.w,
+                                                    bottom: 6.h,
+                                                    top: 6.h),
+                                                child: SizedBox(
+                                                  width: double.infinity,
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Text(
+                                                            schedule.clinicName
+                                                                .toString(),
+                                                            style: size.width >
+                                                                    450
+                                                                ? blackTabMainText
+                                                                : blackMainText,
                                                           ),
-                                                          itemBuilder:
-                                                              (context) =>
-                                                                  <PopupMenuEntry<
-                                                                      dynamic>>[
-                                                            PopupMenuItem(
-                                                              child: Text(
-                                                                "Edit",
+                                                          ShortNamesWidget(
+                                                            typeId: 1,
+                                                            firstText:
+                                                                "schedule type : ",
+                                                            secondText:
+                                                                "schedule ${schedule.scheduleType}",
+                                                          ),
+                                                          ShortNamesWidget(
+                                                            typeId: 1,
+                                                            firstText:
+                                                                "Date : ",
+                                                            secondText:
+                                                                "$formattedStartDate  to  $formattedEndDate",
+                                                          ),
+                                                          ShortNamesWidget(
+                                                            typeId: 1,
+                                                            firstText:
+                                                                "Time : ",
+                                                            secondText:
+                                                                "${schedule.startTime} to ${schedule.endTime}",
+                                                          ),
+                                                          ShortNamesWidget(
+                                                            typeId: 1,
+                                                            firstText:
+                                                                "Time duration : ",
+                                                            secondText: schedule
+                                                                .eachTokenDuration
+                                                                .toString(),
+                                                          ),
+                                                          Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "Days : ",
                                                                 style: size.width >
                                                                         450
-                                                                    ? blackTabMainText
-                                                                    : blackMainText,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
+                                                                    ? greyTabMain
+                                                                    : greyMain,
                                                               ),
+                                                              SizedBox(
+                                                                width: 240.w,
+                                                                child: Text(
+                                                                  schedule
+                                                                      .selectedDays
+                                                                      .toString(),
+                                                                  maxLines: 3,
+                                                                  style: size.width >
+                                                                          450
+                                                                      ? blackTabMainText
+                                                                      : blackMainText,
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          PopupMenuButton(
+                                                            iconSize:
+                                                                size.width > 450
+                                                                    ? 14.sp
+                                                                    : 20.sp,
+                                                            icon: Icon(
+                                                              Icons.more_vert,
+                                                              color: kMainColor,
                                                             ),
-                                                            PopupMenuItem(
-                                                              child: Text(
-                                                                "Delete",
-                                                                style: size.width >
-                                                                        450
-                                                                    ? blackTabMainText
-                                                                    : blackMainText,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
+                                                            itemBuilder: (context) =>
+                                                                <PopupMenuEntry<
+                                                                    dynamic>>[
+                                                              PopupMenuItem(
+                                                                onTap: () {
+                                                                  GeneralServices
+                                                                      .instance
+                                                                      .appCloseDialogue(
+                                                                    context,
+                                                                    "Are you sure want to delete this schedule?",
+                                                                    () {
+                                                                      BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
+                                                                          scheduleId: schedule
+                                                                              .scheduleId
+                                                                              .toString()));
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                  );
+                                                                },
+                                                                child: Text(
+                                                                  "Delete",
+                                                                  style: size.width >
+                                                                          450
+                                                                      ? blackTabMainText
+                                                                      : blackMainText,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return const Center(
-                                  child: Text("Unexpected state"),
-                                );
-                              }
-                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return const Center(
+                                    child: Text("Unexpected state"),
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ],
                       ),

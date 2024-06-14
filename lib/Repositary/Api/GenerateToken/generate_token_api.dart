@@ -74,4 +74,21 @@ class GenerateTokenApi {
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     return GeneratedSchedulesModel.fromJson(json.decode(response.body));
   }
+
+  //! delete schedules api
+
+  Future<String> deleteSchedules({
+    required String scheduleId,
+  }) async {
+    String basePath = "doctor/deleteSchedules";
+
+    final body = {
+      "schedule_id": scheduleId,
+    };
+
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
+    return response.body;
+  }
 }

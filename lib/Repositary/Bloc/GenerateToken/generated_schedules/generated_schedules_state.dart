@@ -14,3 +14,21 @@ final class GeneratedSchedulesLoaded extends GeneratedSchedulesState {
 }
 
 final class GeneratedSchedulesError extends GeneratedSchedulesState {}
+
+//! delete schedules
+
+final class DeleteSchedulesInitial extends GeneratedSchedulesState {}
+
+final class DeleteSchedulesLoading extends GeneratedSchedulesState {}
+
+final class DeleteSchedulesLoaded extends GeneratedSchedulesState {
+  final String successMessage;
+
+  DeleteSchedulesLoaded({required this.successMessage});
+}
+
+final class DeleteSchedulesError extends GeneratedSchedulesState {
+  final String errorMessage;
+
+  DeleteSchedulesError({required this.errorMessage});
+}
