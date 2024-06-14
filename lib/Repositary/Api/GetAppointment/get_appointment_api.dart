@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -91,7 +90,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     //print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }
@@ -225,7 +224,7 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     log("<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
@@ -340,7 +339,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 
@@ -388,7 +387,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 }
