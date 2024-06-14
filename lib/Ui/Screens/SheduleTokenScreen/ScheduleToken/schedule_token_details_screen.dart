@@ -875,6 +875,9 @@ class _ScheduleTokenDetailsScreenState
                               } else if (state is GeneratedSchedulesLoaded) {
                                 final model = state.generatedSchedulesModel;
 
+                                if (model.schedules == null) {
+                                  return Container();
+                                }
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
