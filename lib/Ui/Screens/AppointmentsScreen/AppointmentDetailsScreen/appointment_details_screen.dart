@@ -224,6 +224,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     super.dispose();
   }
 
+//cnages...................
+  final FoodDropdownController foodDropdownController =
+      Get.put(FoodDropdownController());
+  final bokingAppointmentLabController =
+      Get.put(BookingAppointmentLabController());
+
   @override
   Widget build(BuildContext context) {
     log("current position then : $currentPosition");
