@@ -898,6 +898,18 @@ class _ScheduleTokenDetailsScreenState
                                       itemBuilder: (context, index) {
                                         final schedule =
                                             model.schedules![index];
+
+                                        String formattedStartDate =
+                                            DateFormat('dd-MM-yyyy').format(
+                                                DateFormat('yyyy-MM-dd').parse(
+                                                    schedule.startDate
+                                                        .toString()));
+
+                                        String formattedEndDate =
+                                            DateFormat('dd-MM-yyyy').format(
+                                                DateFormat('yyyy-MM-dd').parse(
+                                                    schedule.endDate
+                                                        .toString()));
                                         return SingleChildScrollView(
                                           child: Card(
                                             color: const Color.fromARGB(
@@ -943,7 +955,7 @@ class _ScheduleTokenDetailsScreenState
                                                           typeId: 1,
                                                           firstText: "Date : ",
                                                           secondText:
-                                                              "${schedule.startDate} to ${schedule.endDate}",
+                                                              "$formattedStartDate  to  $formattedEndDate",
                                                         ),
                                                         ShortNamesWidget(
                                                           typeId: 1,
@@ -959,14 +971,33 @@ class _ScheduleTokenDetailsScreenState
                                                               .eachTokenDuration
                                                               .toString(),
                                                         ),
-
-                                                        // ShortNamesWidget(
-                                                        //   typeId: 1,
-                                                        //   firstText: "Days : ",
-                                                        //   secondText: schedule
-                                                        //       .selectedDays
-                                                        //       .toString(),
-                                                        // ),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "Days : ",
+                                                              style: size.width >
+                                                                      450
+                                                                  ? greyTabMain
+                                                                  : greyMain,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 240.w,
+                                                              child: Text(
+                                                                schedule
+                                                                    .selectedDays
+                                                                    .toString(),
+                                                                maxLines: 3,
+                                                                style: size.width >
+                                                                        450
+                                                                    ? blackTabMainText
+                                                                    : blackMainText,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
                                                       ],
                                                     ),
                                                     Column(
@@ -1023,7 +1054,7 @@ class _ScheduleTokenDetailsScreenState
                                   ],
                                 );
                               } else {
-                                return Center(
+                                return const Center(
                                   child: Text("Unexpected state"),
                                 );
                               }

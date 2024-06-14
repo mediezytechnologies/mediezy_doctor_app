@@ -838,7 +838,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           direction:
                                                                               Axis.horizontal,
                                                                           spacing:
-                                                                              8.0, // Add spacing between surgery names
+                                                                              8.0,
                                                                           children: getCurrentTokenModel
                                                                               .tokens![currentIndex]
                                                                               .patientData!
