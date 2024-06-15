@@ -61,7 +61,7 @@ class ImageViewWidgetDemo extends StatelessWidget {
                   color: Colors.yellow,
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      image: FileImage( File(image!)), fit: BoxFit.fill)),
+                      image: FileImage(File(image!)), fit: BoxFit.fill)),
               // child: Image.file(
               //   image!,
               //   fit: BoxFit.fill,

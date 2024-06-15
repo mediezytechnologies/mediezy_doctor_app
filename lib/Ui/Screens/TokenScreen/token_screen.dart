@@ -820,16 +820,47 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         .labtest ==
                                                                     null
                                                                 ? Container()
-                                                                : ShortNamesWidget(
-                                                                    typeId: 1,
-                                                                    firstText:
-                                                                        "Lab test : ",
-                                                                    secondText: getCurrentTokenModel
-                                                                        .tokens![
-                                                                            currentIndex]
-                                                                        .patientData!
-                                                                        .labtest
-                                                                        .toString()),
+                                                                : Row(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Lab test name : ",
+                                                                        style: size.width >
+                                                                                450
+                                                                            ? greyTabMain
+                                                                            : greyMain,
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Wrap(
+                                                                          direction:
+                                                                              Axis.horizontal,
+                                                                          spacing:
+                                                                              8.0,
+                                                                          children: getCurrentTokenModel
+                                                                              .tokens![currentIndex]
+                                                                              .patientData!
+                                                                              .labtest!
+                                                                              .asMap()
+                                                                              .entries
+                                                                              .map((entry) {
+                                                                            final index =
+                                                                                entry.key;
+                                                                            final name =
+                                                                                entry.value;
+                                                                            final isLastItem =
+                                                                                index == getCurrentTokenModel.tokens![currentIndex].patientData!.labtest!.length - 1;
+                                                                            return Text(
+                                                                              "$name${isLastItem ? '' : ','}",
+                                                                              style: size.width > 450 ? blackTabMainText : blackMainText,
+                                                                            );
+                                                                          }).toList(),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                             getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
@@ -851,19 +882,67 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         .tokens![
                                                                             currentIndex]
                                                                         .patientData!
-                                                                        .scanTest ==
+                                                                        .labtest ==
                                                                     null
                                                                 ? Container()
-                                                                : ShortNamesWidget(
-                                                                    typeId: 1,
-                                                                    firstText:
-                                                                        "Scan test : ",
-                                                                    secondText: getCurrentTokenModel
-                                                                        .tokens![
-                                                                            currentIndex]
-                                                                        .patientData!
-                                                                        .scanTest
-                                                                        .toString()),
+                                                                : Row(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Scan test name : ",
+                                                                        style: size.width >
+                                                                                450
+                                                                            ? greyTabMain
+                                                                            : greyMain,
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Wrap(
+                                                                          direction:
+                                                                              Axis.horizontal,
+                                                                          spacing:
+                                                                              8.0, // Add spacing between surgery names
+                                                                          children: getCurrentTokenModel
+                                                                              .tokens![currentIndex]
+                                                                              .patientData!
+                                                                              .scanTest!
+                                                                              .asMap()
+                                                                              .entries
+                                                                              .map((entry) {
+                                                                            final index =
+                                                                                entry.key;
+                                                                            final name =
+                                                                                entry.value;
+                                                                            final isLastItem =
+                                                                                index == getCurrentTokenModel.tokens![currentIndex].patientData!.scanTest!.length - 1;
+                                                                            return Text(
+                                                                              "$name${isLastItem ? '' : ','}",
+                                                                              style: size.width > 450 ? blackTabMainText : blackMainText,
+                                                                            );
+                                                                          }).toList(),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                            // getCurrentTokenModel
+                                                            //             .tokens![
+                                                            //                 currentIndex]
+                                                            //             .patientData!
+                                                            //             .scanTest ==
+                                                            //         null
+                                                            //     ? Container()
+                                                            //     : ShortNamesWidget(
+                                                            //         typeId: 1,
+                                                            //         firstText:
+                                                            //             "Scan test : ",
+                                                            //         secondText: getCurrentTokenModel
+                                                            //             .tokens![
+                                                            //                 currentIndex]
+                                                            //             .patientData!
+                                                            //             .scanTest
+                                                            //             .toString()),
                                                             getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]

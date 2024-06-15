@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
+import 'package:mediezy_doctor/Model/GenerateToken/generated_schedules.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GenerateTokenApi {
   ApiClient apiClient = ApiClient();
   MultiFileApiClient multiFileApiClient = MultiFileApiClient();
+
+  //! clinic get api
 
   Future<ClinicGetModel> getClinic() async {
     String? id;
@@ -18,10 +21,10 @@ class GenerateTokenApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "GET", body: null);
-
-    log("<<<<<<<<<<Generate token response worked>>>>>>>>>>");
     return ClinicGetModel.fromJson(json.decode(response.body));
   }
+
+  //! generate token api
 
   Future<String> getGenerateTokenFinal({
     required String startDate,
@@ -54,6 +57,38 @@ class GenerateTokenApi {
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
     log(body.toString());
     log("<<<<<<<<<<Generate token final response worked>>>>>>>>>>");
+    return response.body;
+  }
+
+  //! generated schedules
+
+  Future<GeneratedSchedulesModel> getSchedules() async {
+    String? id;
+    final preference = await SharedPreferences.getInstance();
+    id = preference.getString('DoctorId').toString();
+    String basePath = "doctor/userSchedules";
+
+    final body = {"user_id": id};
+
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    return GeneratedSchedulesModel.fromJson(json.decode(response.body));
+  }
+
+  //! delete schedules api
+
+  Future<String> deleteSchedules({
+    required String scheduleId,
+  }) async {
+    String basePath = "doctor/deleteSchedules";
+
+    final body = {
+      "schedule_id": scheduleId,
+    };
+
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
     return response.body;
   }
 }

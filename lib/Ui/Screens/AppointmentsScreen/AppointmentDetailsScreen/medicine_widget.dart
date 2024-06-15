@@ -129,7 +129,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        
+                        // Text(widget.medicalStoreId),
                         ShortNamesWidget(
                           typeId: 1,
                           firstText: "Medicine : ",
@@ -382,11 +382,10 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       );
                     },
                     child: SizedBox(
-                      // height: 40.h,
                       width: size.width > 450 ? 245.w : 235.w,
                       child: TextFormField(
                         style: TextStyle(
-                          color: Colors.black, // Set the text color to black
+                          color: Colors.black,
                           fontSize: size.width > 450 ? 9.sp : 14.sp,
                         ),
                         cursorColor: kMainColor,
@@ -415,7 +414,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ),
                   // );
-                
+
                   SizedBox(
                     // height: 40.h,
                     width: 90.w,
@@ -599,7 +598,6 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             GeneralServices.instance
                                 .showErrorMessage(context, "Please fill days");
                           } else if (foodDropdownController.isEdit.value) {
-                          
                             BlocProvider.of<EditMedicineBloc>(context).add(
                               EditMedicine(
                                 medicineName: medicineNameController.text,
@@ -635,9 +633,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             });
                             // foodDropdownController.resetToPreviousValue();
                           } else {
-
-                          
-                            log("data on dropdown val ===: ${widget.medicalStoreId}");
+                            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.medicalStoreId}");
                             BlocProvider.of<AddPrescriptionBloc>(context).add(
                               FetchAddPrescription(
                                 medicineName: medicineNameController.text,

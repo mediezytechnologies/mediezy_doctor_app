@@ -7,6 +7,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/CustomSchedule/LateCustomSchedule
 import 'package:mediezy_doctor/Repositary/Bloc/DeleteTokens/delete_tokens_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GenerateTokenFinal/generate_token_final_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
+import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/generated_schedules/generated_schedules_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/selected_clinic/selected_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
@@ -58,6 +59,9 @@ import 'package:mediezy_doctor/Repositary/Bloc/bottomsheet/bloc/bottom_sheet_blo
 import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/patients/search_patients/search_patients_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/suggest_doctor/suggest_doctor_bloc.dart';
+
+import '../../Repositary/Bloc/GetAppointments/search_lab_test/favourite_lab_test/favourite_lab_test_bloc.dart';
+import '../../Repositary/Bloc/GetAppointments/search_lab_test/search_lab/search_lab_test_bloc.dart';
 
 class AppBBlocProviders {
   static get allBlocProviders => [
@@ -121,5 +125,8 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
         BlocProvider(create: (context) => BottomSheetBloc()),
         BlocProvider(create: (context) => GetAppointmentsBloc()),
+        BlocProvider(create: (context) => SearchLabTestBloc()),
+        BlocProvider(create: (context) => FavouriteLabTestBloc()),
+        BlocProvider(create: (context) => GeneratedSchedulesBloc()),
       ];
 }

@@ -61,6 +61,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
     // Ensure the controller values are initialized before making the API call
     if (controller.initialIndex != null &&
+        // ignore: unnecessary_null_comparison
         controller.scheduleIndex.value != null) {
       BlocProvider.of<GetAppointmentsBloc>(context).add(
         FetchAllAppointments(

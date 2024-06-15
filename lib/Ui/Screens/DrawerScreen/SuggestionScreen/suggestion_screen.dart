@@ -39,7 +39,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
         bottomNavigationBar: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: SizedBox(
-            height: Platform.isIOS ? size.height * 0.105 : size.height * 0.08,
+            height: Platform.isIOS ? size.height * 0.103 : size.height * 0.08,
             child: Column(
               children: [
                 CommonButtonWidget(

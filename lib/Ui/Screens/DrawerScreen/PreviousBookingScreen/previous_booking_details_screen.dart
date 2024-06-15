@@ -384,26 +384,59 @@ class _PreviousBookingDetailsScreenState
                                     .labName ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
+                            : ShortNamesWidget(
+                                typeId: 1,
                                 firstText: "Lab name : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.labName
                                     .toString(),
                               ),
-                        // const VerticalSpacingWidget(height: 10),
                         previousAppointmentDetailsModel
                                     .previousappointmentdetails!
                                     .first
                                     .labTest ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
-                                firstText: "Lab test name : ",
-                                secondText: previousAppointmentDetailsModel
-                                    .previousappointmentdetails!.first.labTest
-                                    .toString(),
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Lab test name : ",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  Expanded(
+                                    child: Wrap(
+                                      direction: Axis.horizontal,
+                                      spacing:
+                                          8.0, // Add spacing between surgery names
+                                      children: previousAppointmentDetailsModel
+                                          .previousappointmentdetails!
+                                          .first
+                                          .labTest!
+                                          .asMap()
+                                          .entries
+                                          .map((entry) {
+                                        final index = entry.key;
+                                        final name = entry.value;
+                                        final isLastItem = index ==
+                                            previousAppointmentDetailsModel
+                                                    .previousappointmentdetails!
+                                                    .first
+                                                    .labTest!
+                                                    .length -
+                                                1;
+                                        return Text(
+                                          "$name${isLastItem ? '' : ','}",
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : blackMainText,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ],
                               ),
                         previousAppointmentDetailsModel
                                     .previousappointmentdetails!
@@ -411,9 +444,9 @@ class _PreviousBookingDetailsScreenState
                                     .scanName ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
-                                firstText: "Scan name : ",
+                            : ShortNamesWidget(
+                                typeId: 1,
+                                firstText: "Scanning centre : ",
                                 secondText: previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.scanName
                                     .toString()),
@@ -423,17 +456,52 @@ class _PreviousBookingDetailsScreenState
                                     .scanTest ==
                                 null
                             ? Container()
-                            :   ShortNamesWidget(
-                          typeId: 1,
-                                firstText: "Scan test name : ",
-                                secondText: previousAppointmentDetailsModel
-                                    .previousappointmentdetails!.first.scanTest
-                                    .toString()),
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Scan test name : ",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  Expanded(
+                                    child: Wrap(
+                                      direction: Axis.horizontal,
+                                      spacing:
+                                          8.0, // Add spacing between surgery names
+                                      children: previousAppointmentDetailsModel
+                                          .previousappointmentdetails!
+                                          .first
+                                          .scanTest!
+                                          .asMap()
+                                          .entries
+                                          .map((entry) {
+                                        final index = entry.key;
+                                        final name = entry.value;
+                                        final isLastItem = index ==
+                                            previousAppointmentDetailsModel
+                                                    .previousappointmentdetails!
+                                                    .first
+                                                    .scanTest!
+                                                    .length -
+                                                1;
+                                        return Text(
+                                          "$name${isLastItem ? '' : ','}",
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : blackMainText,
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ],
+                              ),
                         previousAppointmentDetailsModel
                                     .previousappointmentdetails!.first.notes ==
                                 null
                             ? Container()
-                            : Column(
+                            : Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -442,13 +510,17 @@ class _PreviousBookingDetailsScreenState
                                         ? greyTabMain
                                         : greyMain,
                                   ),
-                                  Text(
-                                    previousAppointmentDetailsModel
-                                        .previousappointmentdetails!.first.notes
-                                        .toString(),
-                                    style: size.width > 450
-                                        ? blackTabMainText
-                                        : blackMainText,
+                                  Expanded(
+                                    child: Text(
+                                      previousAppointmentDetailsModel
+                                          .previousappointmentdetails!
+                                          .first
+                                          .notes
+                                          .toString(),
+                                      style: size.width > 450
+                                          ? blackTabMainText
+                                          : blackMainText,
+                                    ),
                                   ),
                                 ],
                               ),

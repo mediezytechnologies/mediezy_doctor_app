@@ -1,19 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:http/http.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointment_details_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_all_completed_appointments_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/add_prescription_model.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
+import 'package:mediezy_doctor/Model/GetAppointments/search_lab_test_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:mediezy_doctor/Repositary/Api/MultiFileApiClient2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/GetAppointments/get_all_medicines_model.dart';
-
-
-
 
 class GetAppointmentApi {
   ApiClient apiClient = ApiClient();
@@ -73,7 +70,8 @@ class GetAppointmentApi {
     final preference = await SharedPreferences.getInstance();
     id = preference.getString('DoctorId').toString();
     String basePath = "docter/add_prescription";
-    final bodyData={
+
+    final body = {
       "medicine_name": medicineName,
       "medicine_id": medicineId,
       "token_id": tokenId,
@@ -90,12 +88,9 @@ class GetAppointmentApi {
       "time_section": timeSection,
       "interval": interval,
     };
-    log("message $bodyData");
-
-    final body = bodyData;
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     //print("<<<<<<<<<<Add prescription response worked>>>>>>>>>>");
     return AddPrescriptionModel.fromJson(json.decode(response.body));
   }
@@ -136,8 +131,8 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
-    print(body);
-    print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
+    //print(body);
+    //print("<<<<<<<<<<Edit prescription response worked>>>>>>>>>>");
     return response.body;
   }
 
@@ -172,49 +167,44 @@ class GetAppointmentApi {
     return response.body;
   }
 
-  //! Save all appointment details api
-   
+  // //! Save all appointment details api
 
+  // Future<String> addAllAppointmentDetails(
+  //   File? attachment, {
+  //   required String tokenId,
+  //   required String labId,
+  //   required List<String?> labTestId,
+  //   required String medicalshopId,
+  //   required String reviewAfter,
+  //   required String notes,
+  //   required String scanId,
+  //   required List<String?> scanTestId,
+  //   required List<String?> labTestName,
+  //   required List<String?> scanTestName,
+  // }) async {
+  //   String basePath = "docter/AddTestDetails";
 
-
-   //on dio impliment//
-
-
-
-//http impliment//
-
-  Future<String> addAllAppointmentDetails(
-    File? attachment, {
-    required String tokenId,
-    required String labId,
-    required String labTest,
-    required String medicalshopId,
-    required String reviewAfter,
-    required String notes,
-    required String scanId,
-    required String scanTest,
-  }) async {
-    String basePath = "docter/AddTestDetails";
-
-    final body = {
-      "token_id": tokenId,
-      "lab_id": labId,
-      "labtest": labTest,
-      "medical_shop_id": medicalshopId,
-      "prescription_image": attachment,
-      "ReviewAfter": reviewAfter,
-      "notes": notes,
-      "scan_id": scanId,
-      "scan_test": scanTest,
-    };
-    Response response = attachment == null
-        ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
-        : await multiFileApiClient.uploadFiles(
-            files: attachment, uploadPath: basePath, bodyData: body);
-    log(body.toString());
-    log(">>>>>>>><<<<<<<add appointments${response.body}");
-    return response.body;
-  }
+  //   final body = {
+  //     "token_id": tokenId,
+  //     "lab_id": labId,
+  //     "labtest_id": labTestId,
+  //     "medical_shop_id": medicalshopId,
+  //     "prescription_image": attachment,
+  //     "ReviewAfter": reviewAfter,
+  //     "notes": notes,
+  //     "scan_id": scanId,
+  //     "scantest_id": scanTestId,
+  //     "labtest": labTestName,
+  //     "scan_test": scanTestName,
+  //   };
+  //   Response response = attachment == null
+  //       ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
+  //       : await multiFileApiClient.uploadFiles(
+  //           files: attachment, uploadPath: basePath, bodyData: body);
+  //   log(body.toString());
+  //   log(">>>>>>>><<<<<<<add appointments${response.body}");
+  //   return response.body;
+  // }
 
   //! get Completed AppointmentDetails api
 
@@ -234,7 +224,7 @@ class GetAppointmentApi {
 
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
-    print(body);
+    log(body.toString());
     log("<<<<<<<<<<Get all Completed AppointmentDetails response worked>>>>>>>>>>");
     return GetAllCompletedAppointmentDetailsModel.fromJson(
         json.decode(response.body));
@@ -349,7 +339,7 @@ class GetAppointmentApi {
     };
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
-    print(body);
+    log(body.toString());
     return response.body;
   }
 
@@ -368,13 +358,56 @@ class GetAppointmentApi {
     //print(body);
     return response.body;
   }
+
+  //! search lab test
+
+  Future<SearchLabTestModel> getAllLabTest({
+    required String searchQuery,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+    String basePath = "lab-tests";
+    final body = {"user_id": doctorId, "search": searchQuery};
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    //print(body);
+    return SearchLabTestModel.fromJson(json.decode(response.body));
+  }
+
+  //! update favourite lab test
+
+  Future<String> updateFavouriteLabTest({
+    required String labTestId,
+  }) async {
+    String basePath = "updateFavoriteLabs";
+
+    final body = {
+      "labtest_id": labTestId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
+    return response.body;
+  }
+
+  //! delete recently search lab test
+
+  Future<String> deleteRecentlySearchLabTest({
+    required String labtestId,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+
+    String basePath = "doctor/deleteLabTestHistory";
+    final body = {
+      "doctor_id": doctorId,
+      "labtest_id": labtestId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
+    log(body.toString());
+    return response.body;
+  }
 }
-
-
-
-
-
-
-
- //! Save all appointment details api in dio 
- 

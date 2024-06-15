@@ -1,34 +1,35 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
 
-import '../../../Api/GetAppointment/get_all_appointment_api.dart';
+import '../../../Api/GetAppointment/add_test_details_api.dart';
 
 part 'add_all_appointment_details_event.dart';
 part 'add_all_appointment_details_state.dart';
 
 class AddAllAppointmentDetailsBloc
     extends Bloc<AddAllAppointmentDetailsEvent, AddAllAppointmentDetailsState> {
- 
- final SaveaAllApontmentDetailsServicce saveAllAppointmentDetailsService = SaveaAllApontmentDetailsServicce();
- AddAllAppointmentDetailsBloc() : super(AddAllAppointmentDetailsInitial()) {
+  // late String updatedSuccessfully;
+  // GetAppointmentApi getAppointmentApi = GetAppointmentApi();
+  final SaveaAllApontmentDetailsServicce saveAllAppointmentDetailsService =
+      SaveaAllApontmentDetailsServicce();
+  AddAllAppointmentDetailsBloc() : super(AddAllAppointmentDetailsInitial()) {
     on<AddAllAppointmentDetails>((event, emit) async {
       emit(AddAllAppointmentDetailsLoading());
       try {
-     var    response = await saveAllAppointmentDetailsService.addAllApontmentDetailsList(
-          tokenId:event. tokenId,
+        var response =
+            await saveAllAppointmentDetailsService.addAllApontmentDetailsList(
+          tokenId: event.tokenId,
           labId: event.labId,
-           labTest: event.labTest, 
-           medicalshopId:event. medicalshopId,
-            reviewAfter: event.reviewAfter,
-             notes:event. notes,
-              scanId: event.scanId,
-               scanTest:event. scanTest,
-               attachment: event.attachment,
-               );
+          medicalshopId: event.medicalshopId,
+          reviewAfter: event.reviewAfter,
+          notes: event.notes,
+          scanId: event.scanId,
+          attachment: event.attachment,
+          labTestId: event.labTestId,
+          scanTestId: event.scanTestId,
+        );
         if (response != null) {
           emit(AddAllAppointmentDetailsLoaded());
           GeneralServices.instance.showToastMessage(response["message"]);

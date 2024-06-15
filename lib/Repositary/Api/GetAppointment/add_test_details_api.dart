@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
@@ -7,15 +6,15 @@ import 'package:mediezy_doctor/Repositary/Api/ApiClient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SaveaAllApontmentDetailsServicce {
-   Future<Map<String, dynamic>>? addAllApontmentDetailsList({
+  Future<Map<String, dynamic>>? addAllApontmentDetailsList({
     required String tokenId,
     required String labId,
-    required String labTest,
+    required List<String?> labTestId,
     required String medicalshopId,
     required String reviewAfter,
     required String notes,
     required String scanId,
-    required String scanTest,
+    required List<String?> scanTestId,
     String? attachment,
   }) async {
     final preference = await SharedPreferences.getInstance();
@@ -33,21 +32,27 @@ class SaveaAllApontmentDetailsServicce {
         );
       }
 
+      log("message:$scanTestId");
       FormData formData = FormData.fromMap({
         "token_id": tokenId,
         "lab_id": labId,
-        "labtest": labTest,
+        "labtest_id[]": labTestId,
         "medical_shop_id": medicalshopId,
         "prescription_image": addMemberImage,
         "ReviewAfter": reviewAfter,
         "notes": notes,
         "scan_id": scanId,
-        "scan_test": scanTest,
+        "scantest_id[]": scanTestId,
       });
       log("formData ============$addMemberImage");
-     
-       for (var field in formData.fields) {
+      log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${formData.toString()}");
+
+      for (var field in formData.fields) {
         log("${field.key}: ${field.value}");
+      }
+
+      for (var file in formData.files) {
+        log("${file.key}: ${file.value.filename}");
       }
 
       final response = await Dio(BaseOptions(
@@ -80,4 +85,3 @@ class SaveaAllApontmentDetailsServicce {
     return {};
   }
 }
-

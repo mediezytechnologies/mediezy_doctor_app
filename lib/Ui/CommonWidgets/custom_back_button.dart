@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class DoubleTapBackPress extends StatelessWidget {
   DoubleTapBackPress(
-      {super.key, required this.lastpressed, required this.widget,required this.onTap});
+      {super.key,
+      required this.lastpressed,
+      required this.widget,
+      required this.onTap});
   final Widget widget;
   DateTime? lastpressed;
   final VoidCallback onTap;
@@ -20,7 +20,7 @@ class DoubleTapBackPress extends StatelessWidget {
       onWillPop: () async {
         // DateTime? lastpressed;
         final now = DateTime.now();
-        const maxDuration =  Duration(seconds: 1);
+        const maxDuration = Duration(seconds: 1);
         final isWarning =
             lastpressed == null || now.difference(lastpressed!) > maxDuration;
         if (isWarning) {
