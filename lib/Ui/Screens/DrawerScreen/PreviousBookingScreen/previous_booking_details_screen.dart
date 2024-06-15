@@ -392,10 +392,10 @@ class _PreviousBookingDetailsScreenState
                                     .toString(),
                               ),
                         previousAppointmentDetailsModel
-                                    .previousappointmentdetails!
-                                    .first
-                                    .labTest ==
-                                null
+                                .previousappointmentdetails!
+                                .first
+                                .labTest!
+                                .isEmpty
                             ? Container()
                             : Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,10 +451,10 @@ class _PreviousBookingDetailsScreenState
                                     .previousappointmentdetails!.first.scanName
                                     .toString()),
                         previousAppointmentDetailsModel
-                                    .previousappointmentdetails!
-                                    .first
-                                    .scanTest ==
-                                null
+                                .previousappointmentdetails!
+                                .first
+                                .scanTest!
+                                .isEmpty
                             ? Container()
                             : Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
