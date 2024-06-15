@@ -129,7 +129,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        
+                        // Text(widget.medicalStoreId),
                         ShortNamesWidget(
                           typeId: 1,
                           firstText: "Medicine : ",
@@ -414,7 +414,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     ),
                   ),
                   // );
-                
+
                   SizedBox(
                     // height: 40.h,
                     width: 90.w,
@@ -633,6 +633,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                             });
                             // foodDropdownController.resetToPreviousValue();
                           } else {
+                            log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${widget.medicalStoreId}");
                             BlocProvider.of<AddPrescriptionBloc>(context).add(
                               FetchAddPrescription(
                                 medicineName: medicineNameController.text,

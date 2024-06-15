@@ -8,3 +8,11 @@ class AddFavouriteLabTest extends FavouriteLabTestEvent {
 
   AddFavouriteLabTest({required this.labTestId});
 }
+
+//! delete recently search lab test
+
+class DeleteRecentlySearchLabTest extends FavouriteLabTestEvent {
+  final String labTestId;
+
+  DeleteRecentlySearchLabTest({required this.labTestId});
+}

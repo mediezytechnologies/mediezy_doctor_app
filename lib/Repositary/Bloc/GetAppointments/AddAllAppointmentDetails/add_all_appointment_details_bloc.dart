@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:meta/meta.dart';
 
-import '../../../Api/GetAppointment/get_all_appointment_api.dart';
+import '../../../Api/GetAppointment/add_test_details_api.dart';
 
 part 'add_all_appointment_details_event.dart';
 part 'add_all_appointment_details_state.dart';

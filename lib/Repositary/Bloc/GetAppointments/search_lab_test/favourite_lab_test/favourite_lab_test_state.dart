@@ -18,3 +18,21 @@ final class FavouriteLabTestError extends FavouriteLabTestState {
 
   FavouriteLabTestError({required this.errorMessage});
 }
+
+//! delete recently search lab test
+
+final class DeleteRecentlySearchLabTestInitial extends FavouriteLabTestState {}
+
+final class DeleteRecentlySearchLabTestLoading extends FavouriteLabTestState {}
+
+final class DeleteRecentlySearchLabTestLoaded extends FavouriteLabTestState {
+  final String successMessage;
+
+  DeleteRecentlySearchLabTestLoaded({required this.successMessage});
+}
+
+final class DeleteRecentlySearchLabTestError extends FavouriteLabTestState {
+  final String errorMessage;
+
+  DeleteRecentlySearchLabTestError({required this.errorMessage});
+}

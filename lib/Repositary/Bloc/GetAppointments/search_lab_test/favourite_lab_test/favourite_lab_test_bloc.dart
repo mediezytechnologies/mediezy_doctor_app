@@ -27,5 +27,22 @@ class FavouriteLabTestBloc
         emit(FavouriteLabTestError(errorMessage: e.toString()));
       }
     });
+
+    //! delete recently search lab test
+
+    on<DeleteRecentlySearchLabTest>((event, emit) async {
+      emit(DeleteRecentlySearchLabTestLoading());
+      try {
+        updatedSuccessfully = await getAppointmentApi
+            .deleteRecentlySearchLabTest(labtestId: event.labTestId);
+
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        GeneralServices.instance.showToastMessage(data['message']);
+        emit(DeleteRecentlySearchLabTestLoaded(
+            successMessage: data['message'].toString()));
+      } catch (e) {
+        emit(DeleteRecentlySearchLabTestError(errorMessage: e.toString()));
+      }
+    });
   }
 }

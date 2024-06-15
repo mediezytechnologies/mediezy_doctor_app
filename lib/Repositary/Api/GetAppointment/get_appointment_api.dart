@@ -390,4 +390,24 @@ class GetAppointmentApi {
     log(body.toString());
     return response.body;
   }
+
+  //! delete recently search lab test
+
+  Future<String> deleteRecentlySearchLabTest({
+    required String labtestId,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+
+    String basePath = "doctor/deleteLabTestHistory";
+    final body = {
+      "doctor_id": doctorId,
+      "labtest_id": labtestId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "DELETE", body: body);
+    log(body.toString());
+    return response.body;
+  }
 }
