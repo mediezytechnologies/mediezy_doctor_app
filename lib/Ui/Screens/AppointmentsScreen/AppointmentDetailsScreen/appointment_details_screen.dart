@@ -274,19 +274,19 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
               )
             : const SizedBox(),
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                foodDropdownController.resetToInitialValue();
-                bokingAppointmentLabController.resetToPreviousValue();
-                //Navigator.pop(context);
-                BlocProvider.of<GetAppointmentsBloc>(context)
-                    .add(FetchAllAppointments(
-                  date: widget.date,
-                  clinicId: controller.initialIndex!,
-                  scheduleType: controller.scheduleIndex.value,
-                ));
-              },
-              icon: const Icon(Icons.arrow_back)),
+          // leading: IconButton(
+          //     onPressed: () {
+          //       foodDropdownController.resetToInitialValue();
+          //       bokingAppointmentLabController.resetToPreviousValue();
+          //       //Navigator.pop(context);
+          //       BlocProvider.of<GetAppointmentsBloc>(context)
+          //           .add(FetchAllAppointments(
+          //         date: widget.date,
+          //         clinicId: controller.initialIndex!,
+          //         scheduleType: controller.scheduleIndex.value,
+          //       ));
+          //     },
+          //     icon: const Icon(Icons.arrow_back)),
           title: const Text("Appointment Details"),
           centerTitle: true,
         ),
