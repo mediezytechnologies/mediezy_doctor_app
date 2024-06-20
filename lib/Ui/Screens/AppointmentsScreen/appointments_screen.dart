@@ -66,7 +66,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       BlocProvider.of<GetAppointmentsBloc>(context).add(
         FetchAllAppointments(
           date: controller.formatDate(),
-          clinicId: controller.initialIndex!,
+          clinicId: controller.initialIndex.value,
           scheduleType: controller.scheduleIndex.value,
         ),
       );
@@ -87,7 +87,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     BlocProvider.of<GetAppointmentsBloc>(context).add(
       FetchAllAppointments(
         date: controller.formatDate(),
-        clinicId: controller.initialIndex!,
+        clinicId: controller.initialIndex.value,
         scheduleType: controller.scheduleIndex.value,
       ),
     );
@@ -160,11 +160,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                         onDateChange: (date) {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(date);
-                          controller.selectedDate = date;
+                          controller.selectedDate.value = date;
                           BlocProvider.of<GetAppointmentsBloc>(context).add(
                             FetchAllAppointments(
                               date: formattedDate,
-                              clinicId: controller.initialIndex!,
+                              clinicId: controller.initialIndex.value,
                               scheduleType: controller.scheduleIndex.value,
                             ),
                           );
@@ -173,7 +173,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                               .add(
                             FetchAllCompletedAppointments(
                               date: formattedDate,
-                              clinicId: controller.initialIndex!,
+                              clinicId: controller.initialIndex.value,
                               scheduleType: controller.scheduleIndex.value,
                             ),
                           );
@@ -191,7 +191,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                    const AppoimentTabbar(),
+                     AppoimentTabbar(),
                   ],
                 ),
               );

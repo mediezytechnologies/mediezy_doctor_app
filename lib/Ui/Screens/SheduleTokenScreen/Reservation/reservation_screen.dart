@@ -73,7 +73,7 @@ class _ReservationScreenState extends State<ReservationScreen>
     super.initState();
     tabFirstController = TabController(length: 2, vsync: this);
     BlocProvider.of<GetTokenBloc>(context).add(
-      FetchTokens(date: formatDate(), clinicId: dController.initialIndex!),
+      FetchTokens(date: formatDate(), clinicId: dController.initialIndex.value),
     );
   }
 
@@ -97,7 +97,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                     tokenNumber: selectedTokenNumbers.toString(),
                     fromDate: DateFormat('yyy-MM-dd').format(selectedDate),
                     toDate: DateFormat('yyy-MM-dd').format(endDate),
-                    clinicId: dController.initialIndex!));
+                    clinicId: dController.initialIndex.value));
                 resetSelectedTokens();
               },
               child: Padding(
@@ -147,7 +147,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                   BlocProvider.of<GetTokenBloc>(context).add(
                     FetchTokens(
                         date: formatDate(),
-                        clinicId: dController.initialIndex!),
+                        clinicId: dController.initialIndex.value),
                   );
                   resetSelectedTokens();
                 }
@@ -157,7 +157,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                             .format(selectedunreserveDate),
                         toDate:
                             DateFormat('yyy-MM-dd').format(unreserveendDate),
-                        clinicId: dController.initialIndex!));
+                        clinicId: dController.initialIndex.value));
               },
               unselectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
               selectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
@@ -179,7 +179,7 @@ class _ReservationScreenState extends State<ReservationScreen>
           //         BlocProvider.of<GetTokenBloc>(context).add(
           //           FetchTokens(
           //               date: formatDate(),
-          //               clinicId: dController.initialIndex!),
+          //               clinicId: dController.initialIndex.value),
           //         );
           //         resetSelectedTokens();
           //       }
@@ -189,7 +189,7 @@ class _ReservationScreenState extends State<ReservationScreen>
           //                   .format(selectedunreserveDate),
           //               toDate:
           //                   DateFormat('yyy-MM-dd').format(unreserveendDate),
-          //               clinicId: dController.initialIndex!));
+          //               clinicId: dController.initialIndex.value));
           //     },
           //     controller: tabFirstController,
           //     physics: const ClampingScrollPhysics(),
@@ -255,7 +255,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                       BlocProvider.of<GetTokenBloc>(context).add(
                         FetchTokens(
                             date: formatDate(),
-                            clinicId: dController.initialIndex!),
+                            clinicId: dController.initialIndex.value),
                       );
                     }
                     if (state is ReserveTokenError) {
@@ -287,7 +287,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                 GetBuilder<HospitalController>(builder: (clx) {
                                   return CustomDropDown(
                                     width: double.infinity,
-                                    value: dController.initialIndex,
+                                    value: dController.initialIndex.value,
                                     items:
                                         dController.hospitalDetails!.map((e) {
                                       return DropdownMenuItem(
@@ -298,13 +298,13 @@ class _ReservationScreenState extends State<ReservationScreen>
                                     onChanged: (newValue) {
                                       log(newValue!);
                                       dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex!);
+                                          newValue, dController.initialIndex.value);
                                       BlocProvider.of<GetTokenBloc>(context)
                                           .add(
                                         FetchTokens(
                                             date: formatDate(),
                                             clinicId:
-                                                dController.initialIndex!),
+                                                dController.initialIndex.value),
                                       );
                                       resetSelectedTokens();
                                     },
@@ -333,7 +333,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex!),
+                                                            .initialIndex.value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -354,7 +354,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex!),
+                                                            .initialIndex.value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -398,7 +398,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                     formatDate(),
                                                                 clinicId:
                                                                     dController
-                                                                        .initialIndex!,
+                                                                        .initialIndex.value,
                                                               ),
                                                             );
                                                           },
@@ -424,7 +424,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                     formatDate(),
                                                                 clinicId:
                                                                     dController
-                                                                        .initialIndex!,
+                                                                        .initialIndex.value,
                                                               ),
                                                             );
                                                           },
@@ -468,7 +468,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex!),
+                                                            .initialIndex.value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -489,7 +489,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex!),
+                                                            .initialIndex.value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -531,7 +531,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                       formatDate(),
                                                                   clinicId:
                                                                       dController
-                                                                          .initialIndex!),
+                                                                          .initialIndex.value),
                                                             );
                                                             resetSelectedTokens();
                                                           },
@@ -556,7 +556,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                       formatDate(),
                                                                   clinicId:
                                                                       dController
-                                                                          .initialIndex!),
+                                                                          .initialIndex.value),
                                                             );
                                                             resetSelectedTokens();
                                                           },

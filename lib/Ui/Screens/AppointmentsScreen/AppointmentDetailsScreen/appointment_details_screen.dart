@@ -238,20 +238,43 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
-    return DoubleTapBackPress(
-      onTap: () {
+    return
+        // DoubleTapBackPress(
+        //   onTap: () {
+        // foodDropdownController.resetToInitialValue();
+        // bokingAppointmentLabController.resetToPreviousValue();
+        // //Navigator.pop(context);
+        // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
+        //   date: widget.date,
+        //   clinicId: controller.initialIndex.value,
+        //   scheduleType: controller.scheduleIndex.value,
+        // ));
+        // log("kljsdfkljaskdlfjadklsf=======================");
+        // },
+        // lastpressed: lastpressed,
+        // widget:
+        PopScope(
+      canPop: true, //When false, blocks the current route from being popped.
+      onPopInvoked: (didPop) {
+        final startTime = DateTime.now();
+        Future.delayed(const Duration(seconds: 4), () {
+          final endTime = DateTime.now();
+          log('API call ended at: $endTime');
+
+          final duration = endTime.difference(startTime);
+          log("duration is working=======================--------------=-=-=-=-=--=-=-=-=-=-==-::::::: $duration");
+          Navigator.pop(context);
+        });
         foodDropdownController.resetToInitialValue();
         bokingAppointmentLabController.resetToPreviousValue();
-        //Navigator.pop(context);
+
         BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
           date: widget.date,
-          clinicId: controller.initialIndex!,
+          clinicId: controller.initialIndex.value,
           scheduleType: controller.scheduleIndex.value,
         ));
-        log("kljsdfkljaskdlfjadklsf=======================");
       },
-      lastpressed: lastpressed,
-      widget: Scaffold(
+      child: Scaffold(
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
                 height: size.height * 0.038,
@@ -259,19 +282,28 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
               )
             : const SizedBox(),
         appBar: AppBar(
-          // leading: IconButton(
-          //     onPressed: () {
-          //       foodDropdownController.resetToInitialValue();
-          //       bokingAppointmentLabController.resetToPreviousValue();
-          //       //Navigator.pop(context);
-          //       BlocProvider.of<GetAppointmentsBloc>(context)
-          //           .add(FetchAllAppointments(
-          //         date: widget.date,
-          //         clinicId: controller.initialIndex!,
-          //         scheduleType: controller.scheduleIndex.value,
-          //       ));
-          //     },
-          //     icon: const Icon(Icons.arrow_back)),
+          leading: IconButton(
+              onPressed: () {
+                final startTime = DateTime.now();
+                Future.delayed(const Duration(seconds: 4), () {
+                  final endTime = DateTime.now();
+                  log('API call ended at: $endTime');
+
+                  final duration = endTime.difference(startTime);
+                  log("duration is working $duration");
+                  Navigator.pop(context);
+                });
+                foodDropdownController.resetToInitialValue();
+                bokingAppointmentLabController.resetToPreviousValue();
+
+                BlocProvider.of<GetAppointmentsBloc>(context)
+                    .add(FetchAllAppointments(
+                  date: widget.date,
+                  clinicId: controller.initialIndex.value,
+                  scheduleType: controller.scheduleIndex.value,
+                ));
+              },
+              icon: const Icon(Icons.arrow_back)),
           title: const Text("Appointment Details"),
           centerTitle: true,
         ),
@@ -316,7 +348,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: controller.formatDate(),
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -328,7 +360,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -336,7 +368,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -344,7 +376,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -361,7 +393,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -428,8 +460,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       context)
                                                   .add(FetchAllAppointments(
                                                 date: widget.date,
-                                                clinicId:
-                                                    controller.initialIndex!,
+                                                clinicId: controller
+                                                    .initialIndex.value,
                                                 scheduleType: controller
                                                     .scheduleIndex.value,
                                               ));
@@ -598,8 +630,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       context)
                                                   .add(FetchAllAppointments(
                                                 date: widget.date,
-                                                clinicId:
-                                                    controller.initialIndex!,
+                                                clinicId: controller
+                                                    .initialIndex.value,
                                                 scheduleType: controller
                                                     .scheduleIndex.value,
                                               ));
@@ -765,45 +797,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   const VerticalSpacingWidget(height: 5),
-                                  Text(
-                                    "Review After",
-                                    style: size.width > 450
-                                        ? blackTabMainText
-                                        : blackMainText,
-                                  ),
-                                  //! dosage
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 45.h,
-                                        width: 120.w,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                              fontSize: size.width > 450
-                                                  ? 9.sp
-                                                  : 14.sp),
-                                          cursorColor: kMainColor,
-                                          controller: afterDaysController,
-                                          keyboardType: TextInputType.number,
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                            hintStyle: size.width > 450
-                                                ? greyTab10B600
-                                                : grey13B600,
-                                            hintText: "Days",
-                                            filled: true,
-                                            fillColor: kCardColor,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const VerticalSpacingWidget(height: 10),
+
                                   Obx(() {
                                     return bokingAppointmentLabController
                                             .favoritemedicalshop.isEmpty
@@ -1027,6 +1021,45 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   }),
                                   const VerticalSpacingWidget(height: 10),
                                   //! add note
+                                  Text(
+                                    "Review After",
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                  ),
+                                  //! dosage
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 45.h,
+                                        width: 120.w,
+                                        child: TextFormField(
+                                          style: TextStyle(
+                                              fontSize: size.width > 450
+                                                  ? 9.sp
+                                                  : 14.sp),
+                                          cursorColor: kMainColor,
+                                          controller: afterDaysController,
+                                          keyboardType: TextInputType.number,
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                            hintStyle: size.width > 450
+                                                ? greyTab10B600
+                                                : grey13B600,
+                                            hintText: "Days",
+                                            filled: true,
+                                            fillColor: kCardColor,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const VerticalSpacingWidget(height: 10),
                                   Text(
                                     'Add Note',
                                     style: size.width > 450
@@ -1259,6 +1292,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             }
           },
         ),
+        //),
       ),
     );
   }
@@ -1503,7 +1537,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     BlocProvider.of<GetAppointmentsBloc>(context).add(
       FetchAllAppointments(
         date: widget.date,
-        clinicId: controller.initialIndex!,
+        clinicId: controller.initialIndex.value,
         scheduleType: controller.scheduleIndex.value,
       ),
     );

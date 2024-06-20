@@ -75,7 +75,7 @@ class _TokenScreenState extends State<TokenScreen> {
     // selectedValue = items['All'];
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetCurrentTokenBloc>(context).add(FetchGetCurrentToken(
-      clinicId: dController.initialIndex!,
+      clinicId: dController.initialIndex.value,
       scheduleType: dController.scheduleIndex.value,
     ));
     super.initState();
@@ -106,7 +106,7 @@ class _TokenScreenState extends State<TokenScreen> {
       onRefresh: () async {
         BlocProvider.of<GetCurrentTokenBloc>(context).add(
           FetchGetCurrentToken(
-            clinicId: dController.initialIndex!,
+            clinicId: dController.initialIndex.value,
             scheduleType: dController.scheduleIndex.value,
           ),
         );
@@ -119,7 +119,7 @@ class _TokenScreenState extends State<TokenScreen> {
           if (state is AddCheckinOrCheckoutLoaded) {
             BlocProvider.of<GetCurrentTokenBloc>(context).add(
               FetchGetCurrentToken(
-                clinicId: dController.initialIndex!,
+                clinicId: dController.initialIndex.value,
                 scheduleType: dController.scheduleIndex.value,
               ),
             );
@@ -190,11 +190,11 @@ class _TokenScreenState extends State<TokenScreen> {
                                 onChanged: (newValue) {
                                   log(newValue!);
                                   dController.dropdownValueChanging(
-                                      newValue, dController.initialIndex!);
+                                      newValue, dController.initialIndex.value);
                                   BlocProvider.of<GetCurrentTokenBloc>(context)
                                       .add(
                                     FetchGetCurrentToken(
-                                      clinicId: dController.initialIndex!,
+                                      clinicId: dController.initialIndex.value,
                                       scheduleType:
                                           dController.scheduleIndex.value,
                                     ),
@@ -230,7 +230,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                           BlocProvider.of<GetCurrentTokenBloc>(
                                                   context)
                                               .add(FetchGetCurrentToken(
-                                            clinicId: dController.initialIndex!,
+                                            clinicId: dController.initialIndex.value,
                                             scheduleType:
                                                 dController.scheduleIndex.value,
                                           ));
@@ -335,7 +335,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .add(
                                                         FetchGetCurrentToken(
                                                           clinicId: dController
-                                                              .initialIndex!,
+                                                              .initialIndex.value,
                                                           scheduleType:
                                                               dController
                                                                   .scheduleIndex
@@ -386,7 +386,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .add(
                                                         FetchGetCurrentToken(
                                                           clinicId: dController
-                                                              .initialIndex!,
+                                                              .initialIndex.value,
                                                           scheduleType:
                                                               dController
                                                                   .scheduleIndex
@@ -1056,7 +1056,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                   AddCheckinOrCheckout(
                                                                     clinicId:
                                                                         dController
-                                                                            .initialIndex!,
+                                                                            .initialIndex.value,
                                                                     isCompleted:
                                                                         0,
                                                                     isCheckin:
@@ -1167,7 +1167,7 @@ class _TokenScreenState extends State<TokenScreen> {
 
                                                                             _addCheckinOrCheckoutBloc!.add(
                                                                               AddCheckinOrCheckout(
-                                                                                clinicId: dController.initialIndex!,
+                                                                                clinicId: dController.initialIndex.value,
                                                                                 isCompleted: 0,
                                                                                 isCheckin: 1,
                                                                                 tokenNumber: getCurrentTokenModel.tokens![currentIndex].tokenNumber.toString(),
@@ -1196,7 +1196,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                             .add(
                                                                           AddCheckinOrCheckout(
                                                                             clinicId:
-                                                                                dController.initialIndex!,
+                                                                                dController.initialIndex.value,
                                                                             isCompleted:
                                                                                 0,
                                                                             isCheckin:
@@ -1281,7 +1281,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           .add(
                                                                         AddCheckinOrCheckout(
                                                                           clinicId:
-                                                                              dController.initialIndex!,
+                                                                              dController.initialIndex.value,
                                                                           isCompleted:
                                                                               1,
                                                                           isCheckin:
@@ -1325,7 +1325,7 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                           .add(
                                                                         FetchGetCurrentToken(
                                                                           clinicId:
-                                                                              dController.initialIndex!,
+                                                                              dController.initialIndex.value,
                                                                           scheduleType: dController
                                                                               .scheduleIndex
                                                                               .value,

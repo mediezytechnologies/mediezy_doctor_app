@@ -46,20 +46,20 @@ class MediezyDoctor extends StatefulWidget {
 class _MediezyDoctorState extends State<MediezyDoctor> {
   late StreamSubscription<ConnectivityResult> subscription;
   bool hasInternet = false;
-  NotificationServices notificationServices = NotificationServices();
+ // NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     super.initState();
-    notificationServices.requestNotificationPermisions();
-    notificationServices.isRefreshToken();
-    notificationServices.getDeviceToken().then((value) {
-      log("not : $value");
-    });
+  //  notificationServices.requestNotificationPermisions();
+    // notificationServices.isRefreshToken();
+    // notificationServices.getDeviceToken().then((value) {
+    //   log("not : $value");
+    // });
 
-    notificationServices.forgroundMessage();
-    notificationServices.firebaseInit(context);
-    notificationServices.setupInteractMessage(context);
+    // notificationServices.forgroundMessage();
+    // notificationServices.firebaseInit(context);
+    // notificationServices.setupInteractMessage(context);
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {

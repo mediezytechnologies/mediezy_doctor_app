@@ -133,6 +133,8 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select How Frequently");
                       } else {
+
+                        
                         BlocProvider.of<BookAppointmentBloc>(context).add(
                           PassBookAppointMentEvent(
                             clinicId: widget.clinicId,

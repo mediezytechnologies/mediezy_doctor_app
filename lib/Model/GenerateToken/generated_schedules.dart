@@ -31,6 +31,7 @@ class Schedules {
   int? scheduleType;
   String? selectedDays;
   String? clinicName;
+  int? bookingCount;
 
   Schedules(
       {this.scheduleId,
@@ -41,7 +42,9 @@ class Schedules {
       this.eachTokenDuration,
       this.scheduleType,
       this.selectedDays,
-      this.clinicName});
+      this.clinicName,
+      this.bookingCount
+      });
 
   Schedules.fromJson(Map<String, dynamic> json) {
     scheduleId = json['schedule_id'];
@@ -53,6 +56,7 @@ class Schedules {
     scheduleType = json['schedule_type'];
     selectedDays = json['selected_days'];
     clinicName = json['clinic_name'];
+    bookingCount= json["booking_count"];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +70,7 @@ class Schedules {
     data['schedule_type'] = scheduleType;
     data['selected_days'] = selectedDays;
     data['clinic_name'] = clinicName;
+      data['booking_count'] = bookingCount;
     return data;
   }
 }

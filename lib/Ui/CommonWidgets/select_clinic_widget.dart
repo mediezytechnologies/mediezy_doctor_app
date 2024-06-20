@@ -24,7 +24,7 @@ class SelectClinicWidget extends StatelessWidget {
         GetBuilder<HospitalController>(builder: (clx) {
           return CustomDropDown(
             width: size.width * 0.55,
-            value: dController.initialIndex,
+            value: dController.initialIndex.value,
             items: dController.hospitalDetails!.map((e) {
               return DropdownMenuItem(
                 value: e.clinicId.toString(),

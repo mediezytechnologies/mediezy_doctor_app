@@ -50,7 +50,7 @@ class LeaveScreenState extends State<LeaveScreen> {
   //* for leave section
   // late ValueNotifier<String> dropValueLeaveNotifier;
   // String clinicLeaveId = "";
-  // late String dController.initialIndex!;
+  // late String dController.initialIndex.value;
   // List<HospitalDetails> clinicValuesLeave = [];
 
   final HospitalController dController = Get.put(HospitalController());
@@ -58,9 +58,9 @@ class LeaveScreenState extends State<LeaveScreen> {
   @override
   void initState() {
     BlocProvider.of<GetAllLeavesBloc>(context)
-        .add(FetchAllLeaves(hospitalId: dController.initialIndex!));
+        .add(FetchAllLeaves(hospitalId: dController.initialIndex.value));
     BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
-        clinicId: dController.initialIndex!,
+        clinicId: dController.initialIndex.value,
         fromDate: DateFormat('yyyy-MM-dd').format(leaveStartDate),
         toDate: DateFormat('yyyy-MM-dd').format(leaveEndDate)));
     super.initState();
@@ -72,7 +72,7 @@ class LeaveScreenState extends State<LeaveScreen> {
     return BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
       listener: (context, state) {
         BlocProvider.of<GetAllLeavesBloc>(context)
-            .add(FetchAllLeaves(hospitalId: dController.initialIndex!));
+            .add(FetchAllLeaves(hospitalId: dController.initialIndex.value));
       },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
@@ -123,7 +123,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                         GetBuilder<HospitalController>(builder: (clx) {
                           return CustomDropDown(
                             width: double.infinity,
-                            value: dController.initialIndex,
+                            value: dController.initialIndex.value,
                             items: dController.hospitalDetails!.map((e) {
                               return DropdownMenuItem(
                                 value: e.clinicId.toString(),
@@ -133,13 +133,14 @@ class LeaveScreenState extends State<LeaveScreen> {
                             onChanged: (newValue) {
                               log(newValue!);
                               dController.dropdownValueChanging(
-                                  newValue, dController.initialIndex!);
+                                  newValue, dController.initialIndex.value);
                               BlocProvider.of<GetAllLeavesBloc>(context).add(
                                   FetchAllLeaves(
-                                      hospitalId: dController.initialIndex!));
+                                      hospitalId:
+                                          dController.initialIndex.value));
                               BlocProvider.of<LeaveCheckBloc>(context).add(
                                   FetchLeaveCheck(
-                                      clinicId: dController.initialIndex!,
+                                      clinicId: dController.initialIndex.value,
                                       fromDate: DateFormat('yyyy-MM-dd')
                                           .format(leaveStartDate),
                                       toDate: DateFormat('yyyy-MM-dd')
@@ -164,8 +165,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveCheckBloc>(
                                                   context)
                                               .add(FetchLeaveCheck(
-                                                  clinicId:
-                                                      dController.initialIndex!,
+                                                  clinicId: dController
+                                                      .initialIndex.value,
                                                   fromDate: DateFormat(
                                                           'yyyy-MM-dd')
                                                       .format(leaveStartDate),
@@ -185,8 +186,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveCheckBloc>(
                                                   context)
                                               .add(FetchLeaveCheck(
-                                                  clinicId:
-                                                      dController.initialIndex!,
+                                                  clinicId: dController
+                                                      .initialIndex.value,
                                                   fromDate: DateFormat(
                                                           'yyyy-MM-dd')
                                                       .format(leaveStartDate),
@@ -225,7 +226,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                 context)
                                                         .add(FetchLeaveCheck(
                                                             clinicId: dController
-                                                                .initialIndex!,
+                                                                .initialIndex
+                                                                .value,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -251,7 +253,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                 context)
                                                         .add(FetchLeaveCheck(
                                                             clinicId: dController
-                                                                .initialIndex!,
+                                                                .initialIndex
+                                                                .value,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -293,8 +296,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveCheckBloc>(
                                                   context)
                                               .add(FetchLeaveCheck(
-                                                  clinicId:
-                                                      dController.initialIndex!,
+                                                  clinicId: dController
+                                                      .initialIndex.value,
                                                   fromDate: DateFormat(
                                                           'yyyy-MM-dd')
                                                       .format(leaveStartDate),
@@ -313,8 +316,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveCheckBloc>(
                                                   context)
                                               .add(FetchLeaveCheck(
-                                                  clinicId:
-                                                      dController.initialIndex!,
+                                                  clinicId: dController
+                                                      .initialIndex.value,
                                                   fromDate: DateFormat(
                                                           'yyyy-MM-dd')
                                                       .format(leaveStartDate),
@@ -352,7 +355,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                 context)
                                                         .add(FetchLeaveCheck(
                                                             clinicId: dController
-                                                                .initialIndex!,
+                                                                .initialIndex
+                                                                .value,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -377,7 +381,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                 context)
                                                         .add(FetchLeaveCheck(
                                                             clinicId: dController
-                                                                .initialIndex!,
+                                                                .initialIndex
+                                                                .value,
                                                             fromDate: DateFormat(
                                                                     'yyyy-MM-dd')
                                                                 .format(
@@ -429,7 +434,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           BlocProvider.of<LeaveUpdateBloc>(
                                                   context)
                                               .add(FetchLeaveUpdate(
-                                            clinicId: dController.initialIndex!,
+                                            clinicId:
+                                                dController.initialIndex.value,
                                             fromDate:
                                                 "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                             toDate:
@@ -440,7 +446,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       : BlocProvider.of<LeaveUpdateBloc>(
                                               context)
                                           .add(FetchLeaveUpdate(
-                                          clinicId: dController.initialIndex!,
+                                          clinicId:
+                                              dController.initialIndex.value,
                                           fromDate:
                                               "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                           toDate:
@@ -539,7 +546,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                           .add(
                                                         LeaveDelete(
                                                           clinicId: dController
-                                                              .initialIndex!,
+                                                              .initialIndex
+                                                              .value,
                                                           date:
                                                               getAllLeavesModel
                                                                   .leavesData![

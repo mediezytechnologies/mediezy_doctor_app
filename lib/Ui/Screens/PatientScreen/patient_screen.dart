@@ -57,7 +57,7 @@ class _PatientScreenState extends State<PatientScreen> {
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<PatientsGetBloc>(context)
-        .add(FetchPatients(clinicId: dController.initialIndex!));
+        .add(FetchPatients(clinicId: dController.initialIndex.value));
     super.initState();
   }
 
@@ -134,9 +134,9 @@ class _PatientScreenState extends State<PatientScreen> {
                     onChanged: (newValue) {
                       log(newValue!);
                       dController.dropdownValueChanging(
-                          newValue, dController.initialIndex!);
+                          newValue, dController.initialIndex.value);
                       BlocProvider.of<PatientsGetBloc>(context).add(
-                          FetchPatients(clinicId: dController.initialIndex!));
+                          FetchPatients(clinicId: dController.initialIndex.value));
                     },
                   ),
                   Column(
@@ -166,7 +166,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             BlocProvider.of<PatientsGetBloc>(context).add(
                                 FetchSortPatients(
                                     sort: dropdownValue,
-                                    clinicId: dController.initialIndex!,
+                                    clinicId: dController.initialIndex.value,
                                     fromDate: _startRange,
                                     toDate: _endRange));
                             // print(dropdownvalue);
@@ -364,7 +364,7 @@ class _PatientScreenState extends State<PatientScreen> {
               onPressed: () {
                 BlocProvider.of<PatientsGetBloc>(context).add(FetchSortPatients(
                     sort: "Custom",
-                    clinicId: dController.initialIndex!,
+                    clinicId: dController.initialIndex.value,
                     fromDate: _startRange,
                     toDate: _endRange));
                 Navigator.of(context).pop();

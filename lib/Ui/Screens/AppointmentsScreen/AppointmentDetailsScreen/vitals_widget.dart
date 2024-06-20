@@ -498,13 +498,13 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       //bp dia
                       try {
                         diatValue = double.parse(diaController.text);
-                        if (diatValue > 250) {
+                        if (diatValue >180) {
                           errorMessages
-                              .add("Dia is greater than 250 please re-check");
+                              .add("Dia is greater than 180 please re-check");
                           isValid = false;
-                        } else if (diatValue < 80) {
+                        } else if (diatValue < 40) {
                           errorMessages
-                              .add("Dia is less than 80 please re-check");
+                              .add("Dia is less than 40 please re-check");
                           isValid = false;
                         }
                       } catch (e) {
