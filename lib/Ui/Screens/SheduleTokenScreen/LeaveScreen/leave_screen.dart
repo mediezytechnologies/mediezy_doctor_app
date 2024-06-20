@@ -426,6 +426,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                   setState(() {
                                     isClickLeave = true;
                                   });
+                                  log("===================$isClickLeave");
                                   leaveCheckModel.bookedtokencount != 0
                                       ? GeneralServices().appCloseDialogue(
                                           context,
@@ -556,6 +557,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                                   .toString(),
                                                         ),
                                                       );
+                                                      setState(() {
+                                                        isClickLeave = false;
+                                                      });
                                                     },
                                                     icon: Icon(
                                                       Icons.delete,
