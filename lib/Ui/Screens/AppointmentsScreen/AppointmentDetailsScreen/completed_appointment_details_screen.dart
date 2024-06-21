@@ -54,7 +54,7 @@ class CompletedAppointmentDetailsScreenState
         BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
           FetchAllCompletedAppointments(
               date: controller.formatDate(),
-              clinicId: controller.initialIndex!,
+              clinicId: controller.initialIndex.value,
               scheduleType: controller.scheduleIndex.value),
         );
         return Future.value(false);
@@ -73,7 +73,7 @@ class CompletedAppointmentDetailsScreenState
                 BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
                   FetchAllCompletedAppointments(
                       date: controller.formatDate(),
-                      clinicId: controller.initialIndex!,
+                      clinicId: controller.initialIndex.value,
                       scheduleType: controller.scheduleIndex.value),
                 );
               },

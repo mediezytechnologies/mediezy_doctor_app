@@ -55,13 +55,13 @@ class _LogiScreenState extends State<LoginScreen> {
               BlocProvider.of<GetAppointmentsBloc>(context)
                   .add(FetchAllAppointments(
                 date: controller.formatDate(),
-                clinicId: controller.initialIndex!,
+                clinicId: controller.initialIndex.value,
                 scheduleType: controller.scheduleIndex.value,
               )));
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
-            clinicId: controller.initialIndex!,
+            clinicId: controller.initialIndex.value,
             scheduleType: controller.scheduleIndex.value,
           ));
         }
@@ -224,14 +224,14 @@ class _LogiScreenState extends State<LoginScreen> {
                               BlocProvider.of<GetAppointmentsBloc>(context)
                                   .add(FetchAllAppointments(
                                 date: controller.formatDate(),
-                                clinicId: controller.initialIndex!,
+                                clinicId: controller.initialIndex.value,
                                 scheduleType: controller.scheduleIndex.value,
                               ));
                               BlocProvider.of<GetAllCompletedAppointmentsBloc>(
                                       context)
                                   .add(FetchAllCompletedAppointments(
                                 date: controller.formatDate(),
-                                clinicId: controller.initialIndex!,
+                                clinicId: controller.initialIndex.value,
                                 scheduleType: controller.scheduleIndex.value,
                               ));
                             }

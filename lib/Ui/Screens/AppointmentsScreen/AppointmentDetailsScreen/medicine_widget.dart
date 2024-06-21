@@ -577,7 +577,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                     BlocProvider.of<GetAppointmentsBloc>(context)
                         .add(FetchAllAppointments(
                       date: controller.formatDate(),
-                      clinicId: controller.initialIndex!,
+                      clinicId: controller.initialIndex.value,
                       scheduleType: controller.scheduleIndex.value,
                     ));
                   }

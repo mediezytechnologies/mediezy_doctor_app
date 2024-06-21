@@ -23,6 +23,7 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_d
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../Repositary/Api/firebase_service/firebase_fcm_token.dart';
 import 'Widgets/appoiment_drawer.dart';
 
 class AppointmentsScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       BlocProvider.of<GetAppointmentsBloc>(context).add(
         FetchAllAppointments(
           date: controller.formatDate(),
-          clinicId: controller.initialIndex!,
+          clinicId: controller.initialIndex.value,
           scheduleType: controller.scheduleIndex.value,
         ),
       );
@@ -87,7 +88,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     BlocProvider.of<GetAppointmentsBloc>(context).add(
       FetchAllAppointments(
         date: controller.formatDate(),
-        clinicId: controller.initialIndex!,
+        clinicId: controller.initialIndex.value,
         scheduleType: controller.scheduleIndex.value,
       ),
     );
@@ -117,6 +118,9 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
+        // floatingActionButton: FloatingActionButton(onPressed: () {
+        //   NotificationService.fcmTokenData();
+        // },),
         appBar: const AppoimentAppbar(),
         drawer: const CustomDrawer(),
         body: StreamBuilder<ConnectivityResult>(
@@ -160,11 +164,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                         onDateChange: (date) {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(date);
-                          controller.selectedDate = date;
+                          controller.selectedDate.value = date;
                           BlocProvider.of<GetAppointmentsBloc>(context).add(
                             FetchAllAppointments(
                               date: formattedDate,
-                              clinicId: controller.initialIndex!,
+                              clinicId: controller.initialIndex.value,
                               scheduleType: controller.scheduleIndex.value,
                             ),
                           );
@@ -173,7 +177,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                               .add(
                             FetchAllCompletedAppointments(
                               date: formattedDate,
-                              clinicId: controller.initialIndex!,
+                              clinicId: controller.initialIndex.value,
                               scheduleType: controller.scheduleIndex.value,
                             ),
                           );
@@ -191,7 +195,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                    const AppoimentTabbar(),
+                     AppoimentTabbar(),
                   ],
                 ),
               );

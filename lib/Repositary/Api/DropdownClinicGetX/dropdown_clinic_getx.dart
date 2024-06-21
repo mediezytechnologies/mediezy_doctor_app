@@ -46,7 +46,7 @@ class HospitalService {
 
 class HospitalController extends GetxController {
   RxBool loding = true.obs;
-  String? initialIndex;
+  RxString initialIndex ="".obs;
   var scheduleIndex = '0'.obs;
 
   RxList<HospitalDetails>? hospitalDetails = <HospitalDetails>[].obs;
@@ -58,7 +58,7 @@ class HospitalController extends GetxController {
       loding.value = false;
       hospitalDetails!.value = data!;
       update();
-      initialIndex = hospitalDetails!.first.clinicId.toString();
+      initialIndex.value = hospitalDetails!.first.clinicId.toString();
       update();
       return hospitalDetails!;
     } catch (e) {
@@ -71,7 +71,7 @@ class HospitalController extends GetxController {
   }
 
   // schedule//=====
-  DateTime selectedDate = DateTime.now();
+   var selectedDate = DateTime.now().obs;
   List<SchedulDropdowneModel> scheduleData = [
     SchedulDropdowneModel(scheduleId: '0', scheduleName: "All"),
     SchedulDropdowneModel(scheduleId: '1', scheduleName: "Schedule 1"),
@@ -81,14 +81,14 @@ class HospitalController extends GetxController {
 
   String formatDate() {
     String formattedSelectedDate =
-        DateFormat('yyyy-MM-dd').format(selectedDate);
+        DateFormat('yyyy-MM-dd').format(selectedDate.value);
     return formattedSelectedDate;
   }
 
   dropdownValueChanging(String value, String checkingValue) {
-    if (checkingValue == initialIndex) {
-      log("before  :: ${initialIndex!}");
-      initialIndex = value;
+    if (checkingValue == initialIndex.value) {
+      log("before  :: ${initialIndex.value}");
+      initialIndex.value = value;
       //  update();
     } else if (checkingValue == '0') {
       scheduleIndex.value = value;

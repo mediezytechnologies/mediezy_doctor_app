@@ -43,13 +43,13 @@ class _SplashScreenState extends State<SplashScreen> {
           BlocProvider.of<GetAppointmentsBloc>(context)
               .add(FetchAllAppointments(
             date: controller.formatDate(),
-            clinicId: controller.initialIndex!,
+            clinicId: controller.initialIndex.value,
             scheduleType: controller.scheduleIndex.value,
           ));
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
-            clinicId: controller.initialIndex!,
+            clinicId: controller.initialIndex.value,
             scheduleType: controller.scheduleIndex.value,
           ));
           log("msg working ===== splash ");

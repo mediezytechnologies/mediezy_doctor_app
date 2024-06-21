@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -161,6 +162,9 @@ class _ScheduleTokenDetailsScreenState
     super.dispose();
   }
 
+int bookLegth =0;
+
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -229,7 +233,7 @@ class _ScheduleTokenDetailsScreenState
                                       builder: (clx) {
                                     return CustomDropDown(
                                       width: 195.w,
-                                      value: dController.initialIndex,
+                                      value: dController.initialIndex.value,
                                       items:
                                           dController.hospitalDetails!.map((e) {
                                         return DropdownMenuItem(
@@ -241,7 +245,7 @@ class _ScheduleTokenDetailsScreenState
                                         log(newValue!);
                                         dController.dropdownValueChanging(
                                             newValue,
-                                            dController.initialIndex!);
+                                            dController.initialIndex.value);
                                       },
                                     );
                                   }),
@@ -803,13 +807,17 @@ class _ScheduleTokenDetailsScreenState
                                       onTap: isLoading
                                           ? null
                                           : () {
-                                              BlocProvider.of<
+                                            if (bookLegth!=0) {
+                                              log("==============lllllll=============");
+                                              GeneralServices().appCloseDialogue(context, "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule ?",
+                                               () {
+                                                 BlocProvider.of<
                                                           GenerateTokenFinalBloc>(
                                                       context)
                                                   .add(
                                                 FetchGenerateTokenFinal(
                                                   clinicId:
-                                                      dController.initialIndex!,
+                                                      dController.initialIndex.value,
                                                   selecteddays: selectedDays,
                                                   startDate:
                                                       '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
@@ -826,6 +834,34 @@ class _ScheduleTokenDetailsScreenState
                                                       selectedValue.toString(),
                                                 ),
                                               );
+                                               },);
+                                            }else{
+                                              log("lkjdfkdsauifo");
+                                              BlocProvider.of<
+                                                          GenerateTokenFinalBloc>(
+                                                      context)
+                                                  .add(
+                                                FetchGenerateTokenFinal(
+                                                  clinicId:
+                                                      dController.initialIndex.value,
+                                                  selecteddays: selectedDays,
+                                                  startDate:
+                                                      '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                  endDate:
+                                                      '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                  startTime: formatTimeOfDay(
+                                                      selectedSchedule1StartingTime),
+                                                  endTime: formatTimeOfDay(
+                                                      selectedSchedule1EndingTime),
+                                                  timeDuration:
+                                                      timeDuration1Controller
+                                                          .text,
+                                                  scheduleType:
+                                                      selectedValue.toString(),
+                                                ),
+                                              );
+                                            }
+                                              
                                             },
                                       child: Container(
                                         width: double.infinity,
@@ -886,7 +922,10 @@ class _ScheduleTokenDetailsScreenState
                                   );
                                 } else if (state is GeneratedSchedulesLoaded) {
                                   final model = state.generatedSchedulesModel;
+                               
 
+
+                              
                                   if (model.schedules == null) {
                                     return Container();
                                   }
@@ -920,6 +959,7 @@ class _ScheduleTokenDetailsScreenState
                                                   DateFormat('yyyy-MM-dd')
                                                       .parse(schedule.startDate
                                                           .toString()));
+                                                          bookLegth=schedule.bookingCount!;
 
                                           String formattedEndDate =
                                               DateFormat('dd-MM-yyyy').format(
@@ -961,6 +1001,7 @@ class _ScheduleTokenDetailsScreenState
                                                                 ? blackTabMainText
                                                                 : blackMainText,
                                                           ),
+
                                                           ShortNamesWidget(
                                                             typeId: 1,
                                                             firstText:
@@ -1019,52 +1060,63 @@ class _ScheduleTokenDetailsScreenState
                                                           )
                                                         ],
                                                       ),
-                                                      Column(
-                                                        children: [
-                                                          PopupMenuButton(
-                                                            iconSize:
-                                                                size.width > 450
-                                                                    ? 14.sp
-                                                                    : 20.sp,
-                                                            icon: Icon(
-                                                              Icons.more_vert,
-                                                              color: kMainColor,
-                                                            ),
-                                                            itemBuilder: (context) =>
-                                                                <PopupMenuEntry<
-                                                                    dynamic>>[
-                                                              PopupMenuItem(
-                                                                onTap: () {
-                                                                  GeneralServices
-                                                                      .instance
-                                                                      .appCloseDialogue(
-                                                                    context,
-                                                                    "Are you sure want to delete this schedule?",
-                                                                    () {
-                                                                      BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
+                                                      GestureDetector(onTap: () {
+                                                        GeneralServices().appCloseDialogue(context, "You have bookings on this schedule, which may be lost if you delete it. Are you sure you want to delete the schedule ?", () {
+                                                            BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
                                                                           scheduleId: schedule
                                                                               .scheduleId
                                                                               .toString()));
                                                                       Navigator.pop(
                                                                           context);
-                                                                    },
-                                                                  );
-                                                                },
-                                                                child: Text(
-                                                                  "Delete",
-                                                                  style: size.width >
-                                                                          450
-                                                                      ? blackTabMainText
-                                                                      : blackMainText,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
+                                                        },);
+                                                        
+                                                      },child: const Icon(CupertinoIcons.delete),)
+                                                      // Column(
+                                                      //   children: [
+                                                      //     PopupMenuButton(
+                                                      //       iconSize:
+                                                      //           size.width > 450
+                                                      //               ? 14.sp
+                                                      //               : 20.sp,
+                                                      //       icon: Icon(
+                                                      //         Icons.more_vert,
+                                                      //         color: kMainColor,
+                                                      //       ),
+                                                      //       itemBuilder: (context) =>
+                                                      //           <PopupMenuEntry<
+                                                      //               dynamic>>[
+                                                      //         PopupMenuItem(
+                                                      //           onTap: () {
+                                                      //             GeneralServices
+                                                      //                 .instance
+                                                      //                 .appCloseDialogue(
+                                                      //               context,
+                                                      //               "Are you sure want to delete this schedule?",
+                                                      //               () {
+                                                                      // BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
+                                                                      //     scheduleId: schedule
+                                                                      //         .scheduleId
+                                                                      //         .toString()));
+                                                                      // Navigator.pop(
+                                                                      //     context);
+                                                      //               },
+                                                      //             );
+                                                      //           },
+                                                      //           child: Text(
+                                                      //             "Delete",
+                                                      //             style: size.width >
+                                                      //                     450
+                                                      //                 ? blackTabMainText
+                                                      //                 : blackMainText,
+                                                      //             overflow:
+                                                      //                 TextOverflow
+                                                      //                     .ellipsis,
+                                                      //           ),
+                                                      //         ),
+                                                      //       ],
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
                                                     ],
                                                   ),
                                                 ),

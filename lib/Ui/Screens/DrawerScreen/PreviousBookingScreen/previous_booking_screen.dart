@@ -53,7 +53,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetAllPreviousAppointmentsBloc>(context).add(
       FetchAllPreviousAppointments(
-          date: formatDate(), clinicId: dController.initialIndex!),
+          date: formatDate(), clinicId: dController.initialIndex.value),
     );
     super.initState();
   }
@@ -97,7 +97,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                     builder: (clx) {
                       return CustomDropDown(
                         width: double.infinity,
-                        value: dController.initialIndex,
+                        value: dController.initialIndex.value,
                         items: dController.hospitalDetails!.map((e) {
                           return DropdownMenuItem(
                             value: e.clinicId.toString(),
@@ -107,13 +107,13 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                         onChanged: (newValue) {
                           log(newValue!);
                           dController.dropdownValueChanging(
-                              newValue, dController.initialIndex!);
+                              newValue, dController.initialIndex.value);
                           BlocProvider.of<GetAllPreviousAppointmentsBloc>(
                                   context)
                               .add(
                             FetchAllPreviousAppointments(
                                 date: formatDate(),
-                                clinicId: dController.initialIndex!),
+                                clinicId: dController.initialIndex.value),
                           );
                         },
                       );
@@ -135,7 +135,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                                     .add(
                                   FetchAllPreviousAppointments(
                                     date: formatDate(),
-                                    clinicId: dController.initialIndex!,
+                                    clinicId: dController.initialIndex.value,
                                   ),
                                 );
                               },
@@ -152,7 +152,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                                     .add(
                                   FetchAllPreviousAppointments(
                                     date: formatDate(),
-                                    clinicId: dController.initialIndex!,
+                                    clinicId: dController.initialIndex.value,
                                   ),
                                 );
                               },
@@ -186,7 +186,7 @@ class _PreviousBookingScreenState extends State<PreviousBookingScreen> {
                                     .add(
                                   FetchAllPreviousAppointments(
                                     date: formatDate(),
-                                    clinicId: dController.initialIndex!,
+                                    clinicId: dController.initialIndex.value,
                                   ),
                                 );
                               },

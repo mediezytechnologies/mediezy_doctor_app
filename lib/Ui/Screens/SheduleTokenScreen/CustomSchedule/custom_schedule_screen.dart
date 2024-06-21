@@ -89,7 +89,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
   void initState() {
     super.initState();
     BlocProvider.of<GetAllLateBloc>(context)
-        .add(FetchAllLate(clinicId: dController.initialIndex!));
+        .add(FetchAllLate(clinicId: dController.initialIndex.value));
     selectedLateValue = items['Schedule 1'];
     selectedEarlyValue = items['Schedule 1'];
     selectedBreakValue = items['Schedule 1'];
@@ -126,15 +126,15 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                 if (tabFirstController.index == 0) {
                   FocusScope.of(context).unfocus();
                   BlocProvider.of<GetAllLateBloc>(context)
-                      .add(FetchAllLate(clinicId: dController.initialIndex!));
+                      .add(FetchAllLate(clinicId: dController.initialIndex.value));
                 } else if (tabFirstController.index == 1) {
                   FocusScope.of(context).unfocus();
                   BlocProvider.of<GetAllLateBloc>(context)
-                      .add(FetchAllEarly(clinicId: dController.initialIndex!));
+                      .add(FetchAllEarly(clinicId: dController.initialIndex.value));
                 } else {
                   FocusScope.of(context).unfocus();
                   BlocProvider.of<GetAllLateBloc>(context)
-                      .add(FetchAllBreak(clinicId: dController.initialIndex!));
+                      .add(FetchAllBreak(clinicId: dController.initialIndex.value));
                 }
               },
             ),
@@ -158,7 +158,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         GetBuilder<HospitalController>(builder: (clx) {
                           return CustomDropDown(
                             width: double.infinity,
-                            value: dController.initialIndex,
+                            value: dController.initialIndex.value,
                             items: dController.hospitalDetails!.map((e) {
                               return DropdownMenuItem(
                                 value: e.clinicId.toString(),
@@ -168,10 +168,10 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             onChanged: (newValue) {
                               log(newValue!);
                               dController.dropdownValueChanging(
-                                  newValue, dController.initialIndex!);
+                                  newValue, dController.initialIndex.value);
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllLate(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             },
                           );
                         }),
@@ -334,7 +334,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               Future.delayed(const Duration(seconds: 1), () {
                                 BlocProvider.of<GetAllLateBloc>(context).add(
                                     FetchAllLate(
-                                        clinicId: dController.initialIndex!));
+                                        clinicId: dController.initialIndex.value));
                               });
                             }
                             if (state is LateScheduleError) {
@@ -349,7 +349,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               BlocProvider.of<LateScheduleBloc>(context)
                                   .add(AddLateSchedule(
                                 date: DateFormat('yyy-MM-dd').format(lateDate),
-                                clinicId: dController.initialIndex!,
+                                clinicId: dController.initialIndex.value,
                                 scheduleType: selectedLateValue.toString(),
                                 timeDuration: lateTimeController.text,
                               ));
@@ -362,7 +362,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             if (state is DeleteLateLoaded) {
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllLate(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             }
                             if (state is GetAllLateLoaded) {
                               getAllLateModel =
@@ -396,7 +396,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                             date: getAllLateModel
                                                 .data![index].scheduleDate
                                                 .toString(),
-                                            clinicId: dController.initialIndex!,
+                                            clinicId: dController.initialIndex.value,
                                             scheduleId: getAllLateModel
                                                 .data![index].rescheduleId
                                                 .toString(),
@@ -451,7 +451,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                         GetBuilder<HospitalController>(builder: (clx) {
                           return CustomDropDown(
                             width: double.infinity,
-                            value: dController.initialIndex,
+                            value: dController.initialIndex.value,
                             items: dController.hospitalDetails!.map((e) {
                               return DropdownMenuItem(
                                 value: e.clinicId.toString(),
@@ -461,10 +461,10 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             onChanged: (newValue) {
                               log(newValue!);
                               dController.dropdownValueChanging(
-                                  newValue, dController.initialIndex!);
+                                  newValue, dController.initialIndex.value);
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             },
                           );
                         }),
@@ -625,7 +625,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                               Future.delayed(const Duration(seconds: 3), () {});
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             }
                             if (state is EarlyScheduleError) {
                               GeneralServices.instance.showErrorMessage(
@@ -640,7 +640,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     .add(AddEarlySchedule(
                                   date:
                                       DateFormat('yyy-MM-dd').format(earlyDate),
-                                  clinicId: dController.initialIndex!,
+                                  clinicId: dController.initialIndex.value,
                                   scheduleType: selectedEarlyValue.toString(),
                                   timeDuration: earlyTimeController.text,
                                 ));
@@ -652,7 +652,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                             if (state is DeleteEarlyLoaded) {
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllEarly(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             }
                             if (state is GetAllEarlyLoaded) {
                               getAllEarlyModel =
@@ -686,7 +686,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                             date: getAllEarlyModel
                                                 .data![index].scheduleDate
                                                 .toString(),
-                                            clinicId: dController.initialIndex!,
+                                            clinicId: dController.initialIndex.value,
                                             scheduleId: getAllEarlyModel
                                                 .data![index].rescheduleId
                                                 .toString(),
@@ -748,7 +748,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                 GetBuilder<HospitalController>(builder: (clx) {
                                   return CustomDropDown(
                                     width: 180.w,
-                                    value: dController.initialIndex,
+                                    value: dController.initialIndex.value,
                                     items:
                                         dController.hospitalDetails!.map((e) {
                                       return DropdownMenuItem(
@@ -759,11 +759,11 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     onChanged: (newValue) {
                                       log(newValue!);
                                       dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex!);
+                                          newValue, dController.initialIndex.value);
                                       BlocProvider.of<GetAllLateBloc>(context)
                                           .add(FetchAllBreak(
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                     },
                                   );
                                 }),
@@ -1107,7 +1107,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                     BlocProvider.of<GetAllLateBloc>(context)
                                         .add(FetchAllBreak(
                                             clinicId:
-                                                dController.initialIndex!));
+                                                dController.initialIndex.value));
                                   });
                                 }
                                 if (state is BetweenScheduleError) {
@@ -1122,7 +1122,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   FocusScope.of(context).unfocus();
                                   BlocProvider.of<BetweenScheduleBloc>(context)
                                       .add(FetchBetweenSchedule(
-                                    clinicId: dController.initialIndex!,
+                                    clinicId: dController.initialIndex.value,
                                     startTime:
                                         formatTimeOfDay(selectedStartingTime),
                                     endTime:
@@ -1160,7 +1160,7 @@ class _CustomScheduleScreenState extends State<CustomScheduleScreen>
                                   context, "Break deleted successfully");
                               BlocProvider.of<GetAllLateBloc>(context).add(
                                   FetchAllBreak(
-                                      clinicId: dController.initialIndex!));
+                                      clinicId: dController.initialIndex.value));
                             }
                             if (state is DeleteBreakError) {
                               GeneralServices.instance.showErrorMessage(

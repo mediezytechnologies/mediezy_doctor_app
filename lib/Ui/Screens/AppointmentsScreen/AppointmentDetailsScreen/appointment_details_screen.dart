@@ -40,9 +40,7 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsS
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-
 import '../../../../Repositary/getx/apointment_detail_getx.dart';
-import '../../../CommonWidgets/custom_back_button.dart';
 import '../../../CommonWidgets/custom_dropdown_widget.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
@@ -155,7 +153,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   String? imagePath;
 
   bool isFirstCheckIn = true;
-
+bool isConditionMet = false;
+bool isWaitingForCheckout = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -238,20 +237,51 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
-    return DoubleTapBackPress(
-      onTap: () {
-        foodDropdownController.resetToInitialValue();
-        bokingAppointmentLabController.resetToPreviousValue();
-        //Navigator.pop(context);
-        BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
-          date: widget.date,
-          clinicId: controller.initialIndex!,
-          scheduleType: controller.scheduleIndex.value,
-        ));
-        log("kljsdfkljaskdlfjadklsf=======================");
-      },
-      lastpressed: lastpressed,
-      widget: Scaffold(
+    return
+        // DoubleTapBackPress(
+        //   onTap: () {
+        // foodDropdownController.resetToInitialValue();
+        // bokingAppointmentLabController.resetToPreviousValue();
+        // //Navigator.pop(context);
+        // BlocProvider.of<GetAppointmentsBloc>(context).add(FetchAllAppointments(
+        //   date: widget.date,
+        //   clinicId: controller.initialIndex.value,
+        //   scheduleType: controller.scheduleIndex.value,
+        // ));
+        // log("kljsdfkljaskdlfjadklsf=======================");
+        // },
+        // lastpressed: lastpressed,
+        // widget:
+      //    
+ WillPopScope(
+  onWillPop: () async {
+    if (isConditionMet && isWaitingForCheckout) {
+      // Do not allow going back while waiting for checkout and the condition is met
+      return false;
+    } else {
+      final now = DateTime.now();
+      final maxDuration = const Duration(seconds: 1);
+      final isWarning = lastpressed == null || now.difference(lastpressed!) > maxDuration;
+      if (isWarning) {
+        lastpressed = DateTime.now();
+        final snackBar = SnackBar(
+          width: 200.w,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          content: const Text('Duble Tap to back Screen'),
+          duration: maxDuration,
+        );
+        ScaffoldMessenger.of(context)
+          ..removeCurrentSnackBar()
+          ..showSnackBar(snackBar);
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },        
+      child: Scaffold(
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
                 height: size.height * 0.038,
@@ -259,15 +289,25 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
               )
             : const SizedBox(),
         appBar: AppBar(
+          automaticallyImplyLeading: isConditionMet && isWaitingForCheckout?false:true,
           // leading: IconButton(
           //     onPressed: () {
+          //       final startTime = DateTime.now();
+          //       Future.delayed(const Duration(seconds: 4), () {
+          //         final endTime = DateTime.now();
+          //         log('API call ended at: $endTime');
+
+          //         final duration = endTime.difference(startTime);
+          //         log("duration is working $duration");
+          //         Navigator.pop(context);
+          //       });
           //       foodDropdownController.resetToInitialValue();
           //       bokingAppointmentLabController.resetToPreviousValue();
-          //       //Navigator.pop(context);
+
           //       BlocProvider.of<GetAppointmentsBloc>(context)
           //           .add(FetchAllAppointments(
           //         date: widget.date,
-          //         clinicId: controller.initialIndex!,
+          //         clinicId: controller.initialIndex.value,
           //         scheduleType: controller.scheduleIndex.value,
           //       ));
           //     },
@@ -316,7 +356,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: controller.formatDate(),
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -328,7 +368,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -336,7 +376,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -344,7 +384,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -361,7 +401,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         BlocProvider.of<GetAppointmentsBloc>(context)
                             .add(FetchAllAppointments(
                           date: widget.date,
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         ));
                       }
@@ -428,8 +468,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       context)
                                                   .add(FetchAllAppointments(
                                                 date: widget.date,
-                                                clinicId:
-                                                    controller.initialIndex!,
+                                                clinicId: controller
+                                                    .initialIndex.value,
                                                 scheduleType: controller
                                                     .scheduleIndex.value,
                                               ));
@@ -598,8 +638,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       context)
                                                   .add(FetchAllAppointments(
                                                 date: widget.date,
-                                                clinicId:
-                                                    controller.initialIndex!,
+                                                clinicId: controller
+                                                    .initialIndex.value,
                                                 scheduleType: controller
                                                     .scheduleIndex.value,
                                               ));
@@ -655,6 +695,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         .toString(),
                                     bookedPersonId: getAppointmentsModel
                                         .bookingData![index].bookedPersonId
+                                        .toString(), offlineStatus: getAppointmentsModel
+                                        .bookingData![index].onlineStatus
                                         .toString(),
                                   ),
                                   getAppointmentsModel
@@ -765,45 +807,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       ),
                                     ),
                                   const VerticalSpacingWidget(height: 5),
-                                  Text(
-                                    "Review After",
-                                    style: size.width > 450
-                                        ? blackTabMainText
-                                        : blackMainText,
-                                  ),
-                                  //! dosage
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 45.h,
-                                        width: 120.w,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                              fontSize: size.width > 450
-                                                  ? 9.sp
-                                                  : 14.sp),
-                                          cursorColor: kMainColor,
-                                          controller: afterDaysController,
-                                          keyboardType: TextInputType.number,
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                            hintStyle: size.width > 450
-                                                ? greyTab10B600
-                                                : grey13B600,
-                                            hintText: "Days",
-                                            filled: true,
-                                            fillColor: kCardColor,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const VerticalSpacingWidget(height: 10),
+
                                   Obx(() {
                                     return bokingAppointmentLabController
                                             .favoritemedicalshop.isEmpty
@@ -1028,6 +1032,45 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   const VerticalSpacingWidget(height: 10),
                                   //! add note
                                   Text(
+                                    "Review After",
+                                    style: size.width > 450
+                                        ? blackTabMainText
+                                        : blackMainText,
+                                  ),
+                                  //! dosage
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 45.h,
+                                        width: 120.w,
+                                        child: TextFormField(
+                                          style: TextStyle(
+                                              fontSize: size.width > 450
+                                                  ? 9.sp
+                                                  : 14.sp),
+                                          cursorColor: kMainColor,
+                                          controller: afterDaysController,
+                                          keyboardType: TextInputType.number,
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                            hintStyle: size.width > 450
+                                                ? greyTab10B600
+                                                : grey13B600,
+                                            hintText: "Days",
+                                            filled: true,
+                                            fillColor: kCardColor,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const VerticalSpacingWidget(height: 10),
+                                  Text(
                                     'Add Note',
                                     style: size.width > 450
                                         ? greyTabMain
@@ -1059,188 +1102,303 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   const VerticalSpacingWidget(height: 10),
                                   getAppointmentsModel
                                               .bookingData![index].date ==
-                                          formatDate()
-                                      ? InkWell(
-                                          onTap: () async {
-                                            FocusScope.of(context).unfocus();
-                                            BlocProvider.of<
-                                                        AddAllAppointmentDetailsBloc>(
-                                                    context)
-                                                .add(
-                                              AddAllAppointmentDetails(
-                                                labTestId:
-                                                    getSelectedLabTestIds(),
-                                                scanTestId:
-                                                    getSelectedScanTestIds(),
-                                                tokenId: getAppointmentsModel
-                                                    .bookingData![index].tokenId
-                                                    .toString(),
-                                                labId:
-                                                    bokingAppointmentLabController
-                                                        .initialSelectLabIndex
-                                                        .toString(),
-                                                medicalshopId:
-                                                    bokingAppointmentLabController
-                                                        .initialMedicalStoreIndex
-                                                        .toString(),
-                                                attachment: imagePath,
-                                                reviewAfter:
-                                                    afterDaysController.text,
-                                                notes: noteController.text,
-                                                scanId:
-                                                    bokingAppointmentLabController
-                                                        .initialScaningCenerIndex
-                                                        .toString(),
-                                              ),
-                                            );
+                                          formatDate()?
+                                         InkWell(
+  onTap: () async {
+    FocusScope.of(context).unfocus();
 
-                                            // Wait for 2 seconds
-                                            await Future.delayed(
-                                                    const Duration(seconds: 3))
-                                                .then((value) {
-                                              if (getAppointmentsModel
-                                                      .bookingData![index]
-                                                      .isCheckedout !=
-                                                  1) {
-                                                if (currentPosition ==
-                                                        listLength - 1 &&
-                                                    currentPosition == 0) {
-                                                  log("1111111111111111111111111111111111111");
-                                                  handleCheckout(
-                                                      context, index);
-                                                  BlocProvider.of<
-                                                              AddCheckinOrCheckoutBloc>(
-                                                          context)
-                                                      .add(EstimateUpdateCheckout(
-                                                          tokenId:
-                                                              getAppointmentsModel
-                                                                  .bookingData![
-                                                                      index]
-                                                                  .tokenId
-                                                                  .toString()));
-                                                  navigateToHome(context);
-                                                  log("last section currentPosition: $currentPosition");
-                                                } else if (currentPosition ==
-                                                    listLength - 1) {
-                                                  currentPosition--;
-                                                  log("Last section: $currentPosition");
+    // Check if any of the three conditions are met
+    if (currentPosition == listLength - 1 ||
+        currentPosition < listLength - 1 ||
+        (currentPosition == listLength - 1 && currentPosition == 0)) {
+      isConditionMet = true;
+      isWaitingForCheckout = true; // Set this flag to true when the condition is met
+    }
 
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  log("2222222222222222222222222222222222222222222");
-                                                  handleCheckout(
-                                                      context, index);
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 8), () {
-                                                    BlocProvider.of<
-                                                                AddCheckinOrCheckoutBloc>(
-                                                            context)
-                                                        .add(EstimateUpdateCheckout(
-                                                            tokenId:
-                                                                getAppointmentsModel
-                                                                    .bookingData![
-                                                                        index]
-                                                                    .tokenId
-                                                                    .toString()));
-                                                    navigateToHome(context);
-                                                  });
-                                                  refreshData(context);
-                                                } else if (currentPosition <
-                                                    listLength - 1) {
-                                                  log("33333333333333333333333333333333");
-                                                  currentPosition + 1;
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  handleCheckout(
-                                                      context, currentPosition);
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 8), () {
-                                                    BlocProvider.of<
-                                                                AddCheckinOrCheckoutBloc>(
-                                                            context)
-                                                        .add(EstimateUpdateCheckout(
-                                                            tokenId:
-                                                                getAppointmentsModel
-                                                                    .bookingData![
-                                                                        index]
-                                                                    .tokenId
-                                                                    .toString()));
-                                                    // navigateToHome(context);
-                                                  });
-                                                  refreshData(context);
-                                                  _scrollController.animateTo(
-                                                    0.0,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                }
-                                                setState(() {
-                                                  bookingPending = listLength -
-                                                      1 -
-                                                      currentPosition;
-                                                });
-                                              }
-                                            });
-                                          },
-                                          child: Container(
-                                            height: 50.h,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: getAppointmentsModel
-                                                          .bookingData![index]
-                                                          .isCheckedout ==
-                                                      1
-                                                  ? kCardColor
-                                                  : kMainColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image(
-                                                  image: const AssetImage(
-                                                      "assets/icons/check_out.png"),
-                                                  color: getAppointmentsModel
-                                                              .bookingData![
-                                                                  index]
-                                                              .isCheckedout ==
-                                                          1
-                                                      ? kMainColor
-                                                      : Colors.white,
-                                                ),
-                                                Text(
-                                                  "Check Out",
-                                                  style: TextStyle(
-                                                    fontSize: size.width > 450
-                                                        ? 12.sp
-                                                        : 16.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: getAppointmentsModel
-                                                                .bookingData![
-                                                                    index]
-                                                                .isCheckedout ==
-                                                            1
-                                                        ? kMainColor
-                                                        : Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
+    BlocProvider.of<AddAllAppointmentDetailsBloc>(context).add(
+      AddAllAppointmentDetails(
+        labTestId: getSelectedLabTestIds(),
+        scanTestId: getSelectedScanTestIds(),
+        tokenId: getAppointmentsModel.bookingData![index].tokenId.toString(),
+        labId: bokingAppointmentLabController.initialSelectLabIndex.toString(),
+        medicalshopId: bokingAppointmentLabController.initialMedicalStoreIndex.toString(),
+        attachment: imagePath,
+        reviewAfter: afterDaysController.text,
+        notes: noteController.text,
+        scanId: bokingAppointmentLabController.initialScaningCenerIndex.toString(),
+      ),
+    );
+
+    // Wait for 3 seconds
+    await Future.delayed(const Duration(seconds: 3)).then((value) {
+      if (getAppointmentsModel.bookingData![index].isCheckedout != 1) {
+        if (currentPosition == listLength - 1 && currentPosition == 0) {
+          log("1111111111111111111111111111111111111");
+          handleCheckout(context, index, );
+          estimateUpdateCheckout(context, index, );
+          navigateToHome(context);
+          log("last section currentPosition: $currentPosition");
+        } else if (currentPosition == listLength - 1) {
+          currentPosition--;
+          log("Last section: $currentPosition");
+
+          pageController.animateToPage(
+            currentPosition,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+          log("2222222222222222222222222222222222222222222");
+          handleCheckout(context, index, );
+          Future.delayed(const Duration(seconds: 8), () {
+            estimateUpdateCheckout(context, index, );
+            navigateToHome(context);
+          });
+          refreshData(context);
+        } else if (currentPosition < listLength - 1) {
+          log("33333333333333333333333333333333");
+          currentPosition + 1;
+          pageController.animateToPage(
+            currentPosition,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+          handleCheckout(context, currentPosition, );
+          Future.delayed(const Duration(seconds: 8), () {
+            estimateUpdateCheckout(context, index, );
+          });
+          refreshData(context);
+          _scrollController.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+        setState(() {
+          bookingPending = listLength - 1 - currentPosition;
+        });
+      }
+
+      // Reset isWaitingForCheckout to false after 3 seconds
+      isWaitingForCheckout = false;
+    });
+  },
+  child: Container(
+    height: 50.h,
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: getAppointmentsModel.bookingData![index].isCheckedout == 1
+          ? kCardColor
+          : kMainColor,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(
+          image: const AssetImage("assets/icons/check_out.png"),
+          color: getAppointmentsModel.bookingData![index].isCheckedout == 1
+              ? kMainColor
+              : Colors.white,
+        ),
+        Text(
+          "Check Out",
+          style: TextStyle(
+            fontSize: size.width > 450 ? 12.sp : 16.sp,
+            fontWeight: FontWeight.w600,
+            color: getAppointmentsModel.bookingData![index].isCheckedout == 1
+                ? kMainColor
+                : Colors.white,
+          ),
+        ),
+      ],
+    ),
+  ),
+)
+                                      // ? InkWell(
+                                      //     onTap: () async {
+                                      //       FocusScope.of(context).unfocus();
+                                      //       BlocProvider.of<
+                                      //                   AddAllAppointmentDetailsBloc>(
+                                      //               context)
+                                      //           .add(
+                                      //         AddAllAppointmentDetails(
+                                      //           labTestId:
+                                      //               getSelectedLabTestIds(),
+                                      //           scanTestId:
+                                      //               getSelectedScanTestIds(),
+                                      //           tokenId: getAppointmentsModel
+                                      //               .bookingData![index].tokenId
+                                      //               .toString(),
+                                      //           labId:
+                                      //               bokingAppointmentLabController
+                                      //                   .initialSelectLabIndex
+                                      //                   .toString(),
+                                      //           medicalshopId:
+                                      //               bokingAppointmentLabController
+                                      //                   .initialMedicalStoreIndex
+                                      //                   .toString(),
+                                      //           attachment: imagePath,
+                                      //           reviewAfter:
+                                      //               afterDaysController.text,
+                                      //           notes: noteController.text,
+                                      //           scanId:
+                                      //               bokingAppointmentLabController
+                                      //                   .initialScaningCenerIndex
+                                      //                   .toString(),
+                                      //         ),
+                                      //       );
+
+                                      //       // Wait for 2 seconds
+                                      //       await Future.delayed(
+                                      //               const Duration(seconds: 3))
+                                      //           .then((value) {
+                                      //         if (getAppointmentsModel
+                                      //                 .bookingData![index]
+                                      //                 .isCheckedout !=
+                                      //             1) {
+                                      //           if (currentPosition ==
+                                      //                   listLength - 1 &&
+                                      //               currentPosition == 0) {
+                                      //             log("1111111111111111111111111111111111111");
+                                      //             handleCheckout(
+                                      //                 context, index, true);
+                                      //                 estimateUpdateCheckout(context, index, false);
+                                      //             // BlocProvider.of<
+                                      //             //             AddCheckinOrCheckoutBloc>(
+                                      //             //         context)
+                                      //             //     .add(EstimateUpdateCheckout(
+                                      //             //         tokenId:
+                                      //             //             getAppointmentsModel
+                                      //             //                 .bookingData![
+                                      //             //                     index]
+                                      //             //                 .tokenId
+                                      //             //                 .toString()));
+                                      //             //isConditionMet = false;
+                                      //             navigateToHome(context);
+                                      //             log("last section currentPosition: $currentPosition");
+                                      //           } else if (currentPosition ==
+                                      //               listLength - 1) {
+                                      //             currentPosition--;
+                                      //             log("Last section: $currentPosition");
+
+                                      //             pageController.animateToPage(
+                                      //               currentPosition,
+                                      //               duration: const Duration(
+                                      //                   milliseconds: 500),
+                                      //               curve: Curves.easeInOut,
+                                      //             );
+                                      //             log("2222222222222222222222222222222222222222222");
+                                      //             handleCheckout(
+                                      //                 context, index, true);
+                                      //             Future.delayed(
+                                      //                 const Duration(
+                                      //                     seconds: 8), () {
+                                      //                         estimateUpdateCheckout(context, index, false);
+                                      //               // BlocProvider.of<
+                                      //               //             AddCheckinOrCheckoutBloc>(
+                                      //               //         context)
+                                      //               //     .add(EstimateUpdateCheckout(
+                                      //               //         tokenId:
+                                      //               //             getAppointmentsModel
+                                      //               //                 .bookingData![
+                                      //               //                     index]
+                                      //               //                 .tokenId
+                                      //               //                 .toString()));
+                                      //               navigateToHome(context);
+                                      //             });
+                                      //             refreshData(context);
+                                      //           } else if (currentPosition <
+                                      //               listLength - 1) {
+                                      //             log("33333333333333333333333333333333");
+                                      //             currentPosition + 1;
+                                      //             pageController.animateToPage(
+                                      //               currentPosition,
+                                      //               duration: const Duration(
+                                      //                   milliseconds: 500),
+                                      //               curve: Curves.easeInOut,
+                                      //             );
+                                      //             handleCheckout(context,
+                                      //                 currentPosition, true);
+                                      //             Future.delayed(
+                                      //                 const Duration(
+                                      //                     seconds: 8), () {
+                                      //                         estimateUpdateCheckout(context, index, false);
+                                      //               // BlocProvider.of<
+                                      //               //             AddCheckinOrCheckoutBloc>(
+                                      //               //         context)
+                                      //               //     .add(EstimateUpdateCheckout(
+                                      //               //         tokenId:
+                                      //               //             getAppointmentsModel
+                                      //               //                 .bookingData![
+                                      //               //                     index]
+                                      //               //                 .tokenId
+                                      //               //                 .toString()));
+                                      //               // navigateToHome(context);
+                                      //             });
+                                      //             refreshData(context);
+                                      //             _scrollController.animateTo(
+                                      //               0.0,
+                                      //               duration: const Duration(
+                                      //                   milliseconds: 500),
+                                      //               curve: Curves.easeInOut,
+                                      //             );
+                                      //           }
+                                      //           setState(() {
+                                      //             bookingPending = listLength -
+                                      //                 1 -
+                                      //                 currentPosition;
+                                      //           });
+                                      //         }
+                                      //       });
+                                      //     },
+                                      //     child: Container(
+                                      //       height: 50.h,
+                                      //       width: double.infinity,
+                                      //       decoration: BoxDecoration(
+                                      //         color: getAppointmentsModel
+                                      //                     .bookingData![index]
+                                      //                     .isCheckedout ==
+                                      //                 1
+                                      //             ? kCardColor
+                                      //             : kMainColor,
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8),
+                                      //       ),
+                                      //       child: Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment.center,
+                                      //         children: [
+                                      //           Image(
+                                      //             image: const AssetImage(
+                                      //                 "assets/icons/check_out.png"),
+                                      //             color: getAppointmentsModel
+                                      //                         .bookingData![
+                                      //                             index]
+                                      //                         .isCheckedout ==
+                                      //                     1
+                                      //                 ? kMainColor
+                                      //                 : Colors.white,
+                                      //           ),
+                                      //           Text(
+                                      //             "Check Out",
+                                      //             style: TextStyle(
+                                      //               fontSize: size.width > 450
+                                      //                   ? 12.sp
+                                      //                   : 16.sp,
+                                      //               fontWeight: FontWeight.w600,
+                                      //               color: getAppointmentsModel
+                                      //                           .bookingData![
+                                      //                               index]
+                                      //                           .isCheckedout ==
+                                      //                       1
+                                      //                   ? kMainColor
+                                      //                   : Colors.white,
+                                      //             ),
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   )
                                       : Container(),
                                   VerticalSpacingWidget(
                                       height: Platform.isIOS ? 30 : 10),
@@ -1259,6 +1417,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             }
           },
         ),
+        //),
       ),
     );
   }
@@ -1439,10 +1598,16 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     );
   }
 
-  void handleCheckout(
-    BuildContext context,
-    int index,
-  ) {
+  void estimateUpdateCheckout(
+      BuildContext context, int index, ) {
+    BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+        EstimateUpdateCheckout(
+            tokenId:
+                getAppointmentsModel.bookingData![index].tokenId.toString()));
+               
+  }
+
+  void handleCheckout(BuildContext context, int index, ) {
     BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
       AddCheckinOrCheckout(
         clinicId: getAppointmentsModel.bookingData![index].clinicId.toString(),
@@ -1453,6 +1618,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         isReached: '',
       ),
     );
+    
 
     getAppointmentsModel.bookingData![index].isCheckedout = 1;
     scanTestController.clear();
@@ -1503,7 +1669,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     BlocProvider.of<GetAppointmentsBloc>(context).add(
       FetchAllAppointments(
         date: widget.date,
-        clinicId: controller.initialIndex!,
+        clinicId: controller.initialIndex.value,
         scheduleType: controller.scheduleIndex.value,
       ),
     );

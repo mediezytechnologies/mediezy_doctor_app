@@ -69,7 +69,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                       BlocProvider.of<GetAppointmentsBloc>(context).add(
                         FetchAllAppointments(
                             date: controller.formatDate(),
-                            clinicId: controller.initialIndex!,
+                            clinicId: controller.initialIndex.value,
                             scheduleType: controller.scheduleIndex.value),
                       );
                     } else {
@@ -77,7 +77,7 @@ class _AppoimentTabbarState extends State<AppoimentTabbar>
                           .add(
                         FetchAllCompletedAppointments(
                             date: controller.formatDate(),
-                            clinicId: controller.initialIndex!,
+                            clinicId: controller.initialIndex.value,
                             scheduleType: controller.scheduleIndex.value),
                       );
                     }

@@ -28,17 +28,17 @@ class AppoimentDropdown extends StatelessWidget {
               onChanged: (newValue) {
                 log(newValue!);
                 controller.dropdownValueChanging(
-                    newValue, controller.initialIndex!);
+                    newValue, controller.initialIndex.value);
                 BlocProvider.of<GetAppointmentsBloc>(context).add(
                   FetchAllAppointments(
                       date: controller.formatDate(),
-                      clinicId: controller.initialIndex!,
+                      clinicId: controller.initialIndex.value,
                       scheduleType: controller.scheduleIndex.value),
                 );
                 BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                     .add(FetchAllCompletedAppointments(
                   date: controller.formatDate(),
-                  clinicId: controller.initialIndex!,
+                  clinicId: controller.initialIndex.value,
                   scheduleType: controller.scheduleIndex.value,
                 ));
               },
@@ -71,13 +71,13 @@ class AppoimentDropdown extends StatelessWidget {
                     BlocProvider.of<GetAppointmentsBloc>(context).add(
                       FetchAllAppointments(
                           date: controller.formatDate(),
-                          clinicId: controller.initialIndex!,
+                          clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value),
                     );
                     BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                         .add(FetchAllCompletedAppointments(
                       date: controller.formatDate(),
-                      clinicId: controller.initialIndex!,
+                      clinicId: controller.initialIndex.value,
                       scheduleType: controller.scheduleIndex.value,
                     ));
                     log("val : ${controller.scheduleIndex}");

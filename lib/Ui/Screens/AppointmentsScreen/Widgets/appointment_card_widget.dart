@@ -62,7 +62,7 @@ class AppointmentCardWidget extends StatelessWidget {
               ),
               const HorizontalSpacingWidget(width: 10),
               SizedBox(
-                width: size.width > 450 ? size.width * .64 : size.width * .5,
+                width: size.width > 450 ? size.width * .66 : size.width * .53,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,41 +138,50 @@ class AppointmentCardWidget extends StatelessWidget {
                   ? Container()
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        onlineStatus == "offline"
-                            ? Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.red,
-                                    radius: size.width > 450 ? 9 : 5,
+                      onlineStatus == "offline"
+                              ? Padding(
+                                padding:EdgeInsets.only(top: 6.h),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:  EdgeInsets.only(top: 4.h),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.red,
+                                          radius: size.width > 450 ? 9 : 5,
+                                        ),
+                                      ),
+                                      const HorizontalSpacingWidget(width: 5),
+                                      Text(
+                                        "$onlineStatus \nBooking",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize:
+                                                size.width > 450 ? 9.sp : 12.sp),
+                                      )
+                                    ],
                                   ),
-                                  const HorizontalSpacingWidget(width: 5),
-                                  Text(
-                                    onlineStatus,
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize:
-                                            size.width > 450 ? 9.sp : 12.sp),
-                                  )
-                                ],
                               )
-                            : Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: kMainColor,
-                                    radius: size.width > 450 ? 9 : 5,
-                                  ),
-                                  const HorizontalSpacingWidget(width: 5),
-                                  Text(
-                                    onlineStatus,
-                                    style: TextStyle(
-                                        color: kMainColor,
-                                        fontSize:
-                                            size.width > 450 ? 9.sp : 12.sp),
-                                  )
-                                ],
-                              ),
+                              :
+                              SizedBox(),
+                              //  Row(
+                              //     children: [
+                              //       CircleAvatar(
+                              //         backgroundColor: kMainColor,
+                              //         radius: size.width > 450 ? 9 : 5,
+                              //       ),
+                              //       const HorizontalSpacingWidget(width: 5),
+                              //       Text(
+                              //         onlineStatus,
+                              //         style: TextStyle(
+                              //             color: kMainColor,
+                              //             fontSize:
+                              //                 size.width > 450 ? 9.sp : 12.sp),
+                              //       )
+                              //     ],
+                              //   ),
                         reachedStatus == "1"
                             ? Row(
                                 children: [

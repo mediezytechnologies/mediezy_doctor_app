@@ -74,7 +74,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
     super.initState();
     tabFirstController = TabController(length: 2, vsync: this);
     BlocProvider.of<GetTokenBloc>(context).add(
-        FetchTokens(date: formatDate(), clinicId: dController.initialIndex!));
+        FetchTokens(date: formatDate(), clinicId: dController.initialIndex.value));
   }
 
   @override
@@ -151,12 +151,12 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
               });
               if (tabFirstController.index == 0) {
                 BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
-                    date: formatDate(), clinicId: dController.initialIndex!));
+                    date: formatDate(), clinicId: dController.initialIndex.value));
                 resetSelectedTokens();
               }
               BlocProvider.of<DeletedTokensBloc>(context)
                   .add(FetchDeletedTokens(
-                clinicId: dController.initialIndex!,
+                clinicId: dController.initialIndex.value,
               ));
             },
           ),
@@ -174,7 +174,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                       BlocProvider.of<GetTokenBloc>(context).add(
                         FetchTokens(
                             date: formatDate(),
-                            clinicId: dController.initialIndex!),
+                            clinicId: dController.initialIndex.value),
                       );
                     }
                     if (state is DeleteTokensError) {
@@ -203,7 +203,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                 GetBuilder<HospitalController>(builder: (clx) {
                                   return CustomDropDown(
                                     width: double.infinity,
-                                    value: dController.initialIndex,
+                                    value: dController.initialIndex.value,
                                     items:
                                         dController.hospitalDetails!.map((e) {
                                       return DropdownMenuItem(
@@ -214,12 +214,12 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     onChanged: (newValue) {
                                       log(newValue!);
                                       dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex!);
+                                          newValue, dController.initialIndex.value);
                                       BlocProvider.of<GetTokenBloc>(context)
                                           .add(FetchTokens(
                                               date: formatDate(),
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                       resetSelectedTokens();
                                     },
                                   );
@@ -243,7 +243,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     BlocProvider.of<GetTokenBloc>(context).add(
                                       FetchTokens(
                                           date: formattedDate,
-                                          clinicId: dController.initialIndex!),
+                                          clinicId: dController.initialIndex.value),
                                     );
                                   },
                                   dateTextStyle: TextStyle(
@@ -770,7 +770,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                     if (state is AddRestoreTokensLoaded) {
                       BlocProvider.of<DeletedTokensBloc>(context)
                           .add(FetchDeletedTokens(
-                        clinicId: dController.initialIndex!,
+                        clinicId: dController.initialIndex.value,
                       ));
                     }
                   },
@@ -789,7 +789,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                           GetBuilder<HospitalController>(builder: (clx) {
                             return CustomDropDown(
                               width: double.infinity,
-                              value: dController.initialIndex,
+                              value: dController.initialIndex.value,
                               items: dController.hospitalDetails!.map((e) {
                                 return DropdownMenuItem(
                                   value: e.clinicId.toString(),
@@ -799,10 +799,10 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                               onChanged: (newValue) {
                                 log(newValue!);
                                 dController.dropdownValueChanging(
-                                    newValue, dController.initialIndex!);
+                                    newValue, dController.initialIndex.value);
                                 BlocProvider.of<DeletedTokensBloc>(context)
                                     .add(FetchDeletedTokens(
-                                  clinicId: dController.initialIndex!,
+                                  clinicId: dController.initialIndex.value,
                                 ));
                               },
                             );

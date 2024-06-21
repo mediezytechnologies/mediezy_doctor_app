@@ -80,18 +80,14 @@ class _AppoimentAppbarState extends State<AppoimentAppbar> {
                           children: [
                             Text(
                               "Hi,",
-                              style: size.width > 450
-                                  ? TextStyle(
-                                      fontSize: 11.sp,
+                              style:TextStyle(
+                                      fontSize: size.width > 450? 11.sp : 16.sp,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white)
-                                  : TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white),
+                                
                             ),
                             Text(
-                              "$firstName $secondName",
+                              "Dr $firstName $secondName",
                               style: size.width > 450
                                   ? TextStyle(
                                       fontSize: 11.sp,

@@ -49,7 +49,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
 
   Future<void> _refreshData() async {
     BlocProvider.of<GetTokenBloc>(context).add(
-        FetchTokens(date: formatDate(), clinicId: dController.initialIndex!));
+        FetchTokens(date: formatDate(), clinicId: dController.initialIndex.value));
   }
 
   void handleConnectivityChange(ConnectivityResult result) {
@@ -68,7 +68,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
     });
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<GetTokenBloc>(context).add(
-        FetchTokens(date: formatDate(), clinicId: dController.initialIndex!));
+        FetchTokens(date: formatDate(), clinicId: dController.initialIndex.value));
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _isLoading = false;
@@ -159,7 +159,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                               GetBuilder<HospitalController>(builder: (clx) {
                                 return CustomDropDown(
                                   width: double.infinity,
-                                  value: dController.initialIndex,
+                                  value: dController.initialIndex.value,
                                   items: dController.hospitalDetails!.map((e) {
                                     return DropdownMenuItem(
                                       value: e.clinicId.toString(),
@@ -169,12 +169,12 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                   onChanged: (newValue) {
                                     log(newValue!);
                                     dController.dropdownValueChanging(
-                                        newValue, dController.initialIndex!);
+                                        newValue, dController.initialIndex.value);
                                     BlocProvider.of<GetTokenBloc>(context).add(
                                         FetchTokens(
                                             date: formatDate(),
                                             clinicId:
-                                                dController.initialIndex!));
+                                                dController.initialIndex.value));
                                   },
                                 );
                               }),
@@ -201,7 +201,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                             .add(FetchTokens(
                                                 date: formattedDate,
                                                 clinicId:
-                                                    dController.initialIndex!));
+                                                    dController.initialIndex.value));
                                       },
                                       dateTextStyle: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -393,7 +393,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                           itemBuilder: (context, index) {
                                             return TokenCardWidget(
                                               clinicId:
-                                                  dController.initialIndex!,
+                                                  dController.initialIndex.value,
                                               date: selectedDate,
                                               tokenNumber: getTokenModel
                                                   .schedule!
@@ -455,7 +455,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                           itemBuilder: (context, index) {
                                             return TokenCardWidget(
                                               clinicId:
-                                                  dController.initialIndex!,
+                                                  dController.initialIndex.value,
                                               date: selectedDate,
                                               tokenNumber: getTokenModel
                                                   .schedule!
@@ -516,7 +516,7 @@ class _GetTokensScreenState extends State<GetTokensScreen> {
                                           itemBuilder: (context, index) {
                                             return TokenCardWidget(
                                               clinicId:
-                                                  dController.initialIndex!,
+                                                  dController.initialIndex.value,
                                               date: selectedDate,
                                               tokenNumber: getTokenModel
                                                   .schedule!

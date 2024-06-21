@@ -56,7 +56,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
           BlocProvider.of<ReserveTokenBloc>(context).add(FetchReservedTokens(
               fromDate: DateFormat('yyy-MM-dd').format(selectedunreserveDate),
               toDate: DateFormat('yyy-MM-dd').format(unreserveendDate),
-              clinicId: dController.initialIndex!));
+              clinicId: dController.initialIndex.value));
         }
         if (state is UnReserveTokenError) {
           GeneralServices.instance
@@ -84,7 +84,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                     GetBuilder<HospitalController>(builder: (clx) {
                       return CustomDropDown(
                         width: double.infinity,
-                        value: dController.initialIndex,
+                        value: dController.initialIndex.value,
                         items: dController.hospitalDetails!.map((e) {
                           return DropdownMenuItem(
                             value: e.clinicId.toString(),
@@ -94,14 +94,14 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                         onChanged: (newValue) {
                           log(newValue!);
                           dController.dropdownValueChanging(
-                              newValue, dController.initialIndex!);
+                              newValue, dController.initialIndex.value);
                           BlocProvider.of<ReserveTokenBloc>(context).add(
                               FetchReservedTokens(
                                   fromDate: DateFormat('yyy-MM-dd')
                                       .format(selectedunreserveDate),
                                   toDate: DateFormat('yyy-MM-dd')
                                       .format(unreserveendDate),
-                                  clinicId: dController.initialIndex!));
+                                  clinicId: dController.initialIndex.value));
                         },
                       );
                     }),
@@ -127,7 +127,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                     },
                                   )
                                 : GeneralServices.instance.selectDate(
@@ -146,7 +146,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                     },
                                   );
                           },
@@ -189,7 +189,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex!));
+                                                            .initialIndex.value));
                                               },
                                             )
                                           : GeneralServices.instance.selectDate(
@@ -215,7 +215,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex!));
+                                                            .initialIndex.value));
                                               },
                                             );
                                     },
@@ -256,7 +256,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                     },
                                   )
                                 : GeneralServices.instance.selectDate(
@@ -275,7 +275,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
                                               clinicId:
-                                                  dController.initialIndex!));
+                                                  dController.initialIndex.value));
                                     },
                                   );
                           },
@@ -317,7 +317,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex!));
+                                                            .initialIndex.value));
                                               },
                                             )
                                           : GeneralServices.instance.selectDate(
@@ -342,7 +342,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex!));
+                                                            .initialIndex.value));
                                               },
                                             );
                                     },
@@ -467,7 +467,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                         .format(
                                                             unreserveendDate),
                                                     clinicId: dController
-                                                        .initialIndex!));
+                                                        .initialIndex.value));
                                           },
                                           child: CircleAvatar(
                                             backgroundColor: Colors.black,
