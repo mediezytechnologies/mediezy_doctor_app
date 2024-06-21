@@ -695,6 +695,8 @@ bool isWaitingForCheckout = false;
                                         .toString(),
                                     bookedPersonId: getAppointmentsModel
                                         .bookingData![index].bookedPersonId
+                                        .toString(), offlineStatus: getAppointmentsModel
+                                        .bookingData![index].onlineStatus
                                         .toString(),
                                   ),
                                   getAppointmentsModel

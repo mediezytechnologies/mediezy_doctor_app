@@ -21,7 +21,7 @@ class PatientDetailsWidget extends StatefulWidget {
       required this.patientId,
       required this.treatmentTakenDetails,
       required this.surgeryDetails,
-      required this.bookedPersonId});
+      required this.bookedPersonId, required this.offlineStatus});
 
   final List<MainSymptoms>? mainSymptoms;
   final List<OtherSymptoms>? otherSymptoms;
@@ -35,6 +35,7 @@ class PatientDetailsWidget extends StatefulWidget {
   final int patientId;
   final String treatmentTakenDetails;
   final String surgeryDetails;
+  final String offlineStatus;
 
   @override
   State<PatientDetailsWidget> createState() => _PatientDetailsWidgetState();
@@ -244,7 +245,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
         ),
 
         const VerticalSpacingWidget(height: 5),
-        widget.patientId == 0
+        widget.offlineStatus=="offline"
             ? Container()
             : InkWell(
                 onTap: () {
