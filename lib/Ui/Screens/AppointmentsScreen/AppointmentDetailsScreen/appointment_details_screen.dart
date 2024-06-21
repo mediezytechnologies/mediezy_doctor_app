@@ -40,9 +40,7 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsS
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-
 import '../../../../Repositary/getx/apointment_detail_getx.dart';
-import '../../../CommonWidgets/custom_back_button.dart';
 import '../../../CommonWidgets/custom_dropdown_widget.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
