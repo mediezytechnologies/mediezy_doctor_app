@@ -55,7 +55,7 @@ class _BottomNavigationControlWidgetState
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(hours: 3), (timer) {
+    _timer = Timer.periodic(const Duration(hours: 5), (timer) {
       BlocProvider.of<BottomSheetBloc>(context).add(FetchBottomSheet());
     });
   }
@@ -64,10 +64,9 @@ class _BottomNavigationControlWidgetState
     if (model.schedule![0].status != 0) {
       _dismissTimer?.cancel();
       _dismissTimer = Timer(const Duration(seconds: 5), () {
-        Navigator.popUntil(
-          context,
-          (Route<dynamic> route) => route.isFirst,
-        );
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
       });
 
       final clinic = model.schedule![0].clinicName.toString();
@@ -101,6 +100,7 @@ class _BottomNavigationControlWidgetState
                             padding: EdgeInsets.only(left: 30.w),
                             onPressed: () {
                               Navigator.pop(context);
+                              _dismissTimer?.cancel();
                             },
                             icon: const Icon(
                               Icons.cancel_outlined,
@@ -115,6 +115,8 @@ class _BottomNavigationControlWidgetState
                       const VerticalSpacingWidget(height: 10),
                       InkWell(
                         onTap: () {
+                          _dismissTimer?.cancel();
+                          Navigator.pop(context); // Close the bottom sheet
                           Navigator.push(
                             context,
                             MaterialPageRoute(
