@@ -155,7 +155,7 @@ class AppointmentCardWidget extends StatelessWidget {
                                       ),
                                       const HorizontalSpacingWidget(width: 5),
                                       Text(
-                                        "$onlineStatus \nBooking",
+                                        "$onlineStatus \nbooking",
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize:

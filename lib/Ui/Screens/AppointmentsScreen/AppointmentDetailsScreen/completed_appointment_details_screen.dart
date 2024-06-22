@@ -440,9 +440,8 @@ class CompletedAppointmentDetailsScreenState
                                           .appointmentDetails!.first.labName
                                           .toString(),
                                 ),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.labTest ==
-                                  null
+                      getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.isEmpty
                               ? Container()
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
