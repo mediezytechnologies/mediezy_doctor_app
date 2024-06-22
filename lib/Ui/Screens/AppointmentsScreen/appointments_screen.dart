@@ -13,6 +13,7 @@ import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clini
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileGet/profile_get_bloc.dart';
+import 'package:mediezy_doctor/Repositary/getx/get_appointment_getx.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/date_picker_demo.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/internet_handle_screen.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -21,6 +22,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_appbar.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_tabbar_demo.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../Repositary/Api/firebase_service/firebase_fcm_token.dart';
@@ -44,6 +46,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     }
   }
 
+  final getAllAppointmentController =Get.put(GetAllAppointmentController());
+
   late StreamSubscription<ConnectivityResult> subscription;
   late Timer pollingTimer;
   late Timer initialTimer;
@@ -51,8 +55,13 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   void initState() {
     super.initState();
+    
+     getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
+          clinicId: controller.initialIndex.value,
+          scheduleType: controller.scheduleIndex.value,);
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
     BlocProvider.of<ProfileGetBloc>(context).add(FetchProfileGet());
+    
 
     subscription = Connectivity()
         .onConnectivityChanged
@@ -61,38 +70,38 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     });
 
     // Ensure the controller values are initialized before making the API call
-    if (controller.initialIndex != null &&
-        // ignore: unnecessary_null_comparison
-        controller.scheduleIndex.value != null) {
-      BlocProvider.of<GetAppointmentsBloc>(context).add(
-        FetchAllAppointments(
-          date: controller.formatDate(),
-          clinicId: controller.initialIndex.value,
-          scheduleType: controller.scheduleIndex.value,
-        ),
-      );
+    // if (controller.initialIndex != null &&
+    //     // ignore: unnecessary_null_comparison
+    //     controller.scheduleIndex.value != null) {
+    //   BlocProvider.of<GetAppointmentsBloc>(context).add(
+    //     FetchAllAppointments(
+          // date: controller.formatDate(),
+          // clinicId: controller.initialIndex.value,
+          // scheduleType: controller.scheduleIndex.value,
+    //     ),
+    //   );
 
       // Delay the first API call by 1 second
-      initialTimer = Timer(const Duration(seconds: 1), () {
-        fetchAppointments();
+      // initialTimer = Timer(const Duration(seconds: 1), () {
+      //   fetchAppointments();
 
-        // Start polling every 10 seconds after the initial call
-        pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-          fetchAppointments();
-        });
-      });
-    }
+      //   // Start polling every 10 seconds after the initial call
+      //   pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      //     fetchAppointments();
+      //   });
+      // });
+   // }
   }
 
-  void fetchAppointments() {
-    BlocProvider.of<GetAppointmentsBloc>(context).add(
-      FetchAllAppointments(
-        date: controller.formatDate(),
-        clinicId: controller.initialIndex.value,
-        scheduleType: controller.scheduleIndex.value,
-      ),
-    );
-  }
+  // void fetchAppointments() {
+  //   BlocProvider.of<GetAppointmentsBloc>(context).add(
+  //     FetchAllAppointments(
+  //       date: controller.formatDate(),
+  //       clinicId: controller.initialIndex.value,
+  //       scheduleType: controller.scheduleIndex.value,
+  //     ),
+  //   );
+  // }
 
   void stopPolling() {
     pollingTimer.cancel();
@@ -118,9 +127,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(onPressed: () {
-        //   NotificationService.fcmTokenData();
-        // },),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
+          clinicId: controller.initialIndex.value,
+          scheduleType: controller.scheduleIndex.value,);
+        },),
         appBar: const AppoimentAppbar(),
         drawer: const CustomDrawer(),
         body: StreamBuilder<ConnectivityResult>(
@@ -195,7 +206,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                     AppoimentTabbar(),
+                    AppoimentTabbarDemo()
+                    // AppoimentTabbar(),
                   ],
                 ),
               );
