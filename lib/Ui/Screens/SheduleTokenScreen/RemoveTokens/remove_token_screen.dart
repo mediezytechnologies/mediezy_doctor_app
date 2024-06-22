@@ -73,8 +73,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
   void initState() {
     super.initState();
     tabFirstController = TabController(length: 2, vsync: this);
-    BlocProvider.of<GetTokenBloc>(context).add(
-        FetchTokens(date: formatDate(), clinicId: dController.initialIndex.value));
+    BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
+        date: formatDate(), clinicId: dController.initialIndex.value));
   }
 
   @override
@@ -151,7 +151,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
               });
               if (tabFirstController.index == 0) {
                 BlocProvider.of<GetTokenBloc>(context).add(FetchTokens(
-                    date: formatDate(), clinicId: dController.initialIndex.value));
+                    date: formatDate(),
+                    clinicId: dController.initialIndex.value));
                 resetSelectedTokens();
               }
               BlocProvider.of<DeletedTokensBloc>(context)
@@ -214,12 +215,13 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     onChanged: (newValue) {
                                       log(newValue!);
                                       dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex.value);
+                                          newValue,
+                                          dController.initialIndex.value);
                                       BlocProvider.of<GetTokenBloc>(context)
                                           .add(FetchTokens(
                                               date: formatDate(),
-                                              clinicId:
-                                                  dController.initialIndex.value));
+                                              clinicId: dController
+                                                  .initialIndex.value));
                                       resetSelectedTokens();
                                     },
                                   );
@@ -227,10 +229,10 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                 const VerticalSpacingWidget(height: 10),
                                 DatePickerDemoClass(
                                   height: size.width > 450
-                                      ? size.height * .1
+                                      ? size.height * .14
                                       : size.height * .15,
                                   width: size.width > 450
-                                      ? size.width * .12
+                                      ? size.width * .1
                                       : size.width * .17,
                                   DateTime.now(),
                                   initialSelectedDate: DateTime.now(),
@@ -243,7 +245,8 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                     BlocProvider.of<GetTokenBloc>(context).add(
                                       FetchTokens(
                                           date: formattedDate,
-                                          clinicId: dController.initialIndex.value),
+                                          clinicId:
+                                              dController.initialIndex.value),
                                     );
                                   },
                                   dateTextStyle: TextStyle(

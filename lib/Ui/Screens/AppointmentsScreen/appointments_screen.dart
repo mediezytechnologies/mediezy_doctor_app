@@ -23,7 +23,6 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_d
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_tabbar.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../Repositary/Api/firebase_service/firebase_fcm_token.dart';
 import 'Widgets/appoiment_drawer.dart';
 
 class AppointmentsScreen extends StatefulWidget {
@@ -152,10 +151,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 6.w),
                       child: DatePickerDemoClass(
                         height: size.width > 450
-                            ? size.height * .1
+                            ? size.height * .14
                             : size.height * .145,
                         width: size.width > 450
-                            ? size.width * .12
+                            ? size.width * .1
                             : size.width * .17,
                         DateTime.now(),
                         initialSelectedDate: DateTime.now(),
@@ -195,7 +194,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                     ),
                     const VerticalSpacingWidget(height: 5),
-                     AppoimentTabbar(),
+                    const AppoimentTabbar(),
                   ],
                 ),
               );

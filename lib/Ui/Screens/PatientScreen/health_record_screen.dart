@@ -30,7 +30,7 @@ class _HealthRecordScreenState extends State<HealthRecordScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kCardColor,
+      backgroundColor: kScaffoldColor,
       appBar: AppBar(
         backgroundColor: kCardColor,
         title: const Text("Health Record"),

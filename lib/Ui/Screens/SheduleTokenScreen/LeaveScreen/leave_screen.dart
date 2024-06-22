@@ -425,11 +425,10 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       .leaveCheckModel;
                               return Column(
                                 children: [
-                                  
                                   InkWell(
                                     onTap: () {
-                                        log("=================== fsdkfjdsfkjdskfdksfdfksjl${leaveCheckModel.status}");
-                                     
+                                      log("=================== fsdkfjdsfkjdskfdksfdfksjl${leaveCheckModel.status}");
+
                                       setState(() {
                                         isClickLeave = true;
                                       });
@@ -442,8 +441,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                               BlocProvider.of<LeaveUpdateBloc>(
                                                       context)
                                                   .add(FetchLeaveUpdate(
-                                                clinicId:
-                                                    dController.initialIndex.value,
+                                                clinicId: dController
+                                                    .initialIndex.value,
                                                 fromDate:
                                                     "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                                 toDate:
@@ -454,8 +453,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                           : BlocProvider.of<LeaveUpdateBloc>(
                                                   context)
                                               .add(FetchLeaveUpdate(
-                                              clinicId:
-                                                  dController.initialIndex.value,
+                                              clinicId: dController
+                                                  .initialIndex.value,
                                               fromDate:
                                                   "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
                                               toDate:
@@ -466,8 +465,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       height: 50.h,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color:
-                                            isClickLeave ? Colors.grey : kMainColor,
+                                        color: isClickLeave
+                                            ? Colors.grey
+                                            : kMainColor,
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Center(
@@ -486,9 +486,9 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(onPressed: () {
-                                      log("=================== fsdkfjdsfkjdskfdksfdfksjl   ::::   ${leaveCheckModel.message}");
-                                  }, child: Text("data")),
+                                  // ElevatedButton(onPressed: () {
+                                  //     log("=================== fsdkfjdsfkjdskfdksfdfksjl   ::::   ${leaveCheckModel.message}");
+                                  // }, child: Text("data")),
                                 ],
                               );
                             }

@@ -13,7 +13,6 @@ import 'package:mediezy_doctor/Ui/Consts/bloc_providers.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SplashScreen/splash_screen.dart';
 import 'package:mediezy_doctor/firebase_options.dart';
 import 'package:upgrader/upgrader.dart';
-import 'Repositary/Api/firebase_service/notification_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 @pragma('vm:entry-point')
@@ -50,14 +49,14 @@ class _MediezyDoctorState extends State<MediezyDoctor> {
   @override
   void initState() {
     super.initState();
-  //  notificationServices.requestNotificationPermisions();
-  //   notificationServices.isRefreshToken();
-  //   notificationServices.getDeviceToken().then((value) {
-  //     log("not : $value");
-  //   });
-  //   notificationServices.forgroundMessage();
-  //   notificationServices.firebaseInit(context);
-  //   notificationServices.setupInteractMessage(context);
+    //  notificationServices.requestNotificationPermisions();
+    //   notificationServices.isRefreshToken();
+    //   notificationServices.getDeviceToken().then((value) {
+    //     log("not : $value");
+    //   });
+    //   notificationServices.forgroundMessage();
+    //   notificationServices.firebaseInit(context);
+    //   notificationServices.setupInteractMessage(context);
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
