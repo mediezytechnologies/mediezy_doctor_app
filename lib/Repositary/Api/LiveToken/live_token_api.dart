@@ -39,6 +39,7 @@ class GetCurrentTokenApi {
     final preferences = await SharedPreferences.getInstance();
     String? doctorId = preferences.getString('DoctorId');
     String basePath = "doctor/getTokensCheckInCheckOut";
+    log("==============0000  $isReached");
 
     final body = {
       "TokenNumber": tokenNumber,

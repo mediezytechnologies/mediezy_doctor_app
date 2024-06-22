@@ -56,7 +56,6 @@ final getAllAppointmentController =Get.put(GetAllAppointmentController());
           getAllAppointmentController.getAllAppointmentGetxController(   date: controller.formatDate(),
                 clinicId: controller.initialIndex.value,
                 scheduleType: controller.scheduleIndex.value,));
-          
               // BlocProvider.of<GetAppointmentsBloc>(context)
               //     .add(FetchAllAppointments(
                 // date: controller.formatDate(),

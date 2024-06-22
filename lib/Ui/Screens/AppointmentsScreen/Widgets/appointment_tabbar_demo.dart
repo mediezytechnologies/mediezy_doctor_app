@@ -1,10 +1,9 @@
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
@@ -17,6 +16,7 @@ import '../../../../Repositary/getx/apointment_detail_getx.dart';
 import '../../../../Repositary/getx/get_appointment_getx.dart';
 import '../../../CommonWidgets/vertical_spacing_widget.dart';
 import '../../../Consts/app_colors.dart';
+import '../AppointmentDetailsScreen/appointment_details_screen _demo.dart';
 
 class AppoimentTabbarDemo extends StatefulWidget {
   const AppoimentTabbarDemo({super.key});
@@ -91,7 +91,7 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
               children: [
                 GetBuilder<GetAllAppointmentController>(builder: (controller) {
                   if (controller.loding.value) {
-                    return const CircularProgressIndicator();
+                    return Center(child:  CupertinoActivityIndicator(color: kMainColor,radius: 20.r,));
                   }
                   if (controller.bookingData.isEmpty) {
                     return const Center(
@@ -132,7 +132,8 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
                                     MaterialPageRoute(
                                         builder: (ctx) =>
                                             // AppointmentDemo()
-                                            AppointmentDetailsScreen(
+                                           // AppointmentDetailsScreen(
+                                            AppointmentDetailsScreenDemo(
                                               firstIndex:
                                                   getAllAppointmentController
                                                       .bookingData[index]

@@ -127,11 +127,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
-          clinicId: controller.initialIndex.value,
-          scheduleType: controller.scheduleIndex.value,);
-        },),
+        // floatingActionButton: FloatingActionButton(onPressed: () {
+        //   getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
+        //   clinicId: controller.initialIndex.value,
+        //   scheduleType: controller.scheduleIndex.value,);
+        // },),
         appBar: const AppoimentAppbar(),
         drawer: const CustomDrawer(),
         body: StreamBuilder<ConnectivityResult>(

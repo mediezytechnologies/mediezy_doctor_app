@@ -19,7 +19,7 @@ class GetAllAppointmentController extends GetxController {
   required String scheduleType,
 }) async {
   try {
-    loding.value = true;
+    //loding.value = true;
     var data = await GetAllAppointmentGetxService.getAllAppointmentGetxService(
       date: date,
       clinicId: clinicId,
