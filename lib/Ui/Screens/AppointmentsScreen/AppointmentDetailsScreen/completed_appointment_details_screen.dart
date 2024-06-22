@@ -441,16 +441,9 @@ class CompletedAppointmentDetailsScreenState
                                           .toString(),
                                 ),
                           getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .labTest!
-                                      .isEmpty ||
-                                  getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.labTest ==
-                                      null
+                                      .appointmentDetails!.first.labTest ==
+                                  null
                               ? Container()
-                              // ? Text(
-                              //     "================================== :: ================== ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.labTest}")
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -494,13 +487,8 @@ class CompletedAppointmentDetailsScreenState
                                   ],
                                 ),
                           getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.scanName ==
-                                      null ||
-                                  getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .scanName!
-                                      .isEmpty
+                                      .appointmentDetails!.first.scanName ==
+                                  null
                               ? Container()
                               : ShortNamesWidget(
                                   typeId: 1,
@@ -510,7 +498,8 @@ class CompletedAppointmentDetailsScreenState
                                           .appointmentDetails!.first.scanName
                                           .toString()),
                           getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!.first.scanTest!.isEmpty
+                                      .appointmentDetails!.first.scanTest ==
+                                  null
                               ? Container()
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,

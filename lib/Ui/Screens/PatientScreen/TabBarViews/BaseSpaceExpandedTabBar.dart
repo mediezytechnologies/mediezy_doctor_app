@@ -55,17 +55,17 @@ class _BaseSpaceExpandedTabBarState extends State<BaseSpaceExpandedTabBar>
               dividerColor: Colors.white,
               tabAlignment: TabAlignment.start,
               tabs: widget.tabs,
-              labelColor: Colors.white, 
+              labelColor: Colors.white, // Set the color of selected tab text
               labelStyle: const TextStyle(
                   fontSize: 12,
                   fontWeight:
-                      FontWeight.bold), 
+                      FontWeight.bold), // Set style for selected tab text
               unselectedLabelColor:
-                  Colors.black, 
+                  Colors.black, // Set the color of unselected tab text
               unselectedLabelStyle: const TextStyle(
-                  fontSize: 12), 
+                  fontSize: 12), // Set style for unselected tab text
               isScrollable:
-                  true, 
+                  true, // Set to true for full view of text when selected
             ),
           ),
         ),
