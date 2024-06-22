@@ -69,39 +69,38 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       handleConnectivityChange(result);
     });
 
-    // Ensure the controller values are initialized before making the API call
-    // if (controller.initialIndex != null &&
-    //     // ignore: unnecessary_null_comparison
-    //     controller.scheduleIndex.value != null) {
-    //   BlocProvider.of<GetAppointmentsBloc>(context).add(
-    //     FetchAllAppointments(
-          // date: controller.formatDate(),
-          // clinicId: controller.initialIndex.value,
-          // scheduleType: controller.scheduleIndex.value,
-    //     ),
-    //   );
+   // Ensure the controller values are initialized before making the API call
+    if (controller.initialIndex != null &&
+        // ignore: unnecessary_null_comparison
+        controller.scheduleIndex.value != null) {
+      // BlocProvider.of<GetAppointmentsBloc>(context).add(
+      //   FetchAllAppointments(
+      //     date: controller.formatDate(),
+      //     clinicId: controller.initialIndex.value,
+      //     scheduleType: controller.scheduleIndex.value,
+      //   ),
+      // );
+       getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
+          clinicId: controller.initialIndex.value,
+          scheduleType: controller.scheduleIndex.value,);
 
-      // Delay the first API call by 1 second
-      // initialTimer = Timer(const Duration(seconds: 1), () {
-      //   fetchAppointments();
+     // Delay the first API call by 1 second
+      initialTimer = Timer(const Duration(seconds: 1), () {
+        fetchAppointments();
 
-      //   // Start polling every 10 seconds after the initial call
-      //   pollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      //     fetchAppointments();
-      //   });
-      // });
-   // }
+        // Start polling every 10 seconds after the initial call
+        pollingTimer = Timer.periodic(const Duration(seconds: 15), (timer) {
+          fetchAppointments();
+        });
+      });
+   }
   }
 
-  // void fetchAppointments() {
-  //   BlocProvider.of<GetAppointmentsBloc>(context).add(
-  //     FetchAllAppointments(
-  //       date: controller.formatDate(),
-  //       clinicId: controller.initialIndex.value,
-  //       scheduleType: controller.scheduleIndex.value,
-  //     ),
-  //   );
-  // }
+  void fetchAppointments() {
+    getAllAppointmentController.getAllAppointmentGetxController(date: controller.formatDate(),
+          clinicId: controller.initialIndex.value,
+          scheduleType: controller.scheduleIndex.value,);
+  }
 
   void stopPolling() {
     pollingTimer.cancel();
