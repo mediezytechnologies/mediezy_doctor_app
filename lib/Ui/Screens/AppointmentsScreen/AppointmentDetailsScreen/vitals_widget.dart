@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
@@ -12,6 +13,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
+import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
+import '../../../../Repositary/getx/get_appointment_getx.dart';
 import '../../../Services/general_services.dart';
 
 class VitalsWidget extends StatefulWidget {
@@ -38,6 +41,11 @@ class _VitalsWidgetState extends State<VitalsWidget> {
   final TextEditingController sysController = TextEditingController();
   final TextEditingController diaController = TextEditingController();
   final TextEditingController heartRateController = TextEditingController();
+
+
+  final HospitalController controller = Get.put(HospitalController());
+  
+  final getAllAppointmentController = Get.put(GetAllAppointmentController());
 
   String dropdownVitalsValue = 'F';
   var vitalItems = [
@@ -549,6 +557,11 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           sysController.clear();
                           diaController.clear();
                           heartRateController.clear();
+                            getAllAppointmentController.getAllAppointmentGetxController(
+                 date: controller.formatDate(),
+                          clinicId: controller.initialIndex.value,
+                          scheduleType: controller.scheduleIndex.value,
+                );
                           setState(() {
                             isEdit = false;
                           });

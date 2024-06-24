@@ -440,7 +440,7 @@ class CompletedAppointmentDetailsScreenState
                                           .appointmentDetails!.first.labName
                                           .toString(),
                                 ),
-                          getAllCompletedAppointmentDetailsModel
+                      getAllCompletedAppointmentDetailsModel
                                       .appointmentDetails!
                                       .first
                                       .labTest!
@@ -449,8 +449,6 @@ class CompletedAppointmentDetailsScreenState
                                           .appointmentDetails!.first.labTest ==
                                       null
                               ? Container()
-                              // ? Text(
-                              //     "================================== :: ================== ${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.labTest}")
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -494,13 +492,8 @@ class CompletedAppointmentDetailsScreenState
                                   ],
                                 ),
                           getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.scanName ==
-                                      null ||
-                                  getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .scanName!
-                                      .isEmpty
+                                      .appointmentDetails!.first.scanName ==
+                                  null
                               ? Container()
                               : ShortNamesWidget(
                                   typeId: 1,
@@ -509,8 +502,14 @@ class CompletedAppointmentDetailsScreenState
                                       getAllCompletedAppointmentDetailsModel
                                           .appointmentDetails!.first.scanName
                                           .toString()),
-                          getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!.first.scanTest!.isEmpty
+                         getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!.first.scanName ==
+                                      null ||
+                                  getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .scanName!
+                                      .isEmpty
                               ? Container()
                               : Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,

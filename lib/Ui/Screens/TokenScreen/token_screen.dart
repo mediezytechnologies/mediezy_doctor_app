@@ -814,11 +814,11 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         .labName
                                                                         .toString()),
                                                             getCurrentTokenModel
-                                                                    .tokens![
-                                                                        currentIndex]
-                                                                    .patientData!
-                                                                    .labtest!
-                                                                    .isEmpty
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .labtest ==
+                                                                    null
                                                                 ? Container()
                                                                 : Row(
                                                                     crossAxisAlignment:

@@ -19,6 +19,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+import '../../../../Repositary/getx/get_appointment_getx.dart';
 import '../../../CommonWidgets/text_style_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _LogiScreenState extends State<LoginScreen> {
   final HospitalController controller = Get.put(HospitalController());
   bool hidePassword = true;
   late LoginModel loginModel;
-
+final getAllAppointmentController =Get.put(GetAllAppointmentController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -52,12 +53,15 @@ class _LogiScreenState extends State<LoginScreen> {
                       )),
               (route) => false);
           controller.gethospitalService().then((value) =>
-              BlocProvider.of<GetAppointmentsBloc>(context)
-                  .add(FetchAllAppointments(
-                date: controller.formatDate(),
+          getAllAppointmentController.getAllAppointmentGetxController(   date: controller.formatDate(),
                 clinicId: controller.initialIndex.value,
-                scheduleType: controller.scheduleIndex.value,
-              )));
+                scheduleType: controller.scheduleIndex.value,));
+              // BlocProvider.of<GetAppointmentsBloc>(context)
+              //     .add(FetchAllAppointments(
+                // date: controller.formatDate(),
+                // clinicId: controller.initialIndex.value,
+                // scheduleType: controller.scheduleIndex.value,
+              // )));
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
@@ -227,6 +231,7 @@ class _LogiScreenState extends State<LoginScreen> {
                                 clinicId: controller.initialIndex.value,
                                 scheduleType: controller.scheduleIndex.value,
                               ));
+                              
                               BlocProvider.of<GetAllCompletedAppointmentsBloc>(
                                       context)
                                   .add(FetchAllCompletedAppointments(
