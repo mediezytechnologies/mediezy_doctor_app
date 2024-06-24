@@ -87,7 +87,7 @@ class _AppoimentAppbarState extends State<AppoimentAppbar> {
                                 
                             ),
                             Text(
-                              "Dr $firstName $secondName",
+                              "Dr. $firstName $secondName",
                               style: size.width > 450
                                   ? TextStyle(
                                       fontSize: 11.sp,

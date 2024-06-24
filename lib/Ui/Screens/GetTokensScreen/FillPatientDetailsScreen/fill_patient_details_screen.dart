@@ -50,6 +50,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
+ final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
@@ -68,10 +69,12 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
       });
     }
   }
+   double? patientNumber;
 
   int selectedStart = -1;
   int selectedCome = -1;
   int selectedSymptomsID = -1;
+
   String regularMedicine = "No";
   late GetSymptomsModel getSymptomsModel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -114,6 +117,18 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                 CommonButtonWidget(
                     title: "Book Token",
                     onTapFunction: () {
+                      //   double patientNumber;
+                      //     try {
+                      //   patientNumber = double.parse(heightController.text);
+                      //   if (patientNumber > 250) {
+                      //     patientNumber.add(
+                      //         "Height is greater than 250cm please re-check");
+
+                      //     isValid = false;
+                      //   }
+                      // } catch (e) {
+                      //   heightValue = 0;
+                      // }
                       if (patientNameController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient name");
@@ -123,7 +138,12 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                       } else if (patientContactNumberController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient contact number");
-                      } else if (selectedSymptoms.isEmpty) {
+                      } 
+                      // else if (patientContactNumberControlle ) {
+                      //   GeneralServices.instance.showErrorMessage(
+                      //       context, "Please fill patient contact number");
+                      // } 
+                      else if (selectedSymptoms.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select symptoms");
                       } else if (selectedStart == -1) {
@@ -133,8 +153,6 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select How Frequently");
                       } else {
-
-                        
                         BlocProvider.of<BookAppointmentBloc>(context).add(
                           PassBookAppointMentEvent(
                             clinicId: widget.clinicId,
@@ -230,6 +248,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   flex: 2,
                                   child: SizedBox(
                                     child: TextFormField(
+                                      
                                       style: TextStyle(
                                           fontSize:
                                               size.width > 450 ? 11.sp : 14.sp),
@@ -318,6 +337,11 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   flex: 2,
                                   child: SizedBox(
                                     child: TextFormField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          patientNumber =double.parse(patientContactNumberController.text);
+                                        });
+                                      },
                                       style: TextStyle(
                                           fontSize:
                                               size.width > 450 ? 12.sp : 14.sp),
@@ -421,189 +445,227 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                 controller: appointmentForController,
                                 hintText: "eg. Chest pain, Body ache, etc."),
                             const VerticalSpacingWidget(height: 10),
-                            Wrap(
-                              children: List.generate(
-                                getSymptomsModel.symptoms!.length,
-                                (index) => Builder(
-                                  builder: (BuildContext context) {
-                                    return InkWell(
-                                      onTap: () {
-                                        FocusScope.of(context).unfocus();
-                                        setState(() {
-                                          if (selectedSymptoms.contains(
-                                              getSymptomsModel
-                                                  .symptoms![index].id!)) {
-                                            selectedSymptoms.remove(
-                                                getSymptomsModel
-                                                    .symptoms![index].id!);
-                                          } else {
-                                            selectedSymptoms.add(
-                                                getSymptomsModel
-                                                    .symptoms![index].id!);
-                                          }
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: selectedSymptoms.contains(
-                                                  getSymptomsModel
-                                                      .symptoms![index].id!)
-                                              ? Colors.grey
-                                              : kCardColor,
-                                          border: Border.all(
-                                              color: kMainColor, width: 1),
-                                        ),
-                                        margin: const EdgeInsets.all(3.0),
-                                        padding: const EdgeInsets.all(6.0),
-                                        child: Text(
-                                          getSymptomsModel
-                                              .symptoms![index].symtoms
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: size.width > 450
-                                                  ? 9.sp
-                                                  : 11.sp,
-                                              color: selectedSymptoms.contains(
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: 10.h),
+                           //   color:Color.fromARGB(255, 255, 255, 255),
+                              child: Column(
+                                
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Symptoms",  style: size.width > 450 ? greyTabMain : greyMain,),
+                                   const VerticalSpacingWidget(height: 5),
+                                  Wrap(
+                                    children: List.generate(
+                                      getSymptomsModel.symptoms!.length,
+                                      (index) => Builder(
+                                        builder: (BuildContext context) {
+                                          return InkWell(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              setState(() {
+                                                if (selectedSymptoms.contains(
+                                                    getSymptomsModel
+                                                        .symptoms![index]
+                                                        .id!)) {
+                                                  selectedSymptoms.remove(
                                                       getSymptomsModel
-                                                          .symptoms![index].id!)
-                                                  ? Colors.white
-                                                  : kTextColor),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            const VerticalSpacingWidget(height: 10),
-                            Text(
-                              "When it's comes",
-                              style: size.width > 450 ? greyTabMain : greyMain,
-                            ),
-                            const VerticalSpacingWidget(height: 5),
-                            Wrap(
-                              spacing: 8.0,
-                              runSpacing: 8.0,
-                              children: List.generate(
-                                deceaseStartingTime.length,
-                                (index) => GestureDetector(
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    setState(() {
-                                      selectedStart =
-                                          selectedStart == index ? -1 : index;
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: selectedStart == index
-                                          ? Colors.grey
-                                          : kCardColor,
-                                      border: Border.all(
-                                          color: kMainColor, width: 1),
-                                    ),
-                                    margin: const EdgeInsets.all(3.0),
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                      deceaseStartingTime[index],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize:
-                                            size.width > 450 ? 9.sp : 11.sp,
-                                        color: selectedStart == index
-                                            ? Colors.white
-                                            : kTextColor,
+                                                          .symptoms![index]
+                                                          .id!);
+                                                } else {
+                                                  selectedSymptoms.add(
+                                                      getSymptomsModel
+                                                          .symptoms![index]
+                                                          .id!);
+                                                }
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color:
+                                                    selectedSymptoms.contains(
+                                                            getSymptomsModel
+                                                                .symptoms![
+                                                                    index]
+                                                                .id!)
+                                                        ? Colors.grey
+                                                        : kCardColor,
+                                                border: Border.all(
+                                                    color: kMainColor,
+                                                    width: 1),
+                                              ),
+                                              margin: const EdgeInsets.all(3.0),
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Text(
+                                                getSymptomsModel
+                                                    .symptoms![index].symtoms
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: size.width > 450
+                                                        ? 9.sp
+                                                        : 11.sp,
+                                                    color: selectedSymptoms
+                                                            .contains(
+                                                                getSymptomsModel
+                                                                    .symptoms![
+                                                                        index]
+                                                                    .id!)
+                                                        ? Colors.white
+                                                        : kTextColor),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            VerticalSpacingWidget(height: 2.h),
-                            if (selectedStart == 3)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                  const VerticalSpacingWidget(height: 10),
                                   Text(
-                                    "How many days",
+                                    "When it's comes",
                                     style: size.width > 450
                                         ? greyTabMain
                                         : greyMain,
                                   ),
                                   const VerticalSpacingWidget(height: 5),
-                                  SizedBox(
-                                    height: 40.h,
-                                    child: TextFormField(
-                                      cursorColor: kMainColor,
-                                      controller: daysController,
-                                      keyboardType: TextInputType.number,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintStyle: size.width > 450
-                                            ? greyTab10B600
-                                            : grey13B600,
-                                        hintText: "10 days",
-                                        filled: true,
-                                        fillColor: kCardColor,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          borderSide: BorderSide.none,
+                                  Wrap(
+                                    spacing: 8.0,
+                                    runSpacing: 8.0,
+                                    children: List.generate(
+                                      deceaseStartingTime.length,
+                                      (index) => GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            selectedStart =
+                                                selectedStart == index
+                                                    ? -1
+                                                    : index;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: selectedStart == index
+                                                ? Colors.grey
+                                                : kCardColor,
+                                            border: Border.all(
+                                                color: kMainColor, width: 1),
+                                          ),
+                                          margin: const EdgeInsets.all(3.0),
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            deceaseStartingTime[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: size.width > 450
+                                                  ? 9.sp
+                                                  : 11.sp,
+                                              color: selectedStart == index
+                                                  ? Colors.white
+                                                  : kTextColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  VerticalSpacingWidget(height: 2.h),
+                                  if (selectedStart == 3)
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "How many days",
+                                          style: size.width > 450
+                                              ? greyTabMain
+                                              : greyMain,
+                                        ),
+                                        const VerticalSpacingWidget(height: 5),
+                                        SizedBox(
+                                          height: 40.h,
+                                          child: TextFormField(
+                                            cursorColor: kMainColor,
+                                            controller: daysController,
+                                            keyboardType: TextInputType.number,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            decoration: InputDecoration(
+                                              hintStyle: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
+                                              hintText: "10 days",
+                                              filled: true,
+                                              fillColor: kCardColor,
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                borderSide: BorderSide.none,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  const VerticalSpacingWidget(height: 10),
+                                  Text(
+                                    "How Frequently",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  const VerticalSpacingWidget(height: 5),
+                                  Wrap(
+                                    spacing: 8.0,
+                                    runSpacing: 8.0,
+                                    children: List.generate(
+                                      deceaseRepeats.length,
+                                      (index) => GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            selectedCome = selectedCome == index
+                                                ? -1
+                                                : index;
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: selectedCome == index
+                                                ? Colors.grey
+                                                : kCardColor,
+                                            border: Border.all(
+                                                color: kMainColor, width: 1),
+                                          ),
+                                          margin: const EdgeInsets.all(3.0),
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: Text(
+                                            deceaseRepeats[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: size.width > 450
+                                                  ? 9.sp
+                                                  : 11.sp,
+                                              color: selectedCome == index
+                                                  ? Colors.white
+                                                  : kTextColor,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            const VerticalSpacingWidget(height: 10),
-                            Text(
-                              "How Frequently",
-                              style: size.width > 450 ? greyTabMain : greyMain,
                             ),
-                            const VerticalSpacingWidget(height: 5),
-                            Wrap(
-                              spacing: 8.0,
-                              runSpacing: 8.0,
-                              children: List.generate(
-                                deceaseRepeats.length,
-                                (index) => GestureDetector(
-                                  onTap: () {
-                                    FocusScope.of(context).unfocus();
-                                    setState(() {
-                                      selectedCome =
-                                          selectedCome == index ? -1 : index;
-                                    });
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: selectedCome == index
-                                          ? Colors.grey
-                                          : kCardColor,
-                                      border: Border.all(
-                                          color: kMainColor, width: 1),
-                                    ),
-                                    margin: const EdgeInsets.all(3.0),
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                      deceaseRepeats[index],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize:
-                                            size.width > 450 ? 9.sp : 11.sp,
-                                        color: selectedCome == index
-                                            ? Colors.white
-                                            : kTextColor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
