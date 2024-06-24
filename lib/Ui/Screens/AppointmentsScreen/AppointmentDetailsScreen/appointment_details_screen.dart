@@ -835,7 +835,7 @@ bool isWaitingForCheckout = false;
                                                       newValue,
                                                       bokingAppointmentLabController
                                                           .initialMedicalStoreIndex
-                                                          .value);
+                                                            .value);
                                             },
                                           );
                                   }),
@@ -930,7 +930,7 @@ bool isWaitingForCheckout = false;
                                                       newValue,
                                                       bokingAppointmentLabController
                                                           .initialSelectLabIndex
-                                                          .value);
+                                                           .value);
                                             },
                                           );
                                   }),
@@ -1025,7 +1025,7 @@ bool isWaitingForCheckout = false;
                                                       newValue,
                                                       bokingAppointmentLabController
                                                           .initialScaningCenerIndex
-                                                          .value);
+                                                           .value);
                                             },
                                           );
                                   }),

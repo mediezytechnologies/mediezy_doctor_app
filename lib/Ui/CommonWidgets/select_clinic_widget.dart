@@ -7,8 +7,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'custom_dropdown_widget.dart';
 
 class SelectClinicWidget extends StatelessWidget {
-  const SelectClinicWidget({super.key, this.onChanged});
-  final void Function(String?)? onChanged;
+  const SelectClinicWidget({super.key,required this.onChanged});
+  final void Function(String?) onChanged;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

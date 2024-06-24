@@ -743,7 +743,7 @@ class _AppointmentDetailsScreenDemoState
                                           onChanged: (newValue) {
                                             log(newValue!);
                                             bokingAppointmentLabController
-                                                .dropdownValueChanging(
+                                                .dropdownValueMedicalChanging(
                                                     newValue,
                                                     bokingAppointmentLabController
                                                         .initialMedicalStoreIndex
@@ -812,11 +812,12 @@ class _AppointmentDetailsScreenDemoState
                                   style:
                                       size.width > 450 ? greyTabMain : greyMain,
                                 ),
+
                                 Obx(() {
                                   return bokingAppointmentLabController
                                           .favoriteLabs.isEmpty
                                       ? const Text(
-                                          "No Favourite Labs.Please add Labs")
+                                          "No Favourite Labs.\n Please add Labs")
                                       : CustomDropDown(
                                           width: double.infinity,
                                           value: bokingAppointmentLabController
@@ -905,7 +906,7 @@ class _AppointmentDetailsScreenDemoState
                                   return bokingAppointmentLabController
                                           .favoriteLabs.isEmpty
                                       ? const Text(
-                                          "No Favourite Labs.Please add Labs")
+                                          "No Favourite scanning centre.\n Please add scanning centre")
                                       : CustomDropDown(
                                           width: double.infinity,
                                           value: bokingAppointmentLabController
@@ -921,7 +922,7 @@ class _AppointmentDetailsScreenDemoState
                                           onChanged: (newValue) {
                                             log(newValue!);
                                             bokingAppointmentLabController
-                                                .dropdownValueChanging(
+                                                .dropdownValuelabScanChanging(
                                                     newValue,
                                                     bokingAppointmentLabController
                                                         .initialScaningCenerIndex
@@ -1081,7 +1082,7 @@ class _AppointmentDetailsScreenDemoState
                                                   curve: Curves.easeInOut,
                                                 );
                                                 log("2222222222222222222222222222222222222222222");
-                                              
+
                                                 handleCheckout(
                                                   context,
                                                   index,
@@ -1136,7 +1137,6 @@ class _AppointmentDetailsScreenDemoState
                                             // Reset isWaitingForCheckout to false after 3 seconds
                                             isWaitingForCheckout = false;
                                           });
-                                          
                                         },
                                         child: Container(
                                           height: 50.h,
@@ -1642,11 +1642,11 @@ class _AppointmentDetailsScreenDemoState
   }
 
   void refreshData(BuildContext context) {
-      getAllAppointmentController.getAllAppointmentGetxController(
-                 date: controller.formatDate(),
-                          clinicId: controller.initialIndex.value,
-                          scheduleType: controller.scheduleIndex.value,
-                );
+    getAllAppointmentController.getAllAppointmentGetxController(
+      date: controller.formatDate(),
+      clinicId: controller.initialIndex.value,
+      scheduleType: controller.scheduleIndex.value,
+    );
     // BlocProvider.of<GetAppointmentsBloc>(context).add(
     //   FetchAllAppointments(
     //     date: widget.date,

@@ -126,6 +126,8 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
                               padding: EdgeInsets.fromLTRB(0, 5.h, 0, 2.h),
                               child: InkWell(
                                 onTap: () {
+                                  bokingAppointmentLabController.getMedicalStoreController();
+    bokingAppointmentLabController.getLablController();
                                   // bokingAppointmentLabController.addtoTembList();
                                   Navigator.push(
                                     context,
