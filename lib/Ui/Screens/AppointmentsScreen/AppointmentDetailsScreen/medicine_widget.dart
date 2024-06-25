@@ -144,7 +144,6 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            // Text(widget.medicalStoreId),
                             widget.medicine![index].medicalShopName == null
                                 ? Container()
                                 : ShortNamesWidget(

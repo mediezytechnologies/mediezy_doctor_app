@@ -1032,7 +1032,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           FocusScope.of(context).unfocus();
                                           //check condition//.......
 
-                    
                                           if (currentPosition ==
                                                   listLength - 1 ||
                                               currentPosition <
@@ -1041,8 +1040,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       listLength - 1 &&
                                                   currentPosition == 0)) {
                                             isConditionMet = true;
-                                            isWaitingForCheckout =
-                                                true; 
+                                            isWaitingForCheckout = true;
                                           }
 
                                           BlocProvider.of<
