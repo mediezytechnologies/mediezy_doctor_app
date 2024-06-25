@@ -48,7 +48,7 @@ class _AllVitalsScreenState extends State<AllVitalsScreen> {
           if (state is GetAllVitalsLoaded) {
             return state.getVitalsModel.vitals == null
                 ? Center(
-                    child: Image.asset("assets/images/no_data___.jpg"),
+                    child: Image.asset("assets/images/icone.png"),
                   )
                 : ListView.builder(
                     itemCount: state.getVitalsModel.vitals!.length,

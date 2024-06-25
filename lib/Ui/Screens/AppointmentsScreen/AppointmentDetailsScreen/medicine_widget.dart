@@ -116,7 +116,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
           widget.medicine!.isEmpty
               ? Container()
               : Text(
-                  'All Prescriptions ${widget.medicine!.length}',
+                  'All Prescriptions (${widget.medicine!.length})',
                   style: size.width > 450 ? greyTabMain : greyMain,
                 ),
           ListView.builder(
@@ -145,12 +145,15 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             // Text(widget.medicalStoreId),
-                            //  ShortNamesWidget(
-                            //   typeId: 1,
-                            //   firstText: "Medical store : ",
-                            //   secondText: widget.medicine![index].
-                            //       .toString(),
-                            // ),
+                            widget.medicine![index].medicalShopName == null
+                                ? Container()
+                                : ShortNamesWidget(
+                                    typeId: 1,
+                                    firstText: "Medical store : ",
+                                    secondText: widget
+                                        .medicine![index].medicalShopName
+                                        .toString(),
+                                  ),
                             ShortNamesWidget(
                               typeId: 1,
                               firstText: "Medicine : ",
