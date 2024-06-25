@@ -6,10 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/LoginScreen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../Repositary/getx/get_appointment_getx.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,6 +20,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final getAllAppointmentController = Get.put(GetAllAppointmentController());
   Future<void> checkuserlogin() async {
     final preferences = await SharedPreferences.getInstance();
     String? token = preferences.getString('token');
@@ -30,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         if (token == null) {
           Navigator.of(context).pushAndRemoveUntil(
-           
               MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
         } else {
@@ -40,12 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
                         selectedIndex: 0,
                       )),
               (route) => false);
-          BlocProvider.of<GetAppointmentsBloc>(context)
-              .add(FetchAllAppointments(
+          getAllAppointmentController.getAllAppointmentGetxController(
             date: controller.formatDate(),
             clinicId: controller.initialIndex.value,
             scheduleType: controller.scheduleIndex.value,
-          ));
+          );
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),

@@ -42,9 +42,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
   final TextEditingController diaController = TextEditingController();
   final TextEditingController heartRateController = TextEditingController();
 
-
   final HospitalController controller = Get.put(HospitalController());
-  
+
   final getAllAppointmentController = Get.put(GetAllAppointmentController());
 
   String dropdownVitalsValue = 'F';
@@ -65,26 +64,30 @@ class _VitalsWidgetState extends State<VitalsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Add Vitals',
-              style: size.width > 450 ? blackTabMainText : blackMainText,
-            ),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    showSecondContainer =
-                        !showSecondContainer; // Toggle visibility
-                  });
-                },
-                icon: Icon(
-                    showSecondContainer
-                        ? CupertinoIcons.arrowtriangle_up_circle_fill
-                        : CupertinoIcons.arrowtriangle_down_circle_fill,
-                    size: size.width > 450 ? 12.sp : 18.sp))
-          ],
+        Container(
+          decoration: BoxDecoration(
+              color: kCardColor, borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Add Vitals',
+                style: size.width > 450 ? blackTabMainText : blackMainText,
+              ),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      showSecondContainer =
+                          !showSecondContainer; // Toggle visibility
+                    });
+                  },
+                  icon: Icon(
+                      showSecondContainer
+                          ? CupertinoIcons.arrowtriangle_up_circle_fill
+                          : CupertinoIcons.arrowtriangle_down_circle_fill,
+                      size: size.width > 450 ? 12.sp : 18.sp))
+            ],
+          ),
         ),
         const VerticalSpacingWidget(height: 5),
         Visibility(
@@ -444,8 +447,8 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                         tempValue = double.parse(temperatureController.text);
                         // if (tempValue==0) {
                         //   errorMessages.add("pleas enter Temperature");
-                        // } else 
-                        
+                        // } else
+
                         if (dropdownVitalsValue == "F") {
                           if (tempValue > 120) {
                             errorMessages.add(
@@ -506,7 +509,7 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                       //bp dia
                       try {
                         diatValue = double.parse(diaController.text);
-                        if (diatValue >180) {
+                        if (diatValue > 180) {
                           errorMessages
                               .add("Dia is greater than 180 please re-check");
                           isValid = false;
@@ -557,11 +560,12 @@ class _VitalsWidgetState extends State<VitalsWidget> {
                           sysController.clear();
                           diaController.clear();
                           heartRateController.clear();
-                            getAllAppointmentController.getAllAppointmentGetxController(
-                 date: controller.formatDate(),
-                          clinicId: controller.initialIndex.value,
-                          scheduleType: controller.scheduleIndex.value,
-                );
+                          getAllAppointmentController
+                              .getAllAppointmentGetxController(
+                            date: controller.formatDate(),
+                            clinicId: controller.initialIndex.value,
+                            scheduleType: controller.scheduleIndex.value,
+                          );
                           setState(() {
                             isEdit = false;
                           });

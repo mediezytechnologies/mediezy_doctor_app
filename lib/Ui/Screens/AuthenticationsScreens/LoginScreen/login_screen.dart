@@ -10,13 +10,11 @@ import 'package:get/get.dart';
 import 'package:mediezy_doctor/Model/auth/login_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Login/login_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/bottom_navigation_control_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/common_button_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Screens/AuthenticationsScreens/SignUpScreen/dummy_register_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import '../../../../Repositary/getx/get_appointment_getx.dart';
@@ -30,6 +28,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LogiScreenState extends State<LoginScreen> {
+  final List loginScreenImages = [
+    "assets/images/login image one.jpg",
+    "assets/images/login image two.jpg",
+    "assets/images/login image three.jpg"
+  ];
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode passwordFocusController = FocusNode();
@@ -37,7 +41,7 @@ class _LogiScreenState extends State<LoginScreen> {
   final HospitalController controller = Get.put(HospitalController());
   bool hidePassword = true;
   late LoginModel loginModel;
-final getAllAppointmentController =Get.put(GetAllAppointmentController());
+  final getAllAppointmentController = Get.put(GetAllAppointmentController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -53,15 +57,11 @@ final getAllAppointmentController =Get.put(GetAllAppointmentController());
                       )),
               (route) => false);
           controller.gethospitalService().then((value) =>
-          getAllAppointmentController.getAllAppointmentGetxController(   date: controller.formatDate(),
+              getAllAppointmentController.getAllAppointmentGetxController(
+                date: controller.formatDate(),
                 clinicId: controller.initialIndex.value,
-                scheduleType: controller.scheduleIndex.value,));
-              // BlocProvider.of<GetAppointmentsBloc>(context)
-              //     .add(FetchAllAppointments(
-                // date: controller.formatDate(),
-                // clinicId: controller.initialIndex.value,
-                // scheduleType: controller.scheduleIndex.value,
-              // )));
+                scheduleType: controller.scheduleIndex.value,
+              ));
           BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
               .add(FetchAllCompletedAppointments(
             date: controller.formatDate(),
@@ -225,13 +225,13 @@ final getAllAppointmentController =Get.put(GetAllAppointmentController());
                                       email: emailController.text,
                                       password: passwordController.text));
                             } else if (loginModel.token != null) {
-                              BlocProvider.of<GetAppointmentsBloc>(context)
-                                  .add(FetchAllAppointments(
+                              getAllAppointmentController
+                                  .getAllAppointmentGetxController(
                                 date: controller.formatDate(),
                                 clinicId: controller.initialIndex.value,
                                 scheduleType: controller.scheduleIndex.value,
-                              ));
-                              
+                              );
+
                               BlocProvider.of<GetAllCompletedAppointmentsBloc>(
                                       context)
                                   .add(FetchAllCompletedAppointments(

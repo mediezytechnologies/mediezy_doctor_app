@@ -6,10 +6,11 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 class GetMedicinesWidget extends StatelessWidget {
   // final List<DoctorMedicines>? medicine;
-  final String medicineName;
+  final String? medicineName;
   final String? dosage;
   final String timeSection;
   final String? interval;
+  final String? medicalStore;
   final String noOfDays;
   final int? type;
   final int? morning;
@@ -28,7 +29,8 @@ class GetMedicinesWidget extends StatelessWidget {
       this.noon,
       this.night,
       required this.timeSection,
-      this.dosage});
+      this.dosage,
+      this.medicalStore});
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +52,20 @@ class GetMedicinesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ShortNamesWidget(
-                    typeId: 1,
-                    firstText: "Medicine : ",
-                    secondText: medicineName,
-                  ),
+                  medicalStore == null
+                      ? Container()
+                      : ShortNamesWidget(
+                          typeId: 1,
+                          firstText: "Medical store : ",
+                          secondText: medicalStore!,
+                        ),
+                  medicineName == null
+                      ? Container()
+                      : ShortNamesWidget(
+                          typeId: 1,
+                          firstText: "Medicine : ",
+                          secondText: medicineName!,
+                        ),
                   dosage == null
                       ? Container()
                       : ShortNamesWidget(

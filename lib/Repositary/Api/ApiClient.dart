@@ -6,8 +6,8 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ApiException.dart';
 
-const String basePathUrl = "https://mediezy.com/api/";
-// const String basePathUrl = "https://test.mediezy.com/api/";
+// const String basePathUrl = "https://mediezy.com/api/";
+const String basePathUrl = "https://test.mediezy.com/api/";
 
 class ApiClient {
   static const String basePath = basePathUrl;
@@ -22,7 +22,6 @@ class ApiClient {
     final token = prefs.getString('token') ?? prefs.getString('tokenD');
 
     print(prefs.getString('token'));
-
     print("Invoke Api worked");
     print(method);
     print(token);

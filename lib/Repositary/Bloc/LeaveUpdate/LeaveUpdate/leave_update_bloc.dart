@@ -24,7 +24,7 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
         GeneralServices.instance.showToastMessage(data['message']);
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
-        emit(LeaveUpdateError());
+        emit(LeaveUpdateError(errorMessage: e.toString()));
       }
     });
 

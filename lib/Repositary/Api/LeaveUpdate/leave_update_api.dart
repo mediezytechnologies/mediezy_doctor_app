@@ -30,6 +30,8 @@ class LeaveUpdateApi {
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "PUT", body: body);
     log(body.toString());
+    print(body);
+    print(response.body);
     log("<<<<<<<<<<Leave Schedule response worked>>>>>>>>>>");
     return response.body;
   }

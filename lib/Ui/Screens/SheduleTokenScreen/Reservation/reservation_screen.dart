@@ -298,7 +298,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                     onChanged: (newValue) {
                                       log(newValue!);
                                       dController.dropdownValueChanging(
-                                          newValue, dController.initialIndex.value);
+                                          newValue,
+                                          dController.initialIndex.value);
                                       BlocProvider.of<GetTokenBloc>(context)
                                           .add(
                                         FetchTokens(
@@ -333,7 +334,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex.value),
+                                                            .initialIndex
+                                                            .value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -354,7 +356,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex.value),
+                                                            .initialIndex
+                                                            .value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -398,7 +401,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                     formatDate(),
                                                                 clinicId:
                                                                     dController
-                                                                        .initialIndex.value,
+                                                                        .initialIndex
+                                                                        .value,
                                                               ),
                                                             );
                                                           },
@@ -424,7 +428,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                                     formatDate(),
                                                                 clinicId:
                                                                     dController
-                                                                        .initialIndex.value,
+                                                                        .initialIndex
+                                                                        .value,
                                                               ),
                                                             );
                                                           },
@@ -457,6 +462,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 .selectIosDate(
                                                 context: context,
                                                 date: endDate,
+                                                minDate: selectedDate,
                                                 onDateSelected:
                                                     (DateTime picked) async {
                                                   setState(() {
@@ -468,7 +474,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex.value),
+                                                            .initialIndex
+                                                            .value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -477,6 +484,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 .selectDate(
                                                 context: context,
                                                 date: endDate,
+                                                minDate: selectedDate,
                                                 onDateSelected:
                                                     (DateTime picked) {
                                                   setState(() {
@@ -489,7 +497,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                     FetchTokens(
                                                         date: formatDate(),
                                                         clinicId: dController
-                                                            .initialIndex.value),
+                                                            .initialIndex
+                                                            .value),
                                                   );
                                                   resetSelectedTokens();
                                                 },
@@ -516,6 +525,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                           .selectIosDate(
                                                           context: context,
                                                           date: endDate,
+                                                          minDate: selectedDate,
                                                           onDateSelected:
                                                               (DateTime
                                                                   picked) async {
@@ -529,9 +539,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                               FetchTokens(
                                                                   date:
                                                                       formatDate(),
-                                                                  clinicId:
-                                                                      dController
-                                                                          .initialIndex.value),
+                                                                  clinicId: dController
+                                                                      .initialIndex
+                                                                      .value),
                                                             );
                                                             resetSelectedTokens();
                                                           },
@@ -540,6 +550,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                           .selectDate(
                                                           context: context,
                                                           date: endDate,
+                                                          minDate: selectedDate,
                                                           onDateSelected:
                                                               (DateTime
                                                                   picked) {
@@ -554,9 +565,9 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                               FetchTokens(
                                                                   date:
                                                                       formatDate(),
-                                                                  clinicId:
-                                                                      dController
-                                                                          .initialIndex.value),
+                                                                  clinicId: dController
+                                                                      .initialIndex
+                                                                      .value),
                                                             );
                                                             resetSelectedTokens();
                                                           },

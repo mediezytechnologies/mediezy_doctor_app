@@ -314,11 +314,12 @@ class GeneralServices {
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
+    DateTime? minDate,
   }) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: date,
-      firstDate: DateTime.now(),
+      firstDate: minDate ?? DateTime.now(),
       lastDate: DateTime(2101),
       builder: ((context, child) {
         return Theme(
@@ -336,33 +337,11 @@ class GeneralServices {
     }
   }
 
-  // Future<void> selectIosDate({
-  //   required BuildContext context,
-  //   required DateTime date,
-  //   required Function(DateTime) onDateSelected,
-  // }) async {
-  //   final DateTime? picked = await showModalBottomSheet<DateTime>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Container(
-  //         height: 300.0,
-  //         child: CupertinoDatePicker(
-  //           mode: CupertinoDatePickerMode.date,
-  //           initialDateTime: date,
-  //           minimumDate: DateTime(2101),
-  //           maximumDate: DateTime.now(),
-  //           onDateTimeChanged: (DateTime newDate) {
-  //             onDateSelected(newDate);
-  //           },
-  //         ),
-  //       );
-  //     },
-  //   );
-  //}
   Future<void> selectIosDate({
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
+    DateTime? minDate,
   }) async {
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
@@ -373,7 +352,7 @@ class GeneralServices {
         return CupertinoDatePicker(
           mode: CupertinoDatePickerMode.date,
           initialDateTime: date,
-          minimumDate: today,
+          minimumDate: minDate ?? today,
           maximumDate: DateTime(2101),
           onDateTimeChanged: (DateTime newDateTime) {
             onDateSelected(newDateTime);

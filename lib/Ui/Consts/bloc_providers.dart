@@ -19,7 +19,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousApp
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllPreviousAppointments/previous_details/previous_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/update_favourite_medicine/bloc/update_favourite_medicine_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetSymptoms/get_symptoms_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetToken/get_token_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/HealthRecords/AllHealthRecords/all_health_records_bloc.dart';
@@ -124,7 +123,6 @@ class AppBBlocProviders {
         BlocProvider(create: (context) => GetAllMedicinesBloc()),
         BlocProvider(create: (context) => UpdateFavouriteMedicineBloc()),
         BlocProvider(create: (context) => BottomSheetBloc()),
-        BlocProvider(create: (context) => GetAppointmentsBloc()),
         BlocProvider(create: (context) => SearchLabTestBloc()),
         BlocProvider(create: (context) => FavouriteLabTestBloc()),
         BlocProvider(create: (context) => GeneratedSchedulesBloc()),

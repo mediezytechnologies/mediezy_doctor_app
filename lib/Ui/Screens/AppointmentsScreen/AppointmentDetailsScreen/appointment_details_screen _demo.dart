@@ -16,16 +16,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
-import 'package:mediezy_doctor/Model/Labs/get_all_favourite_lab_model.dart';
-import 'package:mediezy_doctor/Model/MedicalShoppe/get_fav_medical_shope_model.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddAllAppointmentDetails/add_all_appointment_details_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/add_prescription_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddVitals/add_vitals_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Labs/GetAllFavouriteLab/get_all_favourite_lab_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/LiveToken/AddCheckinOrCheckout/add_checkin_or_checkout_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/MedicalShoppe/GetAllFavouriteMedicalStore/get_all_favourite_medical_store_bloc.dart';
@@ -45,8 +40,8 @@ import '../../../../Repositary/getx/apointment_detail_getx.dart';
 import '../../../../Repositary/getx/get_appointment_getx.dart';
 import '../../../CommonWidgets/custom_dropdown_widget.dart';
 
-class AppointmentDetailsScreenDemo extends StatefulWidget {
-  const AppointmentDetailsScreenDemo({
+class AppointmentDetailsScreen extends StatefulWidget {
+  const AppointmentDetailsScreen({
     Key? key,
     required this.tokenId,
     required this.position,
@@ -66,12 +61,11 @@ class AppointmentDetailsScreenDemo extends StatefulWidget {
   final int firstIndex;
 
   @override
-  State<AppointmentDetailsScreenDemo> createState() =>
-      _AppointmentDetailsScreenDemoState();
+  State<AppointmentDetailsScreen> createState() =>
+      _AppointmentDetailsScreenState();
 }
 
-class _AppointmentDetailsScreenDemoState
-    extends State<AppointmentDetailsScreenDemo> {
+class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final TextEditingController noteController = TextEditingController();
   final TextEditingController afterDaysController = TextEditingController();
   final TextEditingController labTestController = TextEditingController();
@@ -116,12 +110,9 @@ class _AppointmentDetailsScreenDemoState
   }
 
   final getAllAppointmentController = Get.put(GetAllAppointmentController());
-  //late GetAppointmentsModel getAppointmentsModel;
   int currentPosition = 0;
   late PageController pageController;
   final ScrollController _scrollController = ScrollController();
-
-  // String? selectedValue;
 
   final ImagePicker imagePicker = ImagePicker();
   String? imagePath;
@@ -132,7 +123,6 @@ class _AppointmentDetailsScreenDemoState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Obtain the bloc reference
   }
 
   final HospitalController controller = Get.put(HospitalController());
@@ -192,7 +182,7 @@ class _AppointmentDetailsScreenDemoState
   Widget build(BuildContext context) {
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
-
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         if (isConditionMet && isWaitingForCheckout) {
@@ -279,12 +269,6 @@ class _AppointmentDetailsScreenDemoState
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         );
-                        // BlocProvider.of<GetAppointmentsBloc>(context)
-                        //     .add(FetchAllAppointments(
-                        //   date: controller.formatDate(),
-                        //   clinicId: controller.initialIndex.value,
-                        //   scheduleType: controller.scheduleIndex.value,
-                        // ));
                       }
                     },
                   ),
@@ -297,28 +281,28 @@ class _AppointmentDetailsScreenDemoState
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
                         );
-                        BlocProvider.of<GetAppointmentsBloc>(context)
-                            .add(FetchAllAppointments(
-                          date: widget.date,
+                        getAllAppointmentController
+                            .getAllAppointmentGetxController(
+                          date: controller.formatDate(),
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
-                        ));
+                        );
                       }
                       if (state is EditVitalsLoaded) {
-                        BlocProvider.of<GetAppointmentsBloc>(context)
-                            .add(FetchAllAppointments(
-                          date: widget.date,
+                        getAllAppointmentController
+                            .getAllAppointmentGetxController(
+                          date: controller.formatDate(),
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
-                        ));
+                        );
                       }
                       if (state is DeleteVitalsLoaded) {
-                        BlocProvider.of<GetAppointmentsBloc>(context)
-                            .add(FetchAllAppointments(
-                          date: widget.date,
+                        getAllAppointmentController
+                            .getAllAppointmentGetxController(
+                          date: controller.formatDate(),
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
-                        ));
+                        );
                       }
                     },
                   ),
@@ -330,12 +314,12 @@ class _AppointmentDetailsScreenDemoState
                             .showToastMessage(state.errorMessage);
                       }
                       if (state is AddCheckinOrCheckoutLoaded) {
-                        BlocProvider.of<GetAppointmentsBloc>(context)
-                            .add(FetchAllAppointments(
-                          date: widget.date,
+                        getAllAppointmentController
+                            .getAllAppointmentGetxController(
+                          date: controller.formatDate(),
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
-                        ));
+                        );
                       }
                     },
                   ),
@@ -380,208 +364,217 @@ class _AppointmentDetailsScreenDemoState
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          log("pressed");
-                                          if (currentPosition > 0) {
-                                            log("pressed no zero");
-                                            currentPosition--;
-                                            pageController.animateToPage(
-                                              currentPosition,
-                                              duration: const Duration(
-                                                  milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            );
-                                            BlocProvider.of<
-                                                        GetAppointmentsBloc>(
-                                                    context)
-                                                .add(FetchAllAppointments(
-                                              date: widget.date,
-                                              clinicId:
-                                                  controller.initialIndex.value,
-                                              scheduleType: controller
-                                                  .scheduleIndex.value,
-                                            ));
-                                            setState(() {
-                                              listLength =
-                                                  ctr.bookingData.length;
-                                              bookingPending = listLength -
-                                                  1 -
-                                                  currentPosition;
-                                            });
-                                            foodDropdownController
-                                                .resetToInitialValue();
-                                            bokingAppointmentLabController
-                                                .resetToPreviousValue();
-                                          }
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_back_ios,
-                                          size:
-                                              size.width > 450 ? 16.sp : 25.sp,
-                                          color: kMainColor,
-                                        )),
-                                    FadedScaleAnimation(
-                                      scaleDuration:
-                                          const Duration(milliseconds: 400),
-                                      fadeDuration:
-                                          const Duration(milliseconds: 400),
-                                      child: PatientImageWidget(
-                                          patientImage: ctr
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: kCardColor,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            log("pressed");
+                                            if (currentPosition > 0) {
+                                              log("pressed no zero");
+                                              currentPosition--;
+                                              pageController.animateToPage(
+                                                currentPosition,
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                curve: Curves.easeInOut,
+                                              );
+                                              getAllAppointmentController
+                                                  .getAllAppointmentGetxController(
+                                                date: controller.formatDate(),
+                                                clinicId: controller
+                                                    .initialIndex.value,
+                                                scheduleType: controller
+                                                    .scheduleIndex.value,
+                                              );
+                                              setState(() {
+                                                listLength =
+                                                    ctr.bookingData.length;
+                                                bookingPending = listLength -
+                                                    1 -
+                                                    currentPosition;
+                                              });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
+                                              bokingAppointmentLabController
+                                                  .resetToPreviousValue();
+                                            }
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back_ios,
+                                            size: size.width > 450
+                                                ? 16.sp
+                                                : 25.sp,
+                                            color: kMainColor,
+                                          )),
+                                      FadedScaleAnimation(
+                                        scaleDuration:
+                                            const Duration(milliseconds: 400),
+                                        fadeDuration:
+                                            const Duration(milliseconds: 400),
+                                        child: PatientImageWidget(
+                                            patientImage:
+                                                ctr.bookingData[currentPosition]
+                                                            .userImage ==
+                                                        null
+                                                    ? ""
+                                                    : ctr
+                                                        .bookingData[
+                                                            currentPosition]
+                                                        .userImage
+                                                        .toString(),
+                                            radius: 40.r),
+                                      ),
+                                      SizedBox(
+                                        width: size.width > 450
+                                            ? size.width * .64
+                                            : size.width * .42,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              ctr.bookingData[currentPosition]
+                                                  .patientName
+                                                  .toString(),
+                                              style: size.width > 450
+                                                  ? blackTabMainText
+                                                  : blackMainText,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Token Number : ",
+                                                  style: size.width > 450
+                                                      ? greyTabMain
+                                                      : grey10B400,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Text(
+                                                  ctr
                                                       .bookingData[
                                                           currentPosition]
-                                                      .userImage ==
-                                                  null
-                                              ? ""
-                                              : ctr.bookingData[currentPosition]
-                                                  .userImage
-                                                  .toString(),
-                                          radius: 40.r),
-                                    ),
-                                    SizedBox(
-                                      width: size.width > 450
-                                          ? size.width * .64
-                                          : size.width * .42,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
+                                                      .tokenNumber
+                                                      .toString(),
+                                                  style: size.width > 450
+                                                      ? blackTabMainText
+                                                      : blackMainText,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            ),
                                             ctr.bookingData[currentPosition]
-                                                .patientName
-                                                .toString(),
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : blackMainText,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Token Number : ",
-                                                style: size.width > 450
-                                                    ? greyTabMain
-                                                    : grey10B400,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              Text(
-                                                ctr.bookingData[currentPosition]
-                                                    .tokenNumber
-                                                    .toString(),
-                                                style: size.width > 450
-                                                    ? blackTabMainText
-                                                    : blackMainText,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ],
-                                          ),
-                                          ctr.bookingData[currentPosition]
-                                                      .mediezyPatientId ==
-                                                  null
-                                              ? Container()
-                                              : Row(
-                                                  children: [
-                                                    Text(
-                                                      "Patient Id : ",
-                                                      style: size.width > 450
-                                                          ? greyTabMain
-                                                          : grey10B400,
-                                                    ),
-                                                    Text(
-                                                      ctr
-                                                          .bookingData[
-                                                              currentPosition]
-                                                          .mediezyPatientId
-                                                          .toString(),
-                                                      style: size.width > 450
-                                                          ? blackTabMainText
-                                                          : blackMainText,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ],
-                                                ),
-                                          ctr.bookingData[currentPosition]
-                                                      .age ==
-                                                  null
-                                              ? Container()
-                                              : Row(
-                                                  children: [
-                                                    Text(
-                                                      "Age : ",
-                                                      style: size.width > 450
-                                                          ? greyTabMain
-                                                          : grey10B400,
-                                                    ),
-                                                    Text(
-                                                      ctr
-                                                          .bookingData[
-                                                              currentPosition]
-                                                          .patient!
-                                                          .age
-                                                          .toString(),
-                                                      style: size.width > 450
-                                                          ? blackTabMainText
-                                                          : blackMainText,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ],
-                                                ),
-                                        ],
+                                                        .mediezyPatientId ==
+                                                    null
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        "Patient Id : ",
+                                                        style: size.width > 450
+                                                            ? greyTabMain
+                                                            : grey10B400,
+                                                      ),
+                                                      Text(
+                                                        ctr
+                                                            .bookingData[
+                                                                currentPosition]
+                                                            .mediezyPatientId
+                                                            .toString(),
+                                                        style: size.width > 450
+                                                            ? blackTabMainText
+                                                            : blackMainText,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                            ctr.bookingData[currentPosition]
+                                                        .age ==
+                                                    null
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        "Age : ",
+                                                        style: size.width > 450
+                                                            ? greyTabMain
+                                                            : grey10B400,
+                                                      ),
+                                                      Text(
+                                                        ctr
+                                                            .bookingData[
+                                                                currentPosition]
+                                                            .patient!
+                                                            .age
+                                                            .toString(),
+                                                        style: size.width > 450
+                                                            ? blackTabMainText
+                                                            : blackMainText,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    IconButton(
-                                        onPressed: () {
-                                          if (currentPosition <
-                                              listLength - 1) {
-                                            currentPosition++;
-                                            pageController.animateToPage(
-                                              currentPosition,
-                                              duration: const Duration(
-                                                  milliseconds: 500),
-                                              curve: Curves.easeInOut,
-                                            );
-                                            BlocProvider.of<
-                                                        GetAppointmentsBloc>(
-                                                    context)
-                                                .add(FetchAllAppointments(
-                                              date: widget.date,
-                                              clinicId:
-                                                  controller.initialIndex.value,
-                                              scheduleType: controller
-                                                  .scheduleIndex.value,
-                                            ));
-                                            setState(() {
-                                              // balanceAppoiment=widget.length!-1;
-                                              bookingPending = listLength -
-                                                  1 -
-                                                  currentPosition;
-                                            });
-                                            foodDropdownController
-                                                .resetToInitialValue();
-                                            bokingAppointmentLabController
-                                                .resetToPreviousValue();
-                                          }
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          color: kMainColor,
-                                          size:
-                                              size.width > 450 ? 16.sp : 25.sp,
-                                        )),
-                                  ],
+                                      IconButton(
+                                          onPressed: () {
+                                            if (currentPosition <
+                                                listLength - 1) {
+                                              currentPosition++;
+                                              pageController.animateToPage(
+                                                currentPosition,
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                curve: Curves.easeInOut,
+                                              );
+                                              getAllAppointmentController
+                                                  .getAllAppointmentGetxController(
+                                                date: controller.formatDate(),
+                                                clinicId: controller
+                                                    .initialIndex.value,
+                                                scheduleType: controller
+                                                    .scheduleIndex.value,
+                                              );
+                                              setState(() {
+                                                bookingPending = listLength -
+                                                    1 -
+                                                    currentPosition;
+                                              });
+                                              foodDropdownController
+                                                  .resetToInitialValue();
+                                              bokingAppointmentLabController
+                                                  .resetToPreviousValue();
+                                            }
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: kMainColor,
+                                            size: size.width > 450
+                                                ? 16.sp
+                                                : 25.sp,
+                                          )),
+                                    ],
+                                  ),
                                 ),
+                                const VerticalSpacingWidget(height: 5),
                                 pendingContainer(size, bookingPending),
+                                const VerticalSpacingWidget(height: 5),
                                 PatientDetailsWidget(
                                   allergiesDetails:
                                       ctr.bookingData[index].allergiesDetails,
@@ -603,8 +596,7 @@ class _AppointmentDetailsScreenDemoState
                                       .toString(),
                                   patientId: ctr.bookingData[index].patientId!,
                                   treatmentTakenDetails: ctr
-                                      .bookingData[index].treatmentTakenDetails
-                                      .toString(),
+                                      .bookingData[index].treatmentTakenDetails,
                                   surgeryDetails: ctr
                                       .bookingData[index].surgeryDetails
                                       .toString(),
@@ -631,7 +623,7 @@ class _AppointmentDetailsScreenDemoState
                                 Obx(() {
                                   if (getAllAppointmentController
                                       .loding.value) {
-                                    return CircularProgressIndicator();
+                                    return const CircularProgressIndicator();
                                   }
                                   return MedicineWidget(
                                     tokenId: getAllAppointmentController
@@ -662,10 +654,12 @@ class _AppointmentDetailsScreenDemoState
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('Upload attachments',
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : blackMainText),
+                                        Text(
+                                          'Upload attachments',
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : blackMainText,
+                                        ),
                                         IconButton(
                                           onPressed: () async {
                                             await placePicImage();
@@ -685,42 +679,74 @@ class _AppointmentDetailsScreenDemoState
                                 ),
                                 const VerticalSpacingWidget(height: 5),
                                 if (imagePath != null)
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (ctx) => ImageViewWidgetDemo(
-                                            image: imagePath!,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: kCardColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    ImageViewWidgetDemo(
+                                                        image: imagePath!),
+                                              ),
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "View your uploaded image",
+                                                style: size.width > 450
+                                                    ? TextStyle(
+                                                        fontSize: 11.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      )
+                                                    : TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      ),
+                                              ),
+                                              const HorizontalSpacingWidget(
+                                                  width: 10),
+                                              Icon(
+                                                Icons.image,
+                                                color: Colors.blue,
+                                                size: size.width > 450
+                                                    ? 20.sp
+                                                    : 28.sp,
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "View your uploaded image",
-                                          style: size.width > 450
-                                              ? TextStyle(
-                                                  fontSize: 11.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blue)
-                                              : TextStyle(
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blue),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              imagePath = null;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            CupertinoIcons.clear_circled,
+                                            color: Colors.black,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 20.sp,
+                                          ),
                                         ),
-                                        const HorizontalSpacingWidget(
-                                            width: 10),
-                                        Icon(
-                                          Icons.image,
-                                          color: Colors.blue,
-                                          size:
-                                              size.width > 450 ? 20.sp : 28.sp,
-                                        )
                                       ],
                                     ),
                                   ),
+
                                 const VerticalSpacingWidget(height: 5),
 
                                 Obx(() {

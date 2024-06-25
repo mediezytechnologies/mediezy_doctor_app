@@ -98,7 +98,7 @@ class LeaveScreenState extends State<LeaveScreen> {
             }
             if (state is LeaveUpdateError) {
               GeneralServices.instance
-                  .showErrorMessage(context, "Something Went Wrong");
+                  .showErrorMessage(context, state.errorMessage);
               // Future.delayed(const Duration(seconds: 5), () {
               //   Navigator.pop(context);
               // });
@@ -290,6 +290,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     ? selectIosDate(
                                         context: context,
                                         date: leaveEndDate,
+                                        minDate: leaveStartDate,
                                         onDateSelected: (DateTime picked) {
                                           setState(() {
                                             leaveEndDate = picked;
@@ -310,6 +311,8 @@ class LeaveScreenState extends State<LeaveScreen> {
                                     : selectDate(
                                         context: context,
                                         date: leaveEndDate,
+                                        minDate:
+                                            leaveStartDate, // Add this line
                                         onDateSelected: (DateTime picked) {
                                           setState(() {
                                             leaveEndDate = picked;
@@ -345,6 +348,7 @@ class LeaveScreenState extends State<LeaveScreen> {
                                               ? selectIosDate(
                                                   context: context,
                                                   date: leaveEndDate,
+                                                  minDate: leaveStartDate,
                                                   onDateSelected:
                                                       (DateTime picked) {
                                                     setState(() {
@@ -371,28 +375,29 @@ class LeaveScreenState extends State<LeaveScreen> {
                                               : selectDate(
                                                   context: context,
                                                   date: leaveEndDate,
+                                                  minDate:
+                                                      leaveStartDate, // Add this line
                                                   onDateSelected:
                                                       (DateTime picked) {
                                                     setState(() {
                                                       leaveEndDate = picked;
                                                     });
-                                                    BlocProvider.of<
-                                                                LeaveCheckBloc>(
-                                                            context)
-                                                        .add(
-                                                      FetchLeaveCheck(
-                                                        clinicId: dController
-                                                            .initialIndex.value,
-                                                        fromDate: DateFormat(
-                                                                'yyyy-MM-dd')
-                                                            .format(
-                                                                leaveStartDate),
-                                                        toDate: DateFormat(
-                                                                'yyyy-MM-dd')
-                                                            .format(
-                                                                leaveEndDate),
-                                                      ),
-                                                    );
+                                                    BlocProvider
+                                                            .of<
+                                                                    LeaveCheckBloc>(
+                                                                context)
+                                                        .add(FetchLeaveCheck(
+                                                            clinicId: dController
+                                                                .initialIndex
+                                                                .value,
+                                                            fromDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveStartDate),
+                                                            toDate: DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(
+                                                                    leaveEndDate)));
                                                   },
                                                 );
                                         },
@@ -427,8 +432,6 @@ class LeaveScreenState extends State<LeaveScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      log("=================== fsdkfjdsfkjdskfdksfdfksjl${leaveCheckModel.status}");
-
                                       setState(() {
                                         isClickLeave = true;
                                       });
@@ -444,9 +447,10 @@ class LeaveScreenState extends State<LeaveScreen> {
                                                 clinicId: dController
                                                     .initialIndex.value,
                                                 fromDate:
-                                                    "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
-                                                toDate:
-                                                    "${leaveEndDate.year}-${leaveEndDate.month}-${leaveEndDate.day}",
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(leaveStartDate),
+                                                toDate: DateFormat('yyyy-MM-dd')
+                                                    .format(leaveEndDate),
                                               ));
                                               Navigator.pop(context);
                                             })
@@ -455,10 +459,12 @@ class LeaveScreenState extends State<LeaveScreen> {
                                               .add(FetchLeaveUpdate(
                                               clinicId: dController
                                                   .initialIndex.value,
-                                              fromDate:
-                                                  "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
-                                              toDate:
-                                                  "${leaveEndDate.year}-${leaveEndDate.month}-${leaveEndDate.day}",
+                                              fromDate: DateFormat('yyyy-MM-dd')
+                                                  .format(leaveStartDate),
+                                              // "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
+                                              toDate: DateFormat('yyyy-MM-dd')
+                                                  .format(leaveEndDate),
+                                              // "${leaveEndDate.year}-${leaveEndDate.month}-${leaveEndDate.day}",
                                             ));
                                     },
                                     child: Container(
@@ -616,11 +622,12 @@ class LeaveScreenState extends State<LeaveScreen> {
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
+    DateTime? minDate,
   }) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: date,
-      firstDate: DateTime.now(),
+      firstDate: minDate ?? DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 30)),
       builder: ((context, child) {
         return Theme(
@@ -642,6 +649,7 @@ class LeaveScreenState extends State<LeaveScreen> {
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
+    DateTime? minDate,
   }) async {
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
@@ -651,11 +659,10 @@ class LeaveScreenState extends State<LeaveScreen> {
         return CupertinoDatePicker(
           mode: CupertinoDatePickerMode.date,
           initialDateTime: date,
-          minimumDate: today,
+          minimumDate: minDate ?? today,
           maximumDate: DateTime.now().add(const Duration(days: 30)),
           onDateTimeChanged: (DateTime newDateTime) {
             onDateSelected(newDateTime);
-            // Do something when the date is changed (optional)
           },
         );
       },

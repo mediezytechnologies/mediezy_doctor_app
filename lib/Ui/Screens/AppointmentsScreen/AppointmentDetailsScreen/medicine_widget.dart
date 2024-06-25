@@ -10,7 +10,6 @@ import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/AddPrescription/a
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/DeleteMedicine/delete_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/EditMedicine/edit_medicine_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_all_medicines/get_all_medicines_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
@@ -146,6 +145,12 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             // Text(widget.medicalStoreId),
+                            //  ShortNamesWidget(
+                            //   typeId: 1,
+                            //   firstText: "Medical store : ",
+                            //   secondText: widget.medicine![index].
+                            //       .toString(),
+                            // ),
                             ShortNamesWidget(
                               typeId: 1,
                               firstText: "Medicine : ",
@@ -584,11 +589,12 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                   BlocListener<EditMedicineBloc, EditMedicineState>(
                     listener: (context, state) {
                       if (state is EditMedicineLoaded) {
-                         getAllAppointmentController.getAllAppointmentGetxController(
-                 date: controller.formatDate(),
+                        getAllAppointmentController
+                            .getAllAppointmentGetxController(
+                          date: controller.formatDate(),
                           clinicId: controller.initialIndex.value,
                           scheduleType: controller.scheduleIndex.value,
-                );
+                        );
                         // BlocProvider.of<GetAppointmentsBloc>(context)
                         //     .add(FetchAllAppointments(
                         //   date: controller.formatDate(),
@@ -682,7 +688,7 @@ class _MedicineWidgetState extends State<MedicineWidget> {
                                     medicineId: _selectedMedicineId!,
                                   ),
                                 );
- 
+
                                 medicineNameController.clear();
                                 daysController.clear();
                                 days1Controller.clear();

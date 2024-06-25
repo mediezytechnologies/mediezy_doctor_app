@@ -230,7 +230,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                           BlocProvider.of<GetCurrentTokenBloc>(
                                                   context)
                                               .add(FetchGetCurrentToken(
-                                            clinicId: dController.initialIndex.value,
+                                            clinicId:
+                                                dController.initialIndex.value,
                                             scheduleType:
                                                 dController.scheduleIndex.value,
                                           ));
@@ -335,7 +336,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .add(
                                                         FetchGetCurrentToken(
                                                           clinicId: dController
-                                                              .initialIndex.value,
+                                                              .initialIndex
+                                                              .value,
                                                           scheduleType:
                                                               dController
                                                                   .scheduleIndex
@@ -386,7 +388,8 @@ class _TokenScreenState extends State<TokenScreen> {
                                                           .add(
                                                         FetchGetCurrentToken(
                                                           clinicId: dController
-                                                              .initialIndex.value,
+                                                              .initialIndex
+                                                              .value,
                                                           scheduleType:
                                                               dController
                                                                   .scheduleIndex
@@ -926,40 +929,6 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                            // getCurrentTokenModel
-                                                            //             .tokens![
-                                                            //                 currentIndex]
-                                                            //             .patientData!
-                                                            //             .scanTest ==
-                                                            //         null
-                                                            //     ? Container()
-                                                            //     : ShortNamesWidget(
-                                                            //         typeId: 1,
-                                                            //         firstText:
-                                                            //             "Scan test : ",
-                                                            //         secondText: getCurrentTokenModel
-                                                            //             .tokens![
-                                                            //                 currentIndex]
-                                                            //             .patientData!
-                                                            //             .scanTest
-                                                            //             .toString()),
-                                                            getCurrentTokenModel
-                                                                        .tokens![
-                                                                            currentIndex]
-                                                                        .patientData!
-                                                                        .medicalShopName ==
-                                                                    null
-                                                                ? Container()
-                                                                : ShortNamesWidget(
-                                                                    typeId: 1,
-                                                                    firstText:
-                                                                        "Medical store : ",
-                                                                    secondText: getCurrentTokenModel
-                                                                        .tokens![
-                                                                            currentIndex]
-                                                                        .patientData!
-                                                                        .medicalShopName
-                                                                        .toString()),
                                                             ListView.builder(
                                                                 padding:
                                                                     EdgeInsets
@@ -977,6 +946,11 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                     (context,
                                                                         indexx) {
                                                                   return GetMedicinesWidget(
+                                                                    medicalStore: getCurrentTokenModel
+                                                                        .tokens![
+                                                                            currentIndex]
+                                                                        .patientData!
+                                                                        .medicalShopName,
                                                                     medicineName: getCurrentTokenModel
                                                                         .tokens![
                                                                             currentIndex]
@@ -1054,9 +1028,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                         context)
                                                                     .add(
                                                                   AddCheckinOrCheckout(
-                                                                    clinicId:
-                                                                        dController
-                                                                            .initialIndex.value,
+                                                                    clinicId: dController
+                                                                        .initialIndex
+                                                                        .value,
                                                                     isCompleted:
                                                                         0,
                                                                     isCheckin:
@@ -1280,8 +1254,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                               context)
                                                                           .add(
                                                                         AddCheckinOrCheckout(
-                                                                          clinicId:
-                                                                              dController.initialIndex.value,
+                                                                          clinicId: dController
+                                                                              .initialIndex
+                                                                              .value,
                                                                           isCompleted:
                                                                               1,
                                                                           isCheckin:
@@ -1324,8 +1299,9 @@ class _TokenScreenState extends State<TokenScreen> {
                                                                               context)
                                                                           .add(
                                                                         FetchGetCurrentToken(
-                                                                          clinicId:
-                                                                              dController.initialIndex.value,
+                                                                          clinicId: dController
+                                                                              .initialIndex
+                                                                              .value,
                                                                           scheduleType: dController
                                                                               .scheduleIndex
                                                                               .value,

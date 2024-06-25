@@ -4,6 +4,7 @@ import 'package:mediezy_doctor/Model/GetAppointments/get_appointments_model.dart
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
+import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/names_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/PatientScreen/health_record_screen.dart';
 
@@ -21,7 +22,8 @@ class PatientDetailsWidget extends StatefulWidget {
       required this.patientId,
       required this.treatmentTakenDetails,
       required this.surgeryDetails,
-      required this.bookedPersonId, required this.offlineStatus});
+      required this.bookedPersonId,
+      required this.offlineStatus});
 
   final List<MainSymptoms>? mainSymptoms;
   final List<OtherSymptoms>? otherSymptoms;
@@ -33,7 +35,7 @@ class PatientDetailsWidget extends StatefulWidget {
   final String whenitstart;
   final String bookedPersonId;
   final int patientId;
-  final String treatmentTakenDetails;
+  final String? treatmentTakenDetails;
   final String surgeryDetails;
   final String offlineStatus;
 
@@ -50,202 +52,221 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
     final mWidth = MediaQuery.of(context).size.width;
     final mHeight = MediaQuery.of(context).size.height;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const VerticalSpacingWidget(height: 10),
-        //! appointment for
-        Text('Appointment for',
-            style: size.width > 450 ? greyTabMain : greyMain),
-        // widget.mainSymptoms!.isEmpty
-        //     ? Container()
-        //     : Text(
-        //         widget.mainSymptoms!.first.name.toString(),
-        //         style: size.width > 450 ? blackTabMainText : blackMainText,
-        //       ),
-        // const VerticalSpacingWidget(height: 5),
-        widget.otherSymptoms!.isEmpty
-            ? Container()
-            : Wrap(
-                children: [
-                  Text(
-                    widget.otherSymptoms!
-                        .map((symptom) => "${symptom.name}")
-                        .join(', '),
-                    style: size.width > 450 ? blackTabMainText : blackMainText,
-                  ),
-                ],
-              ),
-        NamesWidget(
-          firstText: "When did it start : ",
-          secondText: widget.whenitcomes.toString(),
-        ),
-        NamesWidget(
-          firstText: "Intensity : ",
-          secondText: widget.whenitstart.toString(),
-        ),
-        widget.allergiesDetails!.isEmpty
-            ? Container()
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Allergy : ",
-                    style: size.width > 450 ? greyTabMain : greyMain,
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(
-                            widget.allergiesDetails!.length,
-                            (index) {
-                              final item = widget.allergiesDetails![index];
-                              final allergyName = item.allergyName.toString();
-                              final allergyDetails = item.allergyDetails
-                                      ?.toString() ??
-                                  ''; // If allergyDetails is null, set it to an empty string
-                              final text = allergyDetails.isEmpty
-                                  ? allergyName
-                                  : '$allergyName - $allergyDetails';
-                              final isLastItem =
-                                  index == widget.allergiesDetails!.length - 1;
-
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    right: isLastItem ? 0 : 8.0),
-                                child: Text(
-                                  isLastItem ? text : '$text,',
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+        Container(
+          decoration: BoxDecoration(
+              color: kCardColor, borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const VerticalSpacingWidget(height: 10),
+              //! appointment for
+              Text('Appointment for :',
+                  style: size.width > 450 ? greyTabMain : greyMain),
+              widget.mainSymptoms!.isEmpty
+                  ? Container()
+                  : Text(
+                      widget.mainSymptoms!.first.name.toString(),
+                      style:
+                          size.width > 450 ? blackTabMainText : blackMainText,
                     ),
-                  ),
-                ],
-              ),
-        widget.surgeryName!.isEmpty
-            ? Container()
-            : Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Surgery name : ",
-                    style: size.width > 450 ? greyTabMain : greyMain,
-                  ),
-                  Expanded(
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 8.0, // Add spacing between surgery names
-                      children:
-                          widget.surgeryName!.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final name = entry.value;
-                        final isLastItem =
-                            index == widget.surgeryName!.length - 1;
-                        return Text(
-                          name == "Other"
-                              ? "${widget.surgeryDetails}${isLastItem ? '' : ','}"
-                              : "$name${isLastItem ? '' : ','}",
+              widget.otherSymptoms!.isEmpty
+                  ? Container()
+                  : Wrap(
+                      children: [
+                        Text(
+                          widget.otherSymptoms!
+                              .map((symptom) => "${symptom.name}")
+                              .join(', '),
                           style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
-                        );
-                      }).toList(),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+              NamesWidget(
+                firstText: "When did it start : ",
+                secondText: widget.whenitcomes.toString(),
               ),
-        // NamesWidget(
-        widget.treatmentTaken!.isEmpty
-            ? Container()
-            : Row(
+              NamesWidget(
+                firstText: "Intensity : ",
+                secondText: widget.whenitstart.toString(),
+              ),
+              widget.allergiesDetails!.isEmpty
+                  ? Container()
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Allergy : ",
+                          style: size.width > 450 ? greyTabMain : greyMain,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  widget.allergiesDetails!.length,
+                                  (index) {
+                                    final item =
+                                        widget.allergiesDetails![index];
+                                    final allergyName =
+                                        item.allergyName.toString();
+                                    final allergyDetails =
+                                        item.allergyDetails?.toString() ?? '';
+                                    final text = allergyDetails.isEmpty
+                                        ? allergyName
+                                        : '$allergyName - $allergyDetails';
+                                    final isLastItem = index ==
+                                        widget.allergiesDetails!.length - 1;
+
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          right: isLastItem ? 0 : 8.0),
+                                      child: Text(
+                                        isLastItem ? text : '$text,',
+                                        style: size.width > 450
+                                            ? blackTabMainText
+                                            : blackMainText,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+              widget.surgeryName!.isEmpty
+                  ? Container()
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Surgery name : ",
+                          style: size.width > 450 ? greyTabMain : greyMain,
+                        ),
+                        Expanded(
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            spacing: 8.0, // Add spacing between surgery names
+                            children: widget.surgeryName!
+                                .asMap()
+                                .entries
+                                .map((entry) {
+                              final index = entry.key;
+                              final name = entry.value;
+                              final isLastItem =
+                                  index == widget.surgeryName!.length - 1;
+                              return Text(
+                                name == "Other" ||
+                                        name == " Other" ||
+                                        name == " Other "
+                                    ? "${widget.surgeryDetails}${isLastItem ? '' : ','}"
+                                    : "$name${isLastItem ? '' : ','}",
+                                style: size.width > 450
+                                    ? blackTabMainText
+                                    : blackMainText,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+              // NamesWidget(
+              widget.treatmentTaken!.isEmpty
+                  ? Container()
+                  : Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Treatment taken : ",
+                          style: size.width > 450 ? greyTabMain : greyMain,
+                        ),
+                        Expanded(
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            spacing: 8.0, // Add spacing between surgery names
+                            children: widget.treatmentTaken!
+                                .asMap()
+                                .entries
+                                .map((entry) {
+                              final index = entry.key;
+                              final name = entry.value;
+                              final isLastItem =
+                                  index == widget.treatmentTaken!.length - 1;
+                              return Text(
+                                name == "Other" ||
+                                        name == " Other" ||
+                                        name == " Other "
+                                    ? "${widget.treatmentTakenDetails}${isLastItem ? '' : ','}"
+                                    : "$name${isLastItem ? '' : ','}",
+                                style: size.width > 450
+                                    ? blackTabMainText
+                                    : blackMainText,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Treatment taken : ",
+                    "Regular Medicines : ",
                     style: size.width > 450 ? greyTabMain : greyMain,
                   ),
-                  Expanded(
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 8.0, // Add spacing between surgery names
-                      children:
-                          widget.treatmentTaken!.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final name = entry.value;
-                        final isLastItem =
-                            index == widget.treatmentTaken!.length - 1;
-                        return Text(
-                          name == "Other"
-                              ? "${widget.treatmentTakenDetails}${isLastItem ? '' : ','}"
-                              : "$name${isLastItem ? '' : ','}",
-                          // Replace "Other" with "Ashwin" and add comma after each surgery name
+                  widget.medicineDetails!.isEmpty
+                      ? Text(
+                          "No",
                           style: size.width > 450
                               ? blackTabMainText
                               : blackMainText,
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
-              ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Regular Medicines : ",
-              style: size.width > 450 ? greyTabMain : greyMain,
-            ),
-            widget.medicineDetails!.isEmpty
-                ? Text(
-                    "No",
-                    style: size.width > 450 ? blackTabMainText : blackMainText,
-                  )
-                : Expanded(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(
-                            widget.medicineDetails!.length,
-                            (index) {
-                              final item = widget.medicineDetails![index];
-                              final text =
-                                  "${item.illness.toString()} - ${item.medicineName.toString()}";
-                              final isLastItem =
-                                  index == widget.medicineDetails!.length - 1;
+                        )
+                      : Expanded(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                  widget.medicineDetails!.length,
+                                  (index) {
+                                    final item = widget.medicineDetails![index];
+                                    final text =
+                                        "${item.illness.toString()} - ${item.medicineName.toString()}";
+                                    final isLastItem = index ==
+                                        widget.medicineDetails!.length - 1;
 
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    right: isLastItem ? 0 : 8.0),
-                                child: Text(
-                                  isLastItem ? text : '$text,',
-                                  style: size.width > 450
-                                      ? blackTabMainText
-                                      : blackMainText,
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          right: isLastItem ? 0 : 8.0),
+                                      child: Text(
+                                        isLastItem ? text : '$text,',
+                                        style: size.width > 450
+                                            ? blackTabMainText
+                                            : blackMainText,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-
         const VerticalSpacingWidget(height: 5),
-        widget.offlineStatus=="offline"
+        widget.offlineStatus == "offline"
             ? Container()
             : InkWell(
                 onTap: () {
@@ -263,6 +284,7 @@ class _PatientDetailsWidgetState extends State<PatientDetailsWidget> {
                   height: mHeight * .07,
                   width: mWidth * .99,
                   decoration: BoxDecoration(
+                      color: kCardColor,
                       border: Border.all(
                         color: Colors.grey,
                       ),

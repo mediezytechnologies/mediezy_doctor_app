@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_tabbar_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
-import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/completed_appointment_details_screen.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_card_widget.dart';
 import '../../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
@@ -18,14 +17,14 @@ import '../../../CommonWidgets/vertical_spacing_widget.dart';
 import '../../../Consts/app_colors.dart';
 import '../AppointmentDetailsScreen/appointment_details_screen _demo.dart';
 
-class AppoimentTabbarDemo extends StatefulWidget {
-  const AppoimentTabbarDemo({super.key});
+class AppoimentTabbar extends StatefulWidget {
+  const AppoimentTabbar({super.key});
 
   @override
-  State<AppoimentTabbarDemo> createState() => _AppoimentTabbarDemoState();
+  State<AppoimentTabbar> createState() => _AppoimentTabbarState();
 }
 
-class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
+class _AppoimentTabbarState extends State<AppoimentTabbar>
     with TickerProviderStateMixin {
   // late GetAllAppointmentsModel getAllAppointmentsModel;
   //late GetAppointmentsModel getAppointmentsModel;
@@ -91,7 +90,11 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
               children: [
                 GetBuilder<GetAllAppointmentController>(builder: (controller) {
                   if (controller.loding.value) {
-                    return Center(child:  CupertinoActivityIndicator(color: kMainColor,radius: 20.r,));
+                    return Center(
+                        child: CupertinoActivityIndicator(
+                      color: kMainColor,
+                      radius: 20.r,
+                    ));
                   }
                   if (controller.bookingData.isEmpty) {
                     return const Center(
@@ -126,16 +129,15 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
                               padding: EdgeInsets.fromLTRB(0, 5.h, 0, 2.h),
                               child: InkWell(
                                 onTap: () {
-                                  bokingAppointmentLabController.getMedicalStoreController();
-    bokingAppointmentLabController.getLablController();
-                                  // bokingAppointmentLabController.addtoTembList();
+                                  bokingAppointmentLabController
+                                      .getMedicalStoreController();
+                                  bokingAppointmentLabController
+                                      .getLablController();
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (ctx) =>
-                                            // AppointmentDemo()
-                                           // AppointmentDetailsScreen(
-                                            AppointmentDetailsScreenDemo(
+                                            AppointmentDetailsScreen(
                                               firstIndex:
                                                   getAllAppointmentController
                                                       .bookingData[index]
@@ -149,7 +151,8 @@ class _AppoimentTabbarDemoState extends State<AppoimentTabbarDemo>
                                                       .bookingData[index]
                                                       .tokenId
                                                       .toString(),
-                                              date: hospitalController.formatDate(),
+                                              date: hospitalController
+                                                  .formatDate(),
                                               patientName:
                                                   getAllAppointmentController
                                                       .bookingData[index]

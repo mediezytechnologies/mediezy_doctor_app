@@ -16,7 +16,6 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
-import 'package:mediezy_doctor/Ui/Data/app_data.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 
 class FillPatientDetailsScreen extends StatefulWidget {
@@ -54,6 +53,15 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final FocusNode patientContactNumberFocusController = FocusNode();
 
   String dropdownValue = 'Male';
+
+  List<String> deceaseStartingTime = [
+    'Today',
+    'Yesterday',
+    '5 Days Before',
+    'Other'
+  ];
+
+  List<String> deceaseRepeats = ['Continues', 'Frequently', 'Sometimes'];
 
   @override
   void didChangeDependencies() {
@@ -133,8 +141,6 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select How Frequently");
                       } else {
-
-                        
                         BlocProvider.of<BookAppointmentBloc>(context).add(
                           PassBookAppointMentEvent(
                             clinicId: widget.clinicId,

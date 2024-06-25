@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
-import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/get_appointments/get_appointments_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/custom_dropdown_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/select_clinic_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import '../../../../Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
+import '../../../../Repositary/getx/get_appointment_getx.dart';
 
 class AppoimentDropdown extends StatelessWidget {
   const AppoimentDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final getAllAppointmentController = Get.put(GetAllAppointmentController());
     final size = MediaQuery.of(context).size;
     final HospitalController controller = Get.put(HospitalController());
     return Row(
@@ -29,11 +30,10 @@ class AppoimentDropdown extends StatelessWidget {
                 log(newValue!);
                 controller.dropdownValueChanging(
                     newValue, controller.initialIndex.value);
-                BlocProvider.of<GetAppointmentsBloc>(context).add(
-                  FetchAllAppointments(
-                      date: controller.formatDate(),
-                      clinicId: controller.initialIndex.value,
-                      scheduleType: controller.scheduleIndex.value),
+                getAllAppointmentController.getAllAppointmentGetxController(
+                  date: controller.formatDate(),
+                  clinicId: controller.initialIndex.value,
+                  scheduleType: controller.scheduleIndex.value,
                 );
                 BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                     .add(FetchAllCompletedAppointments(
@@ -68,11 +68,10 @@ class AppoimentDropdown extends StatelessWidget {
                   onChanged: (newValue) {
                     log(newValue!);
                     controller.dropdownValueChanging(newValue, '0');
-                    BlocProvider.of<GetAppointmentsBloc>(context).add(
-                      FetchAllAppointments(
-                          date: controller.formatDate(),
-                          clinicId: controller.initialIndex.value,
-                          scheduleType: controller.scheduleIndex.value),
+                    getAllAppointmentController.getAllAppointmentGetxController(
+                      date: controller.formatDate(),
+                      clinicId: controller.initialIndex.value,
+                      scheduleType: controller.scheduleIndex.value,
                     );
                     BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
                         .add(FetchAllCompletedAppointments(

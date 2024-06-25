@@ -16,6 +16,7 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/short_names_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/view_file_widget.dart';
+import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_completed_widget.dart';
 
 class CompletedAppointmentDetailsScreen extends StatefulWidget {
@@ -104,531 +105,465 @@ class CompletedAppointmentDetailsScreenState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          FadedScaleAnimation(
-                            scaleDuration: const Duration(milliseconds: 400),
-                            fadeDuration: const Duration(milliseconds: 400),
-                            child: PatientImageWidget(
-                                patientImage:
+                      Container(
+                        decoration: BoxDecoration(
+                            color: kCardColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: [
+                            FadedScaleAnimation(
+                              scaleDuration: const Duration(milliseconds: 400),
+                              fadeDuration: const Duration(milliseconds: 400),
+                              child: PatientImageWidget(
+                                  patientImage:
+                                      getAllCompletedAppointmentDetailsModel
+                                                  .appointmentDetails!
+                                                  .first
+                                                  .patientUserImage ==
+                                              null
+                                          ? ""
+                                          : getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!
+                                              .first
+                                              .patientUserImage
+                                              .toString(),
+                                  radius: 40.r),
+                            ),
+                            const HorizontalSpacingWidget(width: 40),
+                            //! name
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!.first.patientName
+                                      .toString(),
+                                  style: size.width > 450
+                                      ? blackTabMainText
+                                      : blackMainText,
+                                ),
+                                const VerticalSpacingWidget(height: 15),
+                                Row(
+                                  children: [
                                     getAllCompletedAppointmentDetailsModel
                                                 .appointmentDetails!
                                                 .first
-                                                .patientUserImage ==
+                                                .mediezyPatientId ==
                                             null
-                                        ? ""
-                                        : getAllCompletedAppointmentDetailsModel
+                                        ? Container()
+                                        : Text(
+                                            "Patient Id : ",
+                                            style: size.width > 450
+                                                ? greyTabMain
+                                                : greyMain,
+                                          ),
+                                    getAllCompletedAppointmentDetailsModel
+                                                .appointmentDetails!
+                                                .first
+                                                .mediezyPatientId ==
+                                            null
+                                        ? Container()
+                                        : Text(
+                                            getAllCompletedAppointmentDetailsModel
+                                                .appointmentDetails!
+                                                .first
+                                                .mediezyPatientId!,
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : blackMainText,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                  ],
+                                ),
+                                const VerticalSpacingWidget(height: 15),
+                                Text(
+                                  '${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.patientAge.toString()} years old',
+                                  style: size.width > 450
+                                      ? blackTabMainText
+                                      : blackMainText,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const VerticalSpacingWidget(height: 5),
+                      PatientDetailsCompletedWidget(
+                          getAllCompletedAppointmentDetailsModel:
+                              getAllCompletedAppointmentDetailsModel),
+                      const VerticalSpacingWidget(height: 5),
+                      getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals ==
+                              null
+                          ? Container()
+                          : Text(
+                              'Added Vitals : ',
+                              style: size.width > 450 ? greyTabMain : greyMain,
+                            ),
+                      getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals ==
+                              null
+                          ? Container()
+                          : const VerticalSpacingWidget(height: 5),
+                      getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals ==
+                              null
+                          ? Container()
+                          : GetVitalsWidget(
+                              dia: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.dia,
+                              heartRate: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.heartRate,
+                              height: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.height,
+                              spo2: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.spo2,
+                              sys: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.sys,
+                              temperature:
+                                  getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .vitals!
+                                      .temperature,
+                              temperatureType:
+                                  getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .vitals!
+                                      .temperatureType,
+                              weight: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!.first.vitals!.weight,
+                            ),
+                      getAllCompletedAppointmentDetailsModel.appointmentDetails!
+                              .first.doctorMedicines!.isEmpty
+                          ? Container()
+                          : const VerticalSpacingWidget(height: 5),
+                      getAllCompletedAppointmentDetailsModel.appointmentDetails!
+                              .first.doctorMedicines!.isEmpty
+                          ? Container()
+                          : Text(
+                              'Added Medicines :',
+                              style: size.width > 450 ? greyTabMain : greyMain,
+                            ),
+                      getAllCompletedAppointmentDetailsModel.appointmentDetails!
+                              .first.doctorMedicines!.isEmpty
+                          ? Container()
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: getAllCompletedAppointmentDetailsModel
+                                  .appointmentDetails!
+                                  .first
+                                  .doctorMedicines!
+                                  .length,
+                              itemBuilder: (context, index) {
+                                return GetMedicinesWidget(
+                                  medicalStore:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .medicalStoreName,
+                                  medicineName:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .medicineName
+                                          .toString(),
+                                  dosage: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .doctorMedicines![index]
+                                      .dosage,
+                                  noOfDays:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .noOfDays
+                                          .toString(),
+                                  timeSection:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .timeSection
+                                          .toString(),
+                                  evening:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .evening,
+                                  interval:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .interval,
+                                  morning:
+                                      getAllCompletedAppointmentDetailsModel
+                                          .appointmentDetails!
+                                          .first
+                                          .doctorMedicines![index]
+                                          .morning,
+                                  night: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .doctorMedicines![index]
+                                      .night,
+                                  noon: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .doctorMedicines![index]
+                                      .noon,
+                                  type: getAllCompletedAppointmentDetailsModel
+                                      .appointmentDetails!
+                                      .first
+                                      .doctorMedicines![index]
+                                      .type,
+                                );
+                              }),
+                      getAllCompletedAppointmentDetailsModel.appointmentDetails!
+                              .first.doctorMedicines!.isEmpty
+                          ? Container()
+                          : const VerticalSpacingWidget(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: kCardColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          children: [
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!
+                                        .first
+                                        .reviewAfter ==
+                                    null
+                                ? Container()
+                                : ShortNamesWidget(
+                                    typeId: 1,
+                                    firstText: "Review after : ",
+                                    secondText:
+                                        getAllCompletedAppointmentDetailsModel
                                             .appointmentDetails!
                                             .first
-                                            .patientUserImage
+                                            .reviewAfter
                                             .toString(),
-                                radius: 40.r),
-                          ),
-                          const HorizontalSpacingWidget(width: 40),
-                          //! name
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                getAllCompletedAppointmentDetailsModel
-                                    .appointmentDetails!.first.patientName
-                                    .toString(),
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                              const VerticalSpacingWidget(height: 15),
-                              Row(
-                                children: [
-                                  getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .mediezyPatientId ==
-                                          null
-                                      ? Container()
-                                      : Text(
-                                          "Patient Id : ",
-                                          style: size.width > 450
-                                              ? greyTabMain
-                                              : greyMain,
-                                        ),
-                                  getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .mediezyPatientId ==
-                                          null
-                                      ? Container()
-                                      : Text(
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .mediezyPatientId!,
-                                          style: size.width > 450
-                                              ? blackTabMainText
-                                              : blackMainText,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                ],
-                              ),
-                              const VerticalSpacingWidget(height: 15),
-                              Text(
-                                '${getAllCompletedAppointmentDetailsModel.appointmentDetails!.first.patientAge.toString()} years old',
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // const VerticalSpacingWidget(height: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Appointment Date : ',
-                                style:
-                                    size.width > 450 ? greyTabMain : greyMain,
-                              ),
-                              Text(
-                                getAllCompletedAppointmentDetailsModel
-                                    .appointmentDetails!.first.date
-                                    .toString(),
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Appointment time : ',
-                                style:
-                                    size.width > 450 ? greyTabMain : greyMain,
-                              ),
-                              Text(
-                                getAllCompletedAppointmentDetailsModel
-                                    .appointmentDetails!.first.tokenStartTime
-                                    .toString(),
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'Checkout time : ',
-                                style:
-                                    size.width > 450 ? greyTabMain : greyMain,
-                              ),
-                              Text(
-                                getAllCompletedAppointmentDetailsModel
-                                    .appointmentDetails!.first.checkoutTime
-                                    .toString(),
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                            ],
-                          ),
-                          // const VerticalSpacingWidget(height: 10),
-                          Row(
-                            children: [
-                              Text(
-                                'Token Number : ',
-                                style:
-                                    size.width > 450 ? greyTabMain : greyMain,
-                              ),
-                              Text(
-                                getAllCompletedAppointmentDetailsModel
-                                    .appointmentDetails!.first.tokenNumber
-                                    .toString(),
-                                style: size.width > 450
-                                    ? blackTabMainText
-                                    : blackMainText,
-                              ),
-                            ],
-                          ),
-                          PatientDetailsCompletedWidget(
-                              getAllCompletedAppointmentDetailsModel:
-                                  getAllCompletedAppointmentDetailsModel),
-                          const VerticalSpacingWidget(height: 5),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals ==
-                                  null
-                              ? Container()
-                              : Text(
-                                  'Added Vitals : ',
-                                  style:
-                                      size.width > 450 ? greyTabMain : greyMain,
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals ==
-                                  null
-                              ? Container()
-                              : const VerticalSpacingWidget(height: 5),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals ==
-                                  null
-                              ? Container()
-                              : GetVitalsWidget(
-                                  dia: getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals!.dia,
-                                  heartRate:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!
-                                          .first
-                                          .vitals!
-                                          .heartRate,
-                                  height: getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals!.height,
-                                  spo2: getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals!.spo2,
-                                  sys: getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals!.sys,
-                                  temperature:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!
-                                          .first
-                                          .vitals!
-                                          .temperature,
-                                  temperatureType:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!
-                                          .first
-                                          .vitals!
-                                          .temperatureType,
-                                  weight: getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.vitals!.weight,
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!
-                                  .first
-                                  .doctorMedicines!
-                                  .isEmpty
-                              ? Container()
-                              : const VerticalSpacingWidget(height: 5),
-                          getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!
-                                  .first
-                                  .doctorMedicines!
-                                  .isEmpty
-                              ? Container()
-                              : Text(
-                                  'Added Medicines :',
-                                  style:
-                                      size.width > 450 ? greyTabMain : greyMain,
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!
-                                  .first
-                                  .doctorMedicines!
-                                  .isEmpty
-                              ? Container()
-                              : ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!
-                                          .first
-                                          .doctorMedicines!
-                                          .length,
-                                  itemBuilder: (context, index) {
-                                    return GetMedicinesWidget(
-                                      medicineName:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .medicineName
-                                              .toString(),
-                                      dosage:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .dosage,
-                                      noOfDays:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .noOfDays
-                                              .toString(),
-                                      timeSection:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .timeSection
-                                              .toString(),
-                                      evening:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .evening,
-                                      interval:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .interval,
-                                      morning:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .morning,
-                                      night:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .night,
-                                      noon:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .noon,
-                                      type:
-                                          getAllCompletedAppointmentDetailsModel
-                                              .appointmentDetails!
-                                              .first
-                                              .doctorMedicines![index]
-                                              .type,
-                                    );
-                                  }),
-                          getAllCompletedAppointmentDetailsModel
-                                  .appointmentDetails!
-                                  .first
-                                  .doctorMedicines!
-                                  .isEmpty
-                              ? Container()
-                              : const VerticalSpacingWidget(height: 10),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.reviewAfter ==
-                                  null
-                              ? Container()
-                              : ShortNamesWidget(
-                                  typeId: 1,
-                                  firstText: "Review after : ",
-                                  secondText:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.reviewAfter
-                                          .toString(),
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.labName ==
-                                  null
-                              ? Container()
-                              : ShortNamesWidget(
-                                  typeId: 1,
-                                  firstText: "Lab name : ",
-                                  secondText:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.labName
-                                          .toString(),
-                                ),
-                      getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .labTest!
-                                      .isEmpty ||
-                                  getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.labTest ==
-                                      null
-                              ? Container()
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Lab test name : ",
-                                      style: size.width > 450
-                                          ? greyTabMain
-                                          : greyMain,
-                                    ),
-                                    Expanded(
-                                      child: Wrap(
-                                        direction: Axis.horizontal,
-                                        spacing:
-                                            8.0, // Add spacing between surgery names
-                                        children:
-                                            getAllCompletedAppointmentDetailsModel
-                                                .appointmentDetails!
-                                                .first
-                                                .labTest!
-                                                .asMap()
-                                                .entries
-                                                .map((entry) {
-                                          final index = entry.key;
-                                          final name = entry.value;
-                                          final isLastItem = index ==
-                                              getAllCompletedAppointmentDetailsModel
-                                                      .appointmentDetails!
-                                                      .first
-                                                      .labTest!
-                                                      .length -
-                                                  1;
-                                          return Text(
-                                            "$name${isLastItem ? '' : ','}",
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : blackMainText,
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.scanName ==
-                                  null
-                              ? Container()
-                              : ShortNamesWidget(
-                                  typeId: 1,
-                                  firstText: "Scan name : ",
-                                  secondText:
-                                      getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.scanName
-                                          .toString()),
-                         getAllCompletedAppointmentDetailsModel
-                                          .appointmentDetails!.first.scanName ==
-                                      null ||
-                                  getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .scanName!
-                                      .isEmpty
-                              ? Container()
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Scan test name : ",
-                                      style: size.width > 450
-                                          ? greyTabMain
-                                          : greyMain,
-                                    ),
-                                    Expanded(
-                                      child: Wrap(
-                                        direction: Axis.horizontal,
-                                        spacing: 8.0,
-                                        children:
-                                            getAllCompletedAppointmentDetailsModel
-                                                .appointmentDetails!
-                                                .first
-                                                .scanTest!
-                                                .asMap()
-                                                .entries
-                                                .map((entry) {
-                                          final index = entry.key;
-                                          final name = entry.value;
-                                          final isLastItem = index ==
-                                              getAllCompletedAppointmentDetailsModel
-                                                      .appointmentDetails!
-                                                      .first
-                                                      .scanTest!
-                                                      .length -
-                                                  1;
-                                          return Text(
-                                            "$name${isLastItem ? '' : ','}",
-                                            style: size.width > 450
-                                                ? blackTabMainText
-                                                : blackMainText,
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!.first.notes ==
-                                  null
-                              ? Container()
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Additional Note : ",
-                                      style: size.width > 450
-                                          ? greyTabMain
-                                          : greyMain,
-                                    ),
-                                    Expanded(
-                                      child: Text(
+                                  ),
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!.first.labName ==
+                                    null
+                                ? Container()
+                                : ShortNamesWidget(
+                                    typeId: 1,
+                                    firstText: "Lab name : ",
+                                    secondText:
                                         getAllCompletedAppointmentDetailsModel
-                                            .appointmentDetails!.first.notes
+                                            .appointmentDetails!.first.labName
                                             .toString(),
+                                  ),
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!
+                                        .first
+                                        .labTest!
+                                        .isEmpty ||
+                                    getAllCompletedAppointmentDetailsModel
+                                            .appointmentDetails!
+                                            .first
+                                            .labTest ==
+                                        null
+                                ? Container()
+                                : Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Lab test name : ",
                                         style: size.width > 450
-                                            ? blackTabMainText
-                                            : blackMainText,
+                                            ? greyTabMain
+                                            : greyMain,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                          // const VerticalSpacingWidget(height: 10),
-                          getAllCompletedAppointmentDetailsModel
-                                      .appointmentDetails!
-                                      .first
-                                      .prescriptionImage ==
-                                  null
-                              ? Container()
-                              : Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Added Prescription Image : ",
-                                      style: size.width > 450
-                                          ? greyTabMain
-                                          : greyMain,
-                                    ),
-                                    const VerticalSpacingWidget(height: 5),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ViewFileWidget(
-                                                    viewFile:
-                                                        getAllCompletedAppointmentDetailsModel
-                                                            .appointmentDetails!
-                                                            .first
-                                                            .prescriptionImage
-                                                            .toString())));
-                                      },
-                                      child: Container(
-                                        height: 200.h,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
+                                      Expanded(
+                                        child: Wrap(
+                                          direction: Axis.horizontal,
+                                          spacing:
+                                              8.0, // Add spacing between surgery names
+                                          children:
                                               getAllCompletedAppointmentDetailsModel
                                                   .appointmentDetails!
                                                   .first
-                                                  .prescriptionImage
-                                                  .toString(),
+                                                  .labTest!
+                                                  .asMap()
+                                                  .entries
+                                                  .map((entry) {
+                                            final index = entry.key;
+                                            final name = entry.value;
+                                            final isLastItem = index ==
+                                                getAllCompletedAppointmentDetailsModel
+                                                        .appointmentDetails!
+                                                        .first
+                                                        .labTest!
+                                                        .length -
+                                                    1;
+                                            return Text(
+                                              "$name${isLastItem ? '' : ','}",
+                                              style: size.width > 450
+                                                  ? blackTabMainText
+                                                  : blackMainText,
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!.first.scanName ==
+                                    null
+                                ? Container()
+                                : ShortNamesWidget(
+                                    typeId: 1,
+                                    firstText: "Scan name : ",
+                                    secondText:
+                                        getAllCompletedAppointmentDetailsModel
+                                            .appointmentDetails!.first.scanName
+                                            .toString()),
+                            getAllCompletedAppointmentDetailsModel
+                                            .appointmentDetails!
+                                            .first
+                                            .scanName ==
+                                        null ||
+                                    getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!
+                                        .first
+                                        .scanName!
+                                        .isEmpty
+                                ? Container()
+                                : Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Scan test name : ",
+                                        style: size.width > 450
+                                            ? greyTabMain
+                                            : greyMain,
+                                      ),
+                                      Expanded(
+                                        child: Wrap(
+                                          direction: Axis.horizontal,
+                                          spacing: 8.0,
+                                          children:
+                                              getAllCompletedAppointmentDetailsModel
+                                                  .appointmentDetails!
+                                                  .first
+                                                  .scanTest!
+                                                  .asMap()
+                                                  .entries
+                                                  .map((entry) {
+                                            final index = entry.key;
+                                            final name = entry.value;
+                                            final isLastItem = index ==
+                                                getAllCompletedAppointmentDetailsModel
+                                                        .appointmentDetails!
+                                                        .first
+                                                        .scanTest!
+                                                        .length -
+                                                    1;
+                                            return Text(
+                                              "$name${isLastItem ? '' : ','}",
+                                              style: size.width > 450
+                                                  ? blackTabMainText
+                                                  : blackMainText,
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!.first.notes ==
+                                    null
+                                ? Container()
+                                : Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Additional Note : ",
+                                        style: size.width > 450
+                                            ? greyTabMain
+                                            : greyMain,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          getAllCompletedAppointmentDetailsModel
+                                              .appointmentDetails!.first.notes
+                                              .toString(),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : blackMainText,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            // const VerticalSpacingWidget(height: 10),
+                            getAllCompletedAppointmentDetailsModel
+                                        .appointmentDetails!
+                                        .first
+                                        .prescriptionImage ==
+                                    null
+                                ? Container()
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Added Prescription Image : ",
+                                        style: size.width > 450
+                                            ? greyTabMain
+                                            : greyMain,
+                                      ),
+                                      const VerticalSpacingWidget(height: 5),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => ViewFileWidget(
+                                                      viewFile:
+                                                          getAllCompletedAppointmentDetailsModel
+                                                              .appointmentDetails!
+                                                              .first
+                                                              .prescriptionImage
+                                                              .toString())));
+                                        },
+                                        child: Container(
+                                          height: 200.h,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                getAllCompletedAppointmentDetailsModel
+                                                    .appointmentDetails!
+                                                    .first
+                                                    .prescriptionImage
+                                                    .toString(),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const VerticalSpacingWidget(height: 20)
-                                  ],
-                                ),
-                        ],
+                                      const VerticalSpacingWidget(height: 20)
+                                    ],
+                                  ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
