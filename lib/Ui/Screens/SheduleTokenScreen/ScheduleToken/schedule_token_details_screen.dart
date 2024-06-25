@@ -366,7 +366,24 @@ class _ScheduleTokenDetailsScreenState
                             BlocConsumer<GenerateTokenFinalBloc,
                                 GenerateTokenFinalState>(
                               listener: (context, state) {
+                                if (state is GenerateTokenFinalError) {
+                                  log(state.errorMessage);
+                                  GeneralServices.instance.showErrorMessage(
+                                      context, state.errorMessage);
+                                  Future.delayed(const Duration(seconds: 3),
+                                      () {
+                                    Navigator.pop(context);
+                                  });
+                                }
                                 // final size = MediaQuery.of(context).size;
+                                //  if (timeDuration1Controller.text=="") {
+                                //                      GeneralServices.instance.showErrorMessage(
+                                // context, 'The each token duration field is required');
+                                // Future.delayed(const Duration(seconds: 3),
+                                //     () {
+                                //   Navigator.pop(context);
+                                // });
+                                //                   }
                                 if (state is GenerateTokenFinalLoaded) {
                                   showDialog(
                                     context: context,
@@ -408,14 +425,6 @@ class _ScheduleTokenDetailsScreenState
                                     );
                                   });
                                 }
-                                if (state is GenerateTokenFinalError) {
-                                  GeneralServices.instance.showErrorMessage(
-                                      context, state.errorMessage);
-                                  Future.delayed(const Duration(seconds: 3),
-                                      () {
-                                    Navigator.pop(context);
-                                  });
-                                }
                               },
                               builder: (context, state) {
                                 bool isLoading =
@@ -435,69 +444,110 @@ class _ScheduleTokenDetailsScreenState
                                               onTap: isLoading
                                                   ? null
                                                   : () {
-                                                      Schedules?
-                                                          matchingSchedule;
+                                                      if (timeDuration1Controller
+                                                              .text ==
+                                                          "") {
+                                                        GeneralServices.instance
+                                                            .showErrorMessage(
+                                                                context,
+                                                                'The each token duration field is required');
+                                                      } else {
+                                                        Schedules?
+                                                            matchingSchedule;
 
-                                                      try {
-                                                        matchingSchedule = states
-                                                            .generatedSchedulesModel
-                                                            .schedules!
-                                                            .firstWhere(
-                                                          (e) =>
-                                                              e.clinicId ==
-                                                                  int.parse(dController
-                                                                      .initialIndex
-                                                                      .value) &&
-                                                              e.scheduleType ==
-                                                                  selectedValue,
-                                                        );
-                                                      } catch (e) {
-                                                        matchingSchedule = null;
-                                                      }
-                                                      if (matchingSchedule !=
-                                                          null) {
-                                                        bookLength =
-                                                            matchingSchedule
-                                                                .bookingCount!;
-                                                        if (bookLength > 0) {
-                                                          GeneralServices()
-                                                              .appCloseDialogue(
-                                                            context,
-                                                            "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
-                                                            () {
-                                                              BlocProvider.of<
-                                                                          GenerateTokenFinalBloc>(
-                                                                      context)
-                                                                  .add(
-                                                                FetchGenerateTokenFinal(
-                                                                  clinicId:
-                                                                      dController
-                                                                          .initialIndex
-                                                                          .value,
-                                                                  selecteddays:
-                                                                      selectedDays,
-                                                                  startDate:
-                                                                      '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                                  endDate:
-                                                                      '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                                  startTime:
-                                                                      formatTimeOfDay(
-                                                                          selectedSchedule1StartingTime),
-                                                                  endTime:
-                                                                      formatTimeOfDay(
-                                                                          selectedSchedule1EndingTime),
-                                                                  timeDuration:
-                                                                      timeDuration1Controller
-                                                                          .text,
-                                                                  scheduleType:
-                                                                      selectedValue
-                                                                          .toString(),
-                                                                ),
-                                                              );
-                                                            },
+                                                        try {
+                                                          matchingSchedule = states
+                                                              .generatedSchedulesModel
+                                                              .schedules!
+                                                              .firstWhere(
+                                                            (e) =>
+                                                                e.clinicId ==
+                                                                    int.parse(dController
+                                                                        .initialIndex
+                                                                        .value) &&
+                                                                e.scheduleType ==
+                                                                    selectedValue,
                                                           );
+                                                        } catch (e) {
+                                                          matchingSchedule =
+                                                              null;
+                                                        }
+                                                        if (matchingSchedule !=
+                                                            null) {
+                                                          bookLength =
+                                                              matchingSchedule
+                                                                  .bookingCount!;
+                                                          if (bookLength > 0) {
+                                                            GeneralServices()
+                                                                .appCloseDialogue(
+                                                              context,
+                                                              "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
+                                                              () {
+                                                                BlocProvider.of<
+                                                                            GenerateTokenFinalBloc>(
+                                                                        context)
+                                                                    .add(
+                                                                  FetchGenerateTokenFinal(
+                                                                    clinicId: dController
+                                                                        .initialIndex
+                                                                        .value,
+                                                                    selecteddays:
+                                                                        selectedDays,
+                                                                    startDate:
+                                                                        '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                                    endDate:
+                                                                        '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                                    startTime:
+                                                                        formatTimeOfDay(
+                                                                            selectedSchedule1StartingTime),
+                                                                    endTime:
+                                                                        formatTimeOfDay(
+                                                                            selectedSchedule1EndingTime),
+                                                                    timeDuration:
+                                                                        timeDuration1Controller
+                                                                            .text,
+                                                                    scheduleType:
+                                                                        selectedValue
+                                                                            .toString(),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+                                                          } else {
+                                                            log("=================== $bookLength catched");
+                                                            BlocProvider.of<
+                                                                        GenerateTokenFinalBloc>(
+                                                                    context)
+                                                                .add(
+                                                              FetchGenerateTokenFinal(
+                                                                clinicId:
+                                                                    dController
+                                                                        .initialIndex
+                                                                        .value,
+                                                                selecteddays:
+                                                                    selectedDays,
+                                                                startDate:
+                                                                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                                endDate:
+                                                                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                                startTime:
+                                                                    formatTimeOfDay(
+                                                                        selectedSchedule1StartingTime),
+                                                                endTime:
+                                                                    formatTimeOfDay(
+                                                                        selectedSchedule1EndingTime),
+                                                                timeDuration:
+                                                                    timeDuration1Controller
+                                                                        .text,
+                                                                scheduleType:
+                                                                    selectedValue
+                                                                        .toString(),
+                                                              ),
+                                                            );
+                                                          }
+
+                                                          log("Matching schedule found. Booking count: $bookLength");
                                                         } else {
-                                                          log("=================== $bookLength catched");
                                                           BlocProvider.of<
                                                                       GenerateTokenFinalBloc>(
                                                                   context)
@@ -526,40 +576,9 @@ class _ScheduleTokenDetailsScreenState
                                                                       .toString(),
                                                             ),
                                                           );
+                                                          bookLength = 0;
+                                                          log("No matching schedule found. Current bookLength: $bookLength");
                                                         }
-
-                                                        log("Matching schedule found. Booking count: $bookLength");
-                                                      } else {
-                                                        BlocProvider.of<
-                                                                    GenerateTokenFinalBloc>(
-                                                                context)
-                                                            .add(
-                                                          FetchGenerateTokenFinal(
-                                                            clinicId: dController
-                                                                .initialIndex
-                                                                .value,
-                                                            selecteddays:
-                                                                selectedDays,
-                                                            startDate:
-                                                                '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                            endDate:
-                                                                '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                            startTime:
-                                                                formatTimeOfDay(
-                                                                    selectedSchedule1StartingTime),
-                                                            endTime:
-                                                                formatTimeOfDay(
-                                                                    selectedSchedule1EndingTime),
-                                                            timeDuration:
-                                                                timeDuration1Controller
-                                                                    .text,
-                                                            scheduleType:
-                                                                selectedValue
-                                                                    .toString(),
-                                                          ),
-                                                        );
-                                                        bookLength = 0;
-                                                        log("No matching schedule found. Current bookLength: $bookLength");
                                                       }
 
                                                       // if (states
@@ -623,8 +642,7 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                             );
                                           } else {
-                                            return const Center(
-                                              child: Text("Unexpected state"),
+                                            return  Container(
                                             );
                                           }
                                         },
@@ -742,13 +760,13 @@ class _ScheduleTokenDetailsScreenState
                                                                   ? blackTabMainText
                                                                   : blackMainText,
                                                             ),
-                                                            ShortNamesWidget(
-                                                              typeId: 1,
-                                                              firstText:
-                                                                  " Booking count : ",
-                                                              secondText:
-                                                                  "count ${schedule.bookingCount}",
-                                                            ),
+                                                            // ShortNamesWidget(
+                                                            //   typeId: 1,
+                                                            //   firstText:
+                                                            //       " Booking count : ",
+                                                            //   secondText:
+                                                            //       "count ${schedule.bookingCount}",
+                                                            // ),
                                                             ShortNamesWidget(
                                                               typeId: 1,
                                                               firstText:
@@ -887,9 +905,7 @@ class _ScheduleTokenDetailsScreenState
                                       ],
                                     );
                                   } else {
-                                    return const Center(
-                                      child: Text("Unexpected state"),
-                                    );
+                                    return Container();
                                   }
                                 },
                               ),
