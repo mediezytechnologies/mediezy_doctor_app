@@ -182,273 +182,354 @@ class _ScheduleTokenDetailsScreenState
           slideCurve: Curves.linearToEaseOut,
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child:
-                  BlocBuilder<GeneratedSchedulesBloc, GeneratedSchedulesState>(
-                builder: (context, states) {
-                  if (states is GeneratedSchedulesLoaded) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //! first section (Daily shedule)
-                        Container(
-                          decoration: BoxDecoration(
-                            color: kCardColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child:
+                    //   BlocBuilder<GeneratedSchedulesBloc, GeneratedSchedulesState>(
+                    // builder: (context, states) {
+                    //   if (states is GeneratedSchedulesLoaded) {
+                    //     return
+                    Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //! first section (Daily shedule)
+                    Container(
+                      decoration: BoxDecoration(
+                        color: kCardColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const VerticalSpacingWidget(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const VerticalSpacingWidget(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Select Clinic",
-                                          style: size.width > 450
-                                              ? greyTab10B600
-                                              : grey13B600,
-                                        ),
-                                        //! select clinic
-                                        GetBuilder<HospitalController>(
-                                            builder: (clx) {
-                                          return CustomDropDown(
-                                            width: 195.w,
-                                            value:
-                                                dController.initialIndex.value,
-                                            items: dController.hospitalDetails!
-                                                .map((e) {
+                                    Text(
+                                      "Select Clinic",
+                                      style: size.width > 450
+                                          ? greyTab10B600
+                                          : grey13B600,
+                                    ),
+                                    //! select clinic
+                                    GetBuilder<HospitalController>(
+                                        builder: (clx) {
+                                      return CustomDropDown(
+                                        width: 195.w,
+                                        value: dController.initialIndex.value,
+                                        items: dController.hospitalDetails!
+                                            .map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.clinicId.toString(),
+                                            child: Text(e.clinicName!),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          log(newValue!);
+                                          dController.dropdownValueChanging(
+                                              newValue,
+                                              dController.initialIndex.value);
+                                        },
+                                      );
+                                    }),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Select Schedule",
+                                      style: size.width > 450
+                                          ? greyTab10B600
+                                          : grey13B600,
+                                    ),
+                                    Container(
+                                      height: size.height * 0.055,
+                                      width: 145.w,
+                                      decoration: BoxDecoration(
+                                          color: kCardColor,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: const Color(0xFF9C9C9C))),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w),
+                                        child: Center(
+                                          child: DropdownButtonFormField(
+                                            iconEnabledColor: kMainColor,
+                                            decoration:
+                                                const InputDecoration.collapsed(
+                                                    hintText: ''),
+                                            value: dropdownValue,
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : blackMainText,
+                                            icon: const Icon(
+                                                Icons.keyboard_arrow_down),
+                                            items: items.entries.map(
+                                                (MapEntry<String, int> entry) {
                                               return DropdownMenuItem(
-                                                value: e.clinicId.toString(),
-                                                child: Text(e.clinicName!),
+                                                value: entry.key,
+                                                child: Text(entry.key),
                                               );
                                             }).toList(),
-                                            onChanged: (newValue) {
-                                              log(newValue!);
-                                              dController.dropdownValueChanging(
-                                                  newValue,
-                                                  dController
-                                                      .initialIndex.value);
+                                            onChanged: (String? newValue) {
+                                              dropdownValue = newValue!;
+                                              selectedValue = items[newValue];
+                                              // print(selectedValue);
                                             },
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Select Schedule",
-                                          style: size.width > 450
-                                              ? greyTab10B600
-                                              : grey13B600,
+                                          ),
                                         ),
-                                        Container(
-                                          height: size.height * 0.055,
-                                          width: 145.w,
-                                          decoration: BoxDecoration(
-                                              color: kCardColor,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            const VerticalSpacingWidget(height: 5),
+                            startEndDatePicker(size),
+
+                            const VerticalSpacingWidget(height: 10),
+                            //! select starting and ending time
+                            startEndeTimePicker(size, context),
+                            const VerticalSpacingWidget(height: 10),
+                            Row(
+                              children: [
+                                //! time Duration
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Time Duration",
+                                        style: size.width > 450
+                                            ? greyTab10B600
+                                            : grey13B600,
+                                      ),
+                                      const VerticalSpacingWidget(height: 5),
+                                      SizedBox(
+                                        height: 40.h,
+                                        child: TextFormField(
+                                          style: TextStyle(
+                                              fontSize: size.width > 450
+                                                  ? 10.sp
+                                                  : 14.sp),
+                                          // autofocus: true,
+                                          cursorColor: kMainColor,
+                                          controller: timeDuration1Controller,
+                                          keyboardType: TextInputType.number,
+                                          textInputAction: TextInputAction.done,
+                                          focusNode:
+                                              timeDurationFocusController,
+                                          decoration: InputDecoration(
+                                            hintStyle: size.width > 450
+                                                ? greyTab10B600
+                                                : grey13B600,
+                                            hintText: "10 min",
+                                            filled: true,
+                                            fillColor: kCardColor,
+                                            enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: kMainColor)),
+                                            border: OutlineInputBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFF9C9C9C))),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w),
-                                            child: Center(
-                                              child: DropdownButtonFormField(
-                                                iconEnabledColor: kMainColor,
-                                                decoration:
-                                                    const InputDecoration
-                                                        .collapsed(
-                                                        hintText: ''),
-                                                value: dropdownValue,
-                                                style: size.width > 450
-                                                    ? blackTabMainText
-                                                    : blackMainText,
-                                                icon: const Icon(
-                                                    Icons.keyboard_arrow_down),
-                                                items: items.entries.map(
-                                                    (MapEntry<String, int>
-                                                        entry) {
-                                                  return DropdownMenuItem(
-                                                    value: entry.key,
-                                                    child: Text(entry.key),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (String? newValue) {
-                                                  dropdownValue = newValue!;
-                                                  selectedValue =
-                                                      items[newValue];
-                                                  // print(selectedValue);
-                                                },
-                                              ),
+                                                  BorderRadius.circular(7),
+                                              borderSide:
+                                                  BorderSide(color: kMainColor),
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    )
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const VerticalSpacingWidget(height: 5),
-                                startEndDatePicker(size),
-
-                                const VerticalSpacingWidget(height: 10),
-                                //! select starting and ending time
-                                startEndeTimePicker(size, context),
-                                const VerticalSpacingWidget(height: 10),
-                                timeDurationForm(size),
-                                const VerticalSpacingWidget(height: 10),
-                                //! select days
-                                Text(
-                                  "Select Days",
-                                  style: size.width > 450
-                                      ? greyTab10B600
-                                      : grey13B600,
-                                ),
-                                const VerticalSpacingWidget(height: 5),
-                                //! sunday monday tuesday
-                                selectDaysCheckBox(context, selectedDays, size),
-                                BlocConsumer<GenerateTokenFinalBloc,
-                                    GenerateTokenFinalState>(
-                                  listener: (context, state) {
-                                    // final size = MediaQuery.of(context).size;
-                                    if (state is GenerateTokenFinalLoaded) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize
-                                                  .min, // Avoid potential overflow
-                                              children: [
-                                                Lottie.asset(
-                                                    "assets/animations/confirm booking.json",
-                                                    height: 120.h),
-                                                const SizedBox(height: 10.0),
-                                                Text(
-                                                  state.successMessage,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15.sp),
-                                                ),
-                                                const SizedBox(height: 5.0),
-                                                Text(
-                                                  'Note: Check the booking section to see how this shows to patients',
-                                                  style: TextStyle(
-                                                      fontSize: 13.sp),
-                                                ),
-                                              ],
+                                const HorizontalSpacingWidget(width: 5),
+                              ],
+                            ),
+                            const VerticalSpacingWidget(height: 10),
+                            //! select days
+                            Text(
+                              "Select Days",
+                              style:
+                                  size.width > 450 ? greyTab10B600 : grey13B600,
+                            ),
+                            const VerticalSpacingWidget(height: 5),
+                            //! sunday monday tuesday
+                            selectDaysCheckBox(context, selectedDays, size),
+                            BlocConsumer<GenerateTokenFinalBloc,
+                                GenerateTokenFinalState>(
+                              listener: (context, state) {
+                                // final size = MediaQuery.of(context).size;
+                                if (state is GenerateTokenFinalLoaded) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize
+                                              .min, // Avoid potential overflow
+                                          children: [
+                                            Lottie.asset(
+                                                "assets/animations/confirm booking.json",
+                                                height: 120.h),
+                                            const SizedBox(height: 10.0),
+                                            Text(
+                                              state.successMessage,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15.sp),
                                             ),
-                                          );
-                                        },
+                                            const SizedBox(height: 5.0),
+                                            Text(
+                                              'Note: Check the booking section to see how this shows to patients',
+                                              style: TextStyle(fontSize: 13.sp),
+                                            ),
+                                          ],
+                                        ),
                                       );
-                                      Future.delayed(const Duration(seconds: 5),
-                                          () {
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  BottomNavigationControlWidget(
-                                                      selectedIndex: 2)),
-                                          (route) => false,
-                                        );
-                                      });
-                                    }
-                                    if (state is GenerateTokenFinalError) {
-                                      GeneralServices.instance.showErrorMessage(
-                                          context, state.errorMessage);
-                                      Future.delayed(const Duration(seconds: 3),
-                                          () {
-                                        Navigator.pop(context);
-                                      });
-                                    }
-                                  },
-                                  builder: (context, state) {
-                                    bool isLoading =
-                                        state is GenerateTokenFinalLoading;
-                                    return SizedBox(
-                                      height: Platform.isIOS
-                                          ? size.height * 0.107
-                                          : size.height * 0.08,
-                                      child: Column(
-                                        children: [
-                                          InkWell(
-                                            onTap: isLoading
-                                                ? null
-                                                : () {
-                                                    Schedules? matchingSchedule;
+                                    },
+                                  );
+                                  Future.delayed(const Duration(seconds: 5),
+                                      () {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomNavigationControlWidget(
+                                                  selectedIndex: 2)),
+                                      (route) => false,
+                                    );
+                                  });
+                                }
+                                if (state is GenerateTokenFinalError) {
+                                  GeneralServices.instance.showErrorMessage(
+                                      context, state.errorMessage);
+                                  Future.delayed(const Duration(seconds: 3),
+                                      () {
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              },
+                              builder: (context, state) {
+                                bool isLoading =
+                                    state is GenerateTokenFinalLoading;
+                                return SizedBox(
+                                  height: Platform.isIOS
+                                      ? size.height * 0.107
+                                      : size.height * 0.08,
+                                  child: Column(
+                                    children: [
+                                      BlocBuilder<GeneratedSchedulesBloc,
+                                          GeneratedSchedulesState>(
+                                        builder: (context, states) {
+                                          if (states
+                                              is GeneratedSchedulesLoaded) {
+                                            return InkWell(
+                                              onTap: isLoading
+                                                  ? null
+                                                  : () {
+                                                      Schedules?
+                                                          matchingSchedule;
 
-                                                    try {
-                                                      matchingSchedule = states
-                                                          .generatedSchedulesModel
-                                                          .schedules!
-                                                          .firstWhere(
-                                                        (e) =>
-                                                            e.clinicId ==
-                                                                int.parse(dController
-                                                                    .initialIndex
-                                                                    .value) &&
-                                                            e.scheduleType ==
-                                                                selectedValue,
-                                                      );
-                                                    } catch (e) {
-                                                      matchingSchedule = null;
-                                                    }
-                                                    if (matchingSchedule !=
-                                                        null) {
-                                                      bookLength =
-                                                          matchingSchedule
-                                                              .bookingCount!;
-                                                      if (bookLength > 0) {
-                                                        GeneralServices()
-                                                            .appCloseDialogue(
-                                                          context,
-                                                          "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
-                                                          () {
-                                                            BlocProvider.of<
-                                                                        GenerateTokenFinalBloc>(
-                                                                    context)
-                                                                .add(
-                                                              FetchGenerateTokenFinal(
-                                                                clinicId:
-                                                                    dController
-                                                                        .initialIndex
-                                                                        .value,
-                                                                selecteddays:
-                                                                    selectedDays,
-                                                                startDate:
-                                                                    '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                                endDate:
-                                                                    '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                                startTime:
-                                                                    formatTimeOfDay(
-                                                                        selectedSchedule1StartingTime),
-                                                                endTime:
-                                                                    formatTimeOfDay(
-                                                                        selectedSchedule1EndingTime),
-                                                                timeDuration:
-                                                                    timeDuration1Controller
-                                                                        .text,
-                                                                scheduleType:
-                                                                    selectedValue
-                                                                        .toString(),
-                                                              ),
-                                                            );
-                                                          },
+                                                      try {
+                                                        matchingSchedule = states
+                                                            .generatedSchedulesModel
+                                                            .schedules!
+                                                            .firstWhere(
+                                                          (e) =>
+                                                              e.clinicId ==
+                                                                  int.parse(dController
+                                                                      .initialIndex
+                                                                      .value) &&
+                                                              e.scheduleType ==
+                                                                  selectedValue,
                                                         );
+                                                      } catch (e) {
+                                                        matchingSchedule = null;
+                                                      }
+                                                      if (matchingSchedule !=
+                                                          null) {
+                                                        bookLength =
+                                                            matchingSchedule
+                                                                .bookingCount!;
+                                                        if (bookLength > 0) {
+                                                          GeneralServices()
+                                                              .appCloseDialogue(
+                                                            context,
+                                                            "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
+                                                            () {
+                                                              BlocProvider.of<
+                                                                          GenerateTokenFinalBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                FetchGenerateTokenFinal(
+                                                                  clinicId:
+                                                                      dController
+                                                                          .initialIndex
+                                                                          .value,
+                                                                  selecteddays:
+                                                                      selectedDays,
+                                                                  startDate:
+                                                                      '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                                  endDate:
+                                                                      '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                                  startTime:
+                                                                      formatTimeOfDay(
+                                                                          selectedSchedule1StartingTime),
+                                                                  endTime:
+                                                                      formatTimeOfDay(
+                                                                          selectedSchedule1EndingTime),
+                                                                  timeDuration:
+                                                                      timeDuration1Controller
+                                                                          .text,
+                                                                  scheduleType:
+                                                                      selectedValue
+                                                                          .toString(),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        } else {
+                                                          log("=================== $bookLength catched");
+                                                          BlocProvider.of<
+                                                                      GenerateTokenFinalBloc>(
+                                                                  context)
+                                                              .add(
+                                                            FetchGenerateTokenFinal(
+                                                              clinicId: dController
+                                                                  .initialIndex
+                                                                  .value,
+                                                              selecteddays:
+                                                                  selectedDays,
+                                                              startDate:
+                                                                  '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                              endDate:
+                                                                  '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                              startTime:
+                                                                  formatTimeOfDay(
+                                                                      selectedSchedule1StartingTime),
+                                                              endTime:
+                                                                  formatTimeOfDay(
+                                                                      selectedSchedule1EndingTime),
+                                                              timeDuration:
+                                                                  timeDuration1Controller
+                                                                      .text,
+                                                              scheduleType:
+                                                                  selectedValue
+                                                                      .toString(),
+                                                            ),
+                                                          );
+                                                        }
+
+                                                        log("Matching schedule found. Booking count: $bookLength");
                                                       } else {
-                                                        log("=================== $bookLength catched");
                                                         BlocProvider.of<
                                                                     GenerateTokenFinalBloc>(
                                                                 context)
@@ -477,388 +558,356 @@ class _ScheduleTokenDetailsScreenState
                                                                     .toString(),
                                                           ),
                                                         );
+                                                        bookLength = 0;
+                                                        log("No matching schedule found. Current bookLength: $bookLength");
                                                       }
 
-                                                      log("Matching schedule found. Booking count: $bookLength");
-                                                    } else {
-                                                      BlocProvider.of<
-                                                                  GenerateTokenFinalBloc>(
-                                                              context)
-                                                          .add(
-                                                        FetchGenerateTokenFinal(
-                                                          clinicId: dController
-                                                              .initialIndex
-                                                              .value,
-                                                          selecteddays:
-                                                              selectedDays,
-                                                          startDate:
-                                                              '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                          endDate:
-                                                              '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                          startTime:
-                                                              formatTimeOfDay(
-                                                                  selectedSchedule1StartingTime),
-                                                          endTime: formatTimeOfDay(
-                                                              selectedSchedule1EndingTime),
-                                                          timeDuration:
-                                                              timeDuration1Controller
-                                                                  .text,
-                                                          scheduleType:
-                                                              selectedValue
-                                                                  .toString(),
+                                                      // if (states
+                                                      //     .generatedSchedulesModel
+                                                      //     .schedules!
+                                                      //     .isNotEmpty) {
+
+                                                      //   if (states
+                                                      //       .generatedSchedulesModel
+                                                      //       .schedules!
+                                                      //       .any((e) =>
+                                                      //           e.clinicId ==
+                                                      //               int.parse(dController
+                                                      //                   .initialIndex
+                                                      //                   .value) &&
+                                                      //           e.scheduleType ==
+                                                      //               selectedValue)) {
+                                                      //     log("-------------------- $bookLength");
+                                                      //   } else {
+                                                      //     log("================= $bookLength");
+                                                      //   }
+                                                      // }
+
+                                                      // else {
+                                                      //   log("==============lllllll============= $bookLength");
+
+                                                      //   log('klfjdklsdfjklsdfjkldsf');
+                                                      // }
+                                                    },
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 50.h,
+                                                decoration: BoxDecoration(
+                                                  color: kMainColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: isLoading
+                                                    ? Center(
+                                                        child: LoadingAnimationWidget
+                                                            .staggeredDotsWave(
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 30))
+                                                    : Center(
+                                                        child: Text(
+                                                          "Generate token",
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  size.width >
+                                                                          450
+                                                                      ? 12.sp
+                                                                      : 18.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  Colors.white),
                                                         ),
-                                                      );
-                                                      bookLength = 0;
-                                                      log("No matching schedule found. Current bookLength: $bookLength");
-                                                    }
-
-                                                    // if (states
-                                                    //     .generatedSchedulesModel
-                                                    //     .schedules!
-                                                    //     .isNotEmpty) {
-
-                                                    //   if (states
-                                                    //       .generatedSchedulesModel
-                                                    //       .schedules!
-                                                    //       .any((e) =>
-                                                    //           e.clinicId ==
-                                                    //               int.parse(dController
-                                                    //                   .initialIndex
-                                                    //                   .value) &&
-                                                    //           e.scheduleType ==
-                                                    //               selectedValue)) {
-                                                    //     log("-------------------- $bookLength");
-                                                    //   } else {
-                                                    //     log("================= $bookLength");
-                                                    //   }
-                                                    // }
-
-                                                    // else {
-                                                    //   log("==============lllllll============= $bookLength");
-
-                                                    //   log('klfjdklsdfjklsdfjkldsf');
-                                                    // }
-                                                  },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 50.h,
-                                              decoration: BoxDecoration(
-                                                color: kMainColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: isLoading
-                                                  ? Center(
-                                                      child:
-                                                          LoadingAnimationWidget
-                                                              .staggeredDotsWave(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 30))
-                                                  : Center(
-                                                      child: Text(
-                                                        "Generate token",
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                size.width > 450
-                                                                    ? 12.sp
-                                                                    : 18.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color:
-                                                                Colors.white),
                                                       ),
-                                                    ),
-                                            ),
-                                          ),
-                                        ],
+                                              ),
+                                            );
+                                          } else {
+                                            return const Center(
+                                              child: Text("Unexpected state"),
+                                            );
+                                          }
+                                        },
                                       ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            const VerticalSpacingWidget(height: 5),
+                            BlocListener<GeneratedSchedulesBloc,
+                                GeneratedSchedulesState>(
+                              listener: (context, state) {
+                                if (state is DeleteSchedulesLoaded) {
+                                  BlocProvider.of<GeneratedSchedulesBloc>(
+                                          context)
+                                      .add(FetchGeneratedSchedules());
+                                }
+                                if (state is DeleteSchedulesError) {
+                                  GeneralServices.instance
+                                      .showToastMessage(state.errorMessage);
+                                }
+                              },
+                              child: BlocBuilder<GeneratedSchedulesBloc,
+                                  GeneratedSchedulesState>(
+                                builder: (context, state) {
+                                  if (state is GeneratedSchedulesLoading) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
                                     );
-                                  },
-                                ),
-                                const VerticalSpacingWidget(height: 5),
-                                BlocListener<GeneratedSchedulesBloc,
-                                    GeneratedSchedulesState>(
-                                  listener: (context, state) {
-                                    if (state is DeleteSchedulesLoaded) {
-                                      BlocProvider.of<GeneratedSchedulesBloc>(
-                                              context)
-                                          .add(FetchGeneratedSchedules());
-                                    }
-                                    if (state is DeleteSchedulesError) {
-                                      GeneralServices.instance
-                                          .showToastMessage(state.errorMessage);
-                                    }
-                                  },
-                                  child: BlocBuilder<GeneratedSchedulesBloc,
-                                      GeneratedSchedulesState>(
-                                    builder: (context, state) {
-                                      if (state is GeneratedSchedulesLoading) {
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      } else if (state
-                                          is GeneratedSchedulesError) {
-                                        return const Center(
-                                          child: Text("Something went wrong"),
-                                        );
-                                      } else if (state
-                                          is GeneratedSchedulesLoaded) {
-                                        final model =
-                                            state.generatedSchedulesModel;
+                                  } else if (state is GeneratedSchedulesError) {
+                                    return const Center(
+                                      child: Text("Something went wrong"),
+                                    );
+                                  } else if (state
+                                      is GeneratedSchedulesLoaded) {
+                                    final model = state.generatedSchedulesModel;
 
-                                        if (model.schedules == null) {
-                                          return Container();
-                                        }
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Generated schedules",
-                                              style: size.width > 450
-                                                  ? greyTab10B600
-                                                  : grey13B600,
-                                            ),
-                                            const VerticalSpacingWidget(
-                                                height: 3),
-                                            ListView.separated(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              padding: EdgeInsets.zero,
-                                              itemCount:
-                                                  model.schedules!.length,
-                                              separatorBuilder: (BuildContext
-                                                          context,
+                                    if (model.schedules == null) {
+                                      return Container();
+                                    }
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Generated schedules",
+                                          style: size.width > 450
+                                              ? greyTab10B600
+                                              : grey13B600,
+                                        ),
+                                        const VerticalSpacingWidget(height: 3),
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+                                          itemCount: model.schedules!.length,
+                                          separatorBuilder:
+                                              (BuildContext context,
                                                       int index) =>
                                                   const VerticalSpacingWidget(
                                                       height: 3),
-                                              itemBuilder: (context, index) {
-                                                final schedule =
-                                                    model.schedules![index];
-                                                bookLength = model
-                                                    .schedules![index]
-                                                    .bookingCount!;
+                                          itemBuilder: (context, index) {
+                                            final schedule =
+                                                model.schedules![index];
+                                            bookLength = model.schedules![index]
+                                                .bookingCount!;
 
-                                                String formattedStartDate =
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(DateFormat(
-                                                                'yyyy-MM-dd')
-                                                            .parse(schedule
-                                                                .startDate
-                                                                .toString()));
+                                            String formattedStartDate =
+                                                DateFormat('dd-MM-yyyy').format(
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .parse(schedule
+                                                            .startDate
+                                                            .toString()));
 
-                                                String formattedEndDate =
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(DateFormat(
-                                                                'yyyy-MM-dd')
-                                                            .parse(schedule
-                                                                .endDate
-                                                                .toString()));
-                                                return SingleChildScrollView(
-                                                  child: Card(
-                                                    color: const Color.fromARGB(
-                                                        255, 243, 247, 250),
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 6.w,
-                                                          bottom: 6.h,
-                                                          top: 6.h),
-                                                      child: SizedBox(
-                                                        width: double.infinity,
-                                                        child: Row(
+                                            String formattedEndDate =
+                                                DateFormat('dd-MM-yyyy').format(
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .parse(schedule.endDate
+                                                            .toString()));
+                                            return SingleChildScrollView(
+                                              child: Card(
+                                                color: const Color.fromARGB(
+                                                    255, 243, 247, 250),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 6.w,
+                                                      bottom: 6.h,
+                                                      top: 6.h),
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .start,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .spaceBetween,
+                                                                  .spaceEvenly,
                                                           children: [
-                                                            Column(
+                                                            Text(
+                                                              schedule
+                                                                  .clinicName
+                                                                  .toString(),
+                                                              style: size.width >
+                                                                      450
+                                                                  ? blackTabMainText
+                                                                  : blackMainText,
+                                                            ),
+                                                            ShortNamesWidget(
+                                                              typeId: 1,
+                                                              firstText:
+                                                                  " Booking count : ",
+                                                              secondText:
+                                                                  "count ${schedule.bookingCount}",
+                                                            ),
+                                                            ShortNamesWidget(
+                                                              typeId: 1,
+                                                              firstText:
+                                                                  "schedule type : ",
+                                                              secondText:
+                                                                  "schedule ${schedule.scheduleType}",
+                                                            ),
+                                                            ShortNamesWidget(
+                                                              typeId: 1,
+                                                              firstText:
+                                                                  "Date : ",
+                                                              secondText:
+                                                                  "$formattedStartDate  to  $formattedEndDate",
+                                                            ),
+                                                            ShortNamesWidget(
+                                                              typeId: 1,
+                                                              firstText:
+                                                                  "Time : ",
+                                                              secondText:
+                                                                  "${schedule.startTime} to ${schedule.endTime}",
+                                                            ),
+                                                            ShortNamesWidget(
+                                                              typeId: 1,
+                                                              firstText:
+                                                                  "Time duration : ",
+                                                              secondText: schedule
+                                                                  .eachTokenDuration
+                                                                  .toString(),
+                                                            ),
+                                                            Row(
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
                                                               children: [
                                                                 Text(
-                                                                  schedule
-                                                                      .clinicName
-                                                                      .toString(),
+                                                                  "Days : ",
                                                                   style: size.width >
                                                                           450
-                                                                      ? blackTabMainText
-                                                                      : blackMainText,
+                                                                      ? greyTabMain
+                                                                      : greyMain,
                                                                 ),
-                                                                ShortNamesWidget(
-                                                                  typeId: 1,
-                                                                  firstText:
-                                                                      " Booking count : ",
-                                                                  secondText:
-                                                                      "count ${schedule.bookingCount}",
-                                                                ),
-                                                                ShortNamesWidget(
-                                                                  typeId: 1,
-                                                                  firstText:
-                                                                      "schedule type : ",
-                                                                  secondText:
-                                                                      "schedule ${schedule.scheduleType}",
-                                                                ),
-                                                                ShortNamesWidget(
-                                                                  typeId: 1,
-                                                                  firstText:
-                                                                      "Date : ",
-                                                                  secondText:
-                                                                      "$formattedStartDate  to  $formattedEndDate",
-                                                                ),
-                                                                ShortNamesWidget(
-                                                                  typeId: 1,
-                                                                  firstText:
-                                                                      "Time : ",
-                                                                  secondText:
-                                                                      "${schedule.startTime} to ${schedule.endTime}",
-                                                                ),
-                                                                ShortNamesWidget(
-                                                                  typeId: 1,
-                                                                  firstText:
-                                                                      "Time duration : ",
-                                                                  secondText: schedule
-                                                                      .eachTokenDuration
-                                                                      .toString(),
-                                                                ),
-                                                                Row(
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      "Days : ",
-                                                                      style: size.width >
-                                                                              450
-                                                                          ? greyTabMain
-                                                                          : greyMain,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width:
-                                                                          240.w,
-                                                                      child:
-                                                                          Text(
-                                                                        schedule
-                                                                            .selectedDays
-                                                                            .toString(),
-                                                                        maxLines:
-                                                                            3,
-                                                                        style: size.width >
-                                                                                450
-                                                                            ? blackTabMainText
-                                                                            : blackMainText,
-                                                                      ),
-                                                                    )
-                                                                  ],
+                                                                SizedBox(
+                                                                  width: 240.w,
+                                                                  child: Text(
+                                                                    schedule
+                                                                        .selectedDays
+                                                                        .toString(),
+                                                                    maxLines: 3,
+                                                                    style: size.width >
+                                                                            450
+                                                                        ? blackTabMainText
+                                                                        : blackMainText,
+                                                                  ),
                                                                 )
                                                               ],
-                                                            ),
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                GeneralServices()
-                                                                    .appCloseDialogue(
-                                                                  context,
-                                                                  "You have bookings on this schedule, which may be lost if you delete it. Are you sure you want to delete the schedule ?",
-                                                                  () {
-                                                                    BlocProvider.of<GeneratedSchedulesBloc>(
-                                                                            context)
-                                                                        .add(DeleteGeneratedSchedules(
-                                                                            scheduleId:
-                                                                                schedule.scheduleId.toString()));
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                );
-                                                              },
-                                                              child: const Icon(
-                                                                  CupertinoIcons
-                                                                      .delete),
                                                             )
-                                                            // Column(
-                                                            //   children: [
-                                                            //     PopupMenuButton(
-                                                            //       iconSize:
-                                                            //           size.width > 450
-                                                            //               ? 14.sp
-                                                            //               : 20.sp,
-                                                            //       icon: Icon(
-                                                            //         Icons.more_vert,
-                                                            //         color: kMainColor,
-                                                            //       ),
-                                                            //       itemBuilder: (context) =>
-                                                            //           <PopupMenuEntry<
-                                                            //               dynamic>>[
-                                                            //         PopupMenuItem(
-                                                            //           onTap: () {
-                                                            //             GeneralServices
-                                                            //                 .instance
-                                                            //                 .appCloseDialogue(
-                                                            //               context,
-                                                            //               "Are you sure want to delete this schedule?",
-                                                            //               () {
-                                                            // BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
-                                                            //     scheduleId: schedule
-                                                            //         .scheduleId
-                                                            //         .toString()));
-                                                            // Navigator.pop(
-                                                            //     context);
-                                                            //               },
-                                                            //             );
-                                                            //           },
-                                                            //           child: Text(
-                                                            //             "Delete",
-                                                            //             style: size.width >
-                                                            //                     450
-                                                            //                 ? blackTabMainText
-                                                            //                 : blackMainText,
-                                                            //             overflow:
-                                                            //                 TextOverflow
-                                                            //                     .ellipsis,
-                                                            //           ),
-                                                            //         ),
-                                                            //       ],
-                                                            //     ),
-                                                            //   ],
-                                                            // ),
                                                           ],
                                                         ),
-                                                      ),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            GeneralServices()
+                                                                .appCloseDialogue(
+                                                              context,
+                                                              "You have bookings on this schedule, which may be lost if you delete it. Are you sure you want to delete the schedule ?",
+                                                              () {
+                                                                BlocProvider.of<
+                                                                            GeneratedSchedulesBloc>(
+                                                                        context)
+                                                                    .add(DeleteGeneratedSchedules(
+                                                                        scheduleId: schedule
+                                                                            .scheduleId
+                                                                            .toString()));
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                            );
+                                                          },
+                                                          child: const Icon(
+                                                              CupertinoIcons
+                                                                  .delete),
+                                                        )
+                                                        // Column(
+                                                        //   children: [
+                                                        //     PopupMenuButton(
+                                                        //       iconSize:
+                                                        //           size.width > 450
+                                                        //               ? 14.sp
+                                                        //               : 20.sp,
+                                                        //       icon: Icon(
+                                                        //         Icons.more_vert,
+                                                        //         color: kMainColor,
+                                                        //       ),
+                                                        //       itemBuilder: (context) =>
+                                                        //           <PopupMenuEntry<
+                                                        //               dynamic>>[
+                                                        //         PopupMenuItem(
+                                                        //           onTap: () {
+                                                        //             GeneralServices
+                                                        //                 .instance
+                                                        //                 .appCloseDialogue(
+                                                        //               context,
+                                                        //               "Are you sure want to delete this schedule?",
+                                                        //               () {
+                                                        // BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
+                                                        //     scheduleId: schedule
+                                                        //         .scheduleId
+                                                        //         .toString()));
+                                                        // Navigator.pop(
+                                                        //     context);
+                                                        //               },
+                                                        //             );
+                                                        //           },
+                                                        //           child: Text(
+                                                        //             "Delete",
+                                                        //             style: size.width >
+                                                        //                     450
+                                                        //                 ? blackTabMainText
+                                                        //                 : blackMainText,
+                                                        //             overflow:
+                                                        //                 TextOverflow
+                                                        //                     .ellipsis,
+                                                        //           ),
+                                                        //         ),
+                                                        //       ],
+                                                        //     ),
+                                                        //   ],
+                                                        // ),
+                                                      ],
                                                     ),
                                                   ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      } else {
-                                        return const Center(
-                                          child: Text("Unexpected state"),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: Text("Unexpected state"),
+                                    );
+                                  }
+                                },
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    );
-                  } else {
-                    return const Center(
-                      child: Text("Unexpected state"),
-                    );
-                  }
-                },
-              ),
-            ),
+                      ),
+                    ),
+                  ],
+                )
+                //   } else {
+                //     return const Center(
+                //       child: Text("Unexpected state"),
+                //     );
+                //   }
+                // },
+                // ),
+                ),
           ),
         ),
       ),
