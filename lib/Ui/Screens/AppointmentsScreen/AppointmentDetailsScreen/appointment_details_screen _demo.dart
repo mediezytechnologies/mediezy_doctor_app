@@ -1030,8 +1030,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ? InkWell(
                                         onTap: () async {
                                           FocusScope.of(context).unfocus();
+                                          //check condition//.......
 
-                                          // Check if any of the three conditions are met
+                    
                                           if (currentPosition ==
                                                   listLength - 1 ||
                                               currentPosition <
@@ -1041,7 +1042,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   currentPosition == 0)) {
                                             isConditionMet = true;
                                             isWaitingForCheckout =
-                                                true; // Set this flag to true when the condition is met
+                                                true; 
                                           }
 
                                           BlocProvider.of<
