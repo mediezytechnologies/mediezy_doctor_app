@@ -51,7 +51,7 @@ class _ScanningReportScreenState extends State<ScanningReportScreen> {
           if (getUploadedScanReportModel.documentData == null) {
             return Center(
               child: Image(
-                image: const AssetImage("assets/images/no_data___.jpg"),
+                image: const AssetImage("assets/images/icone.png"),
                 height: 300.h,
                 width: 300.w,
               ),

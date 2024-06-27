@@ -110,7 +110,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                         height: 50.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: isClickedManage ? Colors.grey : kMainColor,
+                          color: kMainColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Center(
@@ -172,11 +172,15 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                     if (state is DeleteTokensLoaded) {
                       GeneralServices.instance.showSuccessMessage(
                           context, "Remove Token Successfull");
+
                       BlocProvider.of<GetTokenBloc>(context).add(
                         FetchTokens(
                             date: formatDate(),
                             clinicId: dController.initialIndex.value),
                       );
+                      Future.delayed(const Duration(seconds: 3), () {
+                        Navigator.pop(context);
+                      });
                     }
                     if (state is DeleteTokensError) {
                       GeneralServices.instance

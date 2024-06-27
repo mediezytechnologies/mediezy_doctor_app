@@ -14,17 +14,17 @@ class PatientsGetBloc extends Bloc<PatientsGetEvent, PatientsGetState> {
   PatientScreenApi patientScreenApi = PatientScreenApi();
 
   PatientsGetBloc() : super(PatientsGetInitial()) {
-    on<FetchPatients>((event, emit) async {
-      emit(PatientsGetLoading());
-      try {
-        patientsGetModel =
-            await patientScreenApi.getPatients(clinicId: event.clinicId);
-        emit(PatientsGetLoaded());
-      } catch (error) {
-        log("<<<<<<<<<<Error>>>>>>>>>>$error");
-        emit(PatientsGetError());
-      }
-    });
+    // on<FetchPatients>((event, emit) async {
+    //   emit(PatientsGetLoading());
+    //   try {
+    //     patientsGetModel =
+    //         await patientScreenApi.getPatients(clinicId: event.clinicId);
+    //     emit(PatientsGetLoaded());
+    //   } catch (error) {
+    //     log("<<<<<<<<<<Error>>>>>>>>>>$error");
+    //     emit(PatientsGetError());
+    //   }
+    // });
 
     //Sort patients
 

@@ -49,7 +49,8 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
- final _fomkey = GlobalKey<FormState>();
+
+  // final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
@@ -68,7 +69,6 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Check if there's any selected value from previous screen
     String? selectedValue =
         ModalRoute.of(context)!.settings.arguments as String?;
     if (selectedValue != null) {
@@ -77,7 +77,8 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
       });
     }
   }
-   double? patientNumber;
+
+  double? patientNumber;
 
   int selectedStart = -1;
   int selectedCome = -1;
@@ -125,38 +126,23 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                 CommonButtonWidget(
                     title: "Book Token",
                     onTapFunction: () {
-                      //   double patientNumber;
-                      //     try {
-                      //   patientNumber = double.parse(heightController.text);
-                      //   if (patientNumber > 250) {
-                      //     patientNumber.add(
-                      //         "Height is greater than 250cm please re-check");
-
-                      //     isValid = false;
-                      //   }
-                      // } catch (e) {
-                      //   heightValue = 0;
-                      // }
                       if (patientNameController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient name");
                       } else if (patientAgeController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient age");
-                      } else if (patientContactNumberController.text.isEmpty) {
-                        GeneralServices.instance.showErrorMessage(
-                            context, "Please fill patient contact number");
-                      } 
-                      // else if (patientContactNumberControlle ) {
-                      //   GeneralServices.instance.showErrorMessage(
-                      //       context, "Please fill patient contact number");
-                      // } 
-                      else if (selectedSymptoms.isEmpty) {
-                        GeneralServices.instance.showErrorMessage(
-                            context, "Please select symptoms");
+                      } else if (patientContactNumberController.text.isEmpty ||
+                          patientContactNumberController.text.length != 10) {
+                        GeneralServices.instance.showErrorMessage(context,
+                            "Please fill a valid patient contact number");
+                      } else if (selectedSymptoms.isEmpty &&
+                          appointmentForController.text.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(context,
+                            "Please select symptoms or type appointment for");
                       } else if (selectedStart == -1) {
                         GeneralServices.instance.showErrorMessage(
-                            context, "Please select When it's comes");
+                            context, "Please select When it comes");
                       } else if (selectedCome == -1) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select How Frequently");
@@ -256,7 +242,6 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   flex: 2,
                                   child: SizedBox(
                                     child: TextFormField(
-                                      
                                       style: TextStyle(
                                           fontSize:
                                               size.width > 450 ? 11.sp : 14.sp),
@@ -318,7 +303,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                         hintStyle: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
-                                        hintText: "25 age",
+                                        hintText: "25 years",
                                         filled: true,
                                         fillColor: kCardColor,
                                         border: OutlineInputBorder(
@@ -347,7 +332,10 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     child: TextFormField(
                                       onChanged: (value) {
                                         setState(() {
-                                          patientNumber =double.parse(patientContactNumberController.text);
+                                          patientNumber = double.tryParse(
+                                                  patientContactNumberController
+                                                      .text) ??
+                                              0.0;
                                         });
                                       },
                                       style: TextStyle(
@@ -362,9 +350,12 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       focusNode:
                                           patientContactNumberFocusController,
                                       validator: (value) {
-                                        if (value!.isEmpty ||
-                                            value.length < 10) {
+                                        if (value!.isEmpty) {
                                           return "Phone number is missing";
+                                        } else if (value.length < 10) {
+                                          return "Phone number must be 10 digits";
+                                        } else if (value.length > 10) {
+                                          return "Phone number cannot exceed 10 digits";
                                         } else {
                                           return null;
                                         }
@@ -388,6 +379,56 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     ),
                                   ),
                                 ),
+
+                                // Expanded(
+                                //   flex: 2,
+                                //   child: SizedBox(
+                                //     child: TextFormField(
+                                //       onChanged: (value) {
+                                //         setState(() {
+                                //           patientNumber = double.parse(
+                                //               patientContactNumberController
+                                //                   .text);
+                                //         });
+                                //       },
+                                //       style: TextStyle(
+                                //           fontSize:
+                                //               size.width > 450 ? 12.sp : 14.sp),
+                                //       cursorColor: kMainColor,
+                                //       controller:
+                                //           patientContactNumberController,
+                                //       keyboardType: TextInputType.phone,
+                                //       textInputAction: TextInputAction.done,
+                                //       maxLength: 10,
+                                //       focusNode:
+                                //           patientContactNumberFocusController,
+                                //       validator: (value) {
+                                //         if (value!.isEmpty ||
+                                //             value.length < 10) {
+                                //           return "Phone number is missing";
+                                //         } else {
+                                //           return null;
+                                //         }
+                                //       },
+                                //       decoration: InputDecoration(
+                                //         contentPadding: EdgeInsets.symmetric(
+                                //             vertical: 10.h),
+                                //         counterText: "",
+                                //         hintStyle: size.width > 450
+                                //             ? greyTab10B600
+                                //             : grey13B600,
+                                //         hintText: "Enter patient Phone number",
+                                //         filled: true,
+                                //         fillColor: kCardColor,
+                                //         border: OutlineInputBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(4),
+                                //           borderSide: BorderSide.none,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 const HorizontalSpacingWidget(width: 10),
                                 Expanded(
                                   flex: 1,
@@ -456,13 +497,17 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             Container(
                               width: double.infinity,
                               padding: EdgeInsets.symmetric(vertical: 10.h),
-                           //   color:Color.fromARGB(255, 255, 255, 255),
+                              //   color:Color.fromARGB(255, 255, 255, 255),
                               child: Column(
-                                
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Symptoms",  style: size.width > 450 ? greyTabMain : greyMain,),
-                                   const VerticalSpacingWidget(height: 5),
+                                  Text(
+                                    "Symptoms",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  const VerticalSpacingWidget(height: 5),
                                   Wrap(
                                     children: List.generate(
                                       getSymptomsModel.symptoms!.length,
