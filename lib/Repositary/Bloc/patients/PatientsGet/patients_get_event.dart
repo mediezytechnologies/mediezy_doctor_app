@@ -3,12 +3,11 @@ part of 'patients_get_bloc.dart';
 @immutable
 abstract class PatientsGetEvent {}
 
-class FetchPatients extends PatientsGetEvent {
-  final String clinicId;
+// class FetchPatients extends PatientsGetEvent {
+//   final String clinicId;
 
-  FetchPatients({required this.clinicId});
-}
-
+//   FetchPatients({required this.clinicId});
+// }
 
 class FetchSortPatients extends PatientsGetEvent {
   final String sort;

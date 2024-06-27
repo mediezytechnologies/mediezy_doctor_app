@@ -58,7 +58,7 @@ class _DischargeSummaryScreenState extends State<DischargeSummaryScreen> {
           dischargeSummaryModel = BlocProvider.of<DischargeSummaryBloc>(context)
               .dischargeSummaryModel;
           return dischargeSummaryModel.documentData == null
-              ? Image.asset("assets/images/no_data.jpg")
+              ? Image.asset("assets/images/icone.png")
               : ListView.separated(
                   padding: EdgeInsets.zero,
                   itemCount: dischargeSummaryModel.documentData!.length,
