@@ -113,7 +113,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       //! first section
                       Container(

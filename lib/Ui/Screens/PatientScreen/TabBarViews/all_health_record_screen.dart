@@ -52,7 +52,7 @@ class _AllHealthRecordScreenState extends State<AllHealthRecordScreen> {
           if (healthRecordsModel.documentData == null) {
             return Center(
               child: Image(
-                image: const AssetImage("assets/images/icone.png"),
+                image: const AssetImage("assets/images/no_data___.jpg"),
                 height: 300.h,
                 width: 300.w,
               ),

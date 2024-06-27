@@ -82,7 +82,7 @@ class _ReservationScreenState extends State<ReservationScreen>
     final size = MediaQuery.of(context).size;
     Color eveningContainerColor;
     return Scaffold(
-      backgroundColor: kScaffoldColor,
+      backgroundColor: kCardColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
@@ -163,6 +163,83 @@ class _ReservationScreenState extends State<ReservationScreen>
               selectedLebelSize: size.width > 450 ? 11.sp : 15.sp,
               tabText1: "Reserve",
               tabText2: "Un reserve"),
+          // VerticalSpacingWidget(height: 10.h),
+          // Container(
+          //   height: size.width > 450 ? 60.h : 40.h,
+          //   margin: EdgeInsets.symmetric(horizontal: 15.w),
+          //   decoration: const BoxDecoration(
+          //       color: Color.fromARGB(131, 187, 222, 251),
+          //       borderRadius: BorderRadius.all(Radius.circular(10))),
+          //   child: TabBar(
+          //     onTap: (value) {
+          //       setState(() {
+          //         visible = value;
+          //       });
+          //       if (tabFirstController.index == 0) {
+          //         BlocProvider.of<GetTokenBloc>(context).add(
+          //           FetchTokens(
+          //               date: formatDate(),
+          //               clinicId: dController.initialIndex.value),
+          //         );
+          //         resetSelectedTokens();
+          //       }
+          //       BlocProvider.of<ReserveTokenBloc>(context).add(
+          //           FetchReservedTokens(
+          //               fromDate: DateFormat('yyy-MM-dd')
+          //                   .format(selectedunreserveDate),
+          //               toDate:
+          //                   DateFormat('yyy-MM-dd').format(unreserveendDate),
+          //               clinicId: dController.initialIndex.value));
+          //     },
+          //     controller: tabFirstController,
+          //     physics: const ClampingScrollPhysics(),
+          //     // padding: EdgeInsets.only(
+          //     //     top: 10.h, left: 10.w, right: 10.w, bottom: 10.h),
+          //     dividerColor: Colors.transparent,
+          //     unselectedLabelColor: kTextColor,
+          //     unselectedLabelStyle: TextStyle(
+          //       fontSize: size.width > 450 ? 10.sp : 13.sp,
+          //     ),
+          //     labelStyle: TextStyle(
+          //       fontSize: size.width > 450 ? 11.sp : 15.sp,
+          //       fontWeight: FontWeight.w600,
+          //       color: Colors.white,
+          //     ),
+          //     indicatorSize: TabBarIndicatorSize.tab,
+          //     indicator: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: kMainColor,
+          //     ),
+          //     tabs: [
+          //       //! reserve
+          //       Tab(
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(30),
+          //           ),
+          //           child: const Align(
+          //             alignment: Alignment.center,
+          //             child: Text(
+          //               "Reserve",
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       //! unreserve
+          //       Tab(
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(30),
+          //           ),
+          //           child: const Align(
+          //             alignment: Alignment.center,
+          //             child: Text("Un reserve"),
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
           const VerticalSpacingWidget(height: 5),
           Expanded(
             child: TabBarView(
@@ -180,9 +257,6 @@ class _ReservationScreenState extends State<ReservationScreen>
                             date: formatDate(),
                             clinicId: dController.initialIndex.value),
                       );
-                      Future.delayed(const Duration(seconds: 3), () {
-                        Navigator.pop(context);
-                      });
                     }
                     if (state is ReserveTokenError) {
                       GeneralServices.instance
@@ -593,8 +667,7 @@ class _ReservationScreenState extends State<ReservationScreen>
                                               ),
                                               itemBuilder: (context, index) {
                                                 Color morningContainerColor =
-                                                    kCardColor;
-
+                                                    kCardColor; // Default color
                                                 if (getTokenModel
                                                             .schedule!
                                                             .schedule1![index]
@@ -613,7 +686,8 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                         .isReserved ==
                                                     1) {
                                                   morningContainerColor = Colors
-                                                      .greenAccent.shade100;
+                                                      .greenAccent
+                                                      .shade100; // Change color to green
                                                 } else if (selectedTokenNumbers
                                                     .contains(getTokenModel
                                                         .schedule!
@@ -625,50 +699,46 @@ class _ReservationScreenState extends State<ReservationScreen>
                                                 }
 
                                                 return InkWell(
-                                                  onTap:
-                                                      getTokenModel
-                                                                      .schedule!
-                                                                      .schedule1![
-                                                                          index]
-                                                                      .isTimeout ==
-                                                                  1 ||
-                                                              getTokenModel
-                                                                      .schedule!
-                                                                      .schedule1![
-                                                                          index]
-                                                                      .isBooked ==
-                                                                  1 ||
-                                                              getTokenModel
-                                                                      .schedule!
-                                                                      .schedule1![
-                                                                          index]
-                                                                      .isReserved ==
-                                                                  1
-                                                          ? null
-                                                          : () {
-                                                              setState(() {
-                                                                if (selectedTokenNumbers.contains(getTokenModel
+                                                  onTap: getTokenModel
+                                                                  .schedule!
+                                                                  .schedule1![
+                                                                      index]
+                                                                  .isTimeout ==
+                                                              1 ||
+                                                          getTokenModel
+                                                                  .schedule!
+                                                                  .schedule1![
+                                                                      index]
+                                                                  .isBooked ==
+                                                              1
+                                                      ? null
+                                                      : () {
+                                                          setState(() {
+                                                            if (selectedTokenNumbers
+                                                                .contains(getTokenModel
                                                                     .schedule!
                                                                     .schedule1![
                                                                         index]
                                                                     .tokenNumber!
                                                                     .toString())) {
-                                                                  selectedTokenNumbers.remove(getTokenModel
+                                                              selectedTokenNumbers
+                                                                  .remove(getTokenModel
                                                                       .schedule!
                                                                       .schedule1![
                                                                           index]
                                                                       .tokenNumber!
                                                                       .toString());
-                                                                } else {
-                                                                  selectedTokenNumbers.add(getTokenModel
+                                                            } else {
+                                                              selectedTokenNumbers
+                                                                  .add(getTokenModel
                                                                       .schedule!
                                                                       .schedule1![
                                                                           index]
                                                                       .tokenNumber!
                                                                       .toString());
-                                                                }
-                                                              });
-                                                            },
+                                                            }
+                                                          });
+                                                        },
                                                   child: TokenCardRemoveWidget(
                                                     color:
                                                         morningContainerColor,
