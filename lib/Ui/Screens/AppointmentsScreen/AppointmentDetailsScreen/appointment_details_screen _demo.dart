@@ -118,9 +118,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   String? imagePath;
 
   bool isFirstCheckIn = true;
-  bool isConditionMet = false;
-  bool isWaitingForCheckout = false;
-  
+  bool isCheckoutTapped = false;
+  bool isBackActionDisabled = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -186,33 +186,68 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        if (isConditionMet && isWaitingForCheckout) {
+        if (!isCheckoutTapped) {
+          return true;
+        }
+
+        if (isBackActionDisabled) {
+          // If we're within the 3-second window after tapping checkout, prevent back action
+          return false;
+        }
+
+        // Your existing double-tap to exit logic
+        final now = DateTime.now();
+        const maxDuration = Duration(seconds: 1);
+        final isWarning =
+            lastpressed == null || now.difference(lastpressed!) > maxDuration;
+        if (isWarning) {
+          lastpressed = DateTime.now();
+          final snackBar = SnackBar(
+            width: 200.w,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r)),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: const Text('Double Tap to back Screen'),
+            duration: maxDuration,
+          );
+          ScaffoldMessenger.of(context)
+            ..removeCurrentSnackBar()
+            ..showSnackBar(snackBar);
           return false;
         } else {
-          final now = DateTime.now();
-          const maxDuration = Duration(seconds: 1);
-          final isWarning =
-              lastpressed == null || now.difference(lastpressed!) > maxDuration;
-          if (isWarning) {
-            lastpressed = DateTime.now();
-            final snackBar = SnackBar(
-              width: 200.w,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r)),
-              backgroundColor: Colors.black,
-              behavior: SnackBarBehavior.floating,
-              content: const Text('  Duble Tap to back Screen '),
-              duration: maxDuration,
-            );
-            ScaffoldMessenger.of(context)
-              ..removeCurrentSnackBar()
-              ..showSnackBar(snackBar);
-            return false;
-          } else {
-            return true;
-          }
+          return true;
         }
       },
+      // return WillPopScope(
+      //   onWillPop: () async {
+      //     if (isConditionMet && isWaitingForCheckout) {
+      //       return false;
+      //     } else {
+      //       final now = DateTime.now();
+      //       const maxDuration = Duration(seconds: 1);
+      //       final isWarning =
+      //           lastpressed == null || now.difference(lastpressed!) > maxDuration;
+      //       if (isWarning) {
+      //         lastpressed = DateTime.now();
+      //         final snackBar = SnackBar(
+      //           width: 200.w,
+      //           shape: RoundedRectangleBorder(
+      //               borderRadius: BorderRadius.circular(10.r)),
+      //           backgroundColor: Colors.black,
+      //           behavior: SnackBarBehavior.floating,
+      //           content: const Text('  Duble Tap to back Screen '),
+      //           duration: maxDuration,
+      //         );
+      //         ScaffoldMessenger.of(context)
+      //           ..removeCurrentSnackBar()
+      //           ..showSnackBar(snackBar);
+      //         return false;
+      //       } else {
+      //         return true;
+      //       }
+      //     }
+      //   },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
@@ -222,7 +257,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             : const SizedBox(),
         appBar: AppBar(
           automaticallyImplyLeading:
-              isConditionMet && isWaitingForCheckout ? false : true,
+              isCheckoutTapped && isBackActionDisabled ? false : true,
           title: const Text("Appointment Details"),
           centerTitle: true,
         ),
@@ -1032,8 +1067,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         onTap: () async {
                                           FocusScope.of(context).unfocus();
                                           //check condition//.......
+                                          setState(() {
+                                            isCheckoutTapped = true;
+                                            isBackActionDisabled = true;
+                                          });
 
-                    
                                           if (currentPosition ==
                                                   listLength - 1 ||
                                               currentPosition <
@@ -1041,9 +1079,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               (currentPosition ==
                                                       listLength - 1 &&
                                                   currentPosition == 0)) {
-                                            isConditionMet = true;
-                                            isWaitingForCheckout =
-                                                true; 
+                                            // isConditionMet = true;
+                                            // isWaitingForCheckout =
+                                            //     true;
                                           }
 
                                           BlocProvider.of<
@@ -1081,6 +1119,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           await Future.delayed(
                                                   const Duration(seconds: 3))
                                               .then((value) {
+                                            setState(() {
+                                              isBackActionDisabled = false;
+                                            });
                                             if (ctr.bookingData[index]
                                                     .isCheckedout !=
                                                 1) {
@@ -1163,7 +1204,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             }
 
                                             // Reset isWaitingForCheckout to false after 3 seconds
-                                            isWaitingForCheckout = false;
+                                         isCheckoutTapped = false;
                                           });
                                         },
                                         child: Container(
@@ -1209,7 +1250,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ),
                                         ),
                                       )
-                                 
                                     : Container(),
                                 VerticalSpacingWidget(
                                     height: Platform.isIOS ? 30 : 10),
