@@ -1,10 +1,9 @@
 class GetAllCompletedAppointmentsModel {
   GetAllCompletedAppointmentsModel({
-    this.success,
-    this.appointments,
-    this.code,
-    this.message,
-  });
+      this.success, 
+      this.appointments, 
+      this.code, 
+      this.message,});
 
   GetAllCompletedAppointmentsModel.fromJson(dynamic json) {
     success = json['success'];
@@ -32,41 +31,33 @@ class GetAllCompletedAppointmentsModel {
     map['message'] = message;
     return map;
   }
+
 }
 
 class Appointments {
   Appointments({
-    this.id,
-    this.patientId,
-    this.userId,
-    this.mediezyPatientId,
-    this.patientName,
-    this.tokenNumber,
-    this.userImage,
-    this.age,
-    this.displayAge,
-    this.scheduleType,
-    this.startingtime,
-    this.mainSymptoms,
-    this.otherSymptoms,
-    this.onlineStatus,
-  });
+      this.id, 
+      this.mediezyPatientId, 
+      this.patientName, 
+      this.tokenNumber, 
+      this.userImage, 
+      this.age, 
+      this.scheduleType, 
+      this.startingtime, 
+      this.mainSymptoms, 
+      this.otherSymptoms, 
+      this.onlineStatus,});
 
   Appointments.fromJson(dynamic json) {
     id = json['id'];
-    patientId = json['patient_id'];
-    userId = json['user_id'];
     mediezyPatientId = json['mediezy_patient_id'];
     patientName = json['PatientName'];
     tokenNumber = json['TokenNumber'];
     userImage = json['user_image'];
     age = json['Age'];
-    displayAge = json['displayAge'];
     scheduleType = json['schedule_type'];
     startingtime = json['Startingtime'];
-    mainSymptoms = json['main_symptoms'] != null
-        ? MainSymptoms.fromJson(json['main_symptoms'])
-        : null;
+    mainSymptoms = json['main_symptoms'] != null ? MainSymptoms.fromJson(json['main_symptoms']) : null;
     if (json['other_symptoms'] != null) {
       otherSymptoms = [];
       json['other_symptoms'].forEach((v) {
@@ -76,14 +67,11 @@ class Appointments {
     onlineStatus = json['online_status'];
   }
   int? id;
-  int? patientId;
-  int? userId;
   String? mediezyPatientId;
   String? patientName;
   int? tokenNumber;
   String? userImage;
   dynamic age;
-  dynamic displayAge;
   String? scheduleType;
   String? startingtime;
   MainSymptoms? mainSymptoms;
@@ -93,14 +81,11 @@ class Appointments {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['patient_id'] = patientId;
-    map['user_id'] = userId;
     map['mediezy_patient_id'] = mediezyPatientId;
     map['PatientName'] = patientName;
     map['TokenNumber'] = tokenNumber;
     map['user_image'] = userImage;
     map['Age'] = age;
-    map['displayAge'] = displayAge;
     map['schedule_type'] = scheduleType;
     map['Startingtime'] = startingtime;
     if (mainSymptoms != null) {
@@ -112,12 +97,12 @@ class Appointments {
     map['online_status'] = onlineStatus;
     return map;
   }
+
 }
 
 class OtherSymptoms {
   OtherSymptoms({
-    this.symtoms,
-  });
+      this.symtoms,});
 
   OtherSymptoms.fromJson(dynamic json) {
     symtoms = json['symtoms'];
@@ -129,12 +114,12 @@ class OtherSymptoms {
     map['symtoms'] = symtoms;
     return map;
   }
+
 }
 
 class MainSymptoms {
   MainSymptoms({
-    this.mainsymptoms,
-  });
+      this.mainsymptoms,});
 
   MainSymptoms.fromJson(dynamic json) {
     mainsymptoms = json['Mainsymptoms'];
@@ -146,4 +131,5 @@ class MainSymptoms {
     map['Mainsymptoms'] = mainsymptoms;
     return map;
   }
+
 }
