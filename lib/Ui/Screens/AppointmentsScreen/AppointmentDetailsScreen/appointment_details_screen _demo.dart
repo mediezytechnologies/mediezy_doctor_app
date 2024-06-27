@@ -700,6 +700,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 // },
                                 // child: Text("data")),
                                 //MedicineWidget
+                                //
+                                //changes
                                 Obx(() {
                                   if (getAllAppointmentController
                                       .loding.value) {
