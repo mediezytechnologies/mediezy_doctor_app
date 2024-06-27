@@ -126,8 +126,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                       selectedunreserveDate),
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
-                                              clinicId:
-                                                  dController.initialIndex.value));
+                                              clinicId: dController
+                                                  .initialIndex.value));
                                     },
                                   )
                                 : GeneralServices.instance.selectDate(
@@ -145,8 +145,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                       selectedunreserveDate),
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
-                                              clinicId:
-                                                  dController.initialIndex.value));
+                                              clinicId: dController
+                                                  .initialIndex.value));
                                     },
                                   );
                           },
@@ -189,7 +189,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex.value));
+                                                            .initialIndex
+                                                            .value));
                                               },
                                             )
                                           : GeneralServices.instance.selectDate(
@@ -215,7 +216,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex.value));
+                                                            .initialIndex
+                                                            .value));
                                               },
                                             );
                                     },
@@ -243,6 +245,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                 ? GeneralServices.instance.selectIosDate(
                                     context: context,
                                     date: unreserveendDate,
+                                    minDate: selectedunreserveDate,
                                     onDateSelected: (DateTime picked) {
                                       setState(() {
                                         unreserveendDate = picked;
@@ -255,13 +258,14 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                       selectedunreserveDate),
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
-                                              clinicId:
-                                                  dController.initialIndex.value));
+                                              clinicId: dController
+                                                  .initialIndex.value));
                                     },
                                   )
                                 : GeneralServices.instance.selectDate(
                                     context: context,
                                     date: unreserveendDate,
+                                    minDate: selectedunreserveDate,
                                     onDateSelected: (DateTime picked) {
                                       setState(() {
                                         unreserveendDate = picked;
@@ -274,8 +278,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                       selectedunreserveDate),
                                               toDate: DateFormat('yyy-MM-dd')
                                                   .format(unreserveendDate),
-                                              clinicId:
-                                                  dController.initialIndex.value));
+                                              clinicId: dController
+                                                  .initialIndex.value));
                                     },
                                   );
                           },
@@ -298,6 +302,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                               .selectIosDate(
                                               context: context,
                                               date: unreserveendDate,
+                                              minDate: selectedunreserveDate,
                                               onDateSelected:
                                                   (DateTime picked) {
                                                 setState(() {
@@ -317,12 +322,14 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex.value));
+                                                            .initialIndex
+                                                            .value));
                                               },
                                             )
                                           : GeneralServices.instance.selectDate(
                                               context: context,
                                               date: unreserveendDate,
+                                              minDate: selectedunreserveDate,
                                               onDateSelected:
                                                   (DateTime picked) {
                                                 setState(() {
@@ -342,7 +349,8 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                                             .format(
                                                                 unreserveendDate),
                                                         clinicId: dController
-                                                            .initialIndex.value));
+                                                            .initialIndex
+                                                            .value));
                                               },
                                             );
                                     },

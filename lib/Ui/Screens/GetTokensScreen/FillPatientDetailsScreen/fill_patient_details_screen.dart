@@ -303,7 +303,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                         hintStyle: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
-                                        hintText: "25 age",
+                                        hintText: "25 years",
                                         filled: true,
                                         fillColor: kCardColor,
                                         border: OutlineInputBorder(

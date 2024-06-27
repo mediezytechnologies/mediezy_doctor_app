@@ -25,7 +25,7 @@ class _AllVitalsScreenState extends State<AllVitalsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kScaffoldColor,
       body: BlocBuilder<GetAllVitalsBloc, GetAllVitalsState>(
         builder: (context, state) {
           if (state is GetAllVitalsLoading) {

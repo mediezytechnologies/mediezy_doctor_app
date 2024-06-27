@@ -120,6 +120,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   bool isFirstCheckIn = true;
   bool isConditionMet = false;
   bool isWaitingForCheckout = false;
+  bool hasPressedCheckout = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -178,38 +179,117 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final bokingAppointmentLabController =
       Get.put(BookingAppointmentLabController());
 
+  // final ImagePicker imagePicker = ImagePicker();
+  List<File> imageFiles = [];
+
+  Future<void> pickImage(ImageSource source) async {
+    final pickedFile = await imagePicker.pickImage(
+      source: source,
+      imageQuality: 30,
+    );
+
+    if (pickedFile == null) return;
+
+    setState(() {
+      imageFiles.add(File(pickedFile.path));
+      log("${pickedFile.path}======= image");
+    });
+  }
+
+  void showPickerOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Photo Library'),
+                onTap: () {
+                  pickImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('Camera'),
+                onTap: () {
+                  pickImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  List<String> getImagePaths() {
+    return imageFiles.map((file) => file.path).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     log("current position then : $currentPosition");
     final size = MediaQuery.of(context).size;
     // ignore: deprecated_member_use
     return WillPopScope(
+      // onWillPop: () async {
+      //   if (isConditionMet && isWaitingForCheckout) {
+      //     return false;
+      //   } else {
+      //     final now = DateTime.now();
+      //     const maxDuration = Duration(seconds: 1);
+      //     final isWarning =
+      //         lastpressed == null || now.difference(lastpressed!) > maxDuration;
+      //     if (isWarning) {
+      //       lastpressed = DateTime.now();
+      //       final snackBar = SnackBar(
+      //         width: 200.w,
+      //         shape: RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.circular(10.r)),
+      //         backgroundColor: Colors.black,
+      //         behavior: SnackBarBehavior.floating,
+      //         content: const Text('  Double Tap to back Screen '),
+      //         duration: maxDuration,
+      //       );
+      //       ScaffoldMessenger.of(context)
+      //         ..removeCurrentSnackBar()
+      //         ..showSnackBar(snackBar);
+      //       return false;
+      //     } else {
+      //       return true;
+      //     }
+      //   }
+      // },
       onWillPop: () async {
-        if (isConditionMet && isWaitingForCheckout) {
+        if (!hasPressedCheckout) {
+          return true; // Allow immediate back navigation if checkout has not been pressed
+        }
+
+        final now = DateTime.now();
+        const maxDuration = Duration(seconds: 1);
+        final isWarning =
+            lastpressed == null || now.difference(lastpressed!) > maxDuration;
+        if (isWarning) {
+          lastpressed = DateTime.now();
+          final snackBar = SnackBar(
+            width: 200.w,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r)),
+            backgroundColor: Colors.black,
+            behavior: SnackBarBehavior.floating,
+            content: const Text('  Double Tap to back Screen '),
+            duration: maxDuration,
+          );
+          ScaffoldMessenger.of(context)
+            ..removeCurrentSnackBar()
+            ..showSnackBar(snackBar);
           return false;
         } else {
-          final now = DateTime.now();
-          const maxDuration = Duration(seconds: 1);
-          final isWarning =
-              lastpressed == null || now.difference(lastpressed!) > maxDuration;
-          if (isWarning) {
-            lastpressed = DateTime.now();
-            final snackBar = SnackBar(
-              width: 200.w,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r)),
-              backgroundColor: Colors.black,
-              behavior: SnackBarBehavior.floating,
-              content: const Text('  Duble Tap to back Screen '),
-              duration: maxDuration,
-            );
-            ScaffoldMessenger.of(context)
-              ..removeCurrentSnackBar()
-              ..showSnackBar(snackBar);
-            return false;
-          } else {
-            return true;
-          }
+          return true;
         }
       },
       child: Scaffold(
@@ -662,8 +742,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         ),
                                         IconButton(
                                           onPressed: () async {
-                                            await placePicImage();
-                                            setState(() {});
+                                            // await placePicImage();
+                                            showPickerOptions();
+                                            // setState(() {});
+                                            log(imageFiles.toString());
                                           },
                                           icon: Icon(
                                             Icons.upload_file_outlined,
@@ -678,74 +760,164 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   ),
                                 ),
                                 const VerticalSpacingWidget(height: 5),
-                                if (imagePath != null)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: kCardColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (ctx) =>
-                                                    ImageViewWidgetDemo(
-                                                        image: imagePath!),
+                                if (imageFiles.isNotEmpty)
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: imageFiles.length,
+                                    itemBuilder: (context, index) {
+                                      final file = imageFiles[index];
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: kCardColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 5.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (ctx) =>
+                                                        ImageViewWidgetDemo(
+                                                      image: file.path,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "View your uploaded image",
+                                                    style: size.width > 450
+                                                        ? TextStyle(
+                                                            fontSize: 11.sp,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.blue,
+                                                          )
+                                                        : TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors.blue,
+                                                          ),
+                                                  ),
+                                                  const HorizontalSpacingWidget(
+                                                      width: 10),
+                                                  Icon(
+                                                    Icons.image,
+                                                    color: Colors.blue,
+                                                    size: size.width > 450
+                                                        ? 20.sp
+                                                        : 28.sp,
+                                                  ),
+                                                ],
                                               ),
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "View your uploaded image",
-                                                style: size.width > 450
-                                                    ? TextStyle(
-                                                        fontSize: 11.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue,
-                                                      )
-                                                    : TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.blue,
-                                                      ),
-                                              ),
-                                              const HorizontalSpacingWidget(
-                                                  width: 10),
-                                              Icon(
-                                                Icons.image,
-                                                color: Colors.blue,
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  imageFiles.removeAt(index);
+                                                });
+                                              },
+                                              icon: Icon(
+                                                CupertinoIcons.clear_circled,
+                                                color: Colors.black,
                                                 size: size.width > 450
                                                     ? 20.sp
-                                                    : 28.sp,
+                                                    : 20.sp,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              imagePath = null;
-                                            });
-                                          },
-                                          icon: Icon(
-                                            CupertinoIcons.clear_circled,
-                                            color: Colors.black,
-                                            size: size.width > 450
-                                                ? 20.sp
-                                                : 20.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   ),
+
+                                // ElevatedButton(
+                                //   onPressed: () {
+                                //     List<String> imagePaths = getImagePaths();
+                                //     log(imagePaths.toString());
+                                //     // Use the imagePaths list as needed
+                                //   },
+                                //   child: Text('Get Image Paths'),
+                                // ),
+                                // if (imagePath != null)
+                                //   Container(
+                                //     decoration: BoxDecoration(
+                                //         color: kCardColor,
+                                //         borderRadius:
+                                //             BorderRadius.circular(10)),
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.spaceBetween,
+                                //       children: [
+                                //         InkWell(
+                                //           onTap: () {
+                                //             Navigator.push(
+                                //               context,
+                                //               MaterialPageRoute(
+                                //                 builder: (ctx) =>
+                                //                     ImageViewWidgetDemo(
+                                //                         image: imagePath!),
+                                //               ),
+                                //             );
+                                //           },
+                                //           child: Row(
+                                //             children: [
+                                //               Text(
+                                //                 "View your uploaded image",
+                                //                 style: size.width > 450
+                                //                     ? TextStyle(
+                                //                         fontSize: 11.sp,
+                                //                         fontWeight:
+                                //                             FontWeight.w600,
+                                //                         color: Colors.blue,
+                                //                       )
+                                //                     : TextStyle(
+                                //                         fontSize: 14.sp,
+                                //                         fontWeight:
+                                //                             FontWeight.w600,
+                                //                         color: Colors.blue,
+                                //                       ),
+                                //               ),
+                                //               const HorizontalSpacingWidget(
+                                //                   width: 10),
+                                //               Icon(
+                                //                 Icons.image,
+                                //                 color: Colors.blue,
+                                //                 size: size.width > 450
+                                //                     ? 20.sp
+                                //                     : 28.sp,
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //         IconButton(
+                                //           onPressed: () {
+                                //             setState(() {
+                                //               imagePath = null;
+                                //             });
+                                //           },
+                                //           icon: Icon(
+                                //             CupertinoIcons.clear_circled,
+                                //             color: Colors.black,
+                                //             size: size.width > 450
+                                //                 ? 20.sp
+                                //                 : 20.sp,
+                                //           ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
 
                                 const VerticalSpacingWidget(height: 5),
 
@@ -1030,8 +1202,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ? InkWell(
                                         onTap: () async {
                                           FocusScope.of(context).unfocus();
-                                          //check condition//.......
 
+                                          // Check condition
                                           if (currentPosition ==
                                                   listLength - 1 ||
                                               currentPosition <
@@ -1042,6 +1214,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                             isConditionMet = true;
                                             isWaitingForCheckout = true;
                                           }
+
+                                          hasPressedCheckout =
+                                              true; // Set the flag when checkout button is pressed
 
                                           BlocProvider.of<
                                                       AddAllAppointmentDetailsBloc>(
@@ -1085,14 +1260,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                       listLength - 1 &&
                                                   currentPosition == 0) {
                                                 log("1111111111111111111111111111111111111");
-                                                handleCheckout(
-                                                  context,
-                                                  index,
-                                                );
+                                                handleCheckout(context, index);
                                                 estimateUpdateCheckout(
-                                                  context,
-                                                  index,
-                                                );
+                                                    context, index);
                                                 navigateToHome(context);
                                                 log("last section currentPosition: $currentPosition");
                                               } else if (currentPosition ==
@@ -1108,17 +1278,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 );
                                                 log("2222222222222222222222222222222222222222222");
 
-                                                handleCheckout(
-                                                  context,
-                                                  index,
-                                                );
+                                                handleCheckout(context, index);
                                                 Future.delayed(
                                                     const Duration(seconds: 8),
                                                     () {
                                                   estimateUpdateCheckout(
-                                                    context,
-                                                    index,
-                                                  );
+                                                      context, index);
                                                   navigateToHome(context);
                                                 });
                                                 refreshData(context);
@@ -1133,16 +1298,12 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   curve: Curves.easeInOut,
                                                 );
                                                 handleCheckout(
-                                                  context,
-                                                  currentPosition,
-                                                );
+                                                    context, currentPosition);
                                                 Future.delayed(
                                                     const Duration(seconds: 8),
                                                     () {
                                                   estimateUpdateCheckout(
-                                                    context,
-                                                    index,
-                                                  );
+                                                      context, index);
                                                 });
                                                 refreshData(context);
                                                 _scrollController.animateTo(
@@ -1159,10 +1320,144 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                               });
                                             }
 
-                                            // Reset isWaitingForCheckout to false after 3 seconds
                                             isWaitingForCheckout = false;
                                           });
                                         },
+                                        // onTap: () async {
+                                        //   FocusScope.of(context).unfocus();
+                                        //   //check condition//.......
+
+                                        //   if (currentPosition ==
+                                        //           listLength - 1 ||
+                                        //       currentPosition <
+                                        //           listLength - 1 ||
+                                        //       (currentPosition ==
+                                        //               listLength - 1 &&
+                                        //           currentPosition == 0)) {
+                                        //     isConditionMet = true;
+                                        //     isWaitingForCheckout = true;
+                                        //   }
+
+                                        //   BlocProvider.of<
+                                        //               AddAllAppointmentDetailsBloc>(
+                                        //           context)
+                                        //       .add(
+                                        //     AddAllAppointmentDetails(
+                                        //       labTestId:
+                                        //           getSelectedLabTestIds(),
+                                        //       scanTestId:
+                                        //           getSelectedScanTestIds(),
+                                        //       tokenId: ctr
+                                        //           .bookingData[index].tokenId
+                                        //           .toString(),
+                                        //       labId:
+                                        //           bokingAppointmentLabController
+                                        //               .initialSelectLabIndex
+                                        //               .toString(),
+                                        //       medicalshopId:
+                                        //           bokingAppointmentLabController
+                                        //               .initialMedicalStoreIndex
+                                        //               .toString(),
+                                        //       attachment: imagePath,
+                                        //       reviewAfter:
+                                        //           afterDaysController.text,
+                                        //       notes: noteController.text,
+                                        //       scanId:
+                                        //           bokingAppointmentLabController
+                                        //               .initialScaningCenerIndex
+                                        //               .toString(),
+                                        //     ),
+                                        //   );
+
+                                        //   // Wait for 3 seconds
+                                        //   await Future.delayed(
+                                        //           const Duration(seconds: 3))
+                                        //       .then((value) {
+                                        //     if (ctr.bookingData[index]
+                                        //             .isCheckedout !=
+                                        //         1) {
+                                        //       if (currentPosition ==
+                                        //               listLength - 1 &&
+                                        //           currentPosition == 0) {
+                                        //         log("1111111111111111111111111111111111111");
+                                        //         handleCheckout(
+                                        //           context,
+                                        //           index,
+                                        //         );
+                                        //         estimateUpdateCheckout(
+                                        //           context,
+                                        //           index,
+                                        //         );
+                                        //         navigateToHome(context);
+                                        //         log("last section currentPosition: $currentPosition");
+                                        //       } else if (currentPosition ==
+                                        //           listLength - 1) {
+                                        //         currentPosition--;
+                                        //         log("Last section: $currentPosition");
+
+                                        //         pageController.animateToPage(
+                                        //           currentPosition,
+                                        //           duration: const Duration(
+                                        //               milliseconds: 500),
+                                        //           curve: Curves.easeInOut,
+                                        //         );
+                                        //         log("2222222222222222222222222222222222222222222");
+
+                                        //         handleCheckout(
+                                        //           context,
+                                        //           index,
+                                        //         );
+                                        //         Future.delayed(
+                                        //             const Duration(seconds: 8),
+                                        //             () {
+                                        //           estimateUpdateCheckout(
+                                        //             context,
+                                        //             index,
+                                        //           );
+                                        //           navigateToHome(context);
+                                        //         });
+                                        //         refreshData(context);
+                                        //       } else if (currentPosition <
+                                        //           listLength - 1) {
+                                        //         log("33333333333333333333333333333333");
+                                        //         currentPosition + 1;
+                                        //         pageController.animateToPage(
+                                        //           currentPosition,
+                                        //           duration: const Duration(
+                                        //               milliseconds: 500),
+                                        //           curve: Curves.easeInOut,
+                                        //         );
+                                        //         handleCheckout(
+                                        //           context,
+                                        //           currentPosition,
+                                        //         );
+                                        //         Future.delayed(
+                                        //             const Duration(seconds: 8),
+                                        //             () {
+                                        //           estimateUpdateCheckout(
+                                        //             context,
+                                        //             index,
+                                        //           );
+                                        //         });
+                                        //         refreshData(context);
+                                        //         _scrollController.animateTo(
+                                        //           0.0,
+                                        //           duration: const Duration(
+                                        //               milliseconds: 500),
+                                        //           curve: Curves.easeInOut,
+                                        //         );
+                                        //       }
+                                        //       setState(() {
+                                        //         bookingPending = listLength -
+                                        //             1 -
+                                        //             currentPosition;
+                                        //       });
+                                        //     }
+
+                                        //     // Reset isWaitingForCheckout to false after 3 seconds
+                                        //     isWaitingForCheckout = false;
+                                        //   });
+                                        // },
                                         child: Container(
                                           height: 50.h,
                                           width: double.infinity,
@@ -1206,191 +1501,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ),
                                         ),
                                       )
-                                    // ? InkWell(
-                                    //     onTap: () async {
-                                    //       FocusScope.of(context).unfocus();
-                                    //       BlocProvider.of<
-                                    //                   AddAllAppointmentDetailsBloc>(
-                                    //               context)
-                                    //           .add(
-                                    //         AddAllAppointmentDetails(
-                                    //           labTestId:
-                                    //               getSelectedLabTestIds(),
-                                    //           scanTestId:
-                                    //               getSelectedScanTestIds(),
-                                    //           tokenId: getAppointmentsModel
-                                    //               .bookingData![index].tokenId
-                                    //               .toString(),
-                                    //           labId:
-                                    //               bokingAppointmentLabController
-                                    //                   .initialSelectLabIndex
-                                    //                   .toString(),
-                                    //           medicalshopId:
-                                    //               bokingAppointmentLabController
-                                    //                   .initialMedicalStoreIndex
-                                    //                   .toString(),
-                                    //           attachment: imagePath,
-                                    //           reviewAfter:
-                                    //               afterDaysController.text,
-                                    //           notes: noteController.text,
-                                    //           scanId:
-                                    //               bokingAppointmentLabController
-                                    //                   .initialScaningCenerIndex
-                                    //                   .toString(),
-                                    //         ),
-                                    //       );
-
-                                    //       // Wait for 2 seconds
-                                    //       await Future.delayed(
-                                    //               const Duration(seconds: 3))
-                                    //           .then((value) {
-                                    //         if (getAppointmentsModel
-                                    //                 .bookingData![index]
-                                    //                 .isCheckedout !=
-                                    //             1) {
-                                    //           if (currentPosition ==
-                                    //                   listLength - 1 &&
-                                    //               currentPosition == 0) {
-                                    //             log("1111111111111111111111111111111111111");
-                                    //             handleCheckout(
-                                    //                 context, index, true);
-                                    //                 estimateUpdateCheckout(context, index, false);
-                                    //             // BlocProvider.of<
-                                    //             //             AddCheckinOrCheckoutBloc>(
-                                    //             //         context)
-                                    //             //     .add(EstimateUpdateCheckout(
-                                    //             //         tokenId:
-                                    //             //             getAppointmentsModel
-                                    //             //                 .bookingData![
-                                    //             //                     index]
-                                    //             //                 .tokenId
-                                    //             //                 .toString()));
-                                    //             //isConditionMet = false;
-                                    //             navigateToHome(context);
-                                    //             log("last section currentPosition: $currentPosition");
-                                    //           } else if (currentPosition ==
-                                    //               listLength - 1) {
-                                    //             currentPosition--;
-                                    //             log("Last section: $currentPosition");
-
-                                    //             pageController.animateToPage(
-                                    //               currentPosition,
-                                    //               duration: const Duration(
-                                    //                   milliseconds: 500),
-                                    //               curve: Curves.easeInOut,
-                                    //             );
-                                    //             log("2222222222222222222222222222222222222222222");
-                                    //             handleCheckout(
-                                    //                 context, index, true);
-                                    //             Future.delayed(
-                                    //                 const Duration(
-                                    //                     seconds: 8), () {
-                                    //                         estimateUpdateCheckout(context, index, false);
-                                    //               // BlocProvider.of<
-                                    //               //             AddCheckinOrCheckoutBloc>(
-                                    //               //         context)
-                                    //               //     .add(EstimateUpdateCheckout(
-                                    //               //         tokenId:
-                                    //               //             getAppointmentsModel
-                                    //               //                 .bookingData![
-                                    //               //                     index]
-                                    //               //                 .tokenId
-                                    //               //                 .toString()));
-                                    //               navigateToHome(context);
-                                    //             });
-                                    //             refreshData(context);
-                                    //           } else if (currentPosition <
-                                    //               listLength - 1) {
-                                    //             log("33333333333333333333333333333333");
-                                    //             currentPosition + 1;
-                                    //             pageController.animateToPage(
-                                    //               currentPosition,
-                                    //               duration: const Duration(
-                                    //                   milliseconds: 500),
-                                    //               curve: Curves.easeInOut,
-                                    //             );
-                                    //             handleCheckout(context,
-                                    //                 currentPosition, true);
-                                    //             Future.delayed(
-                                    //                 const Duration(
-                                    //                     seconds: 8), () {
-                                    //                         estimateUpdateCheckout(context, index, false);
-                                    //               // BlocProvider.of<
-                                    //               //             AddCheckinOrCheckoutBloc>(
-                                    //               //         context)
-                                    //               //     .add(EstimateUpdateCheckout(
-                                    //               //         tokenId:
-                                    //               //             getAppointmentsModel
-                                    //               //                 .bookingData![
-                                    //               //                     index]
-                                    //               //                 .tokenId
-                                    //               //                 .toString()));
-                                    //               // navigateToHome(context);
-                                    //             });
-                                    //             refreshData(context);
-                                    //             _scrollController.animateTo(
-                                    //               0.0,
-                                    //               duration: const Duration(
-                                    //                   milliseconds: 500),
-                                    //               curve: Curves.easeInOut,
-                                    //             );
-                                    //           }
-                                    //           setState(() {
-                                    //             bookingPending = listLength -
-                                    //                 1 -
-                                    //                 currentPosition;
-                                    //           });
-                                    //         }
-                                    //       });
-                                    //     },
-                                    //     child: Container(
-                                    //       height: 50.h,
-                                    //       width: double.infinity,
-                                    //       decoration: BoxDecoration(
-                                    //         color: getAppointmentsModel
-                                    //                     .bookingData![index]
-                                    //                     .isCheckedout ==
-                                    //                 1
-                                    //             ? kCardColor
-                                    //             : kMainColor,
-                                    //         borderRadius:
-                                    //             BorderRadius.circular(8),
-                                    //       ),
-                                    //       child: Row(
-                                    //         mainAxisAlignment:
-                                    //             MainAxisAlignment.center,
-                                    //         children: [
-                                    //           Image(
-                                    //             image: const AssetImage(
-                                    //                 "assets/icons/check_out.png"),
-                                    //             color: getAppointmentsModel
-                                    //                         .bookingData![
-                                    //                             index]
-                                    //                         .isCheckedout ==
-                                    //                     1
-                                    //                 ? kMainColor
-                                    //                 : Colors.white,
-                                    //           ),
-                                    //           Text(
-                                    //             "Check Out",
-                                    //             style: TextStyle(
-                                    //               fontSize: size.width > 450
-                                    //                   ? 12.sp
-                                    //                   : 16.sp,
-                                    //               fontWeight: FontWeight.w600,
-                                    //               color: getAppointmentsModel
-                                    //                           .bookingData![
-                                    //                               index]
-                                    //                           .isCheckedout ==
-                                    //                       1
-                                    //                   ? kMainColor
-                                    //                   : Colors.white,
-                                    //             ),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   )
                                     : Container(),
                                 VerticalSpacingWidget(
                                     height: Platform.isIOS ? 30 : 10),
@@ -1628,7 +1738,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     labTestController.clear();
     bokingAppointmentLabController.resetToPreviousValue();
-    imagePath = null;
+    // imagePath = null;
+    imageFiles.removeAt(index);
   }
 
   Future<void> handleCheckoutLastSection(
@@ -1709,16 +1820,92 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future placePicImage() async {
-    var image = await imagePicker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 30,
+  // Future placePicImage() async {
+  //   var image = await imagePicker.pickImage(
+  //     source: ImageSource.camera,
+  //     imageQuality: 30,
+  //   );
+  //   if (image == null) return;
+  //   final imageTemporary = image.path;
+  //   setState(() {
+  //     imagePath = imageTemporary;
+  //     log("$imageTemporary======= image");
+  //   });
+  // }
+
+  Future<void> placePicImage() async {
+    final size = MediaQuery.of(context).size;
+    final pickerOption = await showDialog<ImageSource>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(
+          'Select Image Source',
+          style: size.width > 450 ? blackTabMainText : blackMainText,
+        ),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(ctx, ImageSource.camera),
+              child: Container(
+                height: 30.h,
+                width: 100.w,
+                decoration: BoxDecoration(
+                  color: kMainColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.white,
+                    ),
+                    HorizontalSpacingWidget(width: 5),
+                    Text("Camera", style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
+              child: Container(
+                height: 30.h,
+                width: 100.w,
+                decoration: BoxDecoration(
+                  color: kMainColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Row(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.photo,
+                      color: Colors.white,
+                    ),
+                    HorizontalSpacingWidget(width: 5),
+                    Text("Gallery", style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
-    if (image == null) return;
-    final imageTemporary = image.path;
-    setState(() {
-      imagePath = imageTemporary;
-      log("$imageTemporary======= image");
-    });
+
+    if (pickerOption != null) {
+      final pickedFile = await imagePicker.pickImage(
+        source: pickerOption,
+        imageQuality: 30,
+      );
+      if (pickedFile == null) return;
+
+      setState(() {
+        imagePath = pickedFile.path;
+        log("$imagePath======= image");
+      });
+    }
   }
 }
