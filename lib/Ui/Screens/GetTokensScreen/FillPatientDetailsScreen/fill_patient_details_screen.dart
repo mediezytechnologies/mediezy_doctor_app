@@ -55,14 +55,10 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController daysController = TextEditingController();
   final fillPatiantController =Get.put(FillPatiantController());
 
-  // final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
-  //String dropdownValue = 'Male';
-  //1 .male
-  //2.femaile
-  //3.other
+ 
 
   List<String> deceaseStartingTime = [
     'Today',
@@ -77,13 +73,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // String? selectedValue =
-    //     ModalRoute.of(context)!.settings.arguments as String?;
-    // if (selectedValue != null) {
-    //   setState(() {
-    //     dropdownValue = selectedValue;
-    //   });
-    // }
+    
   }
 
   double? patientNumber;
