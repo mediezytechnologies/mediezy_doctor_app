@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GetSymptoms/get_symptoms_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/BookAppointment/book_appointment_bloc.dart';
@@ -17,6 +19,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+
+import '../../../../Model/schedule_deopdown_model/schadule_dropdown_model.dart';
 
 class FillPatientDetailsScreen extends StatefulWidget {
   const FillPatientDetailsScreen(
@@ -49,12 +53,16 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
+  final fillPatiantController =Get.put(FillPatiantController());
 
   // final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
-  String dropdownValue = 'Male';
+  //String dropdownValue = 'Male';
+  //1 .male
+  //2.femaile
+  //3.other
 
   List<String> deceaseStartingTime = [
     'Today',
@@ -69,13 +77,13 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    String? selectedValue =
-        ModalRoute.of(context)!.settings.arguments as String?;
-    if (selectedValue != null) {
-      setState(() {
-        dropdownValue = selectedValue;
-      });
-    }
+    // String? selectedValue =
+    //     ModalRoute.of(context)!.settings.arguments as String?;
+    // if (selectedValue != null) {
+    //   setState(() {
+    //     dropdownValue = selectedValue;
+    //   });
+    // }
   }
 
   double? patientNumber;
@@ -159,7 +167,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             whenitstart: deceaseRepeats[selectedCome],
                             tokenTime: widget.tokenTime,
                             tokenNumber: widget.tokenNumber,
-                            gender: dropdownValue,
+                            gender: fillPatiantController.genterValue.value,
                             age: patientAgeController.text,
                             mobileNo: patientContactNumberController.text,
                             appoinmentfor1:
@@ -846,3 +854,21 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   }
 }
 //change
+class FillPatiantController extends GetxController {
+  
+  var genterValue ='1'.obs;
+  List<SchedulDropdowneModel>genterData = [
+    SchedulDropdowneModel(scheduleId: '1', scheduleName: "Male"),
+    SchedulDropdowneModel(scheduleId: '2', scheduleName: "Femaile"),
+    SchedulDropdowneModel(scheduleId: '3', scheduleName: "Other"),
+  ];
+    dropdownValueChanging(String value, String checkingValue) {
+    if (checkingValue == genterValue.value) {
+      if (checkingValue == '1') {
+      genterValue.value = value;
+      log(genterValue.toString());
+      update();
+    }
+    update();
+  }
+    }}
