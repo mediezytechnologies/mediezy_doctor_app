@@ -1,8 +1,9 @@
 class GetAllLeavesModel {
   GetAllLeavesModel({
-      this.status,
-      this.leavesData,
-      this.message,});
+    this.status,
+    this.leavesData,
+    this.message,
+  });
 
   GetAllLeavesModel.fromJson(dynamic json) {
     status = json['status'];
@@ -27,26 +28,23 @@ class GetAllLeavesModel {
     map['message'] = message;
     return map;
   }
-
 }
 
 class LeavesData {
-  LeavesData({
-      this.id,
-      this.docterId,
-      this.hospitalId,
-      this.date,});
+  LeavesData({this.id, this.docterId, this.hospitalId, this.date, this.status});
 
   LeavesData.fromJson(dynamic json) {
     id = json['id'];
     docterId = json['docter_id'];
     hospitalId = json['hospital_id'];
     date = json['date'];
+    status = json["status"];
   }
   int? id;
   int? docterId;
   int? hospitalId;
   String? date;
+  bool? status;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -54,7 +52,8 @@ class LeavesData {
     map['docter_id'] = docterId;
     map['hospital_id'] = hospitalId;
     map['date'] = date;
+    map['status'] = status;
+
     return map;
   }
-
 }

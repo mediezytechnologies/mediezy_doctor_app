@@ -72,7 +72,7 @@ class LeaveUpdateApi {
       "doctor_id": doctorId,
       "hospital_id": hospitalId,
     };
-
+log(body.toString());
     Response response =
         await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
 

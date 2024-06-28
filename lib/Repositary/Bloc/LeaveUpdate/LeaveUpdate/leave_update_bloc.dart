@@ -14,6 +14,10 @@ class LeaveUpdateBloc extends Bloc<LeaveUpdateEvent, LeaveUpdateState> {
     on<FetchLeaveUpdate>((event, emit) async {
       emit(LeaveUpdateLoading());
       try {
+
+        log("fromDate ============${event.fromDate}");
+         log("clinicId ============${event.clinicId}");
+          log("toDate ============${event.toDate}");
         updatedSuccessfully = await leaveUpdateApi.getLeaveUpdate(
           fromDate: event.fromDate,
           clinicId: event.clinicId,
