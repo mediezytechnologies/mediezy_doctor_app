@@ -243,7 +243,8 @@ class CompletedAppointmentDetailsScreenState
                       getAllCompletedAppointmentDetailsModel.appointmentDetails!
                               .first.doctorMedicines!.isEmpty
                           ? Container()
-                          : Text(
+                          :
+                           Text(
                               'Added Medicines :',
                               style: size.width > 450 ? greyTabMain : greyMain,
                             ),
@@ -358,7 +359,8 @@ class CompletedAppointmentDetailsScreenState
                                         .appointmentDetails!.first.labName ==
                                     null
                                 ? Container()
-                                : ShortNamesWidget(
+                                : 
+                                ShortNamesWidget(
                                     typeId: 1,
                                     firstText: "Lab name : ",
                                     secondText:
@@ -377,7 +379,8 @@ class CompletedAppointmentDetailsScreenState
                                             .labTest ==
                                         null
                                 ? Container()
-                                : Row(
+                                : 
+                                Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -424,7 +427,8 @@ class CompletedAppointmentDetailsScreenState
                                         .appointmentDetails!.first.scanName ==
                                     null
                                 ? Container()
-                                : ShortNamesWidget(
+                                : 
+                                ShortNamesWidget(
                                     typeId: 1,
                                     firstText: "Scan name : ",
                                     secondText:
@@ -434,15 +438,16 @@ class CompletedAppointmentDetailsScreenState
                             getAllCompletedAppointmentDetailsModel
                                             .appointmentDetails!
                                             .first
-                                            .scanName ==
+                                            .scanTest ==
                                         null ||
                                     getAllCompletedAppointmentDetailsModel
                                         .appointmentDetails!
                                         .first
-                                        .scanName!
+                                        .scanTest!
                                         .isEmpty
                                 ? Container()
-                                : Row(
+                                : 
+                                Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
