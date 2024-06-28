@@ -49,6 +49,8 @@ class HospitalController extends GetxController {
   RxString initialIndex ="".obs;
   var scheduleIndex = '0'.obs;
 
+
+
   RxList<HospitalDetails>? hospitalDetails = <HospitalDetails>[].obs;
 
   Future<List<HospitalDetails>?> gethospitalService() async {
@@ -78,6 +80,7 @@ class HospitalController extends GetxController {
     SchedulDropdowneModel(scheduleId: '2', scheduleName: "Schedule 2"),
     SchedulDropdowneModel(scheduleId: '3', scheduleName: "Schedule 3"),
   ];
+  
 
   String formatDate() {
     String formattedSelectedDate =
@@ -91,6 +94,10 @@ class HospitalController extends GetxController {
       initialIndex.value = value;
       //  update();
     } else if (checkingValue == '0') {
+      scheduleIndex.value = value;
+      log(scheduleIndex.toString());
+      update();
+    } else if (checkingValue == '1') {
       scheduleIndex.value = value;
       log(scheduleIndex.toString());
       update();

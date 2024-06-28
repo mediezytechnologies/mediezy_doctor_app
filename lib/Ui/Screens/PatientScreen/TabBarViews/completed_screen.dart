@@ -58,7 +58,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
           return getCompletedAppointmentsHealthRecordModel.appointmentDetails ==
                   null
               ? Center(
-                  child: Image.asset("assets/images/no_data___.jpg"),
+                  child: Image.asset("assets/images/icone.png"),
                 )
               : ListView.builder(
                   itemCount: getCompletedAppointmentsHealthRecordModel

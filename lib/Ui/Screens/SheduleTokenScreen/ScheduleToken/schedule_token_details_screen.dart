@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,8 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/SheduleTokenScreen/ScheduleToken/schedule_help_screen.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import 'package:sqflite/sqflite.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../CommonWidgets/short_names_widget.dart';
 
 class ScheduleTokenDetailsScreen extends StatefulWidget {
@@ -100,6 +102,7 @@ class _ScheduleTokenDetailsScreenState
     });
   }
 
+  final _formKey = GlobalKey<FormState>();
   String dropdownValue = 'Schedule 1';
   late int? selectedValue;
 
@@ -298,6 +301,7 @@ class _ScheduleTokenDetailsScreenState
                             //! select starting and ending time
                             startEndeTimePicker(size, context),
                             const VerticalSpacingWidget(height: 10),
+                           
                             Row(
                               children: [
                                 //! time Duration
@@ -314,35 +318,47 @@ class _ScheduleTokenDetailsScreenState
                                             : grey13B600,
                                       ),
                                       const VerticalSpacingWidget(height: 5),
-                                      SizedBox(
-                                        height: 40.h,
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                              fontSize: size.width > 450
-                                                  ? 10.sp
-                                                  : 14.sp),
-                                          // autofocus: true,
-                                          cursorColor: kMainColor,
-                                          controller: timeDuration1Controller,
-                                          keyboardType: TextInputType.number,
-                                          textInputAction: TextInputAction.done,
-                                          focusNode:
-                                              timeDurationFocusController,
-                                          decoration: InputDecoration(
-                                            hintStyle: size.width > 450
-                                                ? greyTab10B600
-                                                : grey13B600,
-                                            hintText: "10 min",
-                                            filled: true,
-                                            fillColor: kCardColor,
-                                            enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: kMainColor)),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                              borderSide:
-                                                  BorderSide(color: kMainColor),
+                                      Form(
+                                        key: _formKey,
+                                        child: SizedBox(
+                                          height: 40.h,
+                                          child: TextFormField(
+                                             validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a number';
+                      }
+                      if (int.tryParse(value) == null) {
+                        return 'Please enter a valid number';
+                      }
+                      return null;
+            },
+                                            style: TextStyle(
+                                                fontSize: size.width > 450
+                                                    ? 10.sp
+                                                    : 14.sp),
+                                            // autofocus: true,
+                                            cursorColor: kMainColor,
+                                            controller: timeDuration1Controller,
+                                            keyboardType: TextInputType.number,
+                                            textInputAction: TextInputAction.done,
+                                            focusNode:
+                                                timeDurationFocusController,
+                                            decoration: InputDecoration(
+                                              hintStyle: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
+                                              hintText: "10 min",
+                                              filled: true,
+                                              fillColor: kCardColor,
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: kMainColor)),
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
+                                                borderSide:
+                                                    BorderSide(color: kMainColor),
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -444,77 +460,118 @@ class _ScheduleTokenDetailsScreenState
                                               onTap: isLoading
                                                   ? null
                                                   : () {
-                                                      if (timeDuration1Controller
-                                                              .text ==
-                                                          "") {
-                                                        GeneralServices.instance
-                                                            .showErrorMessage(
-                                                                context,
-                                                                'The each token duration field is required');
-                                                      } else {
-                                                        Schedules?
-                                                            matchingSchedule;
+                                                      bool isValid = _formKey
+                                                          .currentState!
+                                                          .validate();
 
-                                                        try {
-                                                          matchingSchedule = states
-                                                              .generatedSchedulesModel
-                                                              .schedules!
-                                                              .firstWhere(
-                                                            (e) =>
-                                                                e.clinicId ==
-                                                                    int.parse(dController
-                                                                        .initialIndex
-                                                                        .value) &&
-                                                                e.scheduleType ==
-                                                                    selectedValue,
-                                                          );
-                                                        } catch (e) {
-                                                          matchingSchedule =
-                                                              null;
-                                                        }
-                                                        if (matchingSchedule !=
-                                                            null) {
-                                                          bookLength =
-                                                              matchingSchedule
-                                                                  .bookingCount!;
-                                                          if (bookLength > 0) {
-                                                            GeneralServices()
-                                                                .appCloseDialogue(
-                                                              context,
-                                                              "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
-                                                              () {
-                                                                BlocProvider.of<
-                                                                            GenerateTokenFinalBloc>(
-                                                                        context)
-                                                                    .add(
-                                                                  FetchGenerateTokenFinal(
-                                                                    clinicId: dController
-                                                                        .initialIndex
-                                                                        .value,
-                                                                    selecteddays:
-                                                                        selectedDays,
-                                                                    startDate:
-                                                                        '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                                    endDate:
-                                                                        '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                                    startTime:
-                                                                        formatTimeOfDay(
-                                                                            selectedSchedule1StartingTime),
-                                                                    endTime:
-                                                                        formatTimeOfDay(
-                                                                            selectedSchedule1EndingTime),
-                                                                    timeDuration:
-                                                                        timeDuration1Controller
-                                                                            .text,
-                                                                    scheduleType:
-                                                                        selectedValue
-                                                                            .toString(),
-                                                                  ),
-                                                                );
-                                                              },
+                                                      if (isValid) {
+                                                        if (timeDuration1Controller
+                                                                .text ==
+                                                            "") {
+                                                          GeneralServices
+                                                              .instance
+                                                              .showErrorMessage(
+                                                                  context,
+                                                                  'The each token duration field is required');
+                                                        } else {
+                                                          Schedules?
+                                                              matchingSchedule;
+
+                                                          try {
+                                                            matchingSchedule =
+                                                                states
+                                                                    .generatedSchedulesModel
+                                                                    .schedules!
+                                                                    .firstWhere(
+                                                              (e) =>
+                                                                  e.clinicId ==
+                                                                      int.parse(dController
+                                                                          .initialIndex
+                                                                          .value) &&
+                                                                  e.scheduleType ==
+                                                                      selectedValue,
                                                             );
+                                                          } catch (e) {
+                                                            matchingSchedule =
+                                                                null;
+                                                          }
+                                                          if (matchingSchedule !=
+                                                              null) {
+                                                            bookLength =
+                                                                matchingSchedule
+                                                                    .bookingCount!;
+                                                            if (bookLength >
+                                                                0) {
+                                                              GeneralServices()
+                                                                  .appCloseDialogue(
+                                                                context,
+                                                                "You have bookings on this schedule, which may be lost if you change it. Are you sure you want to change the schedule?",
+                                                                () {
+                                                                  BlocProvider.of<
+                                                                              GenerateTokenFinalBloc>(
+                                                                          context)
+                                                                      .add(
+                                                                    FetchGenerateTokenFinal(
+                                                                      clinicId: dController
+                                                                          .initialIndex
+                                                                          .value,
+                                                                      selecteddays:
+                                                                          selectedDays,
+                                                                      startDate:
+                                                                          '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                                      endDate:
+                                                                          '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                                      startTime:
+                                                                          formatTimeOfDay(
+                                                                              selectedSchedule1StartingTime),
+                                                                      endTime:
+                                                                          formatTimeOfDay(
+                                                                              selectedSchedule1EndingTime),
+                                                                      timeDuration:
+                                                                          timeDuration1Controller
+                                                                              .text,
+                                                                      scheduleType:
+                                                                          selectedValue
+                                                                              .toString(),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              );
+                                                            } else {
+                                                              log("=================== $bookLength catched");
+                                                              BlocProvider.of<
+                                                                          GenerateTokenFinalBloc>(
+                                                                      context)
+                                                                  .add(
+                                                                FetchGenerateTokenFinal(
+                                                                  clinicId:
+                                                                      dController
+                                                                          .initialIndex
+                                                                          .value,
+                                                                  selecteddays:
+                                                                      selectedDays,
+                                                                  startDate:
+                                                                      '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
+                                                                  endDate:
+                                                                      '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
+                                                                  startTime:
+                                                                      formatTimeOfDay(
+                                                                          selectedSchedule1StartingTime),
+                                                                  endTime:
+                                                                      formatTimeOfDay(
+                                                                          selectedSchedule1EndingTime),
+                                                                  timeDuration:
+                                                                      timeDuration1Controller
+                                                                          .text,
+                                                                  scheduleType:
+                                                                      selectedValue
+                                                                          .toString(),
+                                                                ),
+                                                              );
+                                                            }
+
+                                                            log("Matching schedule found. Booking count: $bookLength");
                                                           } else {
-                                                            log("=================== $bookLength catched");
                                                             BlocProvider.of<
                                                                         GenerateTokenFinalBloc>(
                                                                     context)
@@ -544,41 +601,12 @@ class _ScheduleTokenDetailsScreenState
                                                                         .toString(),
                                                               ),
                                                             );
+                                                            bookLength = 0;
+                                                            log("No matching schedule found. Current bookLength: $bookLength");
                                                           }
-
-                                                          log("Matching schedule found. Booking count: $bookLength");
-                                                        } else {
-                                                          BlocProvider.of<
-                                                                      GenerateTokenFinalBloc>(
-                                                                  context)
-                                                              .add(
-                                                            FetchGenerateTokenFinal(
-                                                              clinicId: dController
-                                                                  .initialIndex
-                                                                  .value,
-                                                              selecteddays:
-                                                                  selectedDays,
-                                                              startDate:
-                                                                  '${startSchedule1Date.year}-${startSchedule1Date.month}-${startSchedule1Date.day}',
-                                                              endDate:
-                                                                  '${endScheduleDate.year}-${endScheduleDate.month}-${endScheduleDate.day}',
-                                                              startTime:
-                                                                  formatTimeOfDay(
-                                                                      selectedSchedule1StartingTime),
-                                                              endTime:
-                                                                  formatTimeOfDay(
-                                                                      selectedSchedule1EndingTime),
-                                                              timeDuration:
-                                                                  timeDuration1Controller
-                                                                      .text,
-                                                              scheduleType:
-                                                                  selectedValue
-                                                                      .toString(),
-                                                            ),
-                                                          );
-                                                          bookLength = 0;
-                                                          log("No matching schedule found. Current bookLength: $bookLength");
                                                         }
+                                                      // }else{
+                                                      //  GeneralServices.instance.showErrorMessage(context, "Time duration contain only degits ");
                                                       }
 
                                                       // if (states
@@ -642,8 +670,7 @@ class _ScheduleTokenDetailsScreenState
                                               ),
                                             );
                                           } else {
-                                            return  Container(
-                                            );
+                                            return Container();
                                           }
                                         },
                                       ),
@@ -1005,51 +1032,68 @@ class _ScheduleTokenDetailsScreenState
     );
   }
 
-  Row timeDurationForm(Size size) {
-    return Row(
-      children: [
-        //! time Duration
-        Expanded(
-          flex: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Time Duration",
-                style: size.width > 450 ? greyTab10B600 : grey13B600,
-              ),
-              const VerticalSpacingWidget(height: 5),
-              SizedBox(
-                height: 40.h,
-                child: TextFormField(
-                  style: TextStyle(fontSize: size.width > 450 ? 10.sp : 14.sp),
-                  // autofocus: true,
-                  cursorColor: kMainColor,
-                  controller: timeDuration1Controller,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  focusNode: timeDurationFocusController,
-                  decoration: InputDecoration(
-                    hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
-                    hintText: "10 min",
-                    filled: true,
-                    fillColor: kCardColor,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: kMainColor)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(7),
-                      borderSide: BorderSide(color: kMainColor),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const HorizontalSpacingWidget(width: 5),
-      ],
-    );
-  }
+  // Row timeDurationForm(Size size) {
+  //   return Row(
+  //     children: [
+  //       //! time Duration
+  //       Expanded(
+  //         flex: 3,
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               "Time Duration",
+  //               style: size.width > 450 ? greyTab10B600 : grey13B600,
+  //             ),
+  //             const VerticalSpacingWidget(height: 5),
+  //             Form(
+  //               key: _formKey,
+  //               child: SizedBox(
+  //                 height: 40.h,
+  //                 child: TextFormField(
+  //                   validator: (value) {
+  //                     if (value == null || value.isEmpty) {
+  //                       return 'Please enter a number';
+  //                     }
+  //                     if (int.tryParse(value) == null) {
+  //                       return 'Please enter a valid number';
+  //                     }
+  //                     return null;
+  //                   },
+  //                   style:
+  //                       TextStyle(fontSize: size.width > 450 ? 10.sp : 14.sp),
+  //                   // autofocus: true,
+  //                   cursorColor: kMainColor,
+  //                   controller: timeDuration1Controller,
+  //                   inputFormatters: [
+  //                     FilteringTextInputFormatter.digitsOnly,
+  //                     _RemoveNonDigitsFormatter(),
+  //                   ],
+  //                   keyboardType: TextInputType.phone,
+  //                   textInputAction: TextInputAction.done,
+  //                   focusNode: timeDurationFocusController,
+  //                   decoration: InputDecoration(
+  //                     hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
+  //                     hintText: "10 min",
+  //                     filled: true,
+  //                     fillColor: kCardColor,
+  //                     enabledBorder: OutlineInputBorder(
+  //                         borderSide: BorderSide(color: kMainColor)),
+  //                     border: OutlineInputBorder(
+  //                       borderRadius: BorderRadius.circular(7),
+  //                       borderSide: BorderSide(color: kMainColor),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       const HorizontalSpacingWidget(width: 5),
+  //     ],
+  //   );
+  // }
 
   Row startEndeTimePicker(Size size, BuildContext context) {
     return Row(
@@ -1483,6 +1527,18 @@ class _ScheduleTokenDetailsScreenState
         now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
     final formattedTime = DateFormat('H:mm').format(dateTime);
     return formattedTime;
+  }
+}
+
+class _RemoveNonDigitsFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String cleanedText = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+    return TextEditingValue(
+      text: cleanedText,
+      selection: TextSelection.collapsed(offset: cleanedText.length),
+    );
   }
 }
 

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:animation_wrappers/animations/faded_slide_animation.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GetSymptoms/get_symptoms_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/BookAppointment/book_appointment_bloc.dart';
@@ -17,6 +19,8 @@ import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/vertical_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
+
+import '../../../../Model/schedule_deopdown_model/schadule_dropdown_model.dart';
 
 class FillPatientDetailsScreen extends StatefulWidget {
   const FillPatientDetailsScreen(
@@ -49,11 +53,16 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
- final _fomkey = GlobalKey<FormState>();
+  final fillPatiantController =Get.put(FillPatiantController());
+
+  // final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
-  String dropdownValue = 'Male';
+  //String dropdownValue = 'Male';
+  //1 .male
+  //2.femaile
+  //3.other
 
   List<String> deceaseStartingTime = [
     'Today',
@@ -68,16 +77,16 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Check if there's any selected value from previous screen
-    String? selectedValue =
-        ModalRoute.of(context)!.settings.arguments as String?;
-    if (selectedValue != null) {
-      setState(() {
-        dropdownValue = selectedValue;
-      });
-    }
+    // String? selectedValue =
+    //     ModalRoute.of(context)!.settings.arguments as String?;
+    // if (selectedValue != null) {
+    //   setState(() {
+    //     dropdownValue = selectedValue;
+    //   });
+    // }
   }
-   double? patientNumber;
+
+  double? patientNumber;
 
   int selectedStart = -1;
   int selectedCome = -1;
@@ -125,38 +134,23 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                 CommonButtonWidget(
                     title: "Book Token",
                     onTapFunction: () {
-                      //   double patientNumber;
-                      //     try {
-                      //   patientNumber = double.parse(heightController.text);
-                      //   if (patientNumber > 250) {
-                      //     patientNumber.add(
-                      //         "Height is greater than 250cm please re-check");
-
-                      //     isValid = false;
-                      //   }
-                      // } catch (e) {
-                      //   heightValue = 0;
-                      // }
                       if (patientNameController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient name");
                       } else if (patientAgeController.text.isEmpty) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please fill patient age");
-                      } else if (patientContactNumberController.text.isEmpty) {
-                        GeneralServices.instance.showErrorMessage(
-                            context, "Please fill patient contact number");
-                      } 
-                      // else if (patientContactNumberControlle ) {
-                      //   GeneralServices.instance.showErrorMessage(
-                      //       context, "Please fill patient contact number");
-                      // } 
-                      else if (selectedSymptoms.isEmpty) {
-                        GeneralServices.instance.showErrorMessage(
-                            context, "Please select symptoms");
+                      } else if (patientContactNumberController.text.isEmpty ||
+                          patientContactNumberController.text.length != 10) {
+                        GeneralServices.instance.showErrorMessage(context,
+                            "Please fill a valid patient contact number");
+                      } else if (selectedSymptoms.isEmpty &&
+                          appointmentForController.text.isEmpty) {
+                        GeneralServices.instance.showErrorMessage(context,
+                            "Please select symptoms or type appointment for");
                       } else if (selectedStart == -1) {
                         GeneralServices.instance.showErrorMessage(
-                            context, "Please select When it's comes");
+                            context, "Please select When it comes");
                       } else if (selectedCome == -1) {
                         GeneralServices.instance.showErrorMessage(
                             context, "Please select How Frequently");
@@ -173,7 +167,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             whenitstart: deceaseRepeats[selectedCome],
                             tokenTime: widget.tokenTime,
                             tokenNumber: widget.tokenNumber,
-                            gender: dropdownValue,
+                            gender: fillPatiantController.genterValue.value,
                             age: patientAgeController.text,
                             mobileNo: patientContactNumberController.text,
                             appoinmentfor1:
@@ -256,7 +250,6 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                   flex: 2,
                                   child: SizedBox(
                                     child: TextFormField(
-                                      
                                       style: TextStyle(
                                           fontSize:
                                               size.width > 450 ? 11.sp : 14.sp),
@@ -318,7 +311,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                         hintStyle: size.width > 450
                                             ? greyTab10B600
                                             : grey13B600,
-                                        hintText: "25 age",
+                                        hintText: "25 years",
                                         filled: true,
                                         fillColor: kCardColor,
                                         border: OutlineInputBorder(
@@ -347,7 +340,10 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     child: TextFormField(
                                       onChanged: (value) {
                                         setState(() {
-                                          patientNumber =double.parse(patientContactNumberController.text);
+                                          patientNumber = double.tryParse(
+                                                  patientContactNumberController
+                                                      .text) ??
+                                              0.0;
                                         });
                                       },
                                       style: TextStyle(
@@ -362,9 +358,12 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       focusNode:
                                           patientContactNumberFocusController,
                                       validator: (value) {
-                                        if (value!.isEmpty ||
-                                            value.length < 10) {
+                                        if (value!.isEmpty) {
                                           return "Phone number is missing";
+                                        } else if (value.length < 10) {
+                                          return "Phone number must be 10 digits";
+                                        } else if (value.length > 10) {
+                                          return "Phone number cannot exceed 10 digits";
                                         } else {
                                           return null;
                                         }
@@ -388,6 +387,56 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     ),
                                   ),
                                 ),
+
+                                // Expanded(
+                                //   flex: 2,
+                                //   child: SizedBox(
+                                //     child: TextFormField(
+                                //       onChanged: (value) {
+                                //         setState(() {
+                                //           patientNumber = double.parse(
+                                //               patientContactNumberController
+                                //                   .text);
+                                //         });
+                                //       },
+                                //       style: TextStyle(
+                                //           fontSize:
+                                //               size.width > 450 ? 12.sp : 14.sp),
+                                //       cursorColor: kMainColor,
+                                //       controller:
+                                //           patientContactNumberController,
+                                //       keyboardType: TextInputType.phone,
+                                //       textInputAction: TextInputAction.done,
+                                //       maxLength: 10,
+                                //       focusNode:
+                                //           patientContactNumberFocusController,
+                                //       validator: (value) {
+                                //         if (value!.isEmpty ||
+                                //             value.length < 10) {
+                                //           return "Phone number is missing";
+                                //         } else {
+                                //           return null;
+                                //         }
+                                //       },
+                                //       decoration: InputDecoration(
+                                //         contentPadding: EdgeInsets.symmetric(
+                                //             vertical: 10.h),
+                                //         counterText: "",
+                                //         hintStyle: size.width > 450
+                                //             ? greyTab10B600
+                                //             : grey13B600,
+                                //         hintText: "Enter patient Phone number",
+                                //         filled: true,
+                                //         fillColor: kCardColor,
+                                //         border: OutlineInputBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(4),
+                                //           borderSide: BorderSide.none,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 const HorizontalSpacingWidget(width: 10),
                                 Expanded(
                                   flex: 1,
@@ -456,13 +505,17 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             Container(
                               width: double.infinity,
                               padding: EdgeInsets.symmetric(vertical: 10.h),
-                           //   color:Color.fromARGB(255, 255, 255, 255),
+                              //   color:Color.fromARGB(255, 255, 255, 255),
                               child: Column(
-                                
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Symptoms",  style: size.width > 450 ? greyTabMain : greyMain,),
-                                   const VerticalSpacingWidget(height: 5),
+                                  Text(
+                                    "Symptoms",
+                                    style: size.width > 450
+                                        ? greyTabMain
+                                        : greyMain,
+                                  ),
+                                  const VerticalSpacingWidget(height: 5),
                                   Wrap(
                                     children: List.generate(
                                       getSymptomsModel.symptoms!.length,
@@ -801,3 +854,21 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   }
 }
 //change
+class FillPatiantController extends GetxController {
+  
+  var genterValue ='1'.obs;
+  List<SchedulDropdowneModel>genterData = [
+    SchedulDropdowneModel(scheduleId: '1', scheduleName: "Male"),
+    SchedulDropdowneModel(scheduleId: '2', scheduleName: "Femaile"),
+    SchedulDropdowneModel(scheduleId: '3', scheduleName: "Other"),
+  ];
+    dropdownValueChanging(String value, String checkingValue) {
+    if (checkingValue == genterValue.value) {
+      if (checkingValue == '1') {
+      genterValue.value = value;
+      log(genterValue.toString());
+      update();
+    }
+    update();
+  }
+    }}

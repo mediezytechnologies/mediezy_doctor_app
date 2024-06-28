@@ -1,10 +1,13 @@
+// profile_edit_model.dart
+
 class ProfileEditModel {
   ProfileEditModel({
-      this.success, 
-      this.userId, 
-      this.docter, 
-      this.code, 
-      this.message,});
+    this.success,
+    this.userId,
+    this.docter,
+    this.code,
+    this.message,
+  });
 
   ProfileEditModel.fromJson(dynamic json) {
     success = json['success'];
@@ -30,28 +33,28 @@ class ProfileEditModel {
     map['message'] = message;
     return map;
   }
-
 }
 
 class Docter {
   Docter({
-      this.id, 
-      this.firstname, 
-      this.lastname, 
-      this.docterImage, 
-      this.mobileNo, 
-      this.gender, 
-      this.location, 
-      this.email, 
-      this.specializationId, 
-      this.specificationId, 
-      this.subspecificationId, 
-      this.about, 
-      this.servicesAt, 
-      this.userId, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.isApprove,});
+    this.id,
+    this.firstname,
+    this.lastname,
+    this.docterImage,
+    this.mobileNo,
+    this.gender,
+    this.location,
+    this.email,
+    this.specializationId,
+    this.specificationId,
+    this.subspecificationId,
+    this.about,
+    this.servicesAt,
+    this.userId,
+    this.createdAt,
+    this.updatedAt,
+    this.isApprove,
+  });
 
   Docter.fromJson(dynamic json) {
     id = json['id'];
@@ -111,5 +114,4 @@ class Docter {
     map['is_approve'] = isApprove;
     return map;
   }
-
 }

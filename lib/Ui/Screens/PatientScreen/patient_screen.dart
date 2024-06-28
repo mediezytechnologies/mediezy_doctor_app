@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mediezy_doctor/Model/GenerateToken/clinic_get_model.dart';
-import 'package:mediezy_doctor/Model/HealthRecords/patients_get_model.dart';
 import 'package:mediezy_doctor/Repositary/Api/DropdownClinicGetX/dropdown_clinic_getx.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GenerateToken/GetClinic/get_clinic_bloc.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/patients/PatientsGet/patients_get_bloc.dart';
@@ -22,6 +21,9 @@ import 'package:mediezy_doctor/Ui/Screens/PatientScreen/search_patients_screen.d
 import 'package:shimmer/shimmer.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../../Model/GetAppointments/get_all_completed_appointments_model.dart';
+import '../../../Repositary/Bloc/GetAppointments/GetAllCompletedAppointments/ge_all_completed_appointments_bloc.dart';
+
 class PatientScreen extends StatefulWidget {
   const PatientScreen({super.key});
 
@@ -30,7 +32,8 @@ class PatientScreen extends StatefulWidget {
 }
 
 class _PatientScreenState extends State<PatientScreen> {
-  late PatientsGetModel patientsGetModel;
+  // late getAllCompletedAppointmentsModel getAllCompletedAppointmentsModel;
+  late GetAllCompletedAppointmentsModel getAllCompletedAppointmentsModel;
   late ClinicGetModel clinicGetModel;
 
   final HospitalController dController = Get.put(HospitalController());
@@ -53,11 +56,19 @@ class _PatientScreenState extends State<PatientScreen> {
 
   DateTime endDate = DateTime.now().add(const Duration(days: 30));
 
+  final HospitalController hospitalController = Get.put(HospitalController());
+
   @override
   void initState() {
     BlocProvider.of<GetClinicBloc>(context).add(FetchGetClinic());
-    BlocProvider.of<PatientsGetBloc>(context)
-        .add(FetchPatients(clinicId: dController.initialIndex.value));
+    // BlocProvider.of<PatientsGetBloc>(context)
+    //     .add(FetchPatients(clinicId: dController.initialIndex.value));
+    BlocProvider.of<GetAllCompletedAppointmentsBloc>(context).add(
+      FetchAllCompletedAppointments(
+          date: hospitalController.formatDate(),
+          clinicId: hospitalController.initialIndex.value,
+          scheduleType: hospitalController.scheduleIndex.value),
+    );
     super.initState();
   }
 
@@ -135,8 +146,14 @@ class _PatientScreenState extends State<PatientScreen> {
                       log(newValue!);
                       dController.dropdownValueChanging(
                           newValue, dController.initialIndex.value);
-                      BlocProvider.of<PatientsGetBloc>(context).add(
-                          FetchPatients(clinicId: dController.initialIndex.value));
+                      BlocProvider.of<GetAllCompletedAppointmentsBloc>(context)
+                          .add(
+                        FetchAllCompletedAppointments(
+                            date: hospitalController.formatDate(),
+                            clinicId: hospitalController.initialIndex.value,
+                            scheduleType:
+                                hospitalController.scheduleIndex.value),
+                      );
                     },
                   ),
                   Column(
@@ -185,9 +202,10 @@ class _PatientScreenState extends State<PatientScreen> {
                 ],
               ),
               const VerticalSpacingWidget(height: 5),
-              BlocBuilder<PatientsGetBloc, PatientsGetState>(
+              BlocBuilder<GetAllCompletedAppointmentsBloc,
+                  GeAllCompletedAppointmentsState>(
                 builder: (context, state) {
-                  if (state is PatientsGetLoading) {
+                  if (state is GetAllCompletedAppointmentsLoading) {
                     return SizedBox(
                       height: 400.h,
                       child: Shimmer.fromColors(
@@ -236,16 +254,19 @@ class _PatientScreenState extends State<PatientScreen> {
                       ),
                     );
                   }
-                  if (state is PatientsGetError) {
+                  if (state is GetAllCompletedAppointmentsError) {
                     return const Center(
                       child: Text("Something Went Wrong"),
                     );
                   }
-                  if (state is PatientsGetLoaded) {
-                    patientsGetModel = BlocProvider.of<PatientsGetBloc>(context)
-                        .patientsGetModel;
-                    if (patientsGetModel.patientData == null ||
-                        patientsGetModel.patientData!.isEmpty) {
+                  if (state is GetAllCompletedAppointmentsLoaded) {
+                    getAllCompletedAppointmentsModel =
+                        BlocProvider.of<GetAllCompletedAppointmentsBloc>(
+                                context)
+                            .getAllCompletedAppointmentsModel;
+                    if (getAllCompletedAppointmentsModel.appointments == null ||
+                        getAllCompletedAppointmentsModel
+                            .appointments!.isEmpty) {
                       return Expanded(
                         child: Center(
                             child: Image(
@@ -264,7 +285,7 @@ class _PatientScreenState extends State<PatientScreen> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Text(
-                            "Patient Count (${patientsGetModel.patientData!.length.toString()})",
+                            "Patient Count (${getAllCompletedAppointmentsModel.appointments!.length.toString()})",
                             style: size.width > 450
                                 ? blackTabMainText
                                 : blackMainText,
@@ -275,37 +296,37 @@ class _PatientScreenState extends State<PatientScreen> {
                           // color: Colors.yellow,
                           child: ListView.separated(
                             padding: EdgeInsets.zero,
-                            itemCount: patientsGetModel.patientData!.length,
+                            itemCount: getAllCompletedAppointmentsModel
+                                .appointments!.length,
                             separatorBuilder:
                                 (BuildContext context, int index) =>
                                     const VerticalSpacingWidget(height: 3),
                             itemBuilder: (context, index) {
                               return PatientsCardWidget(
-                                patientId: patientsGetModel
-                                    .patientData![index].id
+                                patientId: getAllCompletedAppointmentsModel
+                                    .appointments![index].patientId
                                     .toString(),
-                                userId: patientsGetModel
-                                    .patientData![index].userId
+                                userId: getAllCompletedAppointmentsModel
+                                    .appointments![index].userId
                                     .toString(),
-                                patientName: patientsGetModel
-                                    .patientData![index].firstname
+                                patientName: getAllCompletedAppointmentsModel
+                                    .appointments![index].patientName
                                     .toString(),
-                                age: patientsGetModel
-                                    .patientData![index].displayAge
+                                age: getAllCompletedAppointmentsModel
+                                    .appointments![index].displayAge
                                     .toString(),
-                                gender: patientsGetModel
-                                    .patientData![index].gender
-                                    .toString(),
-                                userImage: patientsGetModel
-                                            .patientData![index].userImage ==
+                                gender: '1',
+                                userImage: getAllCompletedAppointmentsModel
+                                            .appointments![index].userImage ==
                                         null
                                     ? ""
-                                    : patientsGetModel
-                                        .patientData![index].userImage
+                                    : getAllCompletedAppointmentsModel
+                                        .appointments![index].userImage
                                         .toString(),
-                                mediezyPatientId: patientsGetModel
-                                    .patientData![index].mediezyPatientId
-                                    .toString(),
+                                mediezyPatientId:
+                                    getAllCompletedAppointmentsModel
+                                        .appointments![index].mediezyPatientId
+                                        .toString(),
                               );
                             },
                           ),
