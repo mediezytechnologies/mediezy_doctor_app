@@ -318,47 +318,45 @@ class _ScheduleTokenDetailsScreenState
                                       const VerticalSpacingWidget(height: 5),
                                       Form(
                                         key: _formKey,
-                                        child: SizedBox(
-                                          height: 40.h,
-                                          child: TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please enter a number';
-                                              }
-                                              if (int.tryParse(value) == null) {
-                                                return 'Please enter a valid number';
-                                              }
-                                              return null;
-                                            },
-                                            style: TextStyle(
-                                                fontSize: size.width > 450
-                                                    ? 10.sp
-                                                    : 14.sp),
-                                            // autofocus: true,
-                                            cursorColor: kMainColor,
-                                            controller: timeDuration1Controller,
-                                            keyboardType: TextInputType.number,
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            focusNode:
-                                                timeDurationFocusController,
-                                            decoration: InputDecoration(
-                                              hintStyle: size.width > 450
-                                                  ? greyTab10B600
-                                                  : grey13B600,
-                                              hintText: "10 min",
-                                              filled: true,
-                                              fillColor: kCardColor,
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: kMainColor)),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(7),
+                                        child: TextFormField(
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Please enter a number';
+                                            }
+                                            if (int.tryParse(value) == null) {
+                                              return 'Please enter a valid number';
+                                            }
+                                            return null;
+                                          },
+                                          style: TextStyle(
+                                           
+                                              fontSize: size.width > 450
+                                                  ? 10.sp
+                                                  : 14.sp),
+                                          // autofocus: true,
+                                          cursorColor: kMainColor,
+                                          controller: timeDuration1Controller,
+                                          keyboardType: TextInputType.number,
+                                          textInputAction:
+                                              TextInputAction.done,
+                                          focusNode:
+                                              timeDurationFocusController,
+                                          decoration: InputDecoration(
+                                            hintStyle: size.width > 450
+                                                ? greyTab10B600
+                                                : grey13B600,
+                                            hintText: "10 min",
+                                            filled: true,
+                                            fillColor: kCardColor,
+                                            enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    color: kMainColor),
-                                              ),
+                                                    color: kMainColor)),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(7),
+                                              borderSide: BorderSide(
+                                                  color: kMainColor),
                                             ),
                                           ),
                                         ),

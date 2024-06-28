@@ -204,16 +204,16 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Photo Library'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
                 onTap: () {
                   pickImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
                 onTap: () {
                   pickImage(ImageSource.camera);
                   Navigator.of(context).pop();
@@ -270,35 +270,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           return true;
         }
       },
-      // return WillPopScope(
-      //   onWillPop: () async {
-      //     if (isConditionMet && isWaitingForCheckout) {
-      //       return false;
-      //     } else {
-      //       final now = DateTime.now();
-      //       const maxDuration = Duration(seconds: 1);
-      //       final isWarning =
-      //           lastpressed == null || now.difference(lastpressed!) > maxDuration;
-      //       if (isWarning) {
-      //         lastpressed = DateTime.now();
-      //         final snackBar = SnackBar(
-      //           width: 200.w,
-      //           shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10.r)),
-      //           backgroundColor: Colors.black,
-      //           behavior: SnackBarBehavior.floating,
-      //           content: const Text('  Duble Tap to back Screen '),
-      //           duration: maxDuration,
-      //         );
-      //         ScaffoldMessenger.of(context)
-      //           ..removeCurrentSnackBar()
-      //           ..showSnackBar(snackBar);
-      //         return false;
-      //       } else {
-      //         return true;
-      //       }
-      //     }
-      //   },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
@@ -457,46 +428,60 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Row(
                                     children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            log("pressed");
-                                            if (currentPosition > 0) {
-                                              log("pressed no zero");
-                                              currentPosition--;
-                                              pageController.animateToPage(
-                                                currentPosition,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
-                                              getAllAppointmentController
-                                                  .getAllAppointmentGetxController(
-                                                date: controller.formatDate(),
-                                                clinicId: controller
-                                                    .initialIndex.value,
-                                                scheduleType: controller
-                                                    .scheduleIndex.value,
-                                              );
-                                              setState(() {
-                                                listLength =
-                                                    ctr.bookingData.length;
-                                                bookingPending = listLength -
-                                                    1 -
-                                                    currentPosition;
-                                              });
-                                              foodDropdownController
-                                                  .resetToInitialValue();
-                                              bokingAppointmentLabController
-                                                  .resetToPreviousValue();
-                                            }
-                                          },
-                                          icon: Icon(
-                                            Icons.arrow_back_ios,
-                                            size: size.width > 450
-                                                ? 16.sp
-                                                : 25.sp,
-                                            color: kMainColor,
-                                          )),
+                                      currentPosition == 0
+                                          ? Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20.h),
+                                              child: Icon(
+                                                Icons.arrow_back_ios,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kSubTextColor,
+                                              ),
+                                            )
+                                          : IconButton(
+                                              onPressed: () {
+                                                log("pressed");
+                                                if (currentPosition > 0) {
+                                                  log("pressed no zero");
+                                                  currentPosition--;
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  getAllAppointmentController
+                                                      .getAllAppointmentGetxController(
+                                                    date:
+                                                        controller.formatDate(),
+                                                    clinicId: controller
+                                                        .initialIndex.value,
+                                                    scheduleType: controller
+                                                        .scheduleIndex.value,
+                                                  );
+                                                  setState(() {
+                                                    listLength =
+                                                        ctr.bookingData.length;
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
+                                                  });
+                                                  foodDropdownController
+                                                      .resetToInitialValue();
+                                                  bokingAppointmentLabController
+                                                      .resetToPreviousValue();
+                                                }
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_back_ios,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kMainColor,
+                                              )),
                                       FadedScaleAnimation(
                                         scaleDuration:
                                             const Duration(milliseconds: 400),
@@ -619,43 +604,57 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                           ],
                                         ),
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            if (currentPosition <
-                                                listLength - 1) {
-                                              currentPosition++;
-                                              pageController.animateToPage(
-                                                currentPosition,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
-                                              getAllAppointmentController
-                                                  .getAllAppointmentGetxController(
-                                                date: controller.formatDate(),
-                                                clinicId: controller
-                                                    .initialIndex.value,
-                                                scheduleType: controller
-                                                    .scheduleIndex.value,
-                                              );
-                                              setState(() {
-                                                bookingPending = listLength -
-                                                    1 -
-                                                    currentPosition;
-                                              });
-                                              foodDropdownController
-                                                  .resetToInitialValue();
-                                              bokingAppointmentLabController
-                                                  .resetToPreviousValue();
-                                            }
-                                          },
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: kMainColor,
-                                            size: size.width > 450
-                                                ? 16.sp
-                                                : 25.sp,
-                                          )),
+                                      currentPosition == listLength - 1
+                                          ? Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20.h),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kSubTextColor,
+                                              ),
+                                            )
+                                          : IconButton(
+                                              onPressed: () {
+                                                if (currentPosition <
+                                                    listLength - 1) {
+                                                  currentPosition++;
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  getAllAppointmentController
+                                                      .getAllAppointmentGetxController(
+                                                    date:
+                                                        controller.formatDate(),
+                                                    clinicId: controller
+                                                        .initialIndex.value,
+                                                    scheduleType: controller
+                                                        .scheduleIndex.value,
+                                                  );
+                                                  setState(() {
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
+                                                  });
+                                                  foodDropdownController
+                                                      .resetToInitialValue();
+                                                  bokingAppointmentLabController
+                                                      .resetToPreviousValue();
+                                                }
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                color: kMainColor,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                              )),
                                     ],
                                   ),
                                 ),
@@ -707,6 +706,36 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 // },
                                 // child: Text("data")),
                                 //MedicineWidget
+                                const VerticalSpacingWidget(height: 5),
+                                Obx(() {
+                                  return bokingAppointmentLabController
+                                          .favoritemedicalshop.isEmpty
+                                      ? const Text(
+                                          "No Favourite Medical Stores.\n Please add Medical Stores")
+                                      : CustomDropDown(
+                                          width: double.infinity,
+                                          value: bokingAppointmentLabController
+                                              .initialMedicalStoreIndex.value,
+                                          items: bokingAppointmentLabController
+                                              .tempScanList
+                                              .map((e) {
+                                            return DropdownMenuItem(
+                                              value: e.id.toString(),
+                                              child: Text(e.laboratory!),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newValue) {
+                                            log(newValue!);
+                                            bokingAppointmentLabController
+                                                .dropdownValueMedicalChanging(
+                                                    newValue,
+                                                    bokingAppointmentLabController
+                                                        .initialMedicalStoreIndex
+                                                        .value);
+                                          },
+                                        );
+                                }),
+                                const VerticalSpacingWidget(height: 5),
                                 Obx(() {
                                   if (getAllAppointmentController
                                       .loding.value) {
@@ -851,35 +880,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
                                 const VerticalSpacingWidget(height: 5),
 
-                                Obx(() {
-                                  return bokingAppointmentLabController
-                                          .favoritemedicalshop.isEmpty
-                                      ? const Text(
-                                          "No Favourite Medical Stores.\n Please add Medical Stores")
-                                      : CustomDropDown(
-                                          width: double.infinity,
-                                          value: bokingAppointmentLabController
-                                              .initialMedicalStoreIndex.value,
-                                          items: bokingAppointmentLabController
-                                              .tempScanList
-                                              .map((e) {
-                                            return DropdownMenuItem(
-                                              value: e.id.toString(),
-                                              child: Text(e.laboratory!),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newValue) {
-                                            log(newValue!);
-                                            bokingAppointmentLabController
-                                                .dropdownValueMedicalChanging(
-                                                    newValue,
-                                                    bokingAppointmentLabController
-                                                        .initialMedicalStoreIndex
-                                                        .value);
-                                          },
-                                        );
-                                }),
-                                const VerticalSpacingWidget(height: 5),
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -1131,160 +1131,187 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 ctr.bookingData[index].date == formatDate()
                                     ? InkWell(
                                         onTap: () async {
-                                          if (getAllAppointmentController
-                                                  .bookingData[index]
-                                                  .isCheckedin ==
-                                              1) {
-                                            if (bokingAppointmentLabController
-                                                    .initialScaningCenerIndex
-                                                    .value ==
-                                                '0') {}
+                                          if (bokingAppointmentLabController
+                                                      .initialSelectLabIndex
+                                                      .value !=
+                                                  '0' &&
+                                              selectedLabs.isEmpty) {
+                                            GeneralServices.instance
+                                                .showErrorMessage(context,
+                                                    "Please select lab tests ");
+                                          } else if (bokingAppointmentLabController
+                                                      .initialScaningCenerIndex
+                                                      .value !=
+                                                  '0' &&
+                                              selectedScanTests.isEmpty) {
+                                            GeneralServices.instance
+                                                .showErrorMessage(context,
+                                                    "Please Select scanning centre ");
+                                          } 
+                                          
+                                          
+                                          else {
+                                            if (getAllAppointmentController
+                                                    .bookingData[index]
+                                                    .isCheckedin ==
+                                                1) {
+                                              if (bokingAppointmentLabController
+                                                      .initialScaningCenerIndex
+                                                      .value ==
+                                                  '0') {}
 
-                                            FocusScope.of(context).unfocus();
-                                            //check condition//.......
-                                            setState(() {
-                                              isCheckoutTapped = true;
-                                              isBackActionDisabled = true;
-                                            });
-
-                                            if (currentPosition ==
-                                                    listLength - 1 ||
-                                                currentPosition <
-                                                    listLength - 1 ||
-                                                (currentPosition ==
-                                                        listLength - 1 &&
-                                                    currentPosition == 0)) {
-                                              // isConditionMet = true;
-                                              // isWaitingForCheckout =
-                                              //     true;
-                                            }
-
-                                            BlocProvider.of<
-                                                        AddAllAppointmentDetailsBloc>(
-                                                    context)
-                                                .add(
-                                              AddAllAppointmentDetails(
-                                                labTestId:
-                                                    getSelectedLabTestIds(),
-                                                scanTestId:
-                                                    getSelectedScanTestIds(),
-                                                tokenId: ctr
-                                                    .bookingData[index].tokenId
-                                                    .toString(),
-                                                labId:
-                                                    bokingAppointmentLabController
-                                                        .initialSelectLabIndex
-                                                        .toString(),
-                                                medicalshopId:
-                                                    bokingAppointmentLabController
-                                                        .initialMedicalStoreIndex
-                                                        .toString(),
-                                                attachment: imagePath,
-                                                reviewAfter:
-                                                    afterDaysController.text,
-                                                notes: noteController.text,
-                                                scanId:
-                                                    bokingAppointmentLabController
-                                                        .initialScaningCenerIndex
-                                                        .toString(),
-                                              ),
-                                            );
-
-                                            // Wait for 3 seconds
-                                            await Future.delayed(
-                                                    const Duration(seconds: 3))
-                                                .then((value) {
+                                              FocusScope.of(context).unfocus();
+                                              //check condition//.......
                                               setState(() {
-                                                isBackActionDisabled = false;
+                                                isCheckoutTapped = true;
+                                                isBackActionDisabled = true;
                                               });
-                                              if (ctr.bookingData[index]
-                                                      .isCheckedout !=
-                                                  1) {
-                                                if (currentPosition ==
-                                                        listLength - 1 &&
-                                                    currentPosition == 0) {
-                                                  log("1111111111111111111111111111111111111");
-                                                  handleCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  estimateUpdateCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  navigateToHome(context);
-                                                  log("last section currentPosition: $currentPosition");
-                                                } else if (currentPosition ==
-                                                    listLength - 1) {
-                                                  currentPosition--;
-                                                  log("Last section: $currentPosition");
 
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  log("2222222222222222222222222222222222222222222");
+                                              if (currentPosition ==
+                                                      listLength - 1 ||
+                                                  currentPosition <
+                                                      listLength - 1 ||
+                                                  (currentPosition ==
+                                                          listLength - 1 &&
+                                                      currentPosition == 0)) {
+                                                // isConditionMet = true;
+                                                // isWaitingForCheckout =
+                                                //     true;
+                                              }
 
-                                                  handleCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  Future.delayed(
+                                              BlocProvider.of<
+                                                          AddAllAppointmentDetailsBloc>(
+                                                      context)
+                                                  .add(
+                                                AddAllAppointmentDetails(
+                                                  labTestId:
+                                                      getSelectedLabTestIds(),
+                                                  scanTestId:
+                                                      getSelectedScanTestIds(),
+                                                  tokenId: ctr
+                                                      .bookingData[index]
+                                                      .tokenId
+                                                      .toString(),
+                                                  labId:
+                                                      bokingAppointmentLabController
+                                                          .initialSelectLabIndex
+                                                          .value
+                                                          .toString(),
+                                                  medicalshopId:
+                                                      bokingAppointmentLabController
+                                                          .initialMedicalStoreIndex
+                                                          .toString(),
+                                                  attachment: imagePath,
+                                                  reviewAfter:
+                                                      afterDaysController.text,
+                                                  notes: noteController.text,
+                                                  scanId:
+                                                      bokingAppointmentLabController
+                                                          .initialScaningCenerIndex
+                                                          .toString(),
+                                                ),
+                                              );
+
+                                              // Wait for 3 seconds
+                                              await Future.delayed(
                                                       const Duration(
-                                                          seconds: 8), () {
+                                                          seconds: 3))
+                                                  .then((value) {
+                                                setState(() {
+                                                  isBackActionDisabled = false;
+                                                });
+                                                if (ctr.bookingData[index]
+                                                        .isCheckedout !=
+                                                    1) {
+                                                  if (currentPosition ==
+                                                          listLength - 1 &&
+                                                      currentPosition == 0) {
+                                                    log("1111111111111111111111111111111111111");
+                                                    handleCheckout(
+                                                      context,
+                                                      index,
+                                                    );
                                                     estimateUpdateCheckout(
                                                       context,
                                                       index,
                                                     );
                                                     navigateToHome(context);
-                                                  });
-                                                  refreshData(context);
-                                                } else if (currentPosition <
-                                                    listLength - 1) {
-                                                  log("33333333333333333333333333333333");
-                                                  currentPosition + 1;
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  handleCheckout(
-                                                    context,
-                                                    currentPosition,
-                                                  );
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 8), () {
-                                                    estimateUpdateCheckout(
+                                                    log("last section currentPosition: $currentPosition");
+                                                  } else if (currentPosition ==
+                                                      listLength - 1) {
+                                                    currentPosition--;
+                                                    log("Last section: $currentPosition");
+
+                                                    pageController
+                                                        .animateToPage(
+                                                      currentPosition,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                    log("2222222222222222222222222222222222222222222");
+
+                                                    handleCheckout(
                                                       context,
                                                       index,
                                                     );
+                                                    Future.delayed(
+                                                        const Duration(
+                                                            seconds: 8), () {
+                                                      estimateUpdateCheckout(
+                                                        context,
+                                                        index,
+                                                      );
+                                                      navigateToHome(context);
+                                                    });
+                                                    refreshData(context);
+                                                  } else if (currentPosition <
+                                                      listLength - 1) {
+                                                    log("33333333333333333333333333333333");
+                                                    currentPosition + 1;
+                                                    pageController
+                                                        .animateToPage(
+                                                      currentPosition,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                    handleCheckout(
+                                                      context,
+                                                      currentPosition,
+                                                    );
+                                                    Future.delayed(
+                                                        const Duration(
+                                                            seconds: 8), () {
+                                                      estimateUpdateCheckout(
+                                                        context,
+                                                        index,
+                                                      );
+                                                    });
+                                                    refreshData(context);
+                                                    _scrollController.animateTo(
+                                                      0.0,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                  }
+                                                  setState(() {
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
                                                   });
-                                                  refreshData(context);
-                                                  _scrollController.animateTo(
-                                                    0.0,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
                                                 }
-                                                setState(() {
-                                                  bookingPending = listLength -
-                                                      1 -
-                                                      currentPosition;
-                                                });
-                                              }
 
-                                              // Reset isWaitingForCheckout to false after 3 seconds
-                                              isCheckoutTapped = false;
-                                            });
-                                          } else {
-                                            GeneralServices.instance
-                                                .showErrorMessage(context,
-                                                    "please confirm the Check in");
+                                                // Reset isWaitingForCheckout to false after 3 seconds
+                                                isCheckoutTapped = false;
+                                              });
+                                            } else {
+                                              GeneralServices.instance
+                                                  .showErrorMessage(context,
+                                                      "please confirm the Check in");
+                                            }
                                           }
                                         },
                                         child: Container(
