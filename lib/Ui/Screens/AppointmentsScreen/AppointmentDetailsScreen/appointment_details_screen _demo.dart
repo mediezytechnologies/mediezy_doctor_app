@@ -196,36 +196,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     });
   }
 
-  void showPickerOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Photo Library'),
-                onTap: () {
-                  pickImage(ImageSource.gallery);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
-                onTap: () {
-                  pickImage(ImageSource.camera);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   List<String> getImagePaths() {
     return imageFiles.map((file) => file.path).toList();
   }
@@ -456,55 +426,66 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       color: kCardColor,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            log("pressed");
-                                            if (currentPosition > 0) {
-                                              log("pressed no zero");
-                                              currentPosition--;
-                                              pageController.animateToPage(
-                                                currentPosition,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
-                                              getAllAppointmentController
-                                                  .getAllAppointmentGetxController(
-                                                date: controller.formatDate(),
-                                                clinicId: controller
-                                                    .initialIndex.value,
-                                                scheduleType: controller
-                                                    .scheduleIndex.value,
-                                              );
-                                              setState(() {
-                                                listLength =
-                                                    ctr.bookingData.length;
-                                                bookingPending = listLength -
-                                                    1 -
-                                                    currentPosition;
-                                              });
-                                              foodDropdownController
-                                                  .resetToInitialValue();
-                                              bokingAppointmentLabController
-                                                  .resetToPreviousValue();
-                                            }
-                                          },
-                                          icon: Icon(
-                                            Icons.arrow_back_ios,
-                                            size: size.width > 450
-                                                ? 16.sp
-                                                : 25.sp,
-                                            color: kMainColor,
-                                          )),
-                                      FadedScaleAnimation(
-                                        scaleDuration:
-                                            const Duration(milliseconds: 400),
-                                        fadeDuration:
-                                            const Duration(milliseconds: 400),
-                                        child: PatientImageWidget(
-                                            patientImage:
-                                                ctr.bookingData[currentPosition]
+                                      currentPosition > 0
+                                          ? IconButton(
+                                              onPressed: () {
+                                                log("pressed");
+                                                if (currentPosition > 0) {
+                                                  log("pressed no zero");
+                                                  currentPosition--;
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  getAllAppointmentController
+                                                      .getAllAppointmentGetxController(
+                                                    date:
+                                                        controller.formatDate(),
+                                                    clinicId: controller
+                                                        .initialIndex.value,
+                                                    scheduleType: controller
+                                                        .scheduleIndex.value,
+                                                  );
+                                                  setState(() {
+                                                    listLength =
+                                                        ctr.bookingData.length;
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
+                                                  });
+                                                  foodDropdownController
+                                                      .resetToInitialValue();
+                                                  bokingAppointmentLabController
+                                                      .resetToPreviousValue();
+                                                }
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_back_ios,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kMainColor,
+                                              ))
+                                          : Container(
+                                              width: 50.w,
+                                            ),
+                                      Row(
+                                        children: [
+                                          FadedScaleAnimation(
+                                            scaleDuration: const Duration(
+                                                milliseconds: 400),
+                                            fadeDuration: const Duration(
+                                                milliseconds: 400),
+                                            child: PatientImageWidget(
+                                                patientImage: ctr
+                                                            .bookingData[
+                                                                currentPosition]
                                                             .userImage ==
                                                         null
                                                     ? ""
@@ -513,44 +494,23 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                             currentPosition]
                                                         .userImage
                                                         .toString(),
-                                            radius: 40.r),
-                                      ),
-                                      SizedBox(
-                                        width: size.width > 450
-                                            ? size.width * .64
-                                            : size.width * .42,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              ctr.bookingData[currentPosition]
-                                                  .patientName
-                                                  .toString(),
-                                              style: size.width > 450
-                                                  ? blackTabMainText
-                                                  : blackMainText,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Row(
+                                                radius: 40.r),
+                                          ),
+                                          SizedBox(
+                                            width: size.width > 450
+                                                ? size.width * .64
+                                                : size.width * .42,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  "Token Number : ",
-                                                  style: size.width > 450
-                                                      ? greyTabMain
-                                                      : grey10B400,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
                                                 Text(
                                                   ctr
                                                       .bookingData[
                                                           currentPosition]
-                                                      .tokenNumber
+                                                      .patientName
                                                       .toString(),
                                                   style: size.width > 450
                                                       ? blackTabMainText
@@ -559,103 +519,141 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Token Number : ",
+                                                      style: size.width > 450
+                                                          ? greyTabMain
+                                                          : grey10B400,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    Text(
+                                                      ctr
+                                                          .bookingData[
+                                                              currentPosition]
+                                                          .tokenNumber
+                                                          .toString(),
+                                                      style: size.width > 450
+                                                          ? blackTabMainText
+                                                          : blackMainText,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
+                                                ),
+                                                ctr.bookingData[currentPosition]
+                                                            .mediezyPatientId ==
+                                                        null
+                                                    ? Container()
+                                                    : Row(
+                                                        children: [
+                                                          Text(
+                                                            "Patient Id : ",
+                                                            style: size.width >
+                                                                    450
+                                                                ? greyTabMain
+                                                                : grey10B400,
+                                                          ),
+                                                          Text(
+                                                            ctr
+                                                                .bookingData[
+                                                                    currentPosition]
+                                                                .mediezyPatientId
+                                                                .toString(),
+                                                            style: size.width >
+                                                                    450
+                                                                ? blackTabMainText
+                                                                : blackMainText,
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                ctr.bookingData[currentPosition]
+                                                            .age ==
+                                                        null
+                                                    ? Container()
+                                                    : Row(
+                                                        children: [
+                                                          Text(
+                                                            "Age : ",
+                                                            style: size.width >
+                                                                    450
+                                                                ? greyTabMain
+                                                                : grey10B400,
+                                                          ),
+                                                          Text(
+                                                            ctr
+                                                                .bookingData[
+                                                                    currentPosition]
+                                                                .patient!
+                                                                .age
+                                                                .toString(),
+                                                            style: size.width >
+                                                                    450
+                                                                ? blackTabMainText
+                                                                : blackMainText,
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
                                               ],
                                             ),
-                                            ctr.bookingData[currentPosition]
-                                                        .mediezyPatientId ==
-                                                    null
-                                                ? Container()
-                                                : Row(
-                                                    children: [
-                                                      Text(
-                                                        "Patient Id : ",
-                                                        style: size.width > 450
-                                                            ? greyTabMain
-                                                            : grey10B400,
-                                                      ),
-                                                      Text(
-                                                        ctr
-                                                            .bookingData[
-                                                                currentPosition]
-                                                            .mediezyPatientId
-                                                            .toString(),
-                                                        style: size.width > 450
-                                                            ? blackTabMainText
-                                                            : blackMainText,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ],
-                                                  ),
-                                            ctr.bookingData[currentPosition]
-                                                        .age ==
-                                                    null
-                                                ? Container()
-                                                : Row(
-                                                    children: [
-                                                      Text(
-                                                        "Age : ",
-                                                        style: size.width > 450
-                                                            ? greyTabMain
-                                                            : grey10B400,
-                                                      ),
-                                                      Text(
-                                                        ctr
-                                                            .bookingData[
-                                                                currentPosition]
-                                                            .patient!
-                                                            .age
-                                                            .toString(),
-                                                        style: size.width > 450
-                                                            ? blackTabMainText
-                                                            : blackMainText,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ],
-                                                  ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            if (currentPosition <
-                                                listLength - 1) {
-                                              currentPosition++;
-                                              pageController.animateToPage(
-                                                currentPosition,
-                                                duration: const Duration(
-                                                    milliseconds: 500),
-                                                curve: Curves.easeInOut,
-                                              );
-                                              getAllAppointmentController
-                                                  .getAllAppointmentGetxController(
-                                                date: controller.formatDate(),
-                                                clinicId: controller
-                                                    .initialIndex.value,
-                                                scheduleType: controller
-                                                    .scheduleIndex.value,
-                                              );
-                                              setState(() {
-                                                bookingPending = listLength -
-                                                    1 -
-                                                    currentPosition;
-                                              });
-                                              foodDropdownController
-                                                  .resetToInitialValue();
-                                              bokingAppointmentLabController
-                                                  .resetToPreviousValue();
-                                            }
-                                          },
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: kMainColor,
-                                            size: size.width > 450
-                                                ? 16.sp
-                                                : 25.sp,
-                                          )),
+                                      currentPosition < listLength - 1
+                                          ? IconButton(
+                                              onPressed: () {
+                                                if (currentPosition <
+                                                    listLength - 1) {
+                                                  currentPosition++;
+                                                  pageController.animateToPage(
+                                                    currentPosition,
+                                                    duration: const Duration(
+                                                        milliseconds: 500),
+                                                    curve: Curves.easeInOut,
+                                                  );
+                                                  getAllAppointmentController
+                                                      .getAllAppointmentGetxController(
+                                                    date:
+                                                        controller.formatDate(),
+                                                    clinicId: controller
+                                                        .initialIndex.value,
+                                                    scheduleType: controller
+                                                        .scheduleIndex.value,
+                                                  );
+                                                  setState(() {
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
+                                                  });
+                                                  foodDropdownController
+                                                      .resetToInitialValue();
+                                                  bokingAppointmentLabController
+                                                      .resetToPreviousValue();
+                                                }
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                color: kMainColor,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                              ))
+                                          : Container(
+                                              width: 50.w,
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -1615,13 +1613,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
       clinicId: controller.initialIndex.value,
       scheduleType: controller.scheduleIndex.value,
     );
-    // BlocProvider.of<GetAppointmentsBloc>(context).add(
-    //   FetchAllAppointments(
-    //     date: widget.date,
-    //     clinicId: controller.initialIndex.value,
-    //     scheduleType: controller.scheduleIndex.value,
-    //   ),
-    // );
   }
 
   Future<File> compressImage(String imagePath) async {
@@ -1652,91 +1643,33 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future<void> placePicImage() async {
-    final size = MediaQuery.of(context).size;
-    final pickerOption = await showDialog<ImageSource>(
+  void showPickerOptions() {
+    showModalBottomSheet(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(
-          'Select Image Source',
-          style: size.width > 450 ? blackTabMainText : blackMainText,
-        ),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () => Navigator.pop(ctx, ImageSource.camera),
-              child: Container(
-                height: 30.h,
-                width: 100.w,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.camera_alt_outlined,
-                      color: Colors.white,
-                    ),
-                    HorizontalSpacingWidget(width: 5),
-                    Text("Camera", style: TextStyle(color: Colors.white)),
-                  ],
-                ),
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Photo Library'),
+                onTap: () {
+                  pickImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
               ),
-            ),
-            GestureDetector(
-              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
-              child: Container(
-                height: 30.h,
-                width: 100.w,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Row(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.photo,
-                      color: Colors.white,
-                    ),
-                    HorizontalSpacingWidget(width: 5),
-                    Text("Gallery", style: TextStyle(color: Colors.white)),
-                  ],
-                ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Camera'),
+                onTap: () {
+                  pickImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
-
-    if (pickerOption != null) {
-      final pickedFile = await imagePicker.pickImage(
-        source: pickerOption,
-        imageQuality: 30,
-      );
-      if (pickedFile == null) return;
-
-      setState(() {
-        imagePath = pickedFile.path;
-        log("$imagePath======= image");
-      });
-    }
   }
-  // Future placePicImage() async {
-  //   var image = await imagePicker.pickImage(
-  //     source: ImageSource.camera,
-  //     imageQuality: 30,
-  //   );
-  //   if (image == null) return;
-  //   final imageTemporary = image.path;
-  //   setState(() {
-  //     imagePath = imageTemporary;
-  //     log("$imageTemporary======= image");
-  //   });
-  // }
 }

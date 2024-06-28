@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/search_lab_test_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/search_lab_test/favourite_lab_test/favourite_lab_test_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -12,25 +11,23 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 
 import '../../../../Repositary/Bloc/GetAppointments/search_lab_test/search_lab/search_lab_test_bloc.dart';
 
-class LabSearchWidget extends StatefulWidget {
-  const LabSearchWidget({
+class ScanSearchWidget extends StatefulWidget {
+  const ScanSearchWidget({
     super.key,
     required this.onLabSelected,
     required this.typeId,
     required this.labTypeId,
-    this.history,
   });
 
   final int typeId;
   final int labTypeId;
-  final List<History>? history;
   final Function(String selectedLabName, String selectedLabId) onLabSelected;
 
   @override
-  State<LabSearchWidget> createState() => LabhWidgetState();
+  State<ScanSearchWidget> createState() => LabhWidgetState();
 }
 
-class LabhWidgetState extends State<LabSearchWidget> {
+class LabhWidgetState extends State<ScanSearchWidget> {
   final TextEditingController searchController = TextEditingController();
   String searchText = '';
 
@@ -80,8 +77,7 @@ class LabhWidgetState extends State<LabSearchWidget> {
                       size: size.width > 450 ? 14.sp : 20.sp,
                     ),
                     hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
-                    hintText:
-                        "Search your ${widget.labTypeId == 1 ? "scan" : "lab"} test's",
+                    hintText: "Search your labs test's",
                     filled: true,
                     fillColor: kCardColor,
                     border: OutlineInputBorder(
