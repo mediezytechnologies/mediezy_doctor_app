@@ -72,14 +72,17 @@ class _SplashScreenState extends State<SplashScreen> {
         endOffset: const Offset(0, 0),
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                "assets/icons/doctor screen-02.jpg",
-                fit: BoxFit.fill,
-              ),
+            ClipRRect(
+              child: Image.asset("assets/icons/doctor screen-02.jpg"),
             )
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Image.asset(
+            //     "assets/icons/doctor screen-02.jpg",
+            //     fit: BoxFit.fill,
+            //   ),
+            // )
           ],
         ),
       ),

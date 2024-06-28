@@ -53,7 +53,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
-  final fillPatiantController =Get.put(FillPatiantController());
+  final fillPatiantController = Get.put(FillPatiantController());
 
 
   final FocusNode patientContactNumberFocusController = FocusNode();
@@ -850,22 +850,23 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
         fontSize: 16.sp);
   }
 }
+
 //change
 class FillPatiantController extends GetxController {
-  
-  var genterValue ='1'.obs;
-  List<SchedulDropdowneModel>genterData = [
+  var genterValue = '1'.obs;
+  List<SchedulDropdowneModel> genterData = [
     SchedulDropdowneModel(scheduleId: '1', scheduleName: "Male"),
     SchedulDropdowneModel(scheduleId: '2', scheduleName: "Femaile"),
     SchedulDropdowneModel(scheduleId: '3', scheduleName: "Other"),
   ];
-    dropdownValueChanging(String value, String checkingValue) {
+  dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == genterValue.value) {
       if (checkingValue == '1') {
-      genterValue.value = value;
-      log(genterValue.toString());
+        genterValue.value = value;
+        log(genterValue.toString());
+        update();
+      }
       update();
     }
-    update();
   }
-    }}
+}

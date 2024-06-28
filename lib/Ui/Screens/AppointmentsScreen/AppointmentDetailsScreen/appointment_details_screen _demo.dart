@@ -1135,15 +1135,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   .bookingData[index]
                                                   .isCheckedin ==
                                               1) {
-
-                                                if (bokingAppointmentLabController
-                                              .initialScaningCenerIndex.value=='0') {
-                                                  
-                                                }
-
-
-
-
+                                            if (bokingAppointmentLabController
+                                                    .initialScaningCenerIndex
+                                                    .value ==
+                                                '0') {}
 
                                             FocusScope.of(context).unfocus();
                                             //check condition//.......
@@ -1570,35 +1565,38 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     scanTestController.clear();
     afterDaysController.clear();
     noteController.clear();
-    labTestController.clear();
     bokingAppointmentLabController.resetToPreviousValue();
     imagePath = null;
     imageFiles.clear();
+    selectedScanTests.clear();
+    selectedLabs.clear();
   }
 
-  Future<void> handleCheckoutLastSection(
-      BuildContext context, int index) async {
-    log("section one 1============");
-    BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
-      AddCheckinOrCheckout(
-        clinicId:
-            getAllAppointmentController.bookingData[index].clinicId.toString(),
-        isCompleted: 1,
-        isCheckin: 0,
-        tokenNumber: getAllAppointmentController.bookingData[index].tokenNumber
-            .toString(),
-        isReached: '',
-      ),
-    );
-    getAllAppointmentController.bookingData[index].isCheckedout = 1;
-    scanTestController.clear();
-    afterDaysController.clear();
-    noteController.clear();
-    labTestController.clear();
-    bokingAppointmentLabController.resetToPreviousValue();
-
-    imagePath = null;
-  }
+  // Future<void> handleCheckoutLastSection(
+  //     BuildContext context, int index) async {
+  //   log("section one 1============");
+  //   BlocProvider.of<AddCheckinOrCheckoutBloc>(context).add(
+  //     AddCheckinOrCheckout(
+  //       clinicId:
+  //           getAllAppointmentController.bookingData[index].clinicId.toString(),
+  //       isCompleted: 1,
+  //       isCheckin: 0,
+  //       tokenNumber: getAllAppointmentController.bookingData[index].tokenNumber
+  //           .toString(),
+  //       isReached: '',
+  //     ),
+  //   );
+  //   getAllAppointmentController.bookingData[index].isCheckedout = 1;
+  //   scanTestController.clear();
+  //   afterDaysController.clear();
+  //   noteController.clear();
+  //   labTestController.clear();
+  //   bokingAppointmentLabController.resetToPreviousValue();
+  //   imageFiles.clear();
+  //   getSelectedScanTestIds().clear();
+  //   getSelectedLabTestIds().clear();
+  //   imagePath = null;
+  // }
 
   void navigateToHome(BuildContext context) {
     Navigator.pushAndRemoveUntil(
