@@ -187,7 +187,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             title: Text(
-              'Labs',
+              'Lab and scan',
               style: size.width > 450 ? blackTab9B400 : black14B400,
             ),
             trailing: Icon(

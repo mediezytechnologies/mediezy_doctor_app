@@ -47,6 +47,10 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
         return Future.value(false);
       },
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("Schedule"),
+        ),
         body: _isLoading
             ? _buildLoadingWidget()
             : FadedSlideAnimation(
@@ -62,7 +66,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                       children: [
                         size.width > 450
                             ? const VerticalSpacingWidget(height: 20)
-                            : const VerticalSpacingWidget(height: 30),
+                            : const VerticalSpacingWidget(height: 0),
                         //! first section (Daily shedule)
                         InkWell(
                           onTap: () {
@@ -80,6 +84,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
+                                // height: 120.h,
                                 "assets/images/token_schedule.jpg",
                                 fit: BoxFit.fill,
                               ),
