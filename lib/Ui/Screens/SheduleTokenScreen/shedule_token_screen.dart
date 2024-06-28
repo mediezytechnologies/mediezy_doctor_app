@@ -54,7 +54,7 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                 endOffset: const Offset(0, 0),
                 slideCurve: Curves.linearToEaseOut,
                 child: SingleChildScrollView(
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Column(
@@ -67,22 +67,22 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                         InkWell(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (ctx) =>
-                                        const ScheduleTokenDetailsScreen(),),);
+                              context,
+                              MaterialPageRoute(
+                                builder: (ctx) =>
+                                    const ScheduleTokenDetailsScreen(),
+                              ),
+                            );
                           },
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
-                            child: Container(
-                              height: size.width > 450 ? 140.h : 115.h,
-                              decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/token_schedule.jpg"),
-                                      fit: BoxFit.fill),
-                                  borderRadius: BorderRadius.circular(10)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/token_schedule.jpg",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -99,14 +99,12 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
-                            child: Container(
-                              height: size.width > 450 ? 140.h : 115.h,
-                              decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/customize schedule.jpg"),
-                                      fit: BoxFit.fill),
-                                  borderRadius: BorderRadius.circular(10)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/customize schedule.jpg",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -123,14 +121,12 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
-                            child: Container(
-                              height: size.width > 450 ? 140.h : 115.h,
-                              decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/remove_token.jpg"),
-                                      fit: BoxFit.fill),
-                                  borderRadius: BorderRadius.circular(10)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/remove_token.jpg",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -146,14 +142,12 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
-                            child: Container(
-                              height: size.width > 450 ? 140.h : 115.h,
-                              decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/Leave_Banner.jpg"),
-                                      fit: BoxFit.fill),
-                                  borderRadius: BorderRadius.circular(10)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/Leave_Banner.jpg",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -169,14 +163,12 @@ class _SheduleTokenScreenState extends State<SheduleTokenScreen> {
                           child: FadedScaleAnimation(
                             scaleDuration: const Duration(milliseconds: 400),
                             fadeDuration: const Duration(milliseconds: 400),
-                            child: Container(
-                              height: size.width > 450 ? 140.h : 115.h,
-                              decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/reservation.jpg"),
-                                      fit: BoxFit.fill),
-                                  borderRadius: BorderRadius.circular(10)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/reservation.jpg",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),

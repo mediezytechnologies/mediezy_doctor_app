@@ -53,13 +53,13 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   final TextEditingController appointmentForController =
       TextEditingController();
   final TextEditingController daysController = TextEditingController();
-  final fillPatiantController =Get.put(FillPatiantController());
+  final fillPatiantController = Get.put(FillPatiantController());
 
   // final _fomkey = GlobalKey<FormState>();
 
   final FocusNode patientContactNumberFocusController = FocusNode();
 
-  //String dropdownValue = 'Male';
+  String dropdownValue = 'Male';
   //1 .male
   //2.femaile
   //3.other
@@ -77,13 +77,13 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // String? selectedValue =
-    //     ModalRoute.of(context)!.settings.arguments as String?;
-    // if (selectedValue != null) {
-    //   setState(() {
-    //     dropdownValue = selectedValue;
-    //   });
-    // }
+    String? selectedValue =
+        ModalRoute.of(context)!.settings.arguments as String?;
+    if (selectedValue != null) {
+      setState(() {
+        dropdownValue = selectedValue;
+      });
+    }
   }
 
   double? patientNumber;
@@ -853,22 +853,23 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
         fontSize: 16.sp);
   }
 }
+
 //change
 class FillPatiantController extends GetxController {
-  
-  var genterValue ='1'.obs;
-  List<SchedulDropdowneModel>genterData = [
+  var genterValue = '1'.obs;
+  List<SchedulDropdowneModel> genterData = [
     SchedulDropdowneModel(scheduleId: '1', scheduleName: "Male"),
     SchedulDropdowneModel(scheduleId: '2', scheduleName: "Femaile"),
     SchedulDropdowneModel(scheduleId: '3', scheduleName: "Other"),
   ];
-    dropdownValueChanging(String value, String checkingValue) {
+  dropdownValueChanging(String value, String checkingValue) {
     if (checkingValue == genterValue.value) {
       if (checkingValue == '1') {
-      genterValue.value = value;
-      log(genterValue.toString());
+        genterValue.value = value;
+        log(genterValue.toString());
+        update();
+      }
       update();
     }
-    update();
   }
-    }}
+}

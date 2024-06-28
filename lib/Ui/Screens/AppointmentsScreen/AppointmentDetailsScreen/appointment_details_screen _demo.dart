@@ -121,6 +121,8 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   bool isConditionMet = false;
   bool isWaitingForCheckout = false;
   bool hasPressedCheckout = false;
+  bool isCheckoutTapped = false;
+  bool isBackActionDisabled = false;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
