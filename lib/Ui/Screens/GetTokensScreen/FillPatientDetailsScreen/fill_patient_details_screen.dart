@@ -446,11 +446,9 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     child: DropdownButton<String>(
                                       underline:
                                           const SizedBox(), // Set underline to null
-                                      value: dropdownValue,
+                                      value: fillPatiantController.genterValue.value,
                                       onChanged: (String? newValue) {
-                                        setState(() {
-                                          dropdownValue = newValue!;
-                                        });
+                                        fillPatiantController.dropdownValueChanging(newValue!, '1');
                                       },
                                       icon: Padding(
                                         padding: size.width > 450
@@ -465,28 +463,37 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                       iconSize: size.width > 450
                                           ? 30.0
                                           : 24.0, // Adjust icon size if needed
-                                      items: <String>['Male', 'Female', 'Other']
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: size.width > 450
-                                                ? EdgeInsets.only(
-                                                    top: 10.h, left: 30.w)
-                                                : EdgeInsets.symmetric(
-                                                    vertical: 10.h,
-                                                    horizontal: 10.w,
-                                                  ),
-                                            child: Text(
-                                              value,
-                                              style: size.width > 450
+                                      items:
+                                      fillPatiantController.genterData.map((e) {
+                                        return DropdownMenuItem(
+                                          value: e.scheduleId.toString(),
+                                          child: Text(e.scheduleName,style: size.width > 450
                                                   ? blackTabMainText
-                                                  : blackMainText,
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                                  : blackMainText,));
+                                      },).toList()
+                                      
+                                      // <String>['Male', 'Female', 'Other']
+                                      //     .map<DropdownMenuItem<String>>(
+                                      //         (String value) {
+                                      //   return DropdownMenuItem<String>(
+                                      //     value: value,
+                                      //     child: Padding(
+                                      //       padding: size.width > 450
+                                      //           ? EdgeInsets.only(
+                                      //               top: 10.h, left: 30.w)
+                                      //           : EdgeInsets.symmetric(
+                                      //               vertical: 10.h,
+                                      //               horizontal: 10.w,
+                                      //             ),
+                                      //       child: Text(
+                                      //         value,
+                                      //         style: size.width > 450
+                                      //             ? blackTabMainText
+                                      //             : blackMainText,
+                                      //       ),
+                                      //     ),
+                                      //   );
+                                      // }).toList(),
                                     ),
                                   ),
                                 )
