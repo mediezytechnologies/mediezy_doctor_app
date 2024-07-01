@@ -7,6 +7,7 @@ abstract class GetAllLeavesEvent {}
 class FetchAllLeaves extends GetAllLeavesEvent{
   final String hospitalId;
 
+
   FetchAllLeaves({
     required this.hospitalId,
   });

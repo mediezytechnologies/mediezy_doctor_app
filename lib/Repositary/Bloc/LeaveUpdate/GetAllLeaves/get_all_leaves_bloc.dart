@@ -13,12 +13,12 @@ class GetAllLeavesBloc extends Bloc<GetAllLeavesEvent, GetAllLeavesState> {
   LeaveUpdateApi leaveUpdateApi = LeaveUpdateApi();
   GetAllLeavesBloc() : super(GetAllLeavesInitial()) {
     on<FetchAllLeaves>((event, emit) async {
-      emit(GetAllLeavesLoading());
+    emit(GetAllLeavesLoading( ));
       try {
         getAllLeavesModel = await leaveUpdateApi.getAllLeaves(
           hospitalId: event.hospitalId,
         );
-        emit(GetAllLeavesLoaded());
+        emit(GetAllLeavesLoaded(getAllLeavesModel:getAllLeavesModel ));
       } catch (e) {
         log("Error>>>>>>>>>>>>>>>>>>>>>>>>>$e");
         emit(GetAllLeavesError());

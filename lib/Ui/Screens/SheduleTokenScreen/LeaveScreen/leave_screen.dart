@@ -40,6 +40,8 @@ class LeaveScreenState extends State<LeaveScreen> {
   late GetAllLeavesModel getAllLeavesModel;
   late LeaveCheckModel leaveCheckModel;
   bool isClickLeave = false;
+  bool loading = true;
+  List<LeavesData> leavesData = [];
 
   String formatDate() {
     String formattedSelectedDate =
@@ -57,8 +59,10 @@ class LeaveScreenState extends State<LeaveScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<GetAllLeavesBloc>(context)
-        .add(FetchAllLeaves(hospitalId: dController.initialIndex.value));
+    BlocProvider.of<GetAllLeavesBloc>(context).add(FetchAllLeaves(
+      hospitalId: dController.initialIndex.value,
+    ));
+
     BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
         clinicId: dController.initialIndex.value,
         fromDate: DateFormat('yyyy-MM-dd').format(leaveStartDate),
@@ -71,8 +75,9 @@ class LeaveScreenState extends State<LeaveScreen> {
     final size = MediaQuery.of(context).size;
     return BlocListener<LeaveUpdateBloc, LeaveUpdateState>(
       listener: (context, state) {
-        BlocProvider.of<GetAllLeavesBloc>(context)
-            .add(FetchAllLeaves(hospitalId: dController.initialIndex.value));
+        BlocProvider.of<GetAllLeavesBloc>(context).add(FetchAllLeaves(
+          hospitalId: dController.initialIndex.value,
+        ));
       },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
@@ -134,10 +139,10 @@ class LeaveScreenState extends State<LeaveScreen> {
                               log(newValue!);
                               dController.dropdownValueChanging(
                                   newValue, dController.initialIndex.value);
-                              BlocProvider.of<GetAllLeavesBloc>(context).add(
-                                  FetchAllLeaves(
-                                      hospitalId:
-                                          dController.initialIndex.value));
+                              BlocProvider.of<GetAllLeavesBloc>(context)
+                                  .add(FetchAllLeaves(
+                                hospitalId: dController.initialIndex.value,
+                              ));
                               BlocProvider.of<LeaveCheckBloc>(context).add(
                                   FetchLeaveCheck(
                                       clinicId: dController.initialIndex.value,
@@ -148,277 +153,384 @@ class LeaveScreenState extends State<LeaveScreen> {
                             },
                           );
                         }),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Platform.isIOS
-                                    ? selectIosDate(
-                                        context: context,
-                                        date: leaveStartDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            leaveStartDate = picked;
-                                            leaveEndDate = picked;
-                                          });
-                                          BlocProvider.of<LeaveCheckBloc>(
-                                                  context)
-                                              .add(FetchLeaveCheck(
-                                                  clinicId: dController
-                                                      .initialIndex.value,
-                                                  fromDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveStartDate),
-                                                  toDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveEndDate)));
-                                        },
-                                      )
-                                    : selectDate(
-                                        context: context,
-                                        date: leaveStartDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            leaveStartDate = picked;
-                                            leaveEndDate = picked;
-                                          });
-                                          BlocProvider.of<LeaveCheckBloc>(
-                                                  context)
-                                              .add(
-                                            FetchLeaveCheck(
-                                              clinicId: dController
-                                                  .initialIndex.value,
-                                              fromDate: DateFormat('yyyy-MM-dd')
-                                                  .format(leaveStartDate),
-                                              toDate: DateFormat('yyyy-MM-dd')
-                                                  .format(leaveEndDate),
+                        BlocBuilder<GetAllLeavesBloc, GetAllLeavesState>(
+                          builder: (context, state) {
+                            if (state is GetAllLeavesLoaded) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        Platform.isIOS
+                                            ? selectIosDate(
+                                                //deleted pending
+                                                state: state,
+                                                context: context,
+                                                date: leaveStartDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    leaveStartDate = picked;
+                                                    leaveEndDate = picked;
+                                                  });
+                                                  BlocProvider.of<
+                                                              LeaveCheckBloc>(
+                                                          context)
+                                                      .add(FetchLeaveCheck(
+                                                          clinicId: dController
+                                                              .initialIndex
+                                                              .value,
+                                                          fromDate: DateFormat(
+                                                                  'yyyy-MM-dd')
+                                                              .format(
+                                                                  leaveStartDate),
+                                                          toDate: DateFormat(
+                                                                  'yyyy-MM-dd')
+                                                              .format(
+                                                                  leaveEndDate)));
+                                                },
+                                              )
+                                            : selectDate(
+                                                minDate: leaveStartDate,
+                                                context: context,
+                                                date: leaveStartDate,
+                                                onDateSelected:
+                                                    (DateTime picked) {
+                                                  setState(() {
+                                                    leaveStartDate = picked;
+                                                    leaveEndDate = picked;
+                                                  });
+
+                                                  BlocProvider.of<
+                                                              LeaveCheckBloc>(
+                                                          context)
+                                                      .add(
+                                                    FetchLeaveCheck(
+                                                      clinicId: dController
+                                                          .initialIndex.value,
+                                                      fromDate: DateFormat(
+                                                              'yyyy-MM-dd')
+                                                          .format(
+                                                              leaveStartDate),
+                                                      toDate: DateFormat(
+                                                              'yyyy-MM-dd')
+                                                          .format(leaveEndDate),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Start Date",
+                                                style: size.width > 450
+                                                    ? greyTab10B600
+                                                    : grey13B600,
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Platform.isIOS
+                                                      ? selectIosDate(
+                                                          state: state,
+                                                          context: context,
+                                                          date: leaveStartDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              leaveStartDate =
+                                                                  picked;
+                                                              leaveEndDate =
+                                                                  picked;
+                                                            });
+                                                            BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
+                                                                clinicId:
+                                                                    dController
+                                                                        .initialIndex
+                                                                        .value,
+                                                                fromDate: DateFormat(
+                                                                        'yyyy-MM-dd')
+                                                                    .format(
+                                                                        leaveStartDate),
+                                                                toDate: DateFormat(
+                                                                        'yyyy-MM-dd')
+                                                                    .format(
+                                                                        leaveEndDate)));
+                                                          },
+                                                        )
+                                                      : selectDate(
+                                                     minDate: leaveStartDate,
+                                                          //  state: state,
+                                                          context: context,
+                                                          date: leaveStartDate,
+                                                          onDateSelected:
+                                                              (DateTime
+                                                                  picked) {
+                                                            setState(() {
+                                                              leaveStartDate =
+                                                                  picked;
+                                                              leaveEndDate =
+                                                                  picked;
+                                                            });
+                                                            BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
+                                                                clinicId:
+                                                                    dController
+                                                                        .initialIndex
+                                                                        .value,
+                                                                fromDate: DateFormat(
+                                                                        'yyyy-MM-dd')
+                                                                    .format(
+                                                                        leaveStartDate),
+                                                                toDate: DateFormat(
+                                                                        'yyyy-MM-dd')
+                                                                    .format(
+                                                                        leaveEndDate)));
+                                                          },
+                                                        );
+                                                },
+                                                icon: Icon(
+                                                  IconlyLight.calendar,
+                                                  color: kMainColor,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Text(
+                                            DateFormat("dd-MM-yyy")
+                                                .format(leaveStartDate),
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : black14B600,
+                                          ),
+                                        ],
+                                      )),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Platform.isIOS
+                                          ? selectIosDate(
+                                              state: state,
+                                              context: context,
+                                              date: leaveEndDate,
+                                              minDate: leaveStartDate,
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  leaveEndDate = picked;
+                                                });
+                                                BlocProvider.of<
+                                                        LeaveCheckBloc>(context)
+                                                    .add(FetchLeaveCheck(
+                                                        clinicId: dController
+                                                            .initialIndex.value,
+                                                        fromDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveStartDate),
+                                                        toDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveEndDate)));
+                                              },
+                                            )
+                                          : selectDate(
+                                              // state: state,
+                                              context: context,
+                                              date: leaveEndDate,
+                                              minDate:
+                                                  leaveStartDate, // Add this line
+                                              onDateSelected:
+                                                  (DateTime picked) {
+                                                setState(() {
+                                                  leaveEndDate = picked;
+                                                });
+                                                BlocProvider.of<
+                                                        LeaveCheckBloc>(context)
+                                                    .add(FetchLeaveCheck(
+                                                        clinicId: dController
+                                                            .initialIndex.value,
+                                                        fromDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveStartDate),
+                                                        toDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveEndDate)));
+                                              },
+                                            );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "End Date",
+                                              style: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
                                             ),
-                                          );
-                                        },
-                                      );
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Start Date",
-                                        style: size.width > 450
-                                            ? greyTab10B600
-                                            : grey13B600,
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Platform.isIOS
-                                              ? selectIosDate(
-                                                  context: context,
-                                                  date: leaveStartDate,
-                                                  onDateSelected:
-                                                      (DateTime picked) {
-                                                    setState(() {
-                                                      leaveStartDate = picked;
-                                                      leaveEndDate = picked;
-                                                    });
-                                                    BlocProvider
-                                                            .of<
-                                                                    LeaveCheckBloc>(
-                                                                context)
-                                                        .add(FetchLeaveCheck(
-                                                            clinicId: dController
-                                                                .initialIndex
-                                                                .value,
-                                                            fromDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveStartDate),
-                                                            toDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveEndDate)));
-                                                  },
-                                                )
-                                              : selectDate(
-                                                  context: context,
-                                                  date: leaveStartDate,
-                                                  onDateSelected:
-                                                      (DateTime picked) {
-                                                    setState(() {
-                                                      leaveStartDate = picked;
-                                                      leaveEndDate = picked;
-                                                    });
-                                                    BlocProvider
-                                                            .of<
-                                                                    LeaveCheckBloc>(
-                                                                context)
-                                                        .add(FetchLeaveCheck(
-                                                            clinicId: dController
-                                                                .initialIndex
-                                                                .value,
-                                                            fromDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveStartDate),
-                                                            toDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveEndDate)));
-                                                  },
-                                                );
-                                        },
-                                        icon: Icon(
-                                          IconlyLight.calendar,
-                                          color: kMainColor,
+                                            IconButton(
+                                              onPressed: () {
+                                                Platform.isIOS
+                                                    ? selectIosDate(
+                                                        state: state,
+                                                        context: context,
+                                                        date: leaveEndDate,
+                                                        minDate: leaveStartDate,
+                                                        onDateSelected:
+                                                            (DateTime picked) {
+                                                          setState(() {
+                                                            leaveEndDate =
+                                                                picked;
+                                                          });
+                                                          BlocProvider.of<
+                                                                      LeaveCheckBloc>(
+                                                                  context)
+                                                              .add(
+                                                            FetchLeaveCheck(
+                                                              clinicId: dController
+                                                                  .initialIndex
+                                                                  .value,
+                                                              fromDate: DateFormat(
+                                                                      'yyyy-MM-dd')
+                                                                  .format(
+                                                                      leaveStartDate),
+                                                              toDate: DateFormat(
+                                                                      'yyyy-MM-dd')
+                                                                  .format(
+                                                                      leaveEndDate),
+                                                            ),
+                                                          );
+                                                        },
+                                                      )
+                                                    : selectDate(
+                                                        //       state: state,
+                                                        context: context,
+                                                        date: leaveEndDate,
+                                                        minDate:
+                                                            leaveStartDate, // Add this line
+                                                        onDateSelected:
+                                                            (DateTime picked) {
+                                                          setState(() {
+                                                            leaveEndDate =
+                                                                picked;
+                                                          });
+                                                          BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
+                                                              clinicId: dController
+                                                                  .initialIndex
+                                                                  .value,
+                                                              fromDate: DateFormat(
+                                                                      'yyyy-MM-dd')
+                                                                  .format(
+                                                                      leaveStartDate),
+                                                              toDate: DateFormat(
+                                                                      'yyyy-MM-dd')
+                                                                  .format(
+                                                                      leaveEndDate)));
+                                                        },
+                                                      );
+                                              },
+                                              icon: Icon(
+                                                IconlyLight.calendar,
+                                                color: kMainColor,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    DateFormat("dd-MM-yyy")
-                                        .format(leaveStartDate),
-                                    style: size.width > 450
-                                        ? blackTabMainText
-                                        : black14B600,
+                                        Text(
+                                          DateFormat("dd-MM-yyy")
+                                              .format(leaveEndDate),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Platform.isIOS
-                                    ? selectIosDate(
-                                        context: context,
-                                        date: leaveEndDate,
-                                        minDate: leaveStartDate,
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            leaveEndDate = picked;
-                                          });
-                                          BlocProvider.of<LeaveCheckBloc>(
-                                                  context)
-                                              .add(FetchLeaveCheck(
-                                                  clinicId: dController
-                                                      .initialIndex.value,
-                                                  fromDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveStartDate),
-                                                  toDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveEndDate)));
-                                        },
-                                      )
-                                    : selectDate(
-                                        context: context,
-                                        date: leaveEndDate,
-                                        minDate:
-                                            leaveStartDate, // Add this line
-                                        onDateSelected: (DateTime picked) {
-                                          setState(() {
-                                            leaveEndDate = picked;
-                                          });
-                                          BlocProvider.of<LeaveCheckBloc>(
-                                                  context)
-                                              .add(FetchLeaveCheck(
-                                                  clinicId: dController
-                                                      .initialIndex.value,
-                                                  fromDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveStartDate),
-                                                  toDate: DateFormat(
-                                                          'yyyy-MM-dd')
-                                                      .format(leaveEndDate)));
-                                        },
-                                      );
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              );
+                            } else {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "End Date",
-                                        style: size.width > 450
-                                            ? greyTab10B600
-                                            : grey13B600,
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Platform.isIOS
-                                              ? selectIosDate(
-                                                  context: context,
-                                                  date: leaveEndDate,
-                                                  minDate: leaveStartDate,
-                                                  onDateSelected:
-                                                      (DateTime picked) {
-                                                    setState(() {
-                                                      leaveEndDate = picked;
-                                                    });
-                                                    BlocProvider
-                                                            .of<
-                                                                    LeaveCheckBloc>(
-                                                                context)
-                                                        .add(FetchLeaveCheck(
-                                                            clinicId: dController
-                                                                .initialIndex
-                                                                .value,
-                                                            fromDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveStartDate),
-                                                            toDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveEndDate)));
-                                                  },
-                                                )
-                                              : selectDate(
-                                                  context: context,
-                                                  date: leaveEndDate,
-                                                  minDate:
-                                                      leaveStartDate, // Add this line
-                                                  onDateSelected:
-                                                      (DateTime picked) {
-                                                    setState(() {
-                                                      leaveEndDate = picked;
-                                                    });
-                                                    BlocProvider
-                                                            .of<
-                                                                    LeaveCheckBloc>(
-                                                                context)
-                                                        .add(FetchLeaveCheck(
-                                                            clinicId: dController
-                                                                .initialIndex
-                                                                .value,
-                                                            fromDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveStartDate),
-                                                            toDate: DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(
-                                                                    leaveEndDate)));
-                                                  },
-                                                );
-                                        },
-                                        icon: Icon(
-                                          IconlyLight.calendar,
-                                          color: kMainColor,
+                                  GestureDetector(
+                                      onTap: null,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Start Date",
+                                                style: size.width > 450
+                                                    ? greyTab10B600
+                                                    : grey13B600,
+                                              ),
+                                              IconButton(
+                                                onPressed: null,
+                                                icon: Icon(
+                                                  IconlyLight.calendar,
+                                                  color: kMainColor,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Text(
+                                            DateFormat("dd-MM-yyy")
+                                                .format(leaveStartDate),
+                                            style: size.width > 450
+                                                ? blackTabMainText
+                                                : black14B600,
+                                          ),
+                                        ],
+                                      )),
+                                  GestureDetector(
+                                    onTap: null,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "End Date",
+                                              style: size.width > 450
+                                                  ? greyTab10B600
+                                                  : grey13B600,
+                                            ),
+                                            IconButton(
+                                              onPressed: null,
+                                              icon: Icon(
+                                                IconlyLight.calendar,
+                                                color: kMainColor,
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Text(
-                                    DateFormat("dd-MM-yyy")
-                                        .format(leaveEndDate),
-                                    style: size.width > 450
-                                        ? blackTabMainText
-                                        : black14B600,
+                                        Text(
+                                          DateFormat("dd-MM-yyy")
+                                              .format(leaveEndDate),
+                                          style: size.width > 450
+                                              ? blackTabMainText
+                                              : black14B600,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
-                            ),
-                          ],
+                              );
+                            }
+                          },
                         ),
                         const VerticalSpacingWidget(height: 5),
                         // VerticalSpacingWidget(height: 10.h),
@@ -428,84 +540,255 @@ class LeaveScreenState extends State<LeaveScreen> {
                               leaveCheckModel =
                                   BlocProvider.of<LeaveCheckBloc>(context)
                                       .leaveCheckModel;
+                              // BlocBuilder<GetAllLeavesBloc, GetAllLeavesState>(
+                              //     builder: (context, states) {
+                              // if (state is GetAllLeavesLoaded) {
+                              // getAllLeavesModel =
+                              //     BlocProvider.of<GetAllLeavesBloc>(context)
+                              //         .getAllLeavesModel;
                               return Column(
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isClickLeave = true;
-                                      });
-                                      var matchingLeave;
-                                      try {
-                                      //  matchingLeave
-                                      } catch (e) {
-                                        
-                                      }
-
-
-
-                                      log("===================$isClickLeave");
-                                      leaveCheckModel.bookedtokencount != 0
-                                          ? GeneralServices().appCloseDialogue(
-                                              context,
-                                              "You have bookings on this date.Are you sure you want to take leave?",
-                                              () {
-                                              BlocProvider.of<LeaveUpdateBloc>(
-                                                      context)
-                                                  .add(FetchLeaveUpdate(
-                                                clinicId: dController
-                                                    .initialIndex.value,
-                                                fromDate:
-                                                    DateFormat('yyyy-MM-dd')
+                                  BlocBuilder<GetAllLeavesBloc,
+                                      GetAllLeavesState>(
+                                    builder: (context, states) {
+                                      if (states is GetAllLeavesLoaded) {
+                                        return InkWell(
+                                          onTap: () {
+                                            LeavesData? matchingLeave =
+                                                findMatchingLeave(
+                                                    leaveStartDate);
+                                            if (leaveCheckModel
+                                                    .bookedtokencount !=
+                                                0) {}
+                                            if (matchingLeave == null) {
+                                              if (leaveCheckModel
+                                                      .bookedtokencount !=
+                                                  0) {
+                                                GeneralServices()
+                                                    .appCloseDialogue(
+                                                  context,
+                                                  "You have bookings on this date.Are you sure you want to take leave?",
+                                                  () {
+                                                    BlocProvider.of<
+                                                                LeaveUpdateBloc>(
+                                                            context)
+                                                        .add(
+                                                      FetchLeaveUpdate(
+                                                        clinicId: dController
+                                                            .initialIndex.value,
+                                                        fromDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveStartDate),
+                                                        toDate: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                leaveEndDate),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                BlocProvider.of<
+                                                            LeaveUpdateBloc>(
+                                                        context)
+                                                    .add(
+                                                  FetchLeaveUpdate(
+                                                    clinicId: dController
+                                                        .initialIndex.value,
+                                                    fromDate: DateFormat(
+                                                            'yyyy-MM-dd')
                                                         .format(leaveStartDate),
-                                                toDate: DateFormat('yyyy-MM-dd')
-                                                    .format(leaveEndDate),
-                                              ));
-                                              Navigator.pop(context);
-                                            })
-                                          : BlocProvider.of<LeaveUpdateBloc>(
-                                                  context)
-                                              .add(FetchLeaveUpdate(
-                                              clinicId: dController
-                                                  .initialIndex.value,
-                                              fromDate: DateFormat('yyyy-MM-dd')
-                                                  .format(leaveStartDate),
-                                              // "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
-                                              toDate: DateFormat('yyyy-MM-dd')
-                                                  .format(leaveEndDate),
-                                              // "${leaveEndDate.year}-${leaveEndDate.month}-${leaveEndDate.day}",
-                                            ));
+                                                    toDate: DateFormat(
+                                                            'yyyy-MM-dd')
+                                                        .format(leaveEndDate),
+                                                  ),
+                                                );
+                                              }
+                                              // Only allow adding new leave if it's not already a leave date
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 50.h,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: isLeaveDate(
+                                                leaveStartDate,
+                                              )
+                                                  ? Colors.grey
+                                                  : kMainColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                isLeaveDate(leaveStartDate)
+                                                    ? "Leave Date"
+                                                    : "Confirm as a Leave",
+                                                style: TextStyle(
+                                                  fontSize: size.width > 450
+                                                      ? 12.sp
+                                                      : 18.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                        // InkWell(
+                                        //   onTap: () {
+                                        //     LeavesData? matchingLeave;
+                                        //     try {
+                                        //       matchingLeave = states
+                                        //           .getAllLeavesModel.leavesData!
+                                        //           .firstWhere((e) =>
+                                        //               e.date.toString() ==
+                                        //               DateFormat("dd-MM-yyy")
+                                        //                   .format(
+                                        //                       leaveStartDate));
+                                        //     } catch (e) {
+                                        //       matchingLeave = null;
+                                        //     }
+                                        //     if (matchingLeave != null) {
+                                        //       setState(() {
+                                        //         isClickLeave =
+                                        //             matchingLeave!.status!;
+                                        //       });
+                                        //       BlocProvider.of<LeaveUpdateBloc>(
+                                        //               context)
+                                        //           .add(FetchLeaveUpdate(
+                                        //         clinicId: dController
+                                        //             .initialIndex.value,
+                                        //         fromDate:
+                                        //             DateFormat('yyyy-MM-dd')
+                                        //                 .format(leaveStartDate),
+                                        //         toDate: DateFormat('yyyy-MM-dd')
+                                        //             .format(leaveEndDate),
+                                        //       ));
+
+                                        //       log("===================$isClickLeave");
+                                        //     } else {
+                                        //       BlocProvider.of<LeaveUpdateBloc>(
+                                        //               context)
+                                        //           .add(FetchLeaveUpdate(
+                                        //         clinicId: dController
+                                        //             .initialIndex.value,
+                                        //         fromDate:
+                                        //             DateFormat('yyyy-MM-dd')
+                                        //                 .format(leaveStartDate),
+                                        //         toDate: DateFormat('yyyy-MM-dd')
+                                        //             .format(leaveEndDate),
+                                        //       ));
+                                        //     }
+
+                                        // log("===================$isClickLeave");
+                                        // leaveCheckModel.bookedtokencount !=
+                                        //         0
+                                        //     ? GeneralServices()
+                                        //         .appCloseDialogue(context,
+                                        //             "You have bookings on this date.Are you sure you want to take leave?",
+                                        //             () {
+                                        // BlocProvider.of<
+                                        //             LeaveUpdateBloc>(
+                                        //         context)
+                                        //     .add(FetchLeaveUpdate(
+                                        //   clinicId: dController
+                                        //       .initialIndex.value,
+                                        //   fromDate: DateFormat(
+                                        //           'yyyy-MM-dd')
+                                        //       .format(
+                                        //           leaveStartDate),
+                                        //   toDate: DateFormat(
+                                        //           'yyyy-MM-dd')
+                                        //       .format(leaveEndDate),
+                                        // ));
+                                        //         Navigator.pop(context);
+                                        //       })
+                                        //     : BlocProvider.of<
+                                        //                 LeaveUpdateBloc>(
+                                        //             context)
+                                        //         .add(FetchLeaveUpdate(
+                                        //         clinicId: dController
+                                        //             .initialIndex.value,
+                                        //         fromDate: DateFormat(
+                                        //                 'yyyy-MM-dd')
+                                        //             .format(leaveStartDate),
+                                        //         // "${leaveStartDate.year}-${leaveStartDate.month}-${leaveStartDate.day}",
+                                        //         toDate: DateFormat(
+                                        //                 'yyyy-MM-dd')
+                                        //             .format(leaveEndDate),
+                                        //         // "${leaveEndDate.year}-${leaveEndDate.month}-${leaveEndDate.day}",
+                                        //       ));
+                                        //   },
+                                        //   child: Container(
+                                        //     height: 50.h,
+                                        //     width: double.infinity,
+                                        //     decoration: BoxDecoration(
+                                        //       color: isClickLeave
+                                        //           ? Colors.grey
+                                        //           : kMainColor,
+                                        //       borderRadius:
+                                        //           BorderRadius.circular(8),
+                                        //     ),
+                                        //     child: Center(
+                                        //       child: Text(
+                                        //         "Confirm as a Leave",
+                                        //         style: size.width > 450
+                                        //             ? TextStyle(
+                                        //                 fontSize: 12.sp,
+                                        //                 fontWeight:
+                                        //                     FontWeight.w600,
+                                        //                 color: Colors.white)
+                                        //             : TextStyle(
+                                        //                 fontSize: 18.sp,
+                                        //                 fontWeight:
+                                        //                     FontWeight.w600,
+                                        //                 color: Colors.white),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // );
+                                      } else {
+                                        return Container(
+                                          height: 50.h,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: isLeaveDate(
+                                              leaveStartDate,
+                                            )
+                                                ? Colors.grey
+                                                : kMainColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              isLeaveDate(leaveStartDate)
+                                                  ? "Leave Date"
+                                                  : "Confirm as a Leave",
+                                              style: TextStyle(
+                                                fontSize: size.width > 450
+                                                    ? 12.sp
+                                                    : 18.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
                                     },
-                                    child: Container(
-                                      height: 50.h,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: isClickLeave
-                                            ? Colors.grey
-                                            : kMainColor,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Confirm as a Leave",
-                                          style: size.width > 450
-                                              ? TextStyle(
-                                                  fontSize: 12.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white)
-                                              : TextStyle(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                   // ElevatedButton(onPressed: () {
                                   //     log("=================== fsdkfjdsfkjdskfdksfdfksjl   ::::   ${leaveCheckModel.message}");
                                   // }, child: Text("data")),
                                 ],
                               );
+                              // }
+                              //   return Container();
+                              // });
+                              //   return Container();
                             }
                             return Container();
                           },
@@ -514,10 +797,16 @@ class LeaveScreenState extends State<LeaveScreen> {
                         BlocBuilder<GetAllLeavesBloc, GetAllLeavesState>(
                           builder: (context, state) {
                             if (state is GetAllLeavesLoaded) {
-                              getAllLeavesModel =
-                                  BlocProvider.of<GetAllLeavesBloc>(context)
-                                      .getAllLeavesModel;
-                              if (getAllLeavesModel.leavesData == null) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                setState(() {
+                                  leavesData =
+                                      state.getAllLeavesModel.leavesData ?? [];
+                                });
+                              });
+                              // getAllLeavesModel =
+                              //     BlocProvider.of<GetAllLeavesBloc>(context)
+                              //         .getAllLeavesModel;
+                              if (state.getAllLeavesModel.leavesData == null) {
                                 return Container();
                               }
                               return Column(
@@ -533,81 +822,169 @@ class LeaveScreenState extends State<LeaveScreen> {
                                   SizedBox(
                                     height: 500.h,
                                     child: ListView.separated(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        padding: EdgeInsets.zero,
-                                        itemBuilder: (context, index) {
-                                          return Card(
-                                            child: Container(
-                                              height: 40.h,
-                                              width: double.infinity,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5),
-                                              decoration: BoxDecoration(
-                                                color: kScaffoldColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(DateTime.parse(
-                                                            getAllLeavesModel
-                                                                .leavesData![
-                                                                    index]
-                                                                .date!)),
-                                                    style: size.width > 450
-                                                        ? blackTabMainText
-                                                        : black14B600,
-                                                  ),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      BlocProvider.of<
-                                                                  LeaveUpdateBloc>(
-                                                              context)
-                                                          .add(
-                                                        LeaveDelete(
-                                                          clinicId: dController
-                                                              .initialIndex
-                                                              .value,
-                                                          date:
-                                                              getAllLeavesModel
-                                                                  .leavesData![
-                                                                      index]
-                                                                  .date
-                                                                  .toString(),
-                                                        ),
-                                                      );
-
-                                                      isClickLeave = false;
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.delete,
-                                                      color: kMainColor,
-                                                      size: size.width > 450
-                                                          ? 14.sp
-                                                          : 20.sp,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          child: Container(
+                                            height: 40.h,
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            decoration: BoxDecoration(
+                                              color: kScaffoldColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
-                                          );
-                                        },
-                                        separatorBuilder: (context, index) {
-                                          return const VerticalSpacingWidget(
-                                              height: 10);
-                                        },
-                                        itemCount: getAllLeavesModel
-                                            .leavesData!.length),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  DateFormat('dd-MM-yyyy')
+                                                      .format(
+                                                    DateTime.parse(state
+                                                        .getAllLeavesModel
+                                                        .leavesData![index]
+                                                        .date!),
+                                                  ),
+                                                  style: size.width > 450
+                                                      ? blackTabMainText
+                                                      : black14B600,
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                LeaveUpdateBloc>(
+                                                            context)
+                                                        .add(
+                                                      LeaveDelete(
+                                                        clinicId: dController
+                                                            .initialIndex.value,
+                                                        date: state
+                                                            .getAllLeavesModel
+                                                            .leavesData![index]
+                                                            .date
+                                                            .toString(),
+                                                      ),
+                                                    );
+                                                    setState(() {
+                                                      isClickLeave = false;
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: kMainColor,
+                                                    size: size.width > 450
+                                                        ? 14.sp
+                                                        : 20.sp,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(height: 10.h),
+                                      itemCount: state.getAllLeavesModel
+                                              .leavesData?.length ??
+                                          0,
+                                    ),
                                   ),
                                 ],
                               );
+                              // return Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text(
+                              //       "Your upcoming leaves",
+                              //       style: size.width > 450
+                              //           ? greyTab10B600
+                              //           : grey13B600,
+                              //     ),
+                              //     VerticalSpacingWidget(height: 5.h),
+                              //     SizedBox(
+                              //       height: 500.h,
+                              //       child: ListView.separated(
+                              //           physics:
+                              //               const NeverScrollableScrollPhysics(),
+                              //           padding: EdgeInsets.zero,
+                              //           itemBuilder: (context, index) {
+                              //             return Card(
+                              //               child: Container(
+                              //                 height: 40.h,
+                              //                 width: double.infinity,
+                              //                 padding:
+                              //                     const EdgeInsets.symmetric(
+                              //                         horizontal: 5),
+                              //                 decoration: BoxDecoration(
+                              //                   color: kScaffoldColor,
+                              //                   borderRadius:
+                              //                       BorderRadius.circular(10),
+                              //                 ),
+                              //                 child: Row(
+                              //                   mainAxisAlignment:
+                              //                       MainAxisAlignment
+                              //                           .spaceBetween,
+                              //                   children: [
+                              //                     Text(
+                              //                       DateFormat('dd-MM-yyyy')
+                              //                           .format(DateTime.parse(
+                              //                               state
+                              //                                   .getAllLeavesModel
+                              //                                   .leavesData![
+                              //                                       index]
+                              //                                   .date!)),
+                              //                       style: size.width > 450
+                              //                           ? blackTabMainText
+                              //                           : black14B600,
+                              //                     ),
+                              //                     IconButton(
+                              //                       onPressed: () {
+                              //                         BlocProvider.of<
+                              //                                     LeaveUpdateBloc>(
+                              //                                 context)
+                              //                             .add(
+                              //                           LeaveDelete(
+                              //                             clinicId: dController
+                              //                                 .initialIndex
+                              //                                 .value,
+                              //                             date: state
+                              //                                 .getAllLeavesModel
+                              //                                 .leavesData![
+                              //                                     index]
+                              //                                 .date
+                              //                                 .toString(),
+                              //                           ),
+                              //                         );
+
+                              //                         isClickLeave = false;
+                              //                       },
+                              //                       icon: Icon(
+                              //                         Icons.delete,
+                              //                         color: kMainColor,
+                              //                         size: size.width > 450
+                              //                             ? 14.sp
+                              //                             : 20.sp,
+                              //                       ),
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           },
+                              //           separatorBuilder: (context, index) {
+                              //             return const VerticalSpacingWidget(
+                              //                 height: 10);
+                              //           },
+                              //           itemCount: state.getAllLeavesModel
+                              //               .leavesData!.length),
+                              //     ),
+                              //   ],
+                              // );
                             }
                             return Container();
                           },
@@ -625,38 +1002,63 @@ class LeaveScreenState extends State<LeaveScreen> {
     );
   }
 
+  //data on selected datails
+  bool isLeaveDate(DateTime date) {
+    return leavesData.any((leave) =>
+        DateFormat("dd-MM-yyyy").format(DateTime.parse(leave.date!)) ==
+        DateFormat("dd-MM-yyyy").format(date));
+  }
+
+  LeavesData? findMatchingLeave(DateTime date) {
+    try {
+      return leavesData.firstWhere(
+        (leave) =>
+            DateFormat("dd-MM-yyyy").format(DateTime.parse(leave.date!)) ==
+            DateFormat("dd-MM-yyyy").format(date),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
   //! select date
   Future<void> selectDate({
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
     DateTime? minDate,
+    //  required GetAllLeavesState state
   }) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: date,
-      firstDate: minDate ?? DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 30)),
-      builder: ((context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: kMainColor,
-            ),
+   final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: date,
+    firstDate: minDate ?? DateTime.now(),
+    lastDate: DateTime.now().add(const Duration(days: 30)),
+    // selectableDayPredicate: (DateTime date) {
+    //   return !_isLeaveDate(date);
+    // },
+    builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: kMainColor,
+            //onSurface: _isLeaveDate(date) ? Colors.red : Colors.blue,
           ),
-          child: child!,
-        );
-      }),
-    );
-    if (picked != null) {
-      onDateSelected(picked);
-    }
+        ),
+        child: child!,
+      );
+    },
+  );
+  if (picked != null) {
+    onDateSelected(picked);
   }
+}
 
   Future<void> selectIosDate({
     required BuildContext context,
     required DateTime date,
     required Function(DateTime) onDateSelected,
+    required GetAllLeavesState state,
     DateTime? minDate,
   }) async {
     var now = DateTime.now();
@@ -670,7 +1072,7 @@ class LeaveScreenState extends State<LeaveScreen> {
           minimumDate: minDate ?? today,
           maximumDate: DateTime.now().add(const Duration(days: 30)),
           onDateTimeChanged: (DateTime newDateTime) {
-            onDateSelected(newDateTime);
+            _onDateSelected(newDateTime);
           },
         );
       },
@@ -679,4 +1081,24 @@ class LeaveScreenState extends State<LeaveScreen> {
       onDateSelected(picked);
     }
   }
+
+  //ios leave//
+  void _onDateSelected(DateTime picked) {
+    setState(() {
+      leaveStartDate = picked;
+      leaveEndDate = picked;
+    });
+    BlocProvider.of<LeaveCheckBloc>(context).add(FetchLeaveCheck(
+      clinicId: dController.initialIndex.value,
+      fromDate: DateFormat('yyyy-MM-dd').format(leaveStartDate),
+      toDate: DateFormat('yyyy-MM-dd').format(leaveEndDate),
+    ));
+  }
+
+  //leave date //
+//   bool _isLeaveDate(DateTime date) {
+//   return leavesData.any((leave) =>
+//       DateFormat("dd-MM-yyyy").format(DateTime.parse(leave.date!)) ==
+//       DateFormat("dd-MM-yyyy").format(date));
+// }
 }

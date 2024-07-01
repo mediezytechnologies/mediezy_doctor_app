@@ -108,6 +108,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                   BottomNavigationControlWidget(selectedIndex: 2)),
           (route) => false,
         );
+         fillPatiantController.     resetGender();
         return Future.value(false);
       },
       child: Scaffold(
@@ -169,6 +170,7 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                             // endTokenTime: widget.endingTime,
                           ),
                         );
+                   fillPatiantController.     resetGender();
                       }
                     }),
               ],
