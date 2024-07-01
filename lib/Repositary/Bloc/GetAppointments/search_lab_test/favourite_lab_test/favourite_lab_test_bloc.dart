@@ -44,5 +44,39 @@ class FavouriteLabTestBloc
         emit(DeleteRecentlySearchLabTestError(errorMessage: e.toString()));
       }
     });
+
+    //! favourite scan test
+
+    on<AddFavouriteScanTest>((event, emit) async {
+      emit(FavouriteScanTestLoading());
+      try {
+        updatedSuccessfully = await getAppointmentApi.updateFavouriteScanTest(
+            scanTestId: event.scanTestId);
+
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        GeneralServices.instance.showToastMessage(data['message']);
+        emit(FavouriteScanTestLoaded(
+            successMessage: data['message'].toString()));
+      } catch (e) {
+        emit(FavouriteScanTestError(errorMessage: e.toString()));
+      }
+    });
+
+    //! delete recently search scan test
+
+    on<DeleteRecentlySearchScanTest>((event, emit) async {
+      emit(DeleteRecentlySearchScanTestLoading());
+      try {
+        updatedSuccessfully = await getAppointmentApi
+            .deleteRecentlySearchScanTest(historyId: event.historyId);
+
+        Map<String, dynamic> data = jsonDecode(updatedSuccessfully);
+        GeneralServices.instance.showToastMessage(data['message']);
+        emit(DeleteRecentlySearchScanTestLoaded(
+            successMessage: data['message'].toString()));
+      } catch (e) {
+        emit(DeleteRecentlySearchScanTestError(errorMessage: e.toString()));
+      }
+    });
   }
 }

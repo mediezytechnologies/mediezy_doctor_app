@@ -128,7 +128,11 @@ class _PatientsCardWidgetState extends State<PatientsCardWidget> {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              widget.gender == "1" ? "Male" : "Female",
+                              widget.gender == "1"
+                                  ? "Male"
+                                  : widget.gender == "2"
+                                      ? "Female"
+                                      : "Other",
                               style: size.width > 450
                                   ? blackTab9B600
                                   : blackMainText,

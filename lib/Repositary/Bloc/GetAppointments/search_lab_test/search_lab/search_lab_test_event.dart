@@ -8,3 +8,11 @@ class FetchAllLabTest extends SearchLabTestEvent {
 
   FetchAllLabTest({required this.searchQuery});
 }
+
+//! scan test
+
+class FetchAllScanTest extends SearchLabTestEvent {
+  final String searchQuery;
+
+  FetchAllScanTest({required this.searchQuery});
+}

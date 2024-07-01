@@ -14,3 +14,17 @@ final class SearchLabTestLoaded extends SearchLabTestState {
 }
 
 final class SearchLabTestError extends SearchLabTestState {}
+
+//! scan test
+
+final class SearchScanTestInitial extends SearchLabTestState {}
+
+final class SearchScanTestLoading extends SearchLabTestState {}
+
+final class SearchScanTestLoaded extends SearchLabTestState {
+  final SearchLabTestModel searchLabTestModel;
+
+  SearchScanTestLoaded({required this.searchLabTestModel});
+}
+
+final class SearchScanTestError extends SearchLabTestState {}

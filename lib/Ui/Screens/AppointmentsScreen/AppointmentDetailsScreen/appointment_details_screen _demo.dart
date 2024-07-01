@@ -34,6 +34,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/lab_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/scan_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import '../../../../Repositary/getx/apointment_detail_getx.dart';
@@ -179,56 +180,25 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final bokingAppointmentLabController =
       Get.put(BookingAppointmentLabController());
 
-  // final ImagePicker imagePicker = ImagePicker();
-  List<File> imageFiles = [];
+  // List<File> imageFiles = [];
 
-  Future<void> pickImage(ImageSource source) async {
-    final pickedFile = await imagePicker.pickImage(
-      source: source,
-      imageQuality: 30,
-    );
+  // Future<void> pickImage(ImageSource source) async {
+  //   final pickedFile = await imagePicker.pickImage(
+  //     source: source,
+  //     imageQuality: 30,
+  //   );
 
-    if (pickedFile == null) return;
+  //   if (pickedFile == null) return;
 
-    setState(() {
-      imageFiles.add(File(pickedFile.path));
-      log("${pickedFile.path}======= image");
-    });
-  }
+  //   setState(() {
+  //     imageFiles.add(File(pickedFile.path));
+  //     log("${pickedFile.path}======= image");
+  //   });
+  // }
 
-  void showPickerOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Photo Library'),
-                onTap: () {
-                  pickImage(ImageSource.gallery);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
-                onTap: () {
-                  pickImage(ImageSource.camera);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  List<String> getImagePaths() {
-    return imageFiles.map((file) => file.path).toList();
-  }
+  // List<String> getImagePaths() {
+  //   return imageFiles.map((file) => file.path).toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -778,10 +748,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         ),
                                         IconButton(
                                           onPressed: () async {
-                                            // await placePicImage();
-                                            showPickerOptions();
-                                            // setState(() {});
-                                            log(imageFiles.toString());
+                                            await placePicImage();
+                                            setState(() {});
+                                            // showPickerOptions();
+                                            // log(imageFiles.toString());
                                           },
                                           icon: Icon(
                                             Icons.upload_file_outlined,
@@ -796,87 +766,157 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   ),
                                 ),
                                 const VerticalSpacingWidget(height: 5),
-                                if (imageFiles.isNotEmpty)
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: imageFiles.length,
-                                    itemBuilder: (context, index) {
-                                      final file = imageFiles[index];
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: kCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 5.h),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        ImageViewWidgetDemo(
-                                                      image: file.path,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "View your uploaded image",
-                                                    style: size.width > 450
-                                                        ? TextStyle(
-                                                            fontSize: 11.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.blue,
-                                                          )
-                                                        : TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.blue,
-                                                          ),
-                                                  ),
-                                                  const HorizontalSpacingWidget(
-                                                      width: 10),
-                                                  Icon(
-                                                    Icons.image,
-                                                    color: Colors.blue,
-                                                    size: size.width > 450
-                                                        ? 20.sp
-                                                        : 28.sp,
-                                                  ),
-                                                ],
+                                if (imagePath != null)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: kCardColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    margin: EdgeInsets.symmetric(vertical: 5.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    ImageViewWidgetDemo(
+                                                  image: imagePath!,
+                                                ),
                                               ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  imageFiles.removeAt(index);
-                                                });
-                                              },
-                                              icon: Icon(
-                                                CupertinoIcons.clear_circled,
-                                                color: Colors.black,
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "View your uploaded image",
+                                                style: size.width > 450
+                                                    ? TextStyle(
+                                                        fontSize: 11.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      )
+                                                    : TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      ),
+                                              ),
+                                              const HorizontalSpacingWidget(
+                                                  width: 10),
+                                              Icon(
+                                                Icons.image,
+                                                color: Colors.blue,
                                                 size: size.width > 450
                                                     ? 20.sp
-                                                    : 20.sp,
+                                                    : 28.sp,
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      );
-                                    },
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              imagePath = null;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            CupertinoIcons.clear_circled,
+                                            color: Colors.black,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 20.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
+                                // if (imageFiles.isNotEmpty)
+                                //   ListView.builder(
+                                //     shrinkWrap: true,
+                                //     physics:
+                                //         const NeverScrollableScrollPhysics(),
+                                //     itemCount: imageFiles.length,
+                                //     itemBuilder: (context, index) {
+                                //       final file = imageFiles[index];
+                                //       return Container(
+                                //         decoration: BoxDecoration(
+                                //           color: kCardColor,
+                                //           borderRadius:
+                                //               BorderRadius.circular(10),
+                                //         ),
+                                //         margin:
+                                //             EdgeInsets.symmetric(vertical: 5.h),
+                                //         child: Row(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.spaceBetween,
+                                //           children: [
+                                //             InkWell(
+                                //               onTap: () {
+                                //                 Navigator.push(
+                                //                   context,
+                                //                   MaterialPageRoute(
+                                //                     builder: (ctx) =>
+                                //                         ImageViewWidgetDemo(
+                                //                       image: file.path,
+                                //                     ),
+                                //                   ),
+                                //                 );
+                                //               },
+                                //               child: Row(
+                                //                 children: [
+                                //                   Text(
+                                //                     "View your uploaded image",
+                                //                     style: size.width > 450
+                                //                         ? TextStyle(
+                                //                             fontSize: 11.sp,
+                                //                             fontWeight:
+                                //                                 FontWeight.w600,
+                                //                             color: Colors.blue,
+                                //                           )
+                                //                         : TextStyle(
+                                //                             fontSize: 14.sp,
+                                //                             fontWeight:
+                                //                                 FontWeight.w600,
+                                //                             color: Colors.blue,
+                                //                           ),
+                                //                   ),
+                                //                   const HorizontalSpacingWidget(
+                                //                       width: 10),
+                                //                   Icon(
+                                //                     Icons.image,
+                                //                     color: Colors.blue,
+                                //                     size: size.width > 450
+                                //                         ? 20.sp
+                                //                         : 28.sp,
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //             IconButton(
+                                //               onPressed: () {
+                                //                 setState(() {
+                                //                   imageFiles.removeAt(index);
+                                //                 });
+                                //               },
+                                //               icon: Icon(
+                                //                 CupertinoIcons.clear_circled,
+                                //                 color: Colors.black,
+                                //                 size: size.width > 450
+                                //                     ? 20.sp
+                                //                     : 20.sp,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       );
+                                //     },
+                                //   ),
 
                                 const VerticalSpacingWidget(height: 5),
 
@@ -975,7 +1015,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LabSearchWidget(
+                                        builder: (context) => ScanSearchWidget(
                                           onLabSelected:
                                               handleScanTestSelection,
                                           typeId: 0,
@@ -1594,7 +1634,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     bokingAppointmentLabController.resetToPreviousValue();
     imagePath = null;
-    imageFiles.clear();
+    // imageFiles.clear();
     selectedScanTests.clear();
     selectedLabs.clear();
   }
@@ -1679,91 +1719,46 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  Future<void> placePicImage() async {
-    final size = MediaQuery.of(context).size;
-    final pickerOption = await showDialog<ImageSource>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(
-          'Select Image Source',
-          style: size.width > 450 ? blackTabMainText : blackMainText,
-        ),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () => Navigator.pop(ctx, ImageSource.camera),
-              child: Container(
-                height: 30.h,
-                width: 100.w,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.camera_alt_outlined,
-                      color: Colors.white,
-                    ),
-                    HorizontalSpacingWidget(width: 5),
-                    Text("Camera", style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () => Navigator.pop(ctx, ImageSource.gallery),
-              child: Container(
-                height: 30.h,
-                width: 100.w,
-                decoration: BoxDecoration(
-                  color: kMainColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Row(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.photo,
-                      color: Colors.white,
-                    ),
-                    HorizontalSpacingWidget(width: 5),
-                    Text("Gallery", style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+  Future placePicImage() async {
+    var image = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
     );
-
-    if (pickerOption != null) {
-      final pickedFile = await imagePicker.pickImage(
-        source: pickerOption,
-        imageQuality: 30,
-      );
-      if (pickedFile == null) return;
-
-      setState(() {
-        imagePath = pickedFile.path;
-        log("$imagePath======= image");
-      });
-    }
+    if (image == null) return;
+    final imageTemporary = image.path;
+    setState(() {
+      imagePath = imageTemporary;
+      log("$imageTemporary======= image");
+    });
   }
-  // Future placePicImage() async {
-  //   var image = await imagePicker.pickImage(
-  //     source: ImageSource.camera,
-  //     imageQuality: 30,
+
+  //   void showPickerOptions() {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return SafeArea(
+  //         child: Wrap(
+  //           children: <Widget>[
+  //             ListTile(
+  //               leading: const Icon(Icons.photo_library),
+  //               title: const Text('Photo Library'),
+  //               onTap: () {
+  //                 pickImage(ImageSource.gallery);
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //             ListTile(
+  //               leading: const Icon(Icons.photo_camera),
+  //               title: const Text('Camera'),
+  //               onTap: () {
+  //                 pickImage(ImageSource.camera);
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
   //   );
-  //   if (image == null) return;
-  //   final imageTemporary = image.path;
-  //   setState(() {
-  //     imagePath = imageTemporary;
-  //     log("$imageTemporary======= image");
-  //   });
   // }
 }

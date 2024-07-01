@@ -16,3 +16,19 @@ class DeleteRecentlySearchLabTest extends FavouriteLabTestEvent {
 
   DeleteRecentlySearchLabTest({required this.labTestId});
 }
+
+//! favourite scan test
+
+class AddFavouriteScanTest extends FavouriteLabTestEvent {
+  final String scanTestId;
+
+  AddFavouriteScanTest({required this.scanTestId});
+}
+
+//! delete recently search scan test
+
+class DeleteRecentlySearchScanTest extends FavouriteLabTestEvent {
+  final String historyId;
+
+  DeleteRecentlySearchScanTest({required this.historyId});
+}

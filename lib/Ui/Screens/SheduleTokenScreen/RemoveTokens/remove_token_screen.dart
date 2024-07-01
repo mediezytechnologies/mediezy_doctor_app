@@ -853,7 +853,7 @@ class _RemoveTokenScreenState extends State<RemoveTokenScreen>
                                         child: Image(
                                           height: 200.h,
                                           image: const AssetImage(
-                                              "assets/images/no_data.jpg"),
+                                              "assets/images/no_data.png"),
                                         ),
                                       ),
                                     ],

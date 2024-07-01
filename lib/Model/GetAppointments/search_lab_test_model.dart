@@ -1,24 +1,23 @@
 class SearchLabTestModel {
   bool? status;
-  List<LabHistory>? labHistory;
-  List<LabTests>? labTests;
+  List<History>? history;
+  List<Tests>? tests;
   String? message;
 
-  SearchLabTestModel(
-      {this.status, this.labHistory, this.labTests, this.message});
+  SearchLabTestModel({this.status, this.history, this.tests, this.message});
 
   SearchLabTestModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['lab_history'] != null) {
-      labHistory = <LabHistory>[];
-      json['lab_history'].forEach((v) {
-        labHistory!.add(LabHistory.fromJson(v));
+    if (json['history'] != null) {
+      history = <History>[];
+      json['history'].forEach((v) {
+        history!.add(History.fromJson(v));
       });
     }
-    if (json['Lab_Tests'] != null) {
-      labTests = <LabTests>[];
-      json['Lab_Tests'].forEach((v) {
-        labTests!.add(LabTests.fromJson(v));
+    if (json['tests'] != null) {
+      tests = <Tests>[];
+      json['tests'].forEach((v) {
+        tests!.add(Tests.fromJson(v));
       });
     }
     message = json['message'];
@@ -27,24 +26,24 @@ class SearchLabTestModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    if (labHistory != null) {
-      data['lab_history'] = labHistory!.map((v) => v.toJson()).toList();
+    if (history != null) {
+      data['history'] = history!.map((v) => v.toJson()).toList();
     }
-    if (labTests != null) {
-      data['Lab_Tests'] = labTests!.map((v) => v.toJson()).toList();
+    if (tests != null) {
+      data['tests'] = tests!.map((v) => v.toJson()).toList();
     }
     data['message'] = message;
     return data;
   }
 }
 
-class LabHistory {
+class History {
   int? id;
   String? testName;
 
-  LabHistory({this.id, this.testName});
+  History({this.id, this.testName});
 
-  LabHistory.fromJson(Map<String, dynamic> json) {
+  History.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     testName = json['test_name'];
   }
@@ -57,14 +56,14 @@ class LabHistory {
   }
 }
 
-class LabTests {
+class Tests {
   int? id;
   String? testName;
   int? favStatus;
 
-  LabTests({this.id, this.testName, this.favStatus});
+  Tests({this.id, this.testName, this.favStatus});
 
-  LabTests.fromJson(Map<String, dynamic> json) {
+  Tests.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     testName = json['test_name'];
     favStatus = json['fav_status'];

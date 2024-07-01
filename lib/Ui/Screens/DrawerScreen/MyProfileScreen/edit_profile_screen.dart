@@ -9,6 +9,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/Profile/ProfileEdit/profile_edit_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
@@ -63,6 +64,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final preference = await SharedPreferences.getInstance();
+        String? image;
+        image = preference.getString("drImage");
+        log(image.toString());
+      }),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
         child: SizedBox(
@@ -74,6 +81,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   onTapFunction: () {
                     final isValidate = _formKey.currentState!.validate();
                     if (isValidate) {
+                      setNewUserName(
+                          firstNameController.text,
+                          lastNameController.text,
+                          phoneNumberController.text,
+                          imagePath.toString());
                       BlocProvider.of<ProfileEditBloc>(context).add(
                           FetchProfileEdit(
                               firstname: firstNameController.text,
@@ -94,7 +106,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         listener: (context, state) {
           if (state is ProfileEditLoaded) {
             GeneralServices.instance
-                .showSuccessMessage(context, "Profile Update Successfull");
+                .showSuccessMessage(context, "Profile Update Successfully");
             Future.delayed(const Duration(seconds: 3), () {
               Navigator.pop(context);
             });
@@ -274,6 +286,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       imagePath = imageTemporary;
       log("$imageTemporary======= image");
     });
+  }
+
+  Future<void> setNewUserName(
+      String newName, String secondName, String mobNo, String drImage) async {
+    final preference = await SharedPreferences.getInstance();
+    await preference.remove('drFirstName');
+    await preference.remove('drSecondName');
+    await preference.remove('phNo');
+    await preference.remove('drImage');
+    preference.setString('drFirstName', newName);
+    preference.setString('drSecondName', secondName);
+    preference.setString('phNo', mobNo);
+    preference.setString('drImage', drImage);
   }
 
   // Future<void> pickImageFromCamera() async {

@@ -412,7 +412,7 @@ class _UnReserveTokenScreenState extends State<UnReserveTokenScreen> {
                                   child: Image(
                                     height: 150.h,
                                     image: const AssetImage(
-                                        "assets/images/no_data.jpg"),
+                                        "assets/images/no_data.png"),
                                   ),
                                 ),
                               ],

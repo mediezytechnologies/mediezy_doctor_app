@@ -22,5 +22,19 @@ class SearchLabTestBloc extends Bloc<SearchLabTestEvent, SearchLabTestState> {
         log(e.toString());
       }
     });
+
+    //!scan test
+
+    on<FetchAllScanTest>((event, emit) async {
+      emit(SearchScanTestLoading());
+      try {
+        final model = await getAppointmentApi.getAllScanTest(
+            searchQuery: event.searchQuery);
+        emit(SearchScanTestLoaded(searchLabTestModel: model));
+      } catch (e) {
+        emit(SearchScanTestError());
+        log(e.toString());
+      }
+    });
   }
 }

@@ -15,9 +15,24 @@ class FetchAllCompletedAppointments extends GetAllCompletedAppointmentsEvent {
   });
 }
 
+//! fetch sort patients
 
+// class FetchSortPatients extends GetAllCompletedAppointmentsEvent {
+//   final String sort;
+//   final String clinicId;
+//   final String fromDate;
+//   final String toDate;
 
-class FetchAllCompletedAppointmentDetails extends GetAllCompletedAppointmentsEvent {
+//   FetchSortPatients({
+//     required this.sort,
+//     required this.clinicId,
+//     required this.fromDate,
+//     required this.toDate,
+//   });
+// }
+
+class FetchAllCompletedAppointmentDetails
+    extends GetAllCompletedAppointmentsEvent {
   final String tokenId;
 
   FetchAllCompletedAppointmentDetails({

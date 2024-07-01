@@ -167,45 +167,6 @@ class GetAppointmentApi {
     return response.body;
   }
 
-  // //! Save all appointment details api
-
-  // Future<String> addAllAppointmentDetails(
-  //   File? attachment, {
-  //   required String tokenId,
-  //   required String labId,
-  //   required List<String?> labTestId,
-  //   required String medicalshopId,
-  //   required String reviewAfter,
-  //   required String notes,
-  //   required String scanId,
-  //   required List<String?> scanTestId,
-  //   required List<String?> labTestName,
-  //   required List<String?> scanTestName,
-  // }) async {
-  //   String basePath = "docter/AddTestDetails";
-
-  //   final body = {
-  //     "token_id": tokenId,
-  //     "lab_id": labId,
-  //     "labtest_id": labTestId,
-  //     "medical_shop_id": medicalshopId,
-  //     "prescription_image": attachment,
-  //     "ReviewAfter": reviewAfter,
-  //     "notes": notes,
-  //     "scan_id": scanId,
-  //     "scantest_id": scanTestId,
-  //     "labtest": labTestName,
-  //     "scan_test": scanTestName,
-  //   };
-  //   Response response = attachment == null
-  //       ? await apiClient.invokeAPI(path: basePath, method: "POST", body: body)
-  //       : await multiFileApiClient.uploadFiles(
-  //           files: attachment, uploadPath: basePath, bodyData: body);
-  //   log(body.toString());
-  //   log(">>>>>>>><<<<<<<add appointments${response.body}");
-  //   return response.body;
-  // }
-
   //! get Completed AppointmentDetails api
 
   Future<GetAllCompletedAppointmentDetailsModel>
@@ -410,6 +371,60 @@ class GetAppointmentApi {
     log(body.toString());
     return response.body;
   }
-}
-//mahesh appointment get
 
+  //! search scan test
+
+  Future<SearchLabTestModel> getAllScanTest({
+    required String searchQuery,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+    String basePath = "scan-tests";
+    final body = {"user_id": doctorId, "search": searchQuery};
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    print(body);
+    return SearchLabTestModel.fromJson(json.decode(response.body));
+  }
+
+  //! update favourite scan test
+
+  Future<String> updateFavouriteScanTest({
+    required String scanTestId,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+    String basePath = "scan-tests/fav";
+
+    final body = {
+      "user_id": doctorId,
+      "scan_test_id": scanTestId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
+    return response.body;
+  }
+
+  //! delete recently search scan test
+
+  Future<String> deleteRecentlySearchScanTest({
+    required String historyId,
+  }) async {
+    String? doctorId;
+    final preference = await SharedPreferences.getInstance();
+    doctorId = preference.getString('DoctorId').toString();
+
+    String basePath = "scan-tests/delete";
+    final body = {
+      "doctor_id": doctorId,
+      "scan_test_id": historyId,
+    };
+    Response response =
+        await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+    log(body.toString());
+    return response.body;
+  }
+}

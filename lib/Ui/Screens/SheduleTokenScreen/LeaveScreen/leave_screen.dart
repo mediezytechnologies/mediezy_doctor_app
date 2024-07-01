@@ -91,7 +91,7 @@ class LeaveScreenState extends State<LeaveScreen> {
           listener: (context, state) {
             if (state is LeaveUpdateLoaded) {
               GeneralServices.instance
-                  .showSuccessMessage(context, "Leave Update Successfull");
+                  .showSuccessMessage(context, "Leave Update Successfully");
               Future.delayed(const Duration(seconds: 3), () {
                 Navigator.pop(context);
               });

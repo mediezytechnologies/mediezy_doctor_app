@@ -14,5 +14,5 @@ class FetchProfileEdit extends ProfileEditEvent {
     required this.secondname,
     required this.mobileNo,
     required this.attachment,
-});
+  });
 }
