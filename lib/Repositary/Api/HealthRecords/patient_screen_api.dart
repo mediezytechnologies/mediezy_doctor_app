@@ -67,4 +67,27 @@ class PatientScreenApi {
     log(body.toString());
     return PatientsGetModel.fromJson(json.decode(response.body));
   }
+
+  //   Future<GetAllCompletedAppointmentsModel> getSortingPatients(
+  //     {required String sort,
+  //     required String clinicId,
+  //     required String fromDate,
+  //     required String toDate}) async {
+  //   String? doctorId;
+  //   final preference = await SharedPreferences.getInstance();
+  //   doctorId = preference.getString('DoctorId').toString();
+  //   String basePath = "doctor/getAllSortedPatients";
+  //   final body = {
+  //     "doctor_id": doctorId,
+  //     "interval": sort,
+  //     "clinic_id": clinicId,
+  //     "from_date": fromDate,
+  //     "to_date": toDate,
+  //   };
+  //   Response response =
+  //       await apiClient.invokeAPI(path: basePath, method: "POST", body: body);
+  //   log(body.toString());
+  //   return GetAllCompletedAppointmentsModel.fromJson(
+  //       json.decode(response.body));
+  // }
 }

@@ -315,7 +315,9 @@ class _PatientScreenState extends State<PatientScreen> {
                                 age: getAllCompletedAppointmentsModel
                                     .appointments![index].displayAge
                                     .toString(),
-                                gender: '1',
+                                gender: getAllCompletedAppointmentsModel
+                                    .appointments![index].gender
+                                    .toString(),
                                 userImage: getAllCompletedAppointmentsModel
                                             .appointments![index].userImage ==
                                         null

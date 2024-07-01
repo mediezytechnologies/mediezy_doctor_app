@@ -34,6 +34,7 @@ import 'package:mediezy_doctor/Ui/Consts/app_colors.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/lab_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/medicine_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/patient_details_widget.dart';
+import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/scan_search_widget.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/AppointmentDetailsScreen/vitals_widget.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
 import '../../../../Repositary/getx/apointment_detail_getx.dart';
@@ -179,26 +180,25 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   final bokingAppointmentLabController =
       Get.put(BookingAppointmentLabController());
 
-  // final ImagePicker imagePicker = ImagePicker();
-  List<File> imageFiles = [];
+  // List<File> imageFiles = [];
 
-  Future<void> pickImage(ImageSource source) async {
-    final pickedFile = await imagePicker.pickImage(
-      source: source,
-      imageQuality: 30,
-    );
+  // Future<void> pickImage(ImageSource source) async {
+  //   final pickedFile = await imagePicker.pickImage(
+  //     source: source,
+  //     imageQuality: 30,
+  //   );
 
-    if (pickedFile == null) return;
+  //   if (pickedFile == null) return;
 
-    setState(() {
-      imageFiles.add(File(pickedFile.path));
-      log("${pickedFile.path}======= image");
-    });
-  }
+  //   setState(() {
+  //     imageFiles.add(File(pickedFile.path));
+  //     log("${pickedFile.path}======= image");
+  //   });
+  // }
 
-  List<String> getImagePaths() {
-    return imageFiles.map((file) => file.path).toList();
-  }
+  // List<String> getImagePaths() {
+  //   return imageFiles.map((file) => file.path).toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -240,35 +240,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           return true;
         }
       },
-      // return WillPopScope(
-      //   onWillPop: () async {
-      //     if (isConditionMet && isWaitingForCheckout) {
-      //       return false;
-      //     } else {
-      //       final now = DateTime.now();
-      //       const maxDuration = Duration(seconds: 1);
-      //       final isWarning =
-      //           lastpressed == null || now.difference(lastpressed!) > maxDuration;
-      //       if (isWarning) {
-      //         lastpressed = DateTime.now();
-      //         final snackBar = SnackBar(
-      //           width: 200.w,
-      //           shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10.r)),
-      //           backgroundColor: Colors.black,
-      //           behavior: SnackBarBehavior.floating,
-      //           content: const Text('  Duble Tap to back Screen '),
-      //           duration: maxDuration,
-      //         );
-      //         ScaffoldMessenger.of(context)
-      //           ..removeCurrentSnackBar()
-      //           ..showSnackBar(snackBar);
-      //         return false;
-      //       } else {
-      //         return true;
-      //       }
-      //     }
-      //   },
       child: Scaffold(
         bottomNavigationBar: Platform.isIOS
             ? SizedBox(
@@ -426,11 +397,20 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       color: kCardColor,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      currentPosition > 0
-                                          ? IconButton(
+                                      currentPosition == 0
+                                          ? Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20.h),
+                                              child: Icon(
+                                                Icons.arrow_back_ios,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kSubTextColor,
+                                              ),
+                                            )
+                                          : IconButton(
                                               onPressed: () {
                                                 log("pressed");
                                                 if (currentPosition > 0) {
@@ -471,21 +451,15 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                     ? 16.sp
                                                     : 25.sp,
                                                 color: kMainColor,
-                                              ))
-                                          : Container(
-                                              width: 50.w,
-                                            ),
-                                      Row(
-                                        children: [
-                                          FadedScaleAnimation(
-                                            scaleDuration: const Duration(
-                                                milliseconds: 400),
-                                            fadeDuration: const Duration(
-                                                milliseconds: 400),
-                                            child: PatientImageWidget(
-                                                patientImage: ctr
-                                                            .bookingData[
-                                                                currentPosition]
+                                              )),
+                                      FadedScaleAnimation(
+                                        scaleDuration:
+                                            const Duration(milliseconds: 400),
+                                        fadeDuration:
+                                            const Duration(milliseconds: 400),
+                                        child: PatientImageWidget(
+                                            patientImage:
+                                                ctr.bookingData[currentPosition]
                                                             .userImage ==
                                                         null
                                                     ? ""
@@ -494,23 +468,44 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                             currentPosition]
                                                         .userImage
                                                         .toString(),
-                                                radius: 40.r),
-                                          ),
-                                          SizedBox(
-                                            width: size.width > 450
-                                                ? size.width * .64
-                                                : size.width * .42,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                            radius: 40.r),
+                                      ),
+                                      SizedBox(
+                                        width: size.width > 450
+                                            ? size.width * .64
+                                            : size.width * .42,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              ctr.bookingData[currentPosition]
+                                                  .patientName
+                                                  .toString(),
+                                              style: size.width > 450
+                                                  ? blackTabMainText
+                                                  : blackMainText,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Row(
                                               children: [
+                                                Text(
+                                                  "Token Number : ",
+                                                  style: size.width > 450
+                                                      ? greyTabMain
+                                                      : grey10B400,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
                                                 Text(
                                                   ctr
                                                       .bookingData[
                                                           currentPosition]
-                                                      .patientName
+                                                      .tokenNumber
                                                       .toString(),
                                                   style: size.width > 450
                                                       ? blackTabMainText
@@ -519,100 +514,79 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "Token Number : ",
-                                                      style: size.width > 450
-                                                          ? greyTabMain
-                                                          : grey10B400,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    Text(
-                                                      ctr
-                                                          .bookingData[
-                                                              currentPosition]
-                                                          .tokenNumber
-                                                          .toString(),
-                                                      style: size.width > 450
-                                                          ? blackTabMainText
-                                                          : blackMainText,
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ],
-                                                ),
-                                                ctr.bookingData[currentPosition]
-                                                            .mediezyPatientId ==
-                                                        null
-                                                    ? Container()
-                                                    : Row(
-                                                        children: [
-                                                          Text(
-                                                            "Patient Id : ",
-                                                            style: size.width >
-                                                                    450
-                                                                ? greyTabMain
-                                                                : grey10B400,
-                                                          ),
-                                                          Text(
-                                                            ctr
-                                                                .bookingData[
-                                                                    currentPosition]
-                                                                .mediezyPatientId
-                                                                .toString(),
-                                                            style: size.width >
-                                                                    450
-                                                                ? blackTabMainText
-                                                                : blackMainText,
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                ctr.bookingData[currentPosition]
-                                                            .age ==
-                                                        null
-                                                    ? Container()
-                                                    : Row(
-                                                        children: [
-                                                          Text(
-                                                            "Age : ",
-                                                            style: size.width >
-                                                                    450
-                                                                ? greyTabMain
-                                                                : grey10B400,
-                                                          ),
-                                                          Text(
-                                                            ctr
-                                                                .bookingData[
-                                                                    currentPosition]
-                                                                .patient!
-                                                                .age
-                                                                .toString(),
-                                                            style: size.width >
-                                                                    450
-                                                                ? blackTabMainText
-                                                                : blackMainText,
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
                                               ],
                                             ),
-                                          ),
-                                        ],
+                                            ctr.bookingData[currentPosition]
+                                                        .mediezyPatientId ==
+                                                    null
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        "Patient Id : ",
+                                                        style: size.width > 450
+                                                            ? greyTabMain
+                                                            : grey10B400,
+                                                      ),
+                                                      Text(
+                                                        ctr
+                                                            .bookingData[
+                                                                currentPosition]
+                                                            .mediezyPatientId
+                                                            .toString(),
+                                                        style: size.width > 450
+                                                            ? blackTabMainText
+                                                            : blackMainText,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                            ctr.bookingData[currentPosition]
+                                                        .age ==
+                                                    null
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        "Age : ",
+                                                        style: size.width > 450
+                                                            ? greyTabMain
+                                                            : grey10B400,
+                                                      ),
+                                                      Text(
+                                                        ctr
+                                                            .bookingData[
+                                                                currentPosition]
+                                                            .patient!
+                                                            .age
+                                                            .toString(),
+                                                        style: size.width > 450
+                                                            ? blackTabMainText
+                                                            : blackMainText,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
+                                          ],
+                                        ),
                                       ),
-                                      currentPosition < listLength - 1
-                                          ? IconButton(
+                                      currentPosition == listLength - 1
+                                          ? Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20.h),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                size: size.width > 450
+                                                    ? 16.sp
+                                                    : 25.sp,
+                                                color: kSubTextColor,
+                                              ),
+                                            )
+                                          : IconButton(
                                               onPressed: () {
                                                 if (currentPosition <
                                                     listLength - 1) {
@@ -650,10 +624,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                                 size: size.width > 450
                                                     ? 16.sp
                                                     : 25.sp,
-                                              ))
-                                          : Container(
-                                              width: 50.w,
-                                            ),
+                                              )),
                                     ],
                                   ),
                                 ),
@@ -705,6 +676,36 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 // },
                                 // child: Text("data")),
                                 //MedicineWidget
+                                const VerticalSpacingWidget(height: 5),
+                                Obx(() {
+                                  return bokingAppointmentLabController
+                                          .favoritemedicalshop.isEmpty
+                                      ? const Text(
+                                          "No Favourite Medical Stores.\n Please add Medical Stores")
+                                      : CustomDropDown(
+                                          width: double.infinity,
+                                          value: bokingAppointmentLabController
+                                              .initialMedicalStoreIndex.value,
+                                          items: bokingAppointmentLabController
+                                              .tempScanList
+                                              .map((e) {
+                                            return DropdownMenuItem(
+                                              value: e.id.toString(),
+                                              child: Text(e.laboratory!),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newValue) {
+                                            log(newValue!);
+                                            bokingAppointmentLabController
+                                                .dropdownValueMedicalChanging(
+                                                    newValue,
+                                                    bokingAppointmentLabController
+                                                        .initialMedicalStoreIndex
+                                                        .value);
+                                          },
+                                        );
+                                }),
+                                const VerticalSpacingWidget(height: 5),
                                 Obx(() {
                                   if (getAllAppointmentController
                                       .loding.value) {
@@ -747,10 +748,10 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         ),
                                         IconButton(
                                           onPressed: () async {
-                                            // await placePicImage();
-                                            showPickerOptions();
-                                            // setState(() {});
-                                            log(imageFiles.toString());
+                                            await placePicImage();
+                                            setState(() {});
+                                            // showPickerOptions();
+                                            // log(imageFiles.toString());
                                           },
                                           icon: Icon(
                                             Icons.upload_file_outlined,
@@ -765,119 +766,160 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   ),
                                 ),
                                 const VerticalSpacingWidget(height: 5),
-                                if (imageFiles.isNotEmpty)
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: imageFiles.length,
-                                    itemBuilder: (context, index) {
-                                      final file = imageFiles[index];
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          color: kCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 5.h),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (ctx) =>
-                                                        ImageViewWidgetDemo(
-                                                      image: file.path,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "View your uploaded image",
-                                                    style: size.width > 450
-                                                        ? TextStyle(
-                                                            fontSize: 11.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.blue,
-                                                          )
-                                                        : TextStyle(
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.blue,
-                                                          ),
-                                                  ),
-                                                  const HorizontalSpacingWidget(
-                                                      width: 10),
-                                                  Icon(
-                                                    Icons.image,
-                                                    color: Colors.blue,
-                                                    size: size.width > 450
-                                                        ? 20.sp
-                                                        : 28.sp,
-                                                  ),
-                                                ],
+                                if (imagePath != null)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: kCardColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    margin: EdgeInsets.symmetric(vertical: 5.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    ImageViewWidgetDemo(
+                                                  image: imagePath!,
+                                                ),
                                               ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  imageFiles.removeAt(index);
-                                                });
-                                              },
-                                              icon: Icon(
-                                                CupertinoIcons.clear_circled,
-                                                color: Colors.black,
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "View your uploaded image",
+                                                style: size.width > 450
+                                                    ? TextStyle(
+                                                        fontSize: 11.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      )
+                                                    : TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.blue,
+                                                      ),
+                                              ),
+                                              const HorizontalSpacingWidget(
+                                                  width: 10),
+                                              Icon(
+                                                Icons.image,
+                                                color: Colors.blue,
                                                 size: size.width > 450
                                                     ? 20.sp
-                                                    : 20.sp,
+                                                    : 28.sp,
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      );
-                                    },
-                                  ),
-
-                                const VerticalSpacingWidget(height: 5),
-
-                                Obx(() {
-                                  return bokingAppointmentLabController
-                                          .favoritemedicalshop.isEmpty
-                                      ? const Text(
-                                          "No Favourite Medical Stores.\n Please add Medical Stores")
-                                      : CustomDropDown(
-                                          width: double.infinity,
-                                          value: bokingAppointmentLabController
-                                              .initialMedicalStoreIndex.value,
-                                          items: bokingAppointmentLabController
-                                              .tempScanList
-                                              .map((e) {
-                                            return DropdownMenuItem(
-                                              value: e.id.toString(),
-                                              child: Text(e.laboratory!),
-                                            );
-                                          }).toList(),
-                                          onChanged: (newValue) {
-                                            log(newValue!);
-                                            bokingAppointmentLabController
-                                                .dropdownValueMedicalChanging(
-                                                    newValue,
-                                                    bokingAppointmentLabController
-                                                        .initialMedicalStoreIndex
-                                                        .value);
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              imagePath = null;
+                                            });
                                           },
-                                        );
-                                }),
+                                          icon: Icon(
+                                            CupertinoIcons.clear_circled,
+                                            color: Colors.black,
+                                            size: size.width > 450
+                                                ? 20.sp
+                                                : 20.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                // if (imageFiles.isNotEmpty)
+                                //   ListView.builder(
+                                //     shrinkWrap: true,
+                                //     physics:
+                                //         const NeverScrollableScrollPhysics(),
+                                //     itemCount: imageFiles.length,
+                                //     itemBuilder: (context, index) {
+                                //       final file = imageFiles[index];
+                                //       return Container(
+                                //         decoration: BoxDecoration(
+                                //           color: kCardColor,
+                                //           borderRadius:
+                                //               BorderRadius.circular(10),
+                                //         ),
+                                //         margin:
+                                //             EdgeInsets.symmetric(vertical: 5.h),
+                                //         child: Row(
+                                //           mainAxisAlignment:
+                                //               MainAxisAlignment.spaceBetween,
+                                //           children: [
+                                //             InkWell(
+                                //               onTap: () {
+                                //                 Navigator.push(
+                                //                   context,
+                                //                   MaterialPageRoute(
+                                //                     builder: (ctx) =>
+                                //                         ImageViewWidgetDemo(
+                                //                       image: file.path,
+                                //                     ),
+                                //                   ),
+                                //                 );
+                                //               },
+                                //               child: Row(
+                                //                 children: [
+                                //                   Text(
+                                //                     "View your uploaded image",
+                                //                     style: size.width > 450
+                                //                         ? TextStyle(
+                                //                             fontSize: 11.sp,
+                                //                             fontWeight:
+                                //                                 FontWeight.w600,
+                                //                             color: Colors.blue,
+                                //                           )
+                                //                         : TextStyle(
+                                //                             fontSize: 14.sp,
+                                //                             fontWeight:
+                                //                                 FontWeight.w600,
+                                //                             color: Colors.blue,
+                                //                           ),
+                                //                   ),
+                                //                   const HorizontalSpacingWidget(
+                                //                       width: 10),
+                                //                   Icon(
+                                //                     Icons.image,
+                                //                     color: Colors.blue,
+                                //                     size: size.width > 450
+                                //                         ? 20.sp
+                                //                         : 28.sp,
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //             IconButton(
+                                //               onPressed: () {
+                                //                 setState(() {
+                                //                   imageFiles.removeAt(index);
+                                //                 });
+                                //               },
+                                //               icon: Icon(
+                                //                 CupertinoIcons.clear_circled,
+                                //                 color: Colors.black,
+                                //                 size: size.width > 450
+                                //                     ? 20.sp
+                                //                     : 20.sp,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       );
+                                //     },
+                                //   ),
+
                                 const VerticalSpacingWidget(height: 5),
+
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -973,7 +1015,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LabSearchWidget(
+                                        builder: (context) => ScanSearchWidget(
                                           onLabSelected:
                                               handleScanTestSelection,
                                           typeId: 0,
@@ -1129,160 +1171,184 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 ctr.bookingData[index].date == formatDate()
                                     ? InkWell(
                                         onTap: () async {
-                                          if (getAllAppointmentController
-                                                  .bookingData[index]
-                                                  .isCheckedin ==
-                                              1) {
-                                            if (bokingAppointmentLabController
-                                                    .initialScaningCenerIndex
-                                                    .value ==
-                                                '0') {}
+                                          if (bokingAppointmentLabController
+                                                      .initialSelectLabIndex
+                                                      .value !=
+                                                  '0' &&
+                                              selectedLabs.isEmpty) {
+                                            GeneralServices.instance
+                                                .showErrorMessage(context,
+                                                    "Please select lab tests ");
+                                          } else if (bokingAppointmentLabController
+                                                      .initialScaningCenerIndex
+                                                      .value !=
+                                                  '0' &&
+                                              selectedScanTests.isEmpty) {
+                                            GeneralServices.instance
+                                                .showErrorMessage(context,
+                                                    "Please Select scanning centre ");
+                                          } else {
+                                            if (getAllAppointmentController
+                                                    .bookingData[index]
+                                                    .isCheckedin ==
+                                                1) {
+                                              if (bokingAppointmentLabController
+                                                      .initialScaningCenerIndex
+                                                      .value ==
+                                                  '0') {}
 
-                                            FocusScope.of(context).unfocus();
-                                            //check condition//.......
-                                            setState(() {
-                                              isCheckoutTapped = true;
-                                              isBackActionDisabled = true;
-                                            });
-
-                                            if (currentPosition ==
-                                                    listLength - 1 ||
-                                                currentPosition <
-                                                    listLength - 1 ||
-                                                (currentPosition ==
-                                                        listLength - 1 &&
-                                                    currentPosition == 0)) {
-                                              // isConditionMet = true;
-                                              // isWaitingForCheckout =
-                                              //     true;
-                                            }
-
-                                            BlocProvider.of<
-                                                        AddAllAppointmentDetailsBloc>(
-                                                    context)
-                                                .add(
-                                              AddAllAppointmentDetails(
-                                                labTestId:
-                                                    getSelectedLabTestIds(),
-                                                scanTestId:
-                                                    getSelectedScanTestIds(),
-                                                tokenId: ctr
-                                                    .bookingData[index].tokenId
-                                                    .toString(),
-                                                labId:
-                                                    bokingAppointmentLabController
-                                                        .initialSelectLabIndex
-                                                        .toString(),
-                                                medicalshopId:
-                                                    bokingAppointmentLabController
-                                                        .initialMedicalStoreIndex
-                                                        .toString(),
-                                                attachment: imagePath,
-                                                reviewAfter:
-                                                    afterDaysController.text,
-                                                notes: noteController.text,
-                                                scanId:
-                                                    bokingAppointmentLabController
-                                                        .initialScaningCenerIndex
-                                                        .toString(),
-                                              ),
-                                            );
-
-                                            // Wait for 3 seconds
-                                            await Future.delayed(
-                                                    const Duration(seconds: 3))
-                                                .then((value) {
+                                              FocusScope.of(context).unfocus();
+                                              //check condition//.......
                                               setState(() {
-                                                isBackActionDisabled = false;
+                                                isCheckoutTapped = true;
+                                                isBackActionDisabled = true;
                                               });
-                                              if (ctr.bookingData[index]
-                                                      .isCheckedout !=
-                                                  1) {
-                                                if (currentPosition ==
-                                                        listLength - 1 &&
-                                                    currentPosition == 0) {
-                                                  log("1111111111111111111111111111111111111");
-                                                  handleCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  estimateUpdateCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  navigateToHome(context);
-                                                  log("last section currentPosition: $currentPosition");
-                                                } else if (currentPosition ==
-                                                    listLength - 1) {
-                                                  currentPosition--;
-                                                  log("Last section: $currentPosition");
 
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  log("2222222222222222222222222222222222222222222");
+                                              if (currentPosition ==
+                                                      listLength - 1 ||
+                                                  currentPosition <
+                                                      listLength - 1 ||
+                                                  (currentPosition ==
+                                                          listLength - 1 &&
+                                                      currentPosition == 0)) {
+                                                // isConditionMet = true;
+                                                // isWaitingForCheckout =
+                                                //     true;
+                                              }
 
-                                                  handleCheckout(
-                                                    context,
-                                                    index,
-                                                  );
-                                                  Future.delayed(
+                                              BlocProvider.of<
+                                                          AddAllAppointmentDetailsBloc>(
+                                                      context)
+                                                  .add(
+                                                AddAllAppointmentDetails(
+                                                  labTestId:
+                                                      getSelectedLabTestIds(),
+                                                  scanTestId:
+                                                      getSelectedScanTestIds(),
+                                                  tokenId: ctr
+                                                      .bookingData[index]
+                                                      .tokenId
+                                                      .toString(),
+                                                  labId:
+                                                      bokingAppointmentLabController
+                                                          .initialSelectLabIndex
+                                                          .value
+                                                          .toString(),
+                                                  medicalshopId:
+                                                      bokingAppointmentLabController
+                                                          .initialMedicalStoreIndex
+                                                          .toString(),
+                                                  attachment: imagePath,
+                                                  reviewAfter:
+                                                      afterDaysController.text,
+                                                  notes: noteController.text,
+                                                  scanId:
+                                                      bokingAppointmentLabController
+                                                          .initialScaningCenerIndex
+                                                          .toString(),
+                                                ),
+                                              );
+
+                                              // Wait for 3 seconds
+                                              await Future.delayed(
                                                       const Duration(
-                                                          seconds: 8), () {
+                                                          seconds: 3))
+                                                  .then((value) {
+                                                setState(() {
+                                                  isBackActionDisabled = false;
+                                                });
+                                                if (ctr.bookingData[index]
+                                                        .isCheckedout !=
+                                                    1) {
+                                                  if (currentPosition ==
+                                                          listLength - 1 &&
+                                                      currentPosition == 0) {
+                                                    log("1111111111111111111111111111111111111");
+                                                    handleCheckout(
+                                                      context,
+                                                      index,
+                                                    );
                                                     estimateUpdateCheckout(
                                                       context,
                                                       index,
                                                     );
                                                     navigateToHome(context);
-                                                  });
-                                                  refreshData(context);
-                                                } else if (currentPosition <
-                                                    listLength - 1) {
-                                                  log("33333333333333333333333333333333");
-                                                  currentPosition + 1;
-                                                  pageController.animateToPage(
-                                                    currentPosition,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
-                                                  handleCheckout(
-                                                    context,
-                                                    currentPosition,
-                                                  );
-                                                  Future.delayed(
-                                                      const Duration(
-                                                          seconds: 8), () {
-                                                    estimateUpdateCheckout(
+                                                    log("last section currentPosition: $currentPosition");
+                                                  } else if (currentPosition ==
+                                                      listLength - 1) {
+                                                    currentPosition--;
+                                                    log("Last section: $currentPosition");
+
+                                                    pageController
+                                                        .animateToPage(
+                                                      currentPosition,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                    log("2222222222222222222222222222222222222222222");
+
+                                                    handleCheckout(
                                                       context,
                                                       index,
                                                     );
+                                                    Future.delayed(
+                                                        const Duration(
+                                                            seconds: 8), () {
+                                                      estimateUpdateCheckout(
+                                                        context,
+                                                        index,
+                                                      );
+                                                      navigateToHome(context);
+                                                    });
+                                                    refreshData(context);
+                                                  } else if (currentPosition <
+                                                      listLength - 1) {
+                                                    log("33333333333333333333333333333333");
+                                                    currentPosition + 1;
+                                                    pageController
+                                                        .animateToPage(
+                                                      currentPosition,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                    handleCheckout(
+                                                      context,
+                                                      currentPosition,
+                                                    );
+                                                    Future.delayed(
+                                                        const Duration(
+                                                            seconds: 8), () {
+                                                      estimateUpdateCheckout(
+                                                        context,
+                                                        index,
+                                                      );
+                                                    });
+                                                    refreshData(context);
+                                                    _scrollController.animateTo(
+                                                      0.0,
+                                                      duration: const Duration(
+                                                          milliseconds: 500),
+                                                      curve: Curves.easeInOut,
+                                                    );
+                                                  }
+                                                  setState(() {
+                                                    bookingPending =
+                                                        listLength -
+                                                            1 -
+                                                            currentPosition;
                                                   });
-                                                  refreshData(context);
-                                                  _scrollController.animateTo(
-                                                    0.0,
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    curve: Curves.easeInOut,
-                                                  );
                                                 }
-                                                setState(() {
-                                                  bookingPending = listLength -
-                                                      1 -
-                                                      currentPosition;
-                                                });
-                                              }
 
-                                              // Reset isWaitingForCheckout to false after 3 seconds
-                                              isCheckoutTapped = false;
-                                            });
-                                          } else {
-                                            GeneralServices.instance
-                                                .showErrorMessage(context,
-                                                    "please confirm the Check in");
+                                                // Reset isWaitingForCheckout to false after 3 seconds
+                                                isCheckoutTapped = false;
+                                              });
+                                            } else {
+                                              GeneralServices.instance
+                                                  .showErrorMessage(context,
+                                                      "please confirm the Check in");
+                                            }
                                           }
                                         },
                                         child: Container(
@@ -1565,7 +1631,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     noteController.clear();
     bokingAppointmentLabController.resetToPreviousValue();
     imagePath = null;
-    imageFiles.clear();
+    // imageFiles.clear();
     selectedScanTests.clear();
     selectedLabs.clear();
   }
@@ -1613,6 +1679,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
       clinicId: controller.initialIndex.value,
       scheduleType: controller.scheduleIndex.value,
     );
+    // BlocProvider.of<GetAppointmentsBloc>(context).add(
+    //   FetchAllAppointments(
+    //     date: widget.date,
+    //     clinicId: controller.initialIndex.value,
+    //     scheduleType: controller.scheduleIndex.value,
+    //   ),
+    // );
   }
 
   Future<File> compressImage(String imagePath) async {
@@ -1643,33 +1716,46 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
     }
   }
 
-  void showPickerOptions() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Photo Library'),
-                onTap: () {
-                  pickImage(ImageSource.gallery);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
-                onTap: () {
-                  pickImage(ImageSource.camera);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
+  Future placePicImage() async {
+    var image = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 30,
     );
+    if (image == null) return;
+    final imageTemporary = image.path;
+    setState(() {
+      imagePath = imageTemporary;
+      log("$imageTemporary======= image");
+    });
   }
+
+  //   void showPickerOptions() {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return SafeArea(
+  //         child: Wrap(
+  //           children: <Widget>[
+  //             ListTile(
+  //               leading: const Icon(Icons.photo_library),
+  //               title: const Text('Photo Library'),
+  //               onTap: () {
+  //                 pickImage(ImageSource.gallery);
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //             ListTile(
+  //               leading: const Icon(Icons.photo_camera),
+  //               title: const Text('Camera'),
+  //               onTap: () {
+  //                 pickImage(ImageSource.camera);
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

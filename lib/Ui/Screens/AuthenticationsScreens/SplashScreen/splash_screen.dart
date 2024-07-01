@@ -78,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: size.height,
                 width: size.width,
                 "assets/images/doctor screen-03.jpg",
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             )
           ],

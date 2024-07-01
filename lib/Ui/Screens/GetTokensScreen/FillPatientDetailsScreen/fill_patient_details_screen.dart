@@ -444,57 +444,65 @@ class _FillPatientDetailsScreenState extends State<FillPatientDetailsScreen> {
                                     height: size.width > 450 ? 45.h : 40.h,
                                     color: kCardColor,
                                     child: DropdownButton<String>(
-                                      underline:
-                                          const SizedBox(), // Set underline to null
-                                      value: fillPatiantController.genterValue.value,
-                                      onChanged: (String? newValue) {
-                                        fillPatiantController.dropdownValueChanging(newValue!, '1');
-                                      },
-                                      icon: Padding(
-                                        padding: size.width > 450
-                                            ? EdgeInsets.only(top: 10.h)
-                                            : EdgeInsets.symmetric(
-                                                vertical: 10.h,
-                                                horizontal: 10.w,
-                                              ),
-                                        child:
-                                            const Icon(Icons.arrow_drop_down),
-                                      ), // Set the dropdown icon
-                                      iconSize: size.width > 450
-                                          ? 30.0
-                                          : 24.0, // Adjust icon size if needed
-                                      items:
-                                      fillPatiantController.genterData.map((e) {
-                                        return DropdownMenuItem(
-                                          value: e.scheduleId.toString(),
-                                          child: Text(e.scheduleName,style: size.width > 450
-                                                  ? blackTabMainText
-                                                  : blackMainText,));
-                                      },).toList()
-                                      
-                                      // <String>['Male', 'Female', 'Other']
-                                      //     .map<DropdownMenuItem<String>>(
-                                      //         (String value) {
-                                      //   return DropdownMenuItem<String>(
-                                      //     value: value,
-                                      //     child: Padding(
-                                      //       padding: size.width > 450
-                                      //           ? EdgeInsets.only(
-                                      //               top: 10.h, left: 30.w)
-                                      //           : EdgeInsets.symmetric(
-                                      //               vertical: 10.h,
-                                      //               horizontal: 10.w,
-                                      //             ),
-                                      //       child: Text(
-                                      //         value,
-                                      //         style: size.width > 450
-                                      //             ? blackTabMainText
-                                      //             : blackMainText,
-                                      //       ),
-                                      //     ),
-                                      //   );
-                                      // }).toList(),
-                                    ),
+                                        underline:
+                                            const SizedBox(), // Set underline to null
+                                        value: fillPatiantController
+                                            .genterValue.value,
+                                        onChanged: (String? newValue) {
+                                          fillPatiantController
+                                              .dropdownValueChanging(
+                                                  newValue!, '1');
+                                        },
+                                        icon: Padding(
+                                          padding: size.width > 450
+                                              ? EdgeInsets.only(top: 10.h)
+                                              : EdgeInsets.symmetric(
+                                                  vertical: 10.h,
+                                                  horizontal: 10.w,
+                                                ),
+                                          child:
+                                              const Icon(Icons.arrow_drop_down),
+                                        ), // Set the dropdown icon
+                                        iconSize: size.width > 450
+                                            ? 30.0
+                                            : 24.0, // Adjust icon size if needed
+                                        items: fillPatiantController.genterData
+                                            .map(
+                                          (e) {
+                                            return DropdownMenuItem(
+                                                value: e.scheduleId.toString(),
+                                                child: Text(
+                                                  e.scheduleName,
+                                                  style: size.width > 450
+                                                      ? blackTabMainText
+                                                      : blackMainText,
+                                                ));
+                                          },
+                                        ).toList()
+
+                                        // <String>['Male', 'Female', 'Other']
+                                        //     .map<DropdownMenuItem<String>>(
+                                        //         (String value) {
+                                        //   return DropdownMenuItem<String>(
+                                        //     value: value,
+                                        //     child: Padding(
+                                        //       padding: size.width > 450
+                                        //           ? EdgeInsets.only(
+                                        //               top: 10.h, left: 30.w)
+                                        //           : EdgeInsets.symmetric(
+                                        //               vertical: 10.h,
+                                        //               horizontal: 10.w,
+                                        //             ),
+                                        //       child: Text(
+                                        //         value,
+                                        //         style: size.width > 450
+                                        //             ? blackTabMainText
+                                        //             : blackMainText,
+                                        //       ),
+                                        //     ),
+                                        //   );
+                                        // }).toList(),
+                                        ),
                                   ),
                                 )
                               ],
@@ -866,7 +874,7 @@ class FillPatiantController extends GetxController {
   var genterValue = '1'.obs;
   List<SchedulDropdowneModel> genterData = [
     SchedulDropdowneModel(scheduleId: '1', scheduleName: "Male"),
-    SchedulDropdowneModel(scheduleId: '2', scheduleName: "Femaile"),
+    SchedulDropdowneModel(scheduleId: '2', scheduleName: "Female"),
     SchedulDropdowneModel(scheduleId: '3', scheduleName: "Other"),
   ];
   dropdownValueChanging(String value, String checkingValue) {

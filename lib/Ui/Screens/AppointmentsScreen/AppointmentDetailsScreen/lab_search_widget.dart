@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mediezy_doctor/Model/GetAppointments/search_lab_test_model.dart';
 import 'package:mediezy_doctor/Repositary/Bloc/GetAppointments/search_lab_test/favourite_lab_test/favourite_lab_test_bloc.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/horizontal_spacing_widget.dart';
 import 'package:mediezy_doctor/Ui/CommonWidgets/text_style_widget.dart';
@@ -18,12 +17,14 @@ class LabSearchWidget extends StatefulWidget {
     required this.onLabSelected,
     required this.typeId,
     required this.labTypeId,
-    this.history,
+    // this.history,
+    // this.tests,
   });
 
   final int typeId;
   final int labTypeId;
-  final List<History>? history;
+  // final List<History>? history;
+  // final List<Tests>? tests;
   final Function(String selectedLabName, String selectedLabId) onLabSelected;
 
   @override

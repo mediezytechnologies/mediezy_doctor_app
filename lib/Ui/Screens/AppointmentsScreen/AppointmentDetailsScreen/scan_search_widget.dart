@@ -34,7 +34,7 @@ class LabhWidgetState extends State<ScanSearchWidget> {
   @override
   void initState() {
     BlocProvider.of<SearchLabTestBloc>(context)
-        .add(FetchAllLabTest(searchQuery: ""));
+        .add(FetchAllScanTest(searchQuery: ""));
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class LabhWidgetState extends State<ScanSearchWidget> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(widget.labTypeId == 1 ? "Scan test" : "Lab test"),
+        title: const Text("Scan test"),
         centerTitle: true,
       ),
       bottomNavigationBar: Platform.isIOS
@@ -68,7 +68,7 @@ class LabhWidgetState extends State<ScanSearchWidget> {
                   textInputAction: TextInputAction.next,
                   onChanged: (newValue) {
                     BlocProvider.of<SearchLabTestBloc>(context)
-                        .add(FetchAllLabTest(searchQuery: newValue));
+                        .add(FetchAllScanTest(searchQuery: newValue));
                   },
                   decoration: InputDecoration(
                     suffixIcon: Icon(
@@ -77,7 +77,7 @@ class LabhWidgetState extends State<ScanSearchWidget> {
                       size: size.width > 450 ? 14.sp : 20.sp,
                     ),
                     hintStyle: size.width > 450 ? greyTab10B600 : grey13B600,
-                    hintText: "Search your labs test's",
+                    hintText: "Search your scan test's",
                     filled: true,
                     fillColor: kCardColor,
                     border: OutlineInputBorder(
@@ -89,21 +89,21 @@ class LabhWidgetState extends State<ScanSearchWidget> {
               ),
               BlocListener<FavouriteLabTestBloc, FavouriteLabTestState>(
                 listener: (context, state) {
-                  if (state is DeleteRecentlySearchLabTestLoaded) {
+                  if (state is DeleteRecentlySearchScanTestLoaded) {
                     BlocProvider.of<SearchLabTestBloc>(context)
-                        .add(FetchAllLabTest(searchQuery: ""));
+                        .add(FetchAllScanTest(searchQuery: ""));
                   }
                 },
                 child: BlocBuilder<SearchLabTestBloc, SearchLabTestState>(
                   builder: (context, state) {
-                    if (state is SearchLabTestLoading) {
+                    if (state is SearchScanTestLoading) {
                       return Center(
                         child: CircularProgressIndicator(
                           color: kMainColor,
                         ),
                       );
                     }
-                    if (state is SearchLabTestError) {
+                    if (state is SearchScanTestError) {
                       return Center(
                         child: Image(
                           image: const AssetImage(
@@ -113,7 +113,7 @@ class LabhWidgetState extends State<ScanSearchWidget> {
                         ),
                       );
                     }
-                    if (state is SearchLabTestLoaded) {
+                    if (state is SearchScanTestLoaded) {
                       final searchLabTestModel = state.searchLabTestModel;
                       if (searchLabTestModel.tests != null &&
                           searchLabTestModel.tests!.isNotEmpty) {
@@ -220,8 +220,8 @@ class LabhWidgetState extends State<ScanSearchWidget> {
                                                             BlocProvider.of<
                                                                         FavouriteLabTestBloc>(
                                                                     context)
-                                                                .add(DeleteRecentlySearchLabTest(
-                                                                    labTestId: searchLabTestModel
+                                                                .add(DeleteRecentlySearchScanTest(
+                                                                    historyId: searchLabTestModel
                                                                         .history![
                                                                             index]
                                                                         .id
@@ -261,8 +261,8 @@ class LabhWidgetState extends State<ScanSearchWidget> {
                                       });
                                       BlocProvider.of<FavouriteLabTestBloc>(
                                               context)
-                                          .add(AddFavouriteLabTest(
-                                              labTestId:
+                                          .add(AddFavouriteScanTest(
+                                              scanTestId:
                                                   labData.id.toString()));
                                     },
                                     icon: Icon(

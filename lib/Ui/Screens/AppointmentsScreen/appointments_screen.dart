@@ -22,7 +22,6 @@ import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_a
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appoiment_dropdown.dart';
 import 'package:mediezy_doctor/Ui/Screens/AppointmentsScreen/Widgets/appointment_tabbar_demo.dart';
 import 'package:mediezy_doctor/Ui/Services/general_services.dart';
-import 'package:shimmer/shimmer.dart';
 import 'Widgets/appoiment_drawer.dart';
 
 class AppointmentsScreen extends StatefulWidget {
@@ -37,10 +36,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   void handleConnectivityChange(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-      // Handle no connectivity
-    } else {
-      // Handle connectivity restored
-    }
+    } else {}
   }
 
   final getAllAppointmentController = Get.put(GetAllAppointmentController());
@@ -75,11 +71,9 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         scheduleType: controller.scheduleIndex.value,
       );
 
-      // Delay the first API call by 1 second
       initialTimer = Timer(const Duration(seconds: 1), () {
         fetchAppointments();
 
-        // Start polling every 10 seconds after the initial call
         pollingTimer = Timer.periodic(const Duration(seconds: 15), (timer) {
           fetchAppointments();
         });
@@ -202,163 +196,5 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         ),
       ),
     );
-  }
-
-  Widget _shimmerLoading() {
-    return SizedBox(
-      height: 430.h,
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 130.w,
-                height: 20.h,
-                color: Colors.white,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 90.w,
-                    height: 20.h,
-                    color: Colors.white,
-                  ),
-                  Container(
-                    width: 70.w,
-                    height: 20.h,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  Container(
-                    width: 70.0,
-                    height: 70.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 180.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  Container(
-                    width: 180.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<DateTime> _getDisabledDates() {
-    DateTime currentDate = DateTime.now();
-    List<DateTime> disabledDates = [];
-    for (int month = 1; month <= currentDate.month; month++) {
-      int lastDay = month < currentDate.month ? 31 : currentDate.day;
-
-      for (int day = 1; day < lastDay; day++) {
-        disabledDates.add(DateTime(currentDate.year, month, day));
-      }
-    }
-    return disabledDates;
   }
 }

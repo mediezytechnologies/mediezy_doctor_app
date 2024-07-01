@@ -36,3 +36,39 @@ final class DeleteRecentlySearchLabTestError extends FavouriteLabTestState {
 
   DeleteRecentlySearchLabTestError({required this.errorMessage});
 }
+
+//! favourite scan test
+
+final class FavouriteScanTestInitial extends FavouriteLabTestState {}
+
+final class FavouriteScanTestLoading extends FavouriteLabTestState {}
+
+final class FavouriteScanTestLoaded extends FavouriteLabTestState {
+  final String successMessage;
+
+  FavouriteScanTestLoaded({required this.successMessage});
+}
+
+final class FavouriteScanTestError extends FavouriteLabTestState {
+  final String errorMessage;
+
+  FavouriteScanTestError({required this.errorMessage});
+}
+
+//! delete recently search scan test
+
+final class DeleteRecentlySearchScanTestInitial extends FavouriteLabTestState {}
+
+final class DeleteRecentlySearchScanTestLoading extends FavouriteLabTestState {}
+
+final class DeleteRecentlySearchScanTestLoaded extends FavouriteLabTestState {
+  final String successMessage;
+
+  DeleteRecentlySearchScanTestLoaded({required this.successMessage});
+}
+
+final class DeleteRecentlySearchScanTestError extends FavouriteLabTestState {
+  final String errorMessage;
+
+  DeleteRecentlySearchScanTestError({required this.errorMessage});
+}
