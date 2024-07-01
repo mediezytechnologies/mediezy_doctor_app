@@ -435,6 +435,15 @@ class LeaveScreenState extends State<LeaveScreen> {
                                       setState(() {
                                         isClickLeave = true;
                                       });
+                                      var matchingLeave;
+                                      try {
+                                      //  matchingLeave
+                                      } catch (e) {
+                                        
+                                      }
+
+
+
                                       log("===================$isClickLeave");
                                       leaveCheckModel.bookedtokencount != 0
                                           ? GeneralServices().appCloseDialogue(
@@ -502,7 +511,6 @@ class LeaveScreenState extends State<LeaveScreen> {
                           },
                         ),
                         VerticalSpacingWidget(height: 10.h),
-                        // getAllLeavesModel.leavesData==null?Container():
                         BlocBuilder<GetAllLeavesBloc, GetAllLeavesState>(
                           builder: (context, state) {
                             if (state is GetAllLeavesLoaded) {

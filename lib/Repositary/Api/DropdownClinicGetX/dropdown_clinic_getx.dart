@@ -97,11 +97,7 @@ class HospitalController extends GetxController {
       scheduleIndex.value = value;
       log(scheduleIndex.toString());
       update();
-    } else if (checkingValue == '1') {
-      scheduleIndex.value = value;
-      log(scheduleIndex.toString());
-      update();
-    }
+    } 
     update();
   }
 

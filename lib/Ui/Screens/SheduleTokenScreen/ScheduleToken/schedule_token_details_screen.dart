@@ -603,36 +603,8 @@ class _ScheduleTokenDetailsScreenState
                                                             log("No matching schedule found. Current bookLength: $bookLength");
                                                           }
                                                         }
-                                                        // }else{
-                                                        //  GeneralServices.instance.showErrorMessage(context, "Time duration contain only degits ");
-                                                      }
-
-                                                      // if (states
-                                                      //     .generatedSchedulesModel
-                                                      //     .schedules!
-                                                      //     .isNotEmpty) {
-
-                                                      //   if (states
-                                                      //       .generatedSchedulesModel
-                                                      //       .schedules!
-                                                      //       .any((e) =>
-                                                      //           e.clinicId ==
-                                                      //               int.parse(dController
-                                                      //                   .initialIndex
-                                                      //                   .value) &&
-                                                      //           e.scheduleType ==
-                                                      //               selectedValue)) {
-                                                      //     log("-------------------- $bookLength");
-                                                      //   } else {
-                                                      //     log("================= $bookLength");
-                                                      //   }
-                                                      // }
-
-                                                      // else {
-                                                      //   log("==============lllllll============= $bookLength");
-
-                                                      //   log('klfjdklsdfjklsdfjkldsf');
-                                                      // }
+                                                     
+                                                      }  
                                                     },
                                               child: Container(
                                                 width: double.infinity,
@@ -873,52 +845,7 @@ class _ScheduleTokenDetailsScreenState
                                                               CupertinoIcons
                                                                   .delete),
                                                         )
-                                                        // Column(
-                                                        //   children: [
-                                                        //     PopupMenuButton(
-                                                        //       iconSize:
-                                                        //           size.width > 450
-                                                        //               ? 14.sp
-                                                        //               : 20.sp,
-                                                        //       icon: Icon(
-                                                        //         Icons.more_vert,
-                                                        //         color: kMainColor,
-                                                        //       ),
-                                                        //       itemBuilder: (context) =>
-                                                        //           <PopupMenuEntry<
-                                                        //               dynamic>>[
-                                                        //         PopupMenuItem(
-                                                        //           onTap: () {
-                                                        //             GeneralServices
-                                                        //                 .instance
-                                                        //                 .appCloseDialogue(
-                                                        //               context,
-                                                        //               "Are you sure want to delete this schedule?",
-                                                        //               () {
-                                                        // BlocProvider.of<GeneratedSchedulesBloc>(context).add(DeleteGeneratedSchedules(
-                                                        //     scheduleId: schedule
-                                                        //         .scheduleId
-                                                        //         .toString()));
-                                                        // Navigator.pop(
-                                                        //     context);
-                                                        //               },
-                                                        //             );
-                                                        //           },
-                                                        //           child: Text(
-                                                        //             "Delete",
-                                                        //             style: size.width >
-                                                        //                     450
-                                                        //                 ? blackTabMainText
-                                                        //                 : blackMainText,
-                                                        //             overflow:
-                                                        //                 TextOverflow
-                                                        //                     .ellipsis,
-                                                        //           ),
-                                                        //         ),
-                                                        //       ],
-                                                        //     ),
-                                                        //   ],
-                                                        // ),
+                                                       
                                                       ],
                                                     ),
                                                   ),
@@ -941,13 +868,6 @@ class _ScheduleTokenDetailsScreenState
                     ),
                   ],
                 )
-                //   } else {
-                //     return const Center(
-                //       child: Text("Unexpected state"),
-                //     );
-                //   }
-                // },
-                // ),
                 ),
           ),
         ),
